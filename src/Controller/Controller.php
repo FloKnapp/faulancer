@@ -6,8 +6,9 @@ use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
- * File Controller.php
+ * Class Controller
  *
+ * @package Faulancer\Controller
  * @author Florian Knapp <office@florianknapp.de>
  */
 abstract class Controller
@@ -27,6 +28,16 @@ abstract class Controller
     public function getView()
     {
         return new ViewController();
+    }
+
+    /**
+     * @param  string $template
+     * @param  array $variables
+     * @return string
+     */
+    public function render(string $template = '', $variables = [])
+    {
+        return $this->getView()->setTemplate($template)->setVariables($variables)->render();
     }
 
 }

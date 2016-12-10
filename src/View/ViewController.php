@@ -35,6 +35,10 @@ class ViewController
             throw new ConstantMissingException('Constant VIEWS_ROOT not defined');
         }
 
+        if (empty($template)) {
+            throw new FileNotFoundException('Template name missing');
+        }
+
         $this->template = VIEWS_ROOT . '/' . $template;
 
         if (!file_exists($this->template)) {

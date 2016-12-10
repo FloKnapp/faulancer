@@ -2,10 +2,10 @@
 
 namespace Faulancer\Exception;
 
-
 /**
- * File ConstantMissingException.php
+ * Class ConstantMissingException
  *
+ * @package Faulancer\Exception
  * @author Florian Knapp <office@florianknapp.de>
  */
 class ConstantMissingException extends \Exception
