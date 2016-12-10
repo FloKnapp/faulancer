@@ -12,9 +12,12 @@ use Faulancer\ServiceLocator\ServiceLocator;
 abstract class Controller
 {
 
+    /**
+     * @return ServiceLocator
+     */
     public function getServiceLocator()
     {
-        return new ServiceLocator();
+        return ServiceLocator::instance();
     }
 
 }

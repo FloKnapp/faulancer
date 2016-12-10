@@ -2,7 +2,6 @@
 
 namespace Faulancer\ServiceLocator;
 
-use Composer\Factory;
 use Faulancer\Exception\FactoryMayIncompatibleException;
 use Faulancer\Exception\ServiceNotFoundException;
 
@@ -14,8 +13,30 @@ use Faulancer\Exception\ServiceNotFoundException;
  */
 class ServiceLocator implements ServiceLocatorInterface {
 
+    /** @var ServiceLocator */
+    private static $instance = null;
+
     /**
-     * Try to get the service
+     * ServiceLocator private constructor.
+     */
+    private function __construct() {}
+
+    /**
+     * @return ServiceLocator
+     */
+    public static function instance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Try to get the service.
+     * Returns always a new instance of the service/factory.
+     * Can be configured in future to share the instance.
      *
      * @param string $service
      * @return FactoryInterface

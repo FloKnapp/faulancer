@@ -5,7 +5,9 @@ namespace Faulancer\ServiceLocator;
 /**
  * Interface ServiceLocatorInterface
  *
+ * @package Faulancer\ServiceLocator
  * @author Florian Knapp <office@florianknapp.de>
+ *
  */
 interface ServiceLocatorInterface
 {
