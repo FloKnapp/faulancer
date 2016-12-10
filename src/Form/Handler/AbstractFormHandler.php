@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Form\Handler;
+namespace Form\Handler;
 
 use Faulancer\Exception\SecurityException;
 use Faulancer\Form\Validator\AbstractValidator;

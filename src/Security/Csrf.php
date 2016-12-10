@@ -2,10 +2,14 @@
 
 namespace Faulancer\Security;
 
+use Session\SessionManager;
 
-
-use Faulancer\Session\SessionManager;
-
+/**
+ * Class Csrf
+ *
+ * @package Faulancer\Security
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 class Csrf
 {
 

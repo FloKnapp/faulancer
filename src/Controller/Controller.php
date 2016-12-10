@@ -2,7 +2,7 @@
 
 namespace Faulancer\Controller;
 
-use Core\View\ViewController;
+use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
@@ -21,9 +21,12 @@ abstract class Controller
         return ServiceLocator::instance();
     }
 
+    /**
+     * @return ViewController
+     */
     public function getView()
     {
-        return ViewController::instance();
+        return new ViewController();
     }
 
 }
