@@ -1,0 +1,17 @@
+{
+    "name": "floknapp/faulancer",
+    "description": "A collection of helpers to kickstart your project",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Flo Knapp",
+            "email": "office@florianknapp.de"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Faulancer\\": "src/"
+      }
+    },
+    "require": {}
+}
