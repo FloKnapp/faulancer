@@ -29,7 +29,7 @@ class ViewController
      * @return $this
      * @throws ConstantMissingException
      */
-    public function setTemplate(string $template = "")
+    public function setTemplate(string $template = '')
     {
         if (!defined('VIEWS_ROOT')) {
             throw new ConstantMissingException('Constant VIEWS_ROOT not defined');
@@ -92,7 +92,7 @@ class ViewController
      * @param string $key
      * @param string|array $value
      */
-    public function setVariable(string $key = "", $value = null)
+    public function setVariable(string $key = '', $value = null)
     {
         $this->variable[$key] = $value;
     }
