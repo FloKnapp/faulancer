@@ -7,6 +7,7 @@ use Faulancer\Form\Validator\AbstractValidator;
 use Faulancer\Http\Request;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
+use Faulancer\Translate\Translator;
 
 /**
  * Class AbstractFormHandler
@@ -49,12 +50,11 @@ abstract class AbstractFormHandler
      */
     public function validate($validator)
     {
-
-        $errors = [];
+        $errors   = [];
         $formData = $this->getFormData();
 
         $this->successUrl = isset($formData['successUrl']) ? $formData['successUrl'] : null;
-        $this->errorUrl = isset($formData['errorUrl']) ? $formData['errorUrl'] : null;
+        $this->errorUrl   = isset($formData['errorUrl']) ? $formData['errorUrl'] : null;
 
         if (isset($formData['csrf'])) {
             $tokenFromSession = SessionManager::instance()->getFlashbag('csrf');

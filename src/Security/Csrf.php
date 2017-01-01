@@ -2,7 +2,7 @@
 
 namespace Faulancer\Security;
 
-use Session\SessionManager;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Csrf

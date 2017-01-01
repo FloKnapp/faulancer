@@ -29,17 +29,22 @@ class Request extends AbstractHttp
     /**
      * @return boolean
      */
-    public function isPost()
+    public static function isPost()
     {
-        return count($_POST) ? true : false;
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
     /**
      * @return boolean
      */
-    public function isGet()
+    public static function isGet()
     {
-        return count($_GET) ? true : false;
+        return $_SERVER['REQUEST_METHOD'] === 'GET';
+    }
+
+    public static function getRequestMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     /**

@@ -37,23 +37,37 @@ class ClassParser extends \ReflectionClass
 
     }
 
+    /**
+     * @param $name
+     * @param $method
+     *
+     * @return bool
+     */
     private function extractValues($name, $method)
     {
         $arr       = [];
         $methodDoc = new \ReflectionMethod($this->className, $method);
 
-        preg_match('/@' . $name . '(.*)/', $methodDoc->getDocComment(), $arr);
+        preg_match('|@' . $name . '(.*)|', $methodDoc->getDocComment(), $arr);
 
         if (empty($arr)) {
             return false;
         }
 
-        $param = str_replace(['(', ')', ' '], [''], $arr[1]);
-        $param = str_replace(['"', ':', ','], ['', '=', '&'], $param);
+        $var = [];
+
+        preg_match('|\((.*)\)|', $arr[1], $var);
+
+        $param = str_replace(
+            ['"', ',', ' ', '+'],
+            ['', '&', '', '___'],
+            $var[1]
+        );
 
         parse_str($param, $result);
 
         $result['action'] = $method;
+        $result['class']  = $this->className;
 
         return $result;
     }
