@@ -25,6 +25,14 @@ class Csrf
         return $token;
     }
 
+    /**
+     * @return boolean
+     */
+    public static function isValid()
+    {
+        return $_REQUEST['csrf'] === SessionManager::instance()->getFlashbag('csrf');
+    }
+
     private static function saveToSession($token)
     {
         SessionManager::instance()->setFlashbag('csrf', $token);

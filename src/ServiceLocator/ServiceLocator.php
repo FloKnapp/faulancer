@@ -59,7 +59,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * Check if we have a factory for this service
      *
      * @param string $service
-     * @return boolean|FactoryInterface
+     * @return FactoryInterface
      * @throws FactoryMayIncompatibleException
      */
     private function getFactory(string $service)
@@ -68,15 +68,11 @@ class ServiceLocator implements ServiceLocatorInterface {
         $className = array_splice($parts, count($parts) - 1, 1);
         $class     = implode('\\', $parts) . '\\Factory\\' . $className[0] . 'Factory';
 
-        if (!in_array(FactoryInterface::class, class_implements($class, true))) {
-            throw new FactoryMayIncompatibleException('Factory doesn\'t implement FactoryInterface');
-        }
-
-        if (class_exists($class)) {
+        if (class_exists($class) && in_array(FactoryInterface::class, class_implements($class, true))) {
             return new $class();
         }
 
-        return false;
+        throw new FactoryMayIncompatibleException('Factory doesn\'t implement FactoryInterface');
     }
 
 }

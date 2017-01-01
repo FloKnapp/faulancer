@@ -12,6 +12,23 @@ namespace Faulancer\ServiceLocator;
 interface ServiceLocatorInterface
 {
 
+    /**
+     * Get a specific service
+     *
+     * Call example -------------------------------------------------
+     *
+     *   $service = ServiceLocator::instance()->get(Service::class);
+     *
+     * or from controller
+     *
+     *   $service = $this->getServiceLocator()->get(Service::class);
+     *
+     * --------------------------------------------------------------
+     *
+     * @param string $service
+     *
+     * @return object
+     */
     public function get(string $service);
 
 }

@@ -19,6 +19,7 @@ abstract class AbstractHttp
     /** @var string */
     protected $uri;
 
+    /** @var SessionManager */
     protected $session;
 
     /**
