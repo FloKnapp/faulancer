@@ -4,6 +4,7 @@ namespace Faulancer\Controller;
 
 use Exception\ClassNotFoundException;
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use Faulancer\Reflection\ClassParser;
 use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
@@ -24,10 +25,12 @@ class Dispatcher
     protected static $classes = [];
 
     /**
+     * Bootstrap for every route call
+     *
      * @param Request $request
      * @param boolean $routeCacheEnabled
      *
-     * @return mixed
+     * @return Response
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
      */
@@ -39,11 +42,11 @@ class Dispatcher
             $class  = $target['class'];
             $action = $target['action'];
 
-            if (class_exists($class)) {
-                $class  = new $class();
-            } else {
+            if (!class_exists($class)) {
                 throw new ClassNotFoundException();
             }
+
+            $class = new $class();
 
             if (!method_exists($class, $action)) {
                 throw new MethodNotFoundException();
@@ -57,13 +60,16 @@ class Dispatcher
 
         } catch (MethodNotFoundException $e) {
 
-            header('HTTP/2.0 404 Not found');
-            echo 'Ooops - Site not found';
+            header('HTTP/2 404 Not found');
 
         }
+
+        return null;
     }
 
     /**
+     * Get data for specific route path
+     *
      * @param string $uri
      * @param boolean $routeCacheEnabled
      *
@@ -114,6 +120,8 @@ class Dispatcher
     }
 
     /**
+     * Determines if we have a direct/static route match
+     *
      * @param string $uri  The request uri
      * @param array  $data The result from ClassParser
      *
@@ -143,6 +151,8 @@ class Dispatcher
     }
 
     /**
+     * Determines if we have a variable route match
+     *
      * @param string $uri
      * @param array  $data
      *
@@ -163,7 +173,7 @@ class Dispatcher
             $data['path']
         );
 
-        if (preg_match('|' . $regex . '|', $uri, $var)) {
+        if (preg_match('|^' . $regex . '$|', $uri, $var)) {
 
             // Abort handling if there are more parts than regex has exposed
             if (count(explode('/', $uri)) > count(explode('/', $var[0]))) {
@@ -185,6 +195,8 @@ class Dispatcher
     }
 
     /**
+     * Get all defined routes
+     *
      * @return array
      */
     private static function getRoutes()
@@ -208,6 +220,8 @@ class Dispatcher
     }
 
     /**
+     * Retrieve route params from cache
+     *
      * @param $uri
      *
      * @return array
@@ -228,6 +242,8 @@ class Dispatcher
     }
 
     /**
+     * Save route params into cache
+     *
      * @param $uri
      * @param $target
      *
@@ -247,6 +263,8 @@ class Dispatcher
     }
 
     /**
+     * Invalidates the whole cache
+     *
      * @return boolean
      */
     private static function invalidateCache()

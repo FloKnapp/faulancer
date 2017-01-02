@@ -188,9 +188,9 @@ class ViewController
         ob_end_clean();
 
         if( $this->getExtendedTemplate() instanceof ViewController ) {
-            echo $this->cleanOutput($this->getExtendedTemplate()->setVariables($this->getVariables())->setAssetsJs($this->assetScripts)->setAssetsCss($this->assetStylesheets)->render());
+            return $this->cleanOutput($this->getExtendedTemplate()->setVariables($this->getVariables())->setAssetsJs($this->assetScripts)->setAssetsCss($this->assetStylesheets)->render());
         } else {
-            echo $this->cleanOutput($content);
+            return $this->cleanOutput($content);
         }
     }
 

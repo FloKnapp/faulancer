@@ -1,6 +1,6 @@
 <?php
 
-namespace src\ORM;
+namespace Faulancer\ORM;
 
 use ORM\Entity as ORMEntity;
 

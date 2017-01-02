@@ -2,7 +2,7 @@
 
 namespace Faulancer\Controller;
 
-use Faulancer\Service\ORM;
+use Faulancer\ORM\ORM;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -16,6 +16,8 @@ abstract class Controller
 {
 
     /**
+     * Returns the service locator
+     *
      * @return ServiceLocator
      */
     public function getServiceLocator()
@@ -24,6 +26,8 @@ abstract class Controller
     }
 
     /**
+     * Returns the view controller
+     *
      * @return ViewController
      */
     public function getView()
@@ -32,7 +36,9 @@ abstract class Controller
     }
 
     /**
-     * @return Database
+     * Returns the orm/entity manager
+     *
+     * @return ORM
      */
     public function getDatabase()
     {
@@ -40,6 +46,8 @@ abstract class Controller
     }
 
     /**
+     * Render view with given template
+     *
      * @param  string $template
      * @param  array $variables
      * @return string
