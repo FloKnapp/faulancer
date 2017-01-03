@@ -2,7 +2,6 @@
 
 namespace stubs\Service;
 
-
 /**
  * File StubService.php
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace unit;
+namespace tests\unit;
 
 use Faulancer\Controller\Controller;
 use Faulancer\Exception\FileNotFoundException;
@@ -21,8 +21,8 @@ class ControllerTest extends TestCase
 
     public function setUp()
     {
-        $controller = $this->getMockForAbstractClass(Controller::class);
-        $this->controller = $controller;
+        $this->controller = $this->getMockForAbstractClass(Controller::class);
+
         if (!defined('VIEWS_ROOT')) {
             define('VIEWS_ROOT', __DIR__ . '/../stubs/views');
         }

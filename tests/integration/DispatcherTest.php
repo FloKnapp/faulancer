@@ -3,9 +3,10 @@
 namespace tests\integration;
 
 use Faulancer\Controller\Dispatcher;
+use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use PHPUnit\Framework\TestCase;
-
 
 /**
  * File DispatcherTest.php
@@ -15,12 +16,8 @@ use PHPUnit\Framework\TestCase;
 class DispatcherTest extends TestCase
 {
 
-    protected $request;
-
     public function setUp()
     {
-        $this->request = new Request();
-
         if (!defined('PROJECT_ROOT')) {
             define('PROJECT_ROOT', realpath(__DIR__ . '/..'));
         }
@@ -34,32 +31,56 @@ class DispatcherTest extends TestCase
 
     /**
      * Test static routing
+     *
+     * @runInSeparateProcess
      */
     public function testStaticRoute()
     {
         $request = new Request();
         $request->setUri('/stub');
+        $request->setMethod('GET');
 
         $this->assertSame($request->getUri(), '/stub');
 
-        $dispatcher = Dispatcher::run($request, false);
+        $dispatcher = new Dispatcher($request, false);
 
-        $this->assertSame(1, $dispatcher);
+        $this->assertSame(1, $dispatcher->run()->getContent());
     }
 
     /**
      * Test static routing
+     *
+     * @runInSeparateProcess
      */
     public function testDynamicRoute()
     {
         $request = new Request();
         $request->setUri('/stub/dynamic');
+        $request->setMethod('GET');
 
         $this->assertSame($request->getUri(), '/stub/dynamic');
 
-        $dispatcher = Dispatcher::run($request, false);
+        $dispatcher = new Dispatcher($request, false);
 
-        $this->assertSame(2, $dispatcher);
+        $this->assertSame(2, $dispatcher->run()->getContent());
+    }
+
+    /**
+     * Test if dispatcher returns a response object
+     *
+     * @runInSeparateProcess
+     */
+    public function testReturnResponse()
+    {
+        $request = new Request();
+        $request->setUri('/stub/dynamic');
+        $request->setMethod('GET');
+
+        $this->assertSame($request->getUri(), '/stub/dynamic');
+
+        $dispatcher = new Dispatcher($request, false);
+
+        $this->assertInstanceOf(Response::class, $dispatcher->run());
     }
 
     /**
@@ -71,12 +92,17 @@ class DispatcherTest extends TestCase
     {
         $request = new Request();
         $request->setUri('/stubs');
+        $request->setMethod('GET');
 
         $this->assertSame($request->getUri(), '/stubs');
 
-        $dispatcher = Dispatcher::run($request, false);
+        $dispatcher = new Dispatcher($request, false);
 
-        $this->assertSame(null, $dispatcher);
+        try {
+            $dispatcher->run()->getContent();
+        } catch (DispatchFailureException $e) {
+            $this->assertInstanceOf(DispatchFailureException::class, $e);
+        }
     }
 
 }

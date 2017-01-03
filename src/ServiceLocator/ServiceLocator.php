@@ -16,6 +16,8 @@ class ServiceLocator implements ServiceLocatorInterface {
     /** @var ServiceLocator */
     private static $instance = null;
 
+    private static $services = [];
+
     /**
      * ServiceLocator private constructor.
      */
@@ -38,28 +40,47 @@ class ServiceLocator implements ServiceLocatorInterface {
      * Returns always a new instance of the service/factory.
      * Can be configured in future to share the instance.
      *
-     * @param string $service
+     * @param string  $service
+     * @param boolean $shared
      * @return FactoryInterface
      * @throws ServiceNotFoundException
      */
-    public function get(string $service)
+    public function get(string $service, $shared = true)
     {
-        try {
-            return $this->getFactory($service)->createService($this);
-        } catch (FactoryMayIncompatibleException $e) {}
+        if ($shared && isset(self::$services[$service])) {
+            return self::$services[$service];
+        }
 
+        try {
+            $class = $this->getFactory($service)->createService($this);
+        } catch (FactoryMayIncompatibleException $e) {
+            $class = $this->getService($service);
+        } catch (ServiceNotFoundException $e) {
+            return null;
+        }
+
+        if ($shared) {
+            self::$services[$service] = $service;
+        }
+
+        return $class;
+
+    }
+
+    private function getService(string $service)
+    {
         if (class_exists($service)) {
             return new $service();
         }
 
-        throw new ServiceNotFoundException('Service "' . $service . '" cannot be found');
+        throw new ServiceNotFoundException();
     }
 
     /**
      * Check if we have a factory for this service
      *
      * @param string $service
-     * @return FactoryInterface
+     * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
      */
     private function getFactory(string $service)
@@ -72,7 +93,7 @@ class ServiceLocator implements ServiceLocatorInterface {
             return new $class();
         }
 
-        throw new FactoryMayIncompatibleException('Factory doesn\'t implement FactoryInterface');
+        throw new FactoryMayIncompatibleException();
     }
 
 }

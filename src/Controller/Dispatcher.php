@@ -3,6 +3,7 @@
 namespace Faulancer\Controller;
 
 use Exception\ClassNotFoundException;
+use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Reflection\ClassParser;
@@ -19,26 +20,38 @@ class Dispatcher
 {
 
     /** @var string */
-    private static $routeCache = PROJECT_ROOT . '/cache/routes.json';
+    const ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
 
-    /** @var array */
-    protected static $classes = [];
+    /** @var Request */
+    protected $request;
+
+    /**
+     * Dispatcher constructor.
+     *
+     * @param Request $request
+     * @param boolean $routeCacheEnabled
+     */
+    public function __construct(Request $request, $routeCacheEnabled = true)
+    {
+        $this->request           = $request;
+        $this->routeCacheEnabled = $routeCacheEnabled;
+    }
 
     /**
      * Bootstrap for every route call
      *
-     * @param Request $request
-     * @param boolean $routeCacheEnabled
-     *
      * @return Response
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
+     * @throws DispatchFailureException
      */
-    public static function run(Request $request, $routeCacheEnabled = true)
+    public function run()
     {
+        $response = new Response();
+
         try {
 
-            $target = self::getRoute($request->getUri(), $routeCacheEnabled);
+            $target = $this->getRoute($this->request->getUri(), $this->routeCacheEnabled);
             $class  = $target['class'];
             $action = $target['action'];
 
@@ -53,18 +66,18 @@ class Dispatcher
             }
 
             if (isset($target['var'])) {
-                return call_user_func_array([$class, $action], $target['var']);
+                $response->setContent(call_user_func_array([$class, $action], $target['var']));
             }
 
-            return $class->$action();
+            $response->setContent($class->$action());
 
         } catch (MethodNotFoundException $e) {
 
-            header('HTTP/2 404 Not found');
+            throw new DispatchFailureException();
 
         }
 
-        return null;
+        return $response;
     }
 
     /**
@@ -76,15 +89,15 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private static function getRoute(string $uri = '', $routeCacheEnabled)
+    private function getRoute(string $uri = '', $routeCacheEnabled)
     {
         $target = null;
 
-        if ($routeCacheEnabled && $target = self::fromCache($uri)) {
+        if ($routeCacheEnabled && $target = $this->fromCache($uri)) {
             return $target;
         }
 
-        $routes = self::getRoutes();
+        $routes = $this->getRoutes();
 
         foreach ($routes as $route) {
 
@@ -94,9 +107,9 @@ class Dispatcher
 
                     if ($data === false) {
                         continue;
-                    } else if ($target = self::getDirectMatch($uri, $data)) {
+                    } else if ($target = $this->getDirectMatch($uri, $data)) {
                         break;
-                    } else if ($target = self::getVariableMatch($uri, $data)) {
+                    } else if ($target = $this->getVariableMatch($uri, $data)) {
                         break;
                     }
 
@@ -109,7 +122,7 @@ class Dispatcher
         if ($target) {
 
             if ($routeCacheEnabled) {
-                self::saveIntoCache($uri, $target);
+                $this->saveIntoCache($uri, $target);
             }
 
             return $target;
@@ -128,11 +141,11 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private static function getDirectMatch(string $uri, array $data)
+    private function getDirectMatch(string $uri, array $data)
     {
         if ($uri === $data['path']) {
 
-            if ($data['method'] === strtolower(Request::getRequestMethod())) {
+            if ($data['method'] === strtolower($this->request->getMethod())) {
 
                 return [
                     'class'  => $data['class'],
@@ -159,7 +172,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private static function getVariableMatch(string $uri, array $data)
+    private function getVariableMatch(string $uri, array $data)
     {
         $var = [];
 
@@ -199,7 +212,7 @@ class Dispatcher
      *
      * @return array
      */
-    private static function getRoutes()
+    private function getRoutes()
     {
         $routes  = [];
         $classes = DirectoryIterator::getFiles();
@@ -226,11 +239,11 @@ class Dispatcher
      *
      * @return array
      */
-    private static function fromCache($uri)
+    private function fromCache($uri)
     {
-        if (file_exists(self::$routeCache)) {
+        if (file_exists(self::ROUTE_CACHE)) {
 
-            $target = json_decode(file_get_contents(self::$routeCache), true);
+            $target = json_decode(file_get_contents(self::ROUTE_CACHE), true);
 
             if (!empty($target[$uri])) {
                 return $target[$uri];
@@ -249,15 +262,15 @@ class Dispatcher
      *
      * @return boolean
      */
-    private static function saveIntoCache($uri, $target)
+    private function saveIntoCache($uri, $target)
     {
         $cache = [];
 
-        if (file_exists(self::$routeCache)) {
-            $cache = json_decode(file_get_contents(self::$routeCache), true);
+        if (file_exists(self::ROUTE_CACHE)) {
+            $cache = json_decode(file_get_contents(self::ROUTE_CACHE), true);
         }
 
-        file_put_contents(self::$routeCache, json_encode($cache + [$uri => $target], JSON_PRETTY_PRINT));
+        file_put_contents(self::ROUTE_CACHE, json_encode($cache + [$uri => $target], JSON_PRETTY_PRINT));
 
         return true;
     }
@@ -267,9 +280,9 @@ class Dispatcher
      *
      * @return boolean
      */
-    private static function invalidateCache()
+    private function invalidateCache()
     {
-        return unlink(self::$routeCache);
+        return unlink(self::ROUTE_CACHE);
     }
 
 }

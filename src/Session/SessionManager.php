@@ -13,11 +13,9 @@ class SessionManager
      */
     private function __construct()
     {
-
         if (!$this->hasSession()) {
             $this->startSession();
         }
-
     }
 
     /**
@@ -28,9 +26,7 @@ class SessionManager
         if (!self::$instance) {
             self::$instance = new self();
         }
-
         return self::$instance;
-
     }
 
     /**

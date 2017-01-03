@@ -3,6 +3,8 @@
 namespace Faulancer;
 
 use Faulancer\Controller\Dispatcher;
+use Faulancer\Controller\ErrorController;
+use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 
 /**
@@ -27,7 +29,15 @@ class Kernel
 
     public function run()
     {
-        return Dispatcher::run($this->request);
+        $dispatcher = new Dispatcher($this->request);
+
+        try {
+            $response = $dispatcher->run();
+            return $response->getContent();
+        } catch (DispatchFailureException $e) {
+            return ErrorController::notFoundAction();
+        }
+
     }
 
 }

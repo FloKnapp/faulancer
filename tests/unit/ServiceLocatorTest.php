@@ -1,6 +1,6 @@
 <?php
 
-namespace unit;
+namespace tests\unit;
 
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
@@ -45,6 +45,22 @@ class ServiceLocatorTest extends TestCase
     {
         $stubFactory = $this->serviceLocator->get(StubFactory::class);
         $this->assertInstanceOf(StubFactory::class, $stubFactory);
+    }
+
+    public function testGetSameService()
+    {
+        $service1 = $this->serviceLocator->get(StubService::class);
+        $service2 = $this->serviceLocator->get(StubService::class);
+
+        $this->assertSame($service1, $service2);
+    }
+
+    public function testGetNewService()
+    {
+        $service1 = $this->serviceLocator->get(StubService::class);
+        $service2 = $this->serviceLocator->get(StubService::class, false);
+
+        $this->assertNotSame($service1, $service2);
     }
 
 }

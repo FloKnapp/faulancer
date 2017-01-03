@@ -11,6 +11,12 @@ namespace Faulancer\Http;
 class Request extends AbstractHttp
 {
 
+    /** @var string */
+    protected $uri = '';
+
+    /** @var string */
+    protected $method = '';
+
     /**
      * @return void
      */
@@ -27,24 +33,51 @@ class Request extends AbstractHttp
     }
 
     /**
-     * @return boolean
+     * @param string $uri
      */
-    public static function isPost()
+    public function setUri(string $uri)
     {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
+        $this->uri = $uri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method)
+    {
+        $this->method = $method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return empty($this->method) ? $_SERVER['REQUEST_METHOD'] : $this->method;
     }
 
     /**
      * @return boolean
      */
-    public static function isGet()
+    public function isPost()
     {
-        return $_SERVER['REQUEST_METHOD'] === 'GET';
+        return $this->getMethod() === 'POST';
     }
 
-    public static function getRequestMethod()
+    /**
+     * @return boolean
+     */
+    public function isGet()
     {
-        return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+        return $this->getMethod() === 'GET';
     }
 
     /**
