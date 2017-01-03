@@ -21,19 +21,24 @@ class Kernel
     /** @var boolean */
     protected $routeCacheEnabled;
 
-    public function __construct(Request $request, $routeCacheEnabled = true)
+    public function __construct(Request $request, array $config, $routeCacheEnabled = true)
     {
         $this->request = $request;
+        $this->config  = $config;
         $this->routeCacheEnabled = $routeCacheEnabled;
     }
 
     public function run()
     {
+
+        define('APPLICATION_ROOT', $this->config['applicationRoot']);
+        define('PROJECT_ROOT',     $this->config['projectRoot']);
+        define('VIEWS_ROOT',       $this->config['viewsRoot']);
+
         $dispatcher = new Dispatcher($this->request);
 
         try {
-            $response = $dispatcher->run();
-            return $response->getContent();
+            echo $dispatcher->run()->getContent();
         } catch (DispatchFailureException $e) {
             return ErrorController::notFoundAction();
         }

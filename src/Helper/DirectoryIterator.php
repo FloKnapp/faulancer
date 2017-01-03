@@ -23,11 +23,11 @@ class DirectoryIterator
      */
     public static function getFiles($dir = '')
     {
-        if (!defined('PROJECT_ROOT') || !defined('NAMESPACE_ROOT')) {
-            throw new ConstantMissingException('Constants PROJECT_ROOT and NAMESPACE_ROOT missing');
+        if (!defined('PROJECT_ROOT') || !defined('APPLICATION_ROOT')) {
+            throw new ConstantMissingException('Constants PROJECT_ROOT and APPLICATION_ROOT missing!');
         }
 
-        $dir = empty($dir) ? PROJECT_ROOT . '/' . lcfirst(NAMESPACE_ROOT) . '/Controller' : $dir;
+        $dir = empty($dir) ? PROJECT_ROOT . '/' . APPLICATION_ROOT . '/Controller' : $dir;
 
         foreach (scandir($dir) as $res) {
 
@@ -40,7 +40,13 @@ class DirectoryIterator
                 continue;
             }
 
+            var_dump($dir);
+
             $namespace = ucfirst(str_replace([PROJECT_ROOT . '/', '/'], ['', '\\'], $dir));
+
+            if (defined('NAMESPACE_PREFIX')) {
+                $namespace = NAMESPACE_PREFIX . $namespace;
+            }
 
             self::$files[$namespace][] = $res;
 

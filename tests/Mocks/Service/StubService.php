@@ -1,6 +1,6 @@
 <?php
 
-namespace stubs\Service;
+namespace Faulancer\Test\Mocks\Service;
 
 /**
  * File StubService.php

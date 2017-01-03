@@ -1,11 +1,11 @@
 <?php
 
-namespace tests\unit;
+namespace Faulancer\Test\Unit;
 
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
-use stubs\Service\Factory\StubFactory;
-use stubs\Service\StubService;
+use Faulancer\Test\Mocks\Service\Factory\StubFactory;
+use Faulancer\Test\Mocks\Service\StubService;
 
 /**
  * File ServiceLocatorTest.php
@@ -20,8 +20,6 @@ class ServiceLocatorTest extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../stubs/Service/Factory/StubFactory.php';
-        require_once __DIR__ . '/../stubs/Service/StubService.php';
         $this->serviceLocator = ServiceLocator::instance();
     }
 

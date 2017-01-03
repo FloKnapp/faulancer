@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\integration;
+namespace Faulancer\Test\Unit;
 
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\DispatchFailureException;
@@ -15,19 +15,6 @@ use PHPUnit\Framework\TestCase;
  */
 class DispatcherTest extends TestCase
 {
-
-    public function setUp()
-    {
-        if (!defined('PROJECT_ROOT')) {
-            define('PROJECT_ROOT', realpath(__DIR__ . '/..'));
-        }
-
-        if (!defined('NAMESPACE_ROOT')) {
-            define('NAMESPACE_ROOT', 'stubs');
-        }
-
-        require_once PROJECT_ROOT . '/stubs/Controller/DummyController.php';
-    }
 
     /**
      * Test static routing

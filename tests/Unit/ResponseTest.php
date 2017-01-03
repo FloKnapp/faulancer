@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\unit;
+namespace Faulancer\Test\Unit;
 
 use Faulancer\Http\Response;
 use PHPUnit\Framework\TestCase;
