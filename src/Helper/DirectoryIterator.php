@@ -27,7 +27,7 @@ class DirectoryIterator
             throw new ConstantMissingException('Constants PROJECT_ROOT and APPLICATION_ROOT missing!');
         }
 
-        $dir = empty($dir) ? PROJECT_ROOT . '/' . APPLICATION_ROOT . '/Controller' : $dir;
+        $dir = empty($dir) ? APPLICATION_ROOT . '/Controller' : $dir;
 
         foreach (scandir($dir) as $res) {
 
@@ -40,12 +40,10 @@ class DirectoryIterator
                 continue;
             }
 
-            var_dump($dir);
-
             $namespace = ucfirst(str_replace([PROJECT_ROOT . '/', '/'], ['', '\\'], $dir));
 
             if (defined('NAMESPACE_PREFIX')) {
-                $namespace = NAMESPACE_PREFIX . $namespace;
+                $namespace = NAMESPACE_PREFIX . '\\' . $namespace;
             }
 
             self::$files[$namespace][] = $res;

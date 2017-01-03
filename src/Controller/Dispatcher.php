@@ -2,7 +2,7 @@
 
 namespace Faulancer\Controller;
 
-use Exception\ClassNotFoundException;
+use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;

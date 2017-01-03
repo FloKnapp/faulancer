@@ -3,12 +3,11 @@
 namespace Faulancer\Exception;
 
 /**
- * Class ClassNotFoundException
+ * File ViewHelperIncompatibleException.php
  *
- * @package Exception
  * @author Florian Knapp <office@florianknapp.de>
  */
-class ClassNotFoundException extends \Exception
+class ViewHelperIncompatibleException extends \Exception
 {
 
 }

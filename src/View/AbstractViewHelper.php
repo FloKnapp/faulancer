@@ -21,13 +21,14 @@ abstract class AbstractViewHelper
      * @return string
      * @throws ConstantMissingException
      */
-    protected function renderView(string $template = '', array$variables = [])
+    protected function renderView(string $template = '', array $variables = [])
     {
         if (!defined('VIEWS_ROOT')) {
             throw new ConstantMissingException('Constant VIEWS_ROOT missing');
         }
 
-        $templatePath = VIEWS_ROOT . '/_helper';
+        $templatePath = VIEWS_ROOT . '/helper';
+
         return (new ViewController())->setTemplate($templatePath . $template)->setVariables($variables)->render();
     }
 
@@ -40,11 +41,11 @@ abstract class AbstractViewHelper
     }
 
     /**
-     * @return string
+     * @return void
      */
     public function __toString()
     {
-        return (string)$this->__invoke();
+        echo (string)$this->__invoke();
     }
 
 }

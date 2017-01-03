@@ -2,8 +2,10 @@
 
 namespace Faulancer\View;
 
+use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\ConstantMissingException;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ViewHelperIncompatibleException;
 
 class ViewController
 {
@@ -39,7 +41,11 @@ class ViewController
             throw new FileNotFoundException('Template name missing');
         }
 
-        $this->template = VIEWS_ROOT . '/' . $template;
+        if (strpos($template, VIEWS_ROOT) === false) {
+            $template = VIEWS_ROOT . '/' . $template;
+        }
+
+        $this->template = $template;
 
         if (!file_exists($this->template)) {
             throw new FileNotFoundException('Template "' . $this->template . '" not found');
@@ -201,20 +207,34 @@ class ViewController
      * @param $arguments
      * @return null
      * @throws FileNotFoundException
+     * @throws ViewHelperIncompatibleException
+     * @throws ClassNotFoundException
      */
     public function __call($name, $arguments)
     {
+        $className = $name;
+        $classPath = PROJECT_ROOT . '/' . APPLICATION_ROOT . '/View/' . $className . '.php';
 
-        $parts     = explode('\\', $name);
-        $className = array_splice($parts, count($parts) - 1, 1);
-        $classPath = implode('/' . $parts) . '/' . $className . '.php';
-        $class     = new $className();
-
-        if (file_exists($classPath) && method_exists($class, '__construct')) {
-            return call_user_func_array([$class, '__construct'], $arguments);
+        if (file_exists($classPath)) {
+            include $classPath;
         }
 
-        return null;
+        $namespace = '\\' . NAMESPACE_PREFIX . '\\' . str_replace([PROJECT_ROOT, '/'], '', APPLICATION_ROOT);
+        $className = $namespace . '\\View\\' . $className;
+
+        if (!class_exists($className)) {
+            throw new ClassNotFoundException('ViewHelper ' . $name . ' couldn\'t be found');
+        }
+
+        if (method_exists($className, '__construct')) {
+            return call_user_func_array([new $className, '__construct'], $arguments);
+        }
+
+        if (method_exists($className, '__invoke')) {
+            return call_user_func_array([new $className, '__invoke'], $arguments);
+        }
+
+        throw new ViewHelperIncompatibleException('No compatible methods found');
     }
 
     /**

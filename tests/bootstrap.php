@@ -11,9 +11,13 @@ if (!defined('PROJECT_ROOT')) {
 }
 
 if (!defined('APPLICATION_ROOT')) {
-    define('APPLICATION_ROOT', 'Mocks');
+    define('APPLICATION_ROOT', PROJECT_ROOT . '/Mocks');
 }
 
 if (!defined('NAMESPACE_PREFIX')) {
-    define('NAMESPACE_PREFIX', 'Faulancer\Test\\');
+    define('NAMESPACE_PREFIX', 'Faulancer\Test');
+}
+
+if (!defined('TRANSLATION_ROOT')) {
+    define('TRANSLATION_ROOT', APPLICATION_ROOT . '/translation');
 }
