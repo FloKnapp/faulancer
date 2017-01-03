@@ -1,6 +1,7 @@
 {
     "name": "floknapp/faulancer",
     "description": "A collection of helpers to kickstart your project",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
