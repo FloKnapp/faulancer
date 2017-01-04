@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Fixtures\Service;
+namespace Faulancer\Fixture\Service;
 
 /**
  * File StubServiceWithoutFactory.php

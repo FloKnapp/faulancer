@@ -105,7 +105,7 @@ class DispatcherTest extends TestCase
 
         $expectedContent = [
             '/stub' => [
-                'class' => "\\Faulancer\\Test\\Fixtures\\Controller\\DummyController",
+                'class' => "\\Faulancer\\Fixture\\Controller\\DummyController",
                 'action' => 'stubStaticAction',
                 'name' => 'StubStaticRoute',
                 'method' => 'get'

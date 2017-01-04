@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Fixtures\View;
+namespace Faulancer\Fixture\View;
 
 
 /**

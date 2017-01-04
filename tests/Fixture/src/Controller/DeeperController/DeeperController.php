@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Fixtures\Controller\DeeperController;
+namespace Faulancer\Fixture\Controller\DeeperController;
 
 /**
  * File DeeperController.php

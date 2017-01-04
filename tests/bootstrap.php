@@ -3,11 +3,11 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 if (!defined('VIEWS_ROOT')) {
-    define('VIEWS_ROOT', __DIR__ . '/Fixtures/views');
+    define('VIEWS_ROOT', __DIR__ . '/Fixture/views');
 }
 
 if (!defined('PROJECT_ROOT')) {
-    define('PROJECT_ROOT', __DIR__ . '/Fixtures');
+    define('PROJECT_ROOT', __DIR__ . '/Fixture');
 }
 
 if (!defined('APPLICATION_ROOT')) {
@@ -15,7 +15,7 @@ if (!defined('APPLICATION_ROOT')) {
 }
 
 if (!defined('NAMESPACE_PREFIX')) {
-    define('NAMESPACE_PREFIX', 'Faulancer\Test\Fixtures');
+    define('NAMESPACE_PREFIX', 'Faulancer\Fixture');
 }
 
 if (!defined('TRANSLATION_ROOT')) {

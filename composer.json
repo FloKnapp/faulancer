@@ -16,7 +16,8 @@
     },
     "autoload-dev": {
       "psr-4": {
-        "Faulancer\\Test\\": "tests/"
+        "Faulancer\\Test\\": "tests/",
+        "Faulancer\\Fixture\\": "tests/Fixture/src/"
       }
     },
     "require": {

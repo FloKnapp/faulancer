@@ -1,10 +1,10 @@
 <?php
 
-namespace Faulancer\Test\Fixtures\Service\Factory;
+namespace Faulancer\Fixture\Service\Factory;
 
 use Faulancer\ServiceLocator\FactoryInterface;
 use Faulancer\ServiceLocator\ServiceLocatorInterface;
-use Faulancer\Test\Fixtures\Service\StubService;
+use Faulancer\Fixture\Service\StubService;
 
 /**
  * File StubFactory.php
