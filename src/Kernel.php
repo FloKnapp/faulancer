@@ -5,6 +5,7 @@ namespace Faulancer;
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\KernelException;
 use Faulancer\Http\Request;
 
 /**
@@ -31,16 +32,19 @@ class Kernel
     public function run()
     {
 
-        define('APPLICATION_ROOT', $this->config['applicationRoot']);
-        define('PROJECT_ROOT',     $this->config['projectRoot']);
-        define('VIEWS_ROOT',       $this->config['viewsRoot']);
+        if (!empty($this->config)) {
+            define('APPLICATION_ROOT', $this->config['applicationRoot']);
+            define('PROJECT_ROOT',     $this->config['projectRoot']);
+            define('VIEWS_ROOT',       $this->config['viewsRoot']);
+        }
 
-        $dispatcher = new Dispatcher($this->request);
+        $dispatcher = new Dispatcher($this->request, $this->routeCacheEnabled);
 
         try {
             echo $dispatcher->run()->getContent();
+            return true;
         } catch (DispatchFailureException $e) {
-            return ErrorController::notFoundAction();
+            return ErrorController::notFoundAction()->getContent();
         }
 
     }

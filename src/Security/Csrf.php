@@ -30,7 +30,7 @@ class Csrf
      */
     public static function isValid()
     {
-        return $_REQUEST['csrf'] === SessionManager::instance()->getFlashbag('csrf');
+        return isset($_POST['csrf']) && $_POST['csrf'] === SessionManager::instance()->getFlashbag('csrf');
     }
 
     private static function saveToSession($token)
