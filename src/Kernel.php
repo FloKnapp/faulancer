@@ -5,7 +5,6 @@ namespace Faulancer;
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
 use Faulancer\Exception\DispatchFailureException;
-use Faulancer\Exception\KernelException;
 use Faulancer\Http\Request;
 
 /**

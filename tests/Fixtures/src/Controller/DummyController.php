@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Mocks\Controller;
+namespace Faulancer\Test\Fixtures\Controller;
 
 /**
  * File DummyController.php

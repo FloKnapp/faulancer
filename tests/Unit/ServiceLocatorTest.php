@@ -2,12 +2,11 @@
 
 namespace Faulancer\Test\Unit;
 
-use Faulancer\Test\Mocks\Service\Factory\StubServiceFactory;
 use PHPUnit\Framework\TestCase;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Test\Mocks\Service\Factory\StubFactory;
-use Faulancer\Test\Mocks\Service\StubService;
+use Faulancer\Test\Fixtures\Service\Factory\StubServiceFactory;
+use Faulancer\Test\Fixtures\Service\StubService;
 
 /**
  * File ServiceLocatorTest.php

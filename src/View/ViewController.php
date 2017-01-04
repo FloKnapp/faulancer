@@ -223,7 +223,8 @@ class ViewController
     public function __call($name, $arguments)
     {
         $className = $name;
-        $namespace = '\\' . NAMESPACE_PREFIX . '\\' . str_replace([PROJECT_ROOT, '/'], '', APPLICATION_ROOT);
+        $namespace = '\\' . NAMESPACE_PREFIX;
+
         $className = $namespace . '\\View\\' . $className;
 
         if (!class_exists($className)) {

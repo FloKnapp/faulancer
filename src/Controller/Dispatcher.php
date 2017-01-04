@@ -257,6 +257,10 @@ class Dispatcher
     private function saveIntoCache($uri, $target)
     {
         $cache = [];
+        
+        if (!is_dir(PROJECT_ROOT . '/cache')) {
+            mkdir(PROJECT_ROOT);
+        }
 
         if (file_exists(self::$ROUTE_CACHE)) {
             $cache = json_decode(file_get_contents(self::$ROUTE_CACHE), true);

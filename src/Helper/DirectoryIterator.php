@@ -42,7 +42,7 @@ class DirectoryIterator
                 continue;
             }
 
-            $namespace = ucfirst(str_replace([PROJECT_ROOT . '/', '/'], ['', '\\'], $dir));
+            $namespace = ucfirst(str_replace([APPLICATION_ROOT . '/', '/'], ['', '\\'], $dir));
 
             if (defined('NAMESPACE_PREFIX')) {
                 $namespace = NAMESPACE_PREFIX . '\\' . $namespace;

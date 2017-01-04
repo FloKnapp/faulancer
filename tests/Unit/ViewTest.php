@@ -5,7 +5,6 @@ namespace Faulancer\Test\Unit;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ViewHelperIncompatibleException;
-use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\GenericViewHelper;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;

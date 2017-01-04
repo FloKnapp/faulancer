@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Mocks\Service;
+namespace Faulancer\Test\Fixtures\Service;
 
 /**
  * File StubServiceWithoutFactory.php

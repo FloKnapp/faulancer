@@ -4,7 +4,6 @@ namespace Faulancer\Test\Unit;
 
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\DispatchFailureException;
-use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use PHPUnit\Framework\TestCase;
@@ -106,7 +105,7 @@ class DispatcherTest extends TestCase
 
         $expectedContent = [
             '/stub' => [
-                'class' => "\\Faulancer\\Test\\Mocks\\Controller\\DummyController",
+                'class' => "\\Faulancer\\Test\\Fixtures\\Controller\\DummyController",
                 'action' => 'stubStaticAction',
                 'name' => 'StubStaticRoute',
                 'method' => 'get'
@@ -118,7 +117,7 @@ class DispatcherTest extends TestCase
         $this->assertSame($request->getUri(), '/stub');
 
         $dispatcher = new Dispatcher($request);
-        $dispatcher::$ROUTE_CACHE = APPLICATION_ROOT . '/cache/routes.json';
+        $dispatcher::$ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
         $dispatcher->invalidateCache();
 
         $this->assertFileNotExists($dispatcher::$ROUTE_CACHE);
@@ -142,7 +141,7 @@ class DispatcherTest extends TestCase
         );
 
         $dispatcher = new Dispatcher($request);
-        $dispatcher::$ROUTE_CACHE = APPLICATION_ROOT . '/cache/routes.json';
+        $dispatcher::$ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
         $response = $dispatcher->run();
 
         $this->assertInstanceOf(Response::class, $response);
