@@ -35,6 +35,7 @@ class Kernel
             define('APPLICATION_ROOT', $this->config['applicationRoot']);
             define('PROJECT_ROOT',     $this->config['projectRoot']);
             define('VIEWS_ROOT',       $this->config['viewsRoot']);
+            define('NAMESPACE_PREFIX', $this->config['namespacePrefix']);
         }
 
         $dispatcher = new Dispatcher($this->request, $this->routeCacheEnabled);

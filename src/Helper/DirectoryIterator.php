@@ -42,10 +42,10 @@ class DirectoryIterator
                 continue;
             }
 
-            $namespace = ucfirst(str_replace([APPLICATION_ROOT . '/', '/'], ['', '\\'], $dir));
+            $namespace = ucfirst(str_replace([APPLICATION_ROOT, '/'], ['', '\\'], $dir));
 
             if (defined('NAMESPACE_PREFIX')) {
-                $namespace = NAMESPACE_PREFIX . '\\' . $namespace;
+                $namespace = NAMESPACE_PREFIX . $namespace;
             }
 
             self::$files[$namespace][] = $res;

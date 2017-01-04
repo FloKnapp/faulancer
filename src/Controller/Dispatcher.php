@@ -259,7 +259,7 @@ class Dispatcher
         $cache = [];
         
         if (!is_dir(PROJECT_ROOT . '/cache')) {
-            mkdir(PROJECT_ROOT);
+            mkdir(PROJECT_ROOT . '/cache');
         }
 
         if (file_exists(self::$ROUTE_CACHE)) {
