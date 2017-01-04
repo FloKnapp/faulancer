@@ -104,7 +104,7 @@ class GenericViewHelper
      */
     public function getAssets($type)
     {
-        $result = null;
+        $result = '%s';
 
         switch ($type) {
 
@@ -114,10 +114,6 @@ class GenericViewHelper
 
             case 'css':
                 $pattern = '<link rel="stylesheet" type="text/css" href="%s">';
-                break;
-
-            default:
-                $pattern = null;
                 break;
 
         }
@@ -145,10 +141,10 @@ class GenericViewHelper
      */
     public function getFormError($field)
     {
-        $errors = SessionManager::instance()->getFlashbagError($field);
+        $error = SessionManager::instance()->getFlashbagError($field);
 
-        if (isset($errors)) {
-            return '<div class="form-error ' . $field . '"><span>' . implode('</span><span>', $errors) . '</span></div>';
+        if (!empty($error)) {
+            return '<div class="form-error ' . $field . '"><span>' . $error . '</span></div>';
         }
 
         return false;

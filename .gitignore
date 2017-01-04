@@ -1,6 +1,7 @@
 composer.lock
 composer.phar
 
+build/logs/*
 tests/Mocks/cache/*
 vendor/*
 .idea

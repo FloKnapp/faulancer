@@ -35,7 +35,7 @@ abstract class AbstractViewHelper
     /**
      * @return ServiceLocator
      */
-    protected function getServiceLocator()
+    public function getServiceLocator()
     {
         return ServiceLocator::instance();
     }

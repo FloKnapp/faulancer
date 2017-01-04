@@ -33,6 +33,7 @@ class CsrfTokenTest extends TestCase
         $token = Csrf::getToken();
         $_POST['csrf'] = $token;
         $this->assertTrue(Csrf::isValid());
+
     }
 
 }

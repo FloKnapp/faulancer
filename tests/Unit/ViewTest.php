@@ -5,6 +5,9 @@ namespace Faulancer\Test\Unit;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ViewHelperIncompatibleException;
+use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
+use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\GenericViewHelper;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;
@@ -83,6 +86,110 @@ class ViewTest extends TestCase
         $this->assertInstanceOf(ViewController::class, $inst);
     }
 
+    public function testGetAssets()
+    {
+        $view = new ViewController();
+
+        $css = [
+            'stylesheet1.css',
+            'stylesheet2.css',
+            'stylesheet3.css',
+            'stylesheet4.css',
+            'stylesheet5.css'
+        ];
+
+        $js = [
+            'script1.js',
+            'script2.js',
+            'script3.js',
+            'script4.js',
+            'script5.js'
+        ];
+
+        $view->setAssetsCss($css);
+        $view->setAssetsJs($js);
+
+        $viewHelper = new GenericViewHelper($view);
+
+        $resultCss = $viewHelper->getAssets('css');
+        $resultJs = $viewHelper->getAssets('js');
+
+        foreach ($css as $stylesheet) {
+            $this->assertTrue(strpos($resultCss, $stylesheet) !== false);
+        }
+
+        foreach ($js as $script) {
+            $this->assertTrue(strpos($resultJs, $script) !== false);
+        }
+
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testViewHelperCsrf()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+        $token = $viewHelper->generateCsrfToken();
+
+        $this->assertSame(SessionManager::instance()->getFlashbag('csrf'), $token);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testViewHelperSetGetFormError()
+    {
+        $data = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+            'key4' => 'value4',
+            'key5' => 'value5',
+        ];
+
+        SessionManager::instance()->setFlashbag('errors', $data);
+
+        $viewHelper = new GenericViewHelper(new ViewController());
+
+        $this->assertFalse($viewHelper->getFormError('key6'));
+
+        foreach ($data as $key => $value) {
+
+            $this->assertTrue($viewHelper->hasFormError($key));
+
+            $this->assertSame($value, $data[$key]);
+            $this->assertTrue(strpos($viewHelper->getFormError($key), $value) !== false);
+
+        }
+
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSetGetFormData()
+    {
+        $data = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+            'key4' => 'value4',
+            'key5' => 'value5',
+        ];
+
+        $viewHelper = new GenericViewHelper(new ViewController());
+
+        SessionManager::instance()->setFlashbagFormData($data);
+
+        foreach ($data as $key => $value) {
+
+            $this->assertSame($value, $viewHelper->getFormData($key));
+
+        }
+
+    }
+
     /**
      * @outputBuffering enabled
      */
@@ -109,6 +216,11 @@ class ViewTest extends TestCase
         echo 'Test';
         ob_end_flush();
         $this->expectOutputString('Test');
+
+        $block = $viewHelper->renderBlock('content', 'test');
+        $this->assertNotEmpty($block);
+        $this->assertSame('test', $block);
+
     }
 
     public function testCustomViewHelper()
@@ -160,6 +272,39 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $this->assertFalse($view->hasVariable('testKey'));
+    }
+
+    public function testGenericViewHelperRender()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+
+        $response = $viewHelper->render('/stubView.phtml');
+
+        $this->assertNotEmpty($response);
+        $this->assertTrue(is_string($response));
+    }
+
+    public function testGenericViewHelperEscape()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+
+        $string = 'Test\\';
+
+        $this->assertTrue(is_string($string));
+
+        $stripped = $viewHelper->escape($string);
+
+        $this->assertFalse(strpos($stripped, '\\') > 0);
+
+    }
+
+    public function testAbstractViewHelper()
+    {
+        /** @var AbstractViewHelper $mock */
+        $mock = $this->getMockForAbstractClass(AbstractViewHelper::class);
+        $this->assertSame(ServiceLocator::instance(), $mock->getServiceLocator());
+
+        $this->expectOutputString($mock);
     }
 
 }

@@ -152,7 +152,7 @@ class SessionManager
     public function getFlashbagError(string $key)
     {
         if (!isset($_SESSION['flashbag']['errors'][$key])) {
-            return null;
+            return [];
         }
 
         $result = $_SESSION['flashbag']['errors'][$key];
