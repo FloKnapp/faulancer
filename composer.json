@@ -20,7 +20,7 @@
       }
     },
     "require": {
-      "php": "^5.5",
+      "php": "^7.0",
         "tflori/orm": "1.0.0-alpha2"
     },
     "require-dev": {
