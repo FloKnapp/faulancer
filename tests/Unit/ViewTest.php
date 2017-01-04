@@ -80,7 +80,7 @@ class ViewTest extends TestCase
     public function testAddCssAssets()
     {
         $view = new ViewController();
-        $inst = $view->addScript('stylesheet1.css');
+        $inst = $view->addStylesheet('stylesheet1.css');
         $this->assertInstanceOf(ViewController::class, $inst);
     }
 
