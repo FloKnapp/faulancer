@@ -20,7 +20,7 @@ class Dispatcher
 {
 
     /** @var string */
-    const ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
+    public static $ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
 
     /** @var Request */
     protected $request;
@@ -55,15 +55,7 @@ class Dispatcher
             $class  = $target['class'];
             $action = $target['action'];
 
-            if (!class_exists($class)) {
-                throw new ClassNotFoundException();
-            }
-
             $class = new $class();
-
-            if (!method_exists($class, $action)) {
-                throw new MethodNotFoundException();
-            }
 
             if (isset($target['var'])) {
                 $response->setContent(call_user_func_array([$class, $action], $target['var']));
@@ -241,9 +233,9 @@ class Dispatcher
      */
     private function fromCache($uri)
     {
-        if (file_exists(self::ROUTE_CACHE)) {
+        if (file_exists(self::$ROUTE_CACHE)) {
 
-            $target = json_decode(file_get_contents(self::ROUTE_CACHE), true);
+            $target = json_decode(file_get_contents(self::$ROUTE_CACHE), true);
 
             if (!empty($target[$uri])) {
                 return $target[$uri];
@@ -266,11 +258,17 @@ class Dispatcher
     {
         $cache = [];
 
-        if (file_exists(self::ROUTE_CACHE)) {
-            $cache = json_decode(file_get_contents(self::ROUTE_CACHE), true);
+        if (file_exists(self::$ROUTE_CACHE)) {
+            $cache = json_decode(file_get_contents(self::$ROUTE_CACHE), true);
         }
 
-        file_put_contents(self::ROUTE_CACHE, json_encode($cache + [$uri => $target], JSON_PRETTY_PRINT));
+        $routeSet = [
+            $uri => $target
+        ];
+
+        $cache = $cache + $routeSet;
+
+        file_put_contents(self::$ROUTE_CACHE, json_encode($cache, JSON_PRETTY_PRINT));
 
         return true;
     }
@@ -280,9 +278,13 @@ class Dispatcher
      *
      * @return boolean
      */
-    private function invalidateCache()
+    public function invalidateCache()
     {
-        return unlink(self::ROUTE_CACHE);
+        if (file_exists(self::$ROUTE_CACHE)) {
+            return unlink(self::$ROUTE_CACHE);
+        }
+
+        return true;
     }
 
 }

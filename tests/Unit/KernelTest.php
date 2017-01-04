@@ -14,6 +14,25 @@ use PHPUnit\Framework\TestCase;
 class KernelTest extends TestCase
 {
 
+    public function testConfigSet()
+    {
+        $request = new Request();
+        $request->setUri('/test');
+
+        $config = [
+            'applicationRoot' => 'test',
+            'projectRoot'     => 'test',
+            'viewsRoot'       => 'test'
+        ];
+
+        $kernel = new Kernel($request, $config, false);
+
+        $this->assertNotEmpty(APPLICATION_ROOT);
+        $this->assertNotEmpty(PROJECT_ROOT);
+        $this->assertNotEmpty(APPLICATION_ROOT);
+
+    }
+
     /**
      * @runInSeparateProcess
      */

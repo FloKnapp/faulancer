@@ -15,7 +15,7 @@ class DirectoryIteratorTest extends TestCase
 
     public function testReadWithoutConstants()
     {
-        $files = DirectoryIterator::getFiles(APPLICATION_ROOT);
+        $files = DirectoryIterator::getFiles();
         $this->assertNotEmpty($files);
         $this->assertTrue(is_array($files));
 

@@ -11,6 +11,16 @@ class DummyController
 {
 
     /**
+     * @Route(path="/", name="StubStaticHome", method="get")
+     *
+     * @return int
+     */
+    public function stubHomeAction()
+    {
+        return 0;
+    }
+
+    /**
      * @Route(path="/stub", name="StubStaticRoute", method="get")
      *
      * @return int

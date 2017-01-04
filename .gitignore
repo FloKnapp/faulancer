@@ -1,4 +1,6 @@
 composer.lock
 composer.phar
 
+tests/Mocks/cache/*
 vendor/*
+.idea

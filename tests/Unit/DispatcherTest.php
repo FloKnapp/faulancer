@@ -4,6 +4,7 @@ namespace Faulancer\Test\Unit;
 
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use PHPUnit\Framework\TestCase;
@@ -90,6 +91,78 @@ class DispatcherTest extends TestCase
         } catch (DispatchFailureException $e) {
             $this->assertInstanceOf(DispatchFailureException::class, $e);
         }
+    }
+
+    /**
+     * @runInSeparateProcess enabled
+     * 
+     * @throws DispatchFailureException
+     */
+    public function testRouteCache()
+    {
+        $request = new Request();
+        $request->setUri('/stub');
+        $request->setMethod('GET');
+
+        $expectedContent = [
+            '/stub' => [
+                'class' => "\\Faulancer\\Test\\Mocks\\Controller\\DummyController",
+                'action' => 'stubStaticAction',
+                'name' => 'StubStaticRoute',
+                'method' => 'get'
+            ]
+        ];
+
+        $expectedContent = str_replace(["\n", "\t"], "", $expectedContent);
+
+        $this->assertSame($request->getUri(), '/stub');
+
+        $dispatcher = new Dispatcher($request);
+        $dispatcher::$ROUTE_CACHE = APPLICATION_ROOT . '/cache/routes.json';
+        $dispatcher->invalidateCache();
+
+        $this->assertFileNotExists($dispatcher::$ROUTE_CACHE);
+
+        $response = $dispatcher->run();
+
+        $this->assertFileExists($dispatcher::$ROUTE_CACHE);
+        $this->assertFileIsWritable($dispatcher::$ROUTE_CACHE);
+        $this->assertFileIsReadable($dispatcher::$ROUTE_CACHE);
+
+        $this->assertInstanceOf(Response::class, $response);
+
+        $fileContents = file_get_contents($dispatcher::$ROUTE_CACHE);
+
+        $this->assertNotEmpty($fileContents);
+        $this->assertJson($fileContents);
+
+        $this->assertJsonStringEqualsJsonFile(
+            $dispatcher::$ROUTE_CACHE,
+            json_encode($expectedContent, JSON_PRETTY_PRINT)
+        );
+
+        $dispatcher = new Dispatcher($request);
+        $dispatcher::$ROUTE_CACHE = APPLICATION_ROOT . '/cache/routes.json';
+        $response = $dispatcher->run();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertTrue(is_int($response->getContent()));
+        $this->assertSame(200, $response->getCode());
+
+        $dispatcher->invalidateCache();
+
+    }
+
+    public function testInvalidMethod()
+    {
+        $this->expectException(DispatchFailureException::class);
+
+        $request = new Request();
+        $request->setUri('/stub');
+        $request->setMethod('POST');
+
+        $dispatcher = new Dispatcher($request, false);
+        $dispatcher->run();
     }
 
 }

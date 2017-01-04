@@ -15,6 +15,8 @@ class DirectoryIterator
 
     private static $files = [];
 
+    private static $defaultDirectory = APPLICATION_ROOT . '/Controller';
+
     /**
      * @param string $dir
      *
@@ -27,7 +29,7 @@ class DirectoryIterator
             throw new ConstantMissingException('Constants PROJECT_ROOT and APPLICATION_ROOT missing!');
         }
 
-        $dir = empty($dir) ? APPLICATION_ROOT . '/Controller' : $dir;
+        $dir = empty($dir) ? self::$defaultDirectory : $dir;
 
         foreach (scandir($dir) as $res) {
 
@@ -35,7 +37,7 @@ class DirectoryIterator
                 continue;
             }
 
-            if (is_dir(realpath($dir . '/' . $res))) {
+            if (is_dir($dir . '/' . $res)) {
                 self::getFiles($dir . '/' . $res);
                 continue;
             }
