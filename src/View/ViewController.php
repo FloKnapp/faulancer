@@ -237,7 +237,9 @@ class ViewController
         }
 
         if (method_exists($className, '__construct')) {
-            return call_user_func_array([new $className, '__construct'], $arguments);
+            $ref = new \ReflectionClass($className);
+            $class = $ref->newInstanceArgs($arguments);
+            return $class;
         }
 
         if (method_exists($className, '__invoke')) {

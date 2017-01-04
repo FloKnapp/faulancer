@@ -2,7 +2,9 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ViewHelperIncompatibleException;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\GenericViewHelper;
 use Faulancer\View\ViewController;
@@ -103,6 +105,42 @@ class ViewTest extends TestCase
 
         $this->assertTrue(is_string($viewHelper));
         $this->assertSame('Test', $viewHelper);
+    }
+
+    public function testGetMissingViewHelper()
+    {
+        $this->expectException(ClassNotFoundException::class);
+        $view = new ViewController();
+        $view->NonExistingViewHelper();
+    }
+
+    public function testViewHelperWithoutConstructor()
+    {
+        $this->expectException(ViewHelperIncompatibleException::class);
+        $view = new ViewController();
+        $view->StubViewHelperWithoutConstructor();
+    }
+
+    public function testViewHelperWithConstructor()
+    {
+        $view = new ViewController();
+        $viewHelper = $view->StubViewHelperWithConstructor('value');
+        $this->assertNotEmpty($viewHelper->getValue());
+        $this->assertSame('value', $viewHelper->getValue());
+    }
+
+    public function testGetMissingVariable()
+    {
+        $view = new ViewController();
+        $var = $view->getVariable('nonExistend');
+        $this->assertFalse($var);
+    }
+
+    public function testHasVariable()
+    {
+        $view = new ViewController();
+        $view->setVariable('testKey', 'testValue');
+        $this->assertTrue($view->hasVariable('testKey'));
     }
 
 }
