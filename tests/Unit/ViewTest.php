@@ -70,6 +70,20 @@ class ViewTest extends TestCase
 
     }
 
+    public function testAddJsAssets()
+    {
+        $view = new ViewController();
+        $inst = $view->addScript('script1.js');
+        $this->assertInstanceOf(ViewController::class, $inst);
+    }
+
+    public function testAddCssAssets()
+    {
+        $view = new ViewController();
+        $inst = $view->addScript('stylesheet1.css');
+        $this->assertInstanceOf(ViewController::class, $inst);
+    }
+
     /**
      * @outputBuffering enabled
      */
@@ -141,6 +155,12 @@ class ViewTest extends TestCase
         $view = new ViewController();
         $view->setVariable('testKey', 'testValue');
         $this->assertTrue($view->hasVariable('testKey'));
+    }
+
+    public function testHasNotVariable()
+    {
+        $view = new ViewController();
+        $this->assertFalse($view->hasVariable('testKey'));
     }
 
 }
