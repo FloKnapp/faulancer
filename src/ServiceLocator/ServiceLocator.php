@@ -89,7 +89,7 @@ class ServiceLocator implements ServiceLocatorInterface {
         $className = array_splice($parts, count($parts) - 1, 1);
         $class     = implode('\\', $parts) . '\\Factory\\' . $className[0] . 'Factory';
 
-        if (class_exists($class) && in_array(FactoryInterface::class, class_implements($class, true))) {
+        if (class_exists($class) && in_array(FactoryInterface::class, class_implements($class))) {
             return new $class();
         }
 

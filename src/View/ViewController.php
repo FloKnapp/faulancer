@@ -58,7 +58,7 @@ class ViewController
      * @param string $file
      * @return $this
      */
-    public function setScripts(string $file)
+    public function addScript(string $file)
     {
         $this->assetScripts[] = $file;
         return $this;
@@ -68,18 +68,28 @@ class ViewController
      * @param string $file
      * @return $this
      */
-    public function setStylesheets(string $file)
+    public function addStylesheet(string $file)
     {
         $this->assetStylesheets[] = $file;
         return $this;
     }
 
+    /**
+     * @param array $assets
+     *
+     * @return $this
+     */
     public function setAssetsJs(array $assets)
     {
         $this->setVariable('assetsJs', $assets);
         return $this;
     }
 
+    /**
+     * @param array $assets
+     *
+     * @return $this
+     */
     public function setAssetsCss(array $assets)
     {
         $this->setVariable('assetsCss', $assets);

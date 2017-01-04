@@ -76,7 +76,7 @@ class Response extends AbstractHttp
 
     public function __toString()
     {
-        return $this->getContent();
+        return (string)$this->getContent();
     }
 
 }

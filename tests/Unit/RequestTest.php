@@ -79,7 +79,18 @@ class RequestTest extends TestCase
 
         $this->assertEmpty($request->getUri());
         $this->assertSame('GET', $request->getMethod());
+        $this->assertTrue($request->isGet());
 
+    }
+
+    public function testWithQuery()
+    {
+        $request = new Request();
+
+        $_SERVER['REQUEST_URI'] = '/stub?test=tester';
+        $request->createFromHeaders();
+
+        $this->assertNotEmpty($request->getQuery());
     }
 
 

@@ -11,12 +11,13 @@ use Faulancer\Test\Mocks\Service\StubService;
  *
  * @author Florian Knapp <office@florianknapp.de>
  */
-class StubFactory implements FactoryInterface
+class StubServiceFactory implements FactoryInterface
 {
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new StubService();
+        $dependency = 'here';
+        return new StubService($dependency);
     }
 
 }

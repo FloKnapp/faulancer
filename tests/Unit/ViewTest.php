@@ -2,6 +2,7 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Exception\FileNotFoundException;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\GenericViewHelper;
 use Faulancer\View\ViewController;
@@ -20,6 +21,13 @@ class ViewTest extends TestCase
         $view = new ViewController();
         $view->setTemplate('/stubView.phtml');
         $this->assertTrue(is_string($view->getTemplate()));
+    }
+
+    public function testViewMissingTemplate()
+    {
+        $this->expectException(FileNotFoundException::class);
+        $view = new ViewController();
+        $view->setTemplate('NonExistend.phtml');
     }
 
     public function testViewRender()

@@ -18,9 +18,4 @@ class ErrorController
         $response->setContent('Not found');
         return $response;
     }
-
-    public static function badRequestAction()
-    {
-
-    }
 }

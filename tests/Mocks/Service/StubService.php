@@ -10,4 +10,21 @@ namespace Faulancer\Test\Mocks\Service;
 class StubService
 {
 
+    protected $dependency = '';
+
+    /**
+     * StubService constructor.
+     *
+     * @param string $dependency
+     */
+    public function __construct($dependency)
+    {
+        $this->dependency = $dependency;
+    }
+
+    public function getDependency()
+    {
+        return $this->dependency;
+    }
+
 }

@@ -2,8 +2,10 @@
 
 namespace Faulancer\Test\Unit;
 
-use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Test\Mocks\Service\Factory\StubServiceFactory;
 use PHPUnit\Framework\TestCase;
+use Faulancer\Exception\ServiceNotFoundException;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Test\Mocks\Service\Factory\StubFactory;
 use Faulancer\Test\Mocks\Service\StubService;
 
@@ -37,12 +39,14 @@ class ServiceLocatorTest extends TestCase
     {
         $stubService = $this->serviceLocator->get(StubService::class);
         $this->assertInstanceOf(StubService::class, $stubService);
+        $this->assertNotEmpty($stubService->getDependency());
+        $this->assertSame('here', $stubService->getDependency());
     }
 
     public function testGetServiceFactory()
     {
-        $stubFactory = $this->serviceLocator->get(StubFactory::class);
-        $this->assertInstanceOf(StubFactory::class, $stubFactory);
+        $stubFactory = $this->serviceLocator->get(StubServiceFactory::class);
+        $this->assertInstanceOf(StubServiceFactory::class, $stubFactory);
     }
 
     public function testGetSameService()
@@ -59,6 +63,12 @@ class ServiceLocatorTest extends TestCase
         $service2 = $this->serviceLocator->get(StubService::class, false);
 
         $this->assertNotSame($service1, $service2);
+    }
+
+    public function testMissingService()
+    {
+        $this->expectException(ServiceNotFoundException::class);
+        ServiceLocator::instance()->get('NonExistentService');
     }
 
 }

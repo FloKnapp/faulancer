@@ -40,7 +40,18 @@ class ResponseTest extends TestCase
     public function testResponseHeader()
     {
         $this->response->setCode(404);
+    }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testToString()
+    {
+        $response = new Response();
+        $response->setContent('Test');
+        echo $response;
+
+        $this->expectOutputString('Test');
     }
 
 }

@@ -17,6 +17,9 @@ class Request extends AbstractHttp
     /** @var string */
     protected $method = '';
 
+    /** @var string */
+    protected $query = '';
+
     /**
      * @return void
      */
@@ -25,7 +28,9 @@ class Request extends AbstractHttp
         $uri = $_SERVER['REQUEST_URI'];
 
         if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-            $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+            $uri = explode('?', $_SERVER['REQUEST_URI']);
+            $this->setQuery($uri[1]);
+            $uri = $uri[0];
         }
 
         $this->setUri($uri);
@@ -62,6 +67,22 @@ class Request extends AbstractHttp
     public function getMethod()
     {
         return empty($this->method) ? $_SERVER['REQUEST_METHOD'] : $this->method;
+    }
+
+    /**
+     * @param string $query
+     */
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 
     /**
