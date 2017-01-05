@@ -97,9 +97,7 @@ class Dispatcher
 
                 foreach ($methods as $data) {
 
-                    if ($data === false) {
-                        continue;
-                    } else if ($target = $this->getDirectMatch($uri, $data)) {
+                    if ($target = $this->getDirectMatch($uri, $data)) {
                         break;
                     } else if ($target = $this->getVariableMatch($uri, $data)) {
                         break;
@@ -179,11 +177,6 @@ class Dispatcher
         );
 
         if (preg_match('|^' . $regex . '$|', $uri, $var)) {
-
-            // Abort handling if there are more parts than regex has exposed
-            if (count(explode('/', $uri)) > count(explode('/', $var[0]))) {
-                return [];
-            }
 
             array_splice($var, 0, 1);
 
@@ -266,9 +259,7 @@ class Dispatcher
             $cache = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
         }
 
-        $routeSet = [
-            $uri => $target
-        ];
+        $routeSet = [$uri => $target];
 
         $cache = $cache + $routeSet;
 

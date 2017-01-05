@@ -63,6 +63,21 @@ class DispatcherTest extends TestCase
         $this->assertSame(2, $dispatcher->run()->getContent());
     }
 
+    public function testDynamicRouteTooLong()
+    {
+        $this->expectException(DispatchFailureException::class);
+
+        $request = new Request();
+        $request->setUri('/stub/dynamic/all');
+        $request->setMethod('GET');
+
+        $this->assertSame($request->getUri(), '/stub/dynamic/all');
+
+        $dispatcher = new Dispatcher($request, $this->config, false);
+
+        $this->assertSame(2, $dispatcher->run()->getContent());
+    }
+
     /**
      * Test if dispatcher returns a response object
      *

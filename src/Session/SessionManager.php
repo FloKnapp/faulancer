@@ -77,7 +77,6 @@ class SessionManager
      */
     public function delete(string $key)
     {
-
         if (!isset($_SESSION[$key])) {
             return false;
         }
@@ -85,7 +84,6 @@ class SessionManager
         unset($_SESSION[$key]);
 
         return true;
-
     }
 
     /**

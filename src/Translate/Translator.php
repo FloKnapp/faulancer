@@ -8,6 +8,7 @@ use Faulancer\Session\SessionManager;
  * File Translator.php
  *
  * @author Florian Knapp <office@florianknapp.de>
+ *
  */
 class Translator
 {
@@ -16,6 +17,12 @@ class Translator
 
     protected $language;
 
+    /**
+     * Translator constructor.
+     * @param string $language
+     *
+     * @codeCoverageIgnore
+     */
     public function __construct($language = 'ger_DE')
     {
 
@@ -29,6 +36,13 @@ class Translator
 
     }
 
+    /**
+     * @param $key
+     * @param null $value
+     * @return mixed
+     *
+     * @codeCoverageIgnore
+     */
     public function translate($key, $value = null)
     {
         if (isset($this->config[$this->language][$key])) {

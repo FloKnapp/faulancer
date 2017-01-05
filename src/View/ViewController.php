@@ -241,9 +241,13 @@ class ViewController
             return $class;
         }
 
-        if (method_exists($className, '__invoke')) {
-            return call_user_func_array([new $className, '__invoke'], $arguments);
+        if (method_exists($className, '__toString')) {
+            return new $className();
         }
+
+        //if (method_exists($className, '__toString')) {
+        //    return call_user_func_array([new $className, '__invoke'], $arguments);
+        //}
 
         throw new ViewHelperIncompatibleException('No compatible methods found');
     }

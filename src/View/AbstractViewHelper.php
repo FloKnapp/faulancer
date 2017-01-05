@@ -41,11 +41,11 @@ abstract class AbstractViewHelper
     }
 
     /**
-     * @return void
+     * @return string
      */
     public function __toString()
     {
-        echo (string)$this->__invoke();
+        return (string)$this->__invoke();
     }
 
 }

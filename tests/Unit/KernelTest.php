@@ -31,7 +31,7 @@ class KernelTest extends TestCase
             'viewsRoot'       => 'test'
         ];
 
-        $kernel = new Kernel($request, $conf, false);
+        new Kernel($request, $conf, false);
 
         $this->assertNotEmpty($config->get('applicationRoot'));
         $this->assertNotEmpty($config->get('projectRoot'));

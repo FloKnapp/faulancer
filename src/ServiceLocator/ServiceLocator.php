@@ -55,8 +55,6 @@ class ServiceLocator implements ServiceLocatorInterface {
             $class = $this->getFactory($service)->createService($this);
         } catch (FactoryMayIncompatibleException $e) {
             $class = $this->getService($service);
-        } catch (ServiceNotFoundException $e) {
-            return null;
         }
 
         if ($shared) {
@@ -64,7 +62,6 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         return $class;
-
     }
 
     private function getService(string $service)
@@ -94,6 +91,11 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         throw new FactoryMayIncompatibleException();
+    }
+
+    public function destroy(ServiceLocator &$instance)
+    {
+        $instance = null;
     }
 
 }

@@ -23,6 +23,9 @@ class ConfigTest extends TestCase
         $this->serviceLocator = ServiceLocator::instance();
     }
 
+    /**
+     * @throws ConfigInvalidException
+     */
     public function testSetGet()
     {
         /** @var Config $config */
@@ -95,7 +98,6 @@ class ConfigTest extends TestCase
             $this->assertSame($data[$key], $value);
 
         }
-
 
     }
 

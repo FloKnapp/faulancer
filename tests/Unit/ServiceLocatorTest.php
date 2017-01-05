@@ -41,7 +41,7 @@ class ServiceLocatorTest extends TestCase
         $this->assertNotEmpty($stubService->getDependency());
         $this->assertSame('here', $stubService->getDependency());
     }
-
+    
     public function testGetServiceFactory()
     {
         $stubFactory = $this->serviceLocator->get(StubServiceFactory::class);
@@ -67,7 +67,21 @@ class ServiceLocatorTest extends TestCase
     public function testMissingService()
     {
         $this->expectException(ServiceNotFoundException::class);
-        ServiceLocator::instance()->get('NonExistentService');
+        $result = ServiceLocator::instance()->get('NonExistentService');
+        $this->assertNull($result);
+    }
+
+    public function testCreationAndDestroying()
+    {
+        $serviceLocator = ServiceLocator::instance();
+
+        $serviceLocator->destroy($serviceLocator);
+
+        $this->assertNotSame(ServiceLocator::instance(), $serviceLocator);
+        $this->assertNull($serviceLocator);
+
+        $serviceLocatorNew = ServiceLocator::instance();
+        $this->assertSame(ServiceLocator::instance(), $serviceLocatorNew);
     }
 
 }

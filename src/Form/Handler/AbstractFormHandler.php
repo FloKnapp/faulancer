@@ -47,6 +47,8 @@ abstract class AbstractFormHandler
      * @param AbstractValidator|null $validator
      * @throws SecurityException
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function validate($validator)
     {
@@ -131,6 +133,8 @@ abstract class AbstractFormHandler
 
     /**
      * @return array
+     *
+     * @codeCoverageIgnore
      */
     protected function getFormData()
     {
@@ -139,6 +143,8 @@ abstract class AbstractFormHandler
 
     /**
      * @return ServiceLocator
+     *
+     * @codeCoverageIgnore
      */
     protected function getServiceLocator()
     {
@@ -147,6 +153,8 @@ abstract class AbstractFormHandler
 
     /**
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     abstract public function run();
 

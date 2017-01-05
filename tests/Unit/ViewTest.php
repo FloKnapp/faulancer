@@ -228,8 +228,10 @@ class ViewTest extends TestCase
         $view = new ViewController();
         $viewHelper = $view->StubViewHelper();
 
-        $this->assertTrue(is_string($viewHelper));
-        $this->assertSame('Test', $viewHelper);
+        $returnValue = (string)$viewHelper;
+
+        $this->assertSame('Test', $returnValue);
+
     }
 
     public function testGetMissingViewHelper()
