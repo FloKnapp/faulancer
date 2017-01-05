@@ -2,6 +2,8 @@
 
 namespace Faulancer\Translate;
 
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
@@ -20,39 +22,40 @@ class Translator
     /**
      * Translator constructor.
      * @param string $language
-     *
-     * @codeCoverageIgnore
      */
     public function __construct($language = 'ger_DE')
     {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+        $translationFile = $config->get('translationFile');
+        $this->config = require_once $translationFile;
 
         $this->language = $language;
 
-        $sessionStorage = SessionManager::instance();
+        $sessionManager = SessionManager::instance();
 
-        if ($sessionStorage->get('lang')) {
-            $this->language = $sessionStorage->get('lang');
+        if ($sessionManager->get('language')) {
+            $this->language = $sessionManager->get('language');
         }
-
     }
 
     /**
-     * @param $key
-     * @param null $value
-     * @return mixed
-     *
-     * @codeCoverageIgnore
+     * @param string $key
+     * @param array  $value
+     * @return string
      */
-    public function translate($key, $value = null)
+    public function translate($key, $value = [])
     {
         if (isset($this->config[$this->language][$key])) {
 
-            if ($value !== null) {
-                return sprintf($this->config[$this->language][$key], $value);
+            if (!empty($value)) {
+                return vsprintf($this->config[$this->language][$key], $value);
             }
 
             return $this->config[$this->language][$key];
+
         }
+
         return $key;
     }
 

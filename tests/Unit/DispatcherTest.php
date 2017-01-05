@@ -138,7 +138,7 @@ class DispatcherTest extends TestCase
         if (file_exists($config->get('routeCacheFile'))) {
             unlink($config->get('routeCacheFile'));
         }
-        
+
         if (is_dir($config->get('projectRoot') . '/cache')) {
             rmdir($config->get('projectRoot') . '/cache');
         }
@@ -146,6 +146,7 @@ class DispatcherTest extends TestCase
         $dispatcher = new Dispatcher($request, $this->config, true);
 
         $this->assertSame(1, $dispatcher->run()->getContent());
+        $this->assertDirectoryExists($config->get('projectRoot') . '/cache');
         $this->assertFileExists($config->get('routeCacheFile'));
 
     }
