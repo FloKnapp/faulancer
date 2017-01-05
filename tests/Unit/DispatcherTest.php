@@ -6,6 +6,8 @@ use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,6 +17,15 @@ use PHPUnit\Framework\TestCase;
  */
 class DispatcherTest extends TestCase
 {
+
+    /** @var Config */
+    protected $config;
+
+    public function setUp()
+    {
+        /** @var Config $config */
+        $this->config = ServiceLocator::instance()->get(Config::class);
+    }
 
     /**
      * Test static routing
@@ -29,7 +40,7 @@ class DispatcherTest extends TestCase
 
         $this->assertSame($request->getUri(), '/stub');
 
-        $dispatcher = new Dispatcher($request, false);
+        $dispatcher = new Dispatcher($request, $this->config, false);
 
         $this->assertSame(1, $dispatcher->run()->getContent());
     }
@@ -47,7 +58,7 @@ class DispatcherTest extends TestCase
 
         $this->assertSame($request->getUri(), '/stub/dynamic');
 
-        $dispatcher = new Dispatcher($request, false);
+        $dispatcher = new Dispatcher($request, $this->config, false);
 
         $this->assertSame(2, $dispatcher->run()->getContent());
     }
@@ -65,7 +76,7 @@ class DispatcherTest extends TestCase
 
         $this->assertSame($request->getUri(), '/stub/dynamic');
 
-        $dispatcher = new Dispatcher($request, false);
+        $dispatcher = new Dispatcher($request, $this->config, false);
 
         $this->assertInstanceOf(Response::class, $dispatcher->run());
     }
@@ -83,7 +94,7 @@ class DispatcherTest extends TestCase
 
         $this->assertSame($request->getUri(), '/stubs');
 
-        $dispatcher = new Dispatcher($request, false);
+        $dispatcher = new Dispatcher($request, $this->config, false);
 
         try {
             $dispatcher->run()->getContent();
@@ -116,32 +127,32 @@ class DispatcherTest extends TestCase
 
         $this->assertSame($request->getUri(), '/stub');
 
-        $dispatcher = new Dispatcher($request);
-        $dispatcher::$ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
+        $dispatcher = new Dispatcher($request, $this->config);
+        $this->config->set('routeCacheFile', $this->config->get('projectRoot') . '/cache/routes.json', true);
         $dispatcher->invalidateCache();
 
-        $this->assertFileNotExists($dispatcher::$ROUTE_CACHE);
+        $this->assertFileNotExists($this->config->get('routeCacheFile'));
 
         $response = $dispatcher->run();
 
-        $this->assertFileExists($dispatcher::$ROUTE_CACHE);
-        $this->assertFileIsWritable($dispatcher::$ROUTE_CACHE);
-        $this->assertFileIsReadable($dispatcher::$ROUTE_CACHE);
+        $this->assertFileExists($this->config->get('routeCacheFile'));
+        $this->assertFileIsWritable($this->config->get('routeCacheFile'));
+        $this->assertFileIsReadable($this->config->get('routeCacheFile'));
 
         $this->assertInstanceOf(Response::class, $response);
 
-        $fileContents = file_get_contents($dispatcher::$ROUTE_CACHE);
+        $fileContents = file_get_contents($this->config->get('routeCacheFile'));
 
         $this->assertNotEmpty($fileContents);
         $this->assertJson($fileContents);
 
         $this->assertJsonStringEqualsJsonFile(
-            $dispatcher::$ROUTE_CACHE,
+            $this->config->get('routeCacheFile'),
             json_encode($expectedContent, JSON_PRETTY_PRINT)
         );
 
-        $dispatcher = new Dispatcher($request);
-        $dispatcher::$ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
+        $dispatcher = new Dispatcher($request, $this->config);
+        $this->config->set('routeCacheFile', $this->config->get('projectRoot') . '/cache/routes.json', true);
         $response = $dispatcher->run();
 
         $this->assertInstanceOf(Response::class, $response);
@@ -160,7 +171,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/stub');
         $request->setMethod('POST');
 
-        $dispatcher = new Dispatcher($request, false);
+        $dispatcher = new Dispatcher($request, $this->config, false);
         $dispatcher->run();
     }
 

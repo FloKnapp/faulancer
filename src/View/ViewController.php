@@ -6,6 +6,8 @@ use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\ConstantMissingException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ViewHelperIncompatibleException;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 
 class ViewController
 {
@@ -33,16 +35,15 @@ class ViewController
      */
     public function setTemplate(string $template = '')
     {
-        if (!defined('VIEWS_ROOT')) {
-            throw new ConstantMissingException('Constant VIEWS_ROOT not defined');
-        }
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
 
         if (empty($template)) {
             throw new FileNotFoundException('Template name missing');
         }
 
-        if (strpos($template, VIEWS_ROOT) === false) {
-            $template = VIEWS_ROOT . '/' . $template;
+        if (strpos($template, $config->get('viewsRoot')) === false) {
+            $template = $config->get('viewsRoot') . '/' . $template;
         }
 
         $this->template = $template;
@@ -222,8 +223,11 @@ class ViewController
      */
     public function __call($name, $arguments)
     {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+
         $className = $name;
-        $namespace = '\\' . NAMESPACE_PREFIX;
+        $namespace = '\\' . $config->get('namespacePrefix');
 
         $className = $namespace . '\\View\\' . $className;
 

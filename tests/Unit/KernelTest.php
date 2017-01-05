@@ -4,6 +4,8 @@ namespace Faulancer\Test\Unit;
 
 use Faulancer\Http\Request;
 use Faulancer\Kernel;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,20 +18,24 @@ class KernelTest extends TestCase
 
     public function testConfigSet()
     {
+
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+
         $request = new Request();
         $request->setUri('/test');
 
-        $config = [
+        $conf = [
             'applicationRoot' => 'test',
             'projectRoot'     => 'test',
             'viewsRoot'       => 'test'
         ];
 
-        $kernel = new Kernel($request, $config, false);
+        $kernel = new Kernel($request, $conf, false);
 
-        $this->assertNotEmpty(APPLICATION_ROOT);
-        $this->assertNotEmpty(PROJECT_ROOT);
-        $this->assertNotEmpty(APPLICATION_ROOT);
+        $this->assertNotEmpty($config->get('applicationRoot'));
+        $this->assertNotEmpty($config->get('projectRoot'));
+        $this->assertNotEmpty($config->get('viewsRoot'));
 
     }
 

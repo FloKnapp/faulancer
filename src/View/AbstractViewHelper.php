@@ -3,6 +3,7 @@
 namespace Faulancer\View;
 
 use Faulancer\Exception\ConstantMissingException;
+use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
@@ -23,11 +24,10 @@ abstract class AbstractViewHelper
      */
     protected function renderView(string $template = '', array $variables = [])
     {
-        if (!defined('VIEWS_ROOT')) {
-            throw new ConstantMissingException('Constant VIEWS_ROOT missing');
-        }
+        /** @var Config $config */
+        $config = $this->getServiceLocator()->get(Config::class);
 
-        $templatePath = VIEWS_ROOT . '/helper';
+        $templatePath = $config->get('viewsRoot') . '/helper';
 
         return (new ViewController())->setTemplate($templatePath . $template)->setVariables($variables)->render();
     }

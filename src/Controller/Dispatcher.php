@@ -9,6 +9,7 @@ use Faulancer\Http\Response;
 use Faulancer\Reflection\ClassParser;
 use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
+use Faulancer\Service\Config;
 
 /**
  * Class Dispatcher
@@ -19,9 +20,6 @@ use Faulancer\Exception\MethodNotFoundException;
 class Dispatcher
 {
 
-    /** @var string */
-    public static $ROUTE_CACHE = PROJECT_ROOT . '/cache/routes.json';
-
     /** @var Request */
     protected $request;
 
@@ -29,12 +27,14 @@ class Dispatcher
      * Dispatcher constructor.
      *
      * @param Request $request
+     * @param Config  $config
      * @param boolean $routeCacheEnabled
      */
-    public function __construct(Request $request, $routeCacheEnabled = true)
+    public function __construct(Request $request, Config $config, $routeCacheEnabled = true)
     {
         $this->request           = $request;
         $this->routeCacheEnabled = $routeCacheEnabled;
+        $this->config            = $config;
     }
 
     /**
@@ -233,9 +233,9 @@ class Dispatcher
      */
     private function fromCache($uri)
     {
-        if (file_exists(self::$ROUTE_CACHE)) {
+        if (file_exists($this->config->get('routeCacheFile'))) {
 
-            $target = json_decode(file_get_contents(self::$ROUTE_CACHE), true);
+            $target = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
 
             if (!empty($target[$uri])) {
                 return $target[$uri];
@@ -258,12 +258,12 @@ class Dispatcher
     {
         $cache = [];
         
-        if (!is_dir(PROJECT_ROOT . '/cache')) {
-            mkdir(PROJECT_ROOT . '/cache');
+        if (!is_dir($this->config->get('projectRoot') . '/cache')) {
+            mkdir($this->config->get('projectRoot') . '/cache');
         }
 
-        if (file_exists(self::$ROUTE_CACHE)) {
-            $cache = json_decode(file_get_contents(self::$ROUTE_CACHE), true);
+        if (file_exists($this->config->get('routeCacheFile'))) {
+            $cache = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
         }
 
         $routeSet = [
@@ -272,7 +272,7 @@ class Dispatcher
 
         $cache = $cache + $routeSet;
 
-        file_put_contents(self::$ROUTE_CACHE, json_encode($cache, JSON_PRETTY_PRINT));
+        file_put_contents($this->config->get('routeCacheFile'), json_encode($cache, JSON_PRETTY_PRINT));
 
         return true;
     }
@@ -284,8 +284,8 @@ class Dispatcher
      */
     public function invalidateCache()
     {
-        if (file_exists(self::$ROUTE_CACHE)) {
-            return unlink(self::$ROUTE_CACHE);
+        if (file_exists($this->config->get('routeCacheFile'))) {
+            return unlink($this->config->get('routeCacheFile'));
         }
 
         return true;

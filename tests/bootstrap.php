@@ -2,22 +2,12 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-if (!defined('VIEWS_ROOT')) {
-    define('VIEWS_ROOT', __DIR__ . '/Fixture/views');
-}
+/** @var \Faulancer\Service\Config $config */
+$config = \Faulancer\ServiceLocator\ServiceLocator::instance()->get(\Faulancer\Service\Config::class);
 
-if (!defined('PROJECT_ROOT')) {
-    define('PROJECT_ROOT', __DIR__ . '/Fixture');
-}
-
-if (!defined('APPLICATION_ROOT')) {
-    define('APPLICATION_ROOT', PROJECT_ROOT . '/src');
-}
-
-if (!defined('NAMESPACE_PREFIX')) {
-    define('NAMESPACE_PREFIX', 'Faulancer\Fixture');
-}
-
-if (!defined('TRANSLATION_ROOT')) {
-    define('TRANSLATION_ROOT', APPLICATION_ROOT . '/translation');
-}
+$config->set('viewsRoot', __DIR__ . '/Fixture/views');
+$config->set('projectRoot', __DIR__ . '/Fixture');
+$config->set('applicationRoot', $config->get('projectRoot') . '/src');
+$config->set('namespacePrefix', 'Faulancer\Fixture');
+$config->set('translationRoot', $config->get('applicationRoot') . '/translation');
+$config->set('routeCacheFile', __DIR__ . '/Fixture/cache/routes.conf');

@@ -3,6 +3,8 @@
 namespace Faulancer\Helper;
 
 use Faulancer\Exception\ConstantMissingException;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class DirectoryIterator
@@ -15,7 +17,7 @@ class DirectoryIterator
 
     private static $files = [];
 
-    private static $defaultDirectory = APPLICATION_ROOT . '/Controller';
+    private static $defaultDirectory = '/Controller';
 
     /**
      * @param string $dir
@@ -25,11 +27,10 @@ class DirectoryIterator
      */
     public static function getFiles($dir = '')
     {
-        if (!defined('PROJECT_ROOT') || !defined('APPLICATION_ROOT')) {
-            throw new ConstantMissingException('Constants PROJECT_ROOT and APPLICATION_ROOT missing!');
-        }
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
 
-        $dir = empty($dir) ? self::$defaultDirectory : $dir;
+        $dir = empty($dir) ? $config->get('applicationRoot') . self::$defaultDirectory : $dir;
 
         foreach (scandir($dir) as $res) {
 
@@ -42,10 +43,10 @@ class DirectoryIterator
                 continue;
             }
 
-            $namespace = ucfirst(str_replace([APPLICATION_ROOT, '/'], ['', '\\'], $dir));
+            $namespace = ucfirst(str_replace([$config->get('applicationRoot'), '/'], ['', '\\'], $dir));
 
-            if (defined('NAMESPACE_PREFIX')) {
-                $namespace = NAMESPACE_PREFIX . $namespace;
+            if (!empty($config->get('namespacePrefix'))) {
+                $namespace = $config->get('namespacePrefix') . $namespace;
             }
 
             self::$files[$namespace][] = $res;

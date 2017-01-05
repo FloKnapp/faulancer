@@ -60,7 +60,7 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         if ($shared) {
-            self::$services[$service] = $service;
+            self::$services[$service] = $class;
         }
 
         return $class;

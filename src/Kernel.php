@@ -6,6 +6,8 @@ use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * File Kernel.php
@@ -23,22 +25,24 @@ class Kernel
 
     public function __construct(Request $request, array $config, $routeCacheEnabled = true)
     {
-        $this->request = $request;
-        $this->config  = $config;
+        $this->request           = $request;
+        $this->config            = $config;
         $this->routeCacheEnabled = $routeCacheEnabled;
     }
 
     public function run()
     {
 
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+
         if (!empty($this->config)) {
-            define('APPLICATION_ROOT', $this->config['applicationRoot']);
-            define('PROJECT_ROOT',     $this->config['projectRoot']);
-            define('VIEWS_ROOT',       $this->config['viewsRoot']);
-            define('NAMESPACE_PREFIX', $this->config['namespacePrefix']);
+            $config->set($this->config);
         }
 
-        $dispatcher = new Dispatcher($this->request, $this->routeCacheEnabled);
+        $config->set('routeCacheFile', $config->get('projectRoot') . '/cache/routes.json', true);
+
+        $dispatcher = new Dispatcher($this->request, $config, $this->routeCacheEnabled);
 
         try {
             echo $dispatcher->run()->getContent();
