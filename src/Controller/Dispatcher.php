@@ -135,7 +135,7 @@ class Dispatcher
     {
         if ($uri === $data['path']) {
 
-            if ($data['method'] === strtolower($this->request->getMethod())) {
+            if (strcasecmp($data['method'], $this->request->getMethod()) === 0) {
 
                 return [
                     'class'  => $data['class'],
