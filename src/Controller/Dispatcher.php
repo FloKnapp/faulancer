@@ -6,7 +6,7 @@ use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\Reflection\ClassParser;
+use Faulancer\Helper\Reflection\ClassParser;
 use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;

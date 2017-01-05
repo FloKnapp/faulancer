@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Reflection;
+namespace Faulancer\Helper\Reflection;
 
 /**
  * Class ClassParser
@@ -21,11 +21,9 @@ class ClassParser extends \ReflectionClass
 
     /**
      * @param string $name
-     * @param string $method
-     *
      * @return array
      */
-    public function getMethodDoc($name = '', string $method = '')
+    public function getMethodDoc($name = '')
     {
         $result   = [];
 
@@ -46,7 +44,7 @@ class ClassParser extends \ReflectionClass
      * @param $name
      * @param $method
      *
-     * @return bool
+     * @return array
      */
     private function extractValues($name, $method)
     {
