@@ -119,6 +119,38 @@ class DispatcherTest extends TestCase
     }
 
     /**
+     * @throws DispatchFailureException
+     * @throws \Faulancer\Exception\ConfigInvalidException
+     *
+     * @runInSeparateProcess
+     */
+    public function testCacheDirCreate()
+    {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+
+        $request = new Request();
+        $request->setUri('/stub');
+        $request->setMethod('GET');
+
+        $this->assertSame($request->getUri(), '/stub');
+
+        if (file_exists($config->get('routeCacheFile'))) {
+            unlink($config->get('routeCacheFile'));
+        }
+        
+        if (is_dir($config->get('projectRoot') . '/cache')) {
+            rmdir($config->get('projectRoot') . '/cache');
+        }
+
+        $dispatcher = new Dispatcher($request, $this->config, true);
+
+        $this->assertSame(1, $dispatcher->run()->getContent());
+        $this->assertFileExists($config->get('routeCacheFile'));
+
+    }
+
+    /**
      * @runInSeparateProcess enabled
      * 
      * @throws DispatchFailureException
@@ -143,7 +175,6 @@ class DispatcherTest extends TestCase
         $this->assertSame($request->getUri(), '/stub');
 
         $dispatcher = new Dispatcher($request, $this->config);
-        $this->config->set('routeCacheFile', $this->config->get('projectRoot') . '/cache/routes.json', true);
         $dispatcher->invalidateCache();
 
         $this->assertFileNotExists($this->config->get('routeCacheFile'));
@@ -166,8 +197,18 @@ class DispatcherTest extends TestCase
             json_encode($expectedContent, JSON_PRETTY_PRINT)
         );
 
+        $request = new Request();
+        $request->setUri('/stub/test');
+        $request->setMethod('GET');
+
         $dispatcher = new Dispatcher($request, $this->config);
-        $this->config->set('routeCacheFile', $this->config->get('projectRoot') . '/cache/routes.json', true);
+        $response = $dispatcher->run();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertTrue(is_int($response->getContent()));
+        $this->assertSame(200, $response->getCode());
+
+        $dispatcher = new Dispatcher($request, $this->config);
         $response = $dispatcher->run();
 
         $this->assertInstanceOf(Response::class, $response);
@@ -176,6 +217,7 @@ class DispatcherTest extends TestCase
 
         $dispatcher->invalidateCache();
 
+        $this->assertFalse($dispatcher->invalidateCache());
     }
 
     public function testInvalidMethod()

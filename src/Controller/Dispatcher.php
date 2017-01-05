@@ -220,15 +220,20 @@ class Dispatcher
     /**
      * Retrieve route params from cache
      *
-     * @param $uri
+     * @param string  $uri
+     * @param boolean $wholeContent
      *
      * @return array
      */
-    private function fromCache($uri)
+    private function fromCache($uri, $wholeContent = false)
     {
         if (file_exists($this->config->get('routeCacheFile'))) {
 
             $target = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
+
+            if ($wholeContent) {
+                return $target;
+            }
 
             if (!empty($target[$uri])) {
                 return $target[$uri];
@@ -249,19 +254,13 @@ class Dispatcher
      */
     private function saveIntoCache($uri, $target)
     {
-        $cache = [];
-        
         if (!is_dir($this->config->get('projectRoot') . '/cache')) {
             mkdir($this->config->get('projectRoot') . '/cache');
         }
 
-        if (file_exists($this->config->get('routeCacheFile'))) {
-            $cache = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
-        }
-
         $routeSet = [$uri => $target];
-
-        $cache = $cache + $routeSet;
+        $cache    = $this->fromCache($uri, true);
+        $cache    = $cache + $routeSet;
 
         file_put_contents($this->config->get('routeCacheFile'), json_encode($cache, JSON_PRETTY_PRINT));
 
@@ -279,7 +278,7 @@ class Dispatcher
             return unlink($this->config->get('routeCacheFile'));
         }
 
-        return true;
+        return false;
     }
 
 }

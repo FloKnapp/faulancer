@@ -10,4 +10,4 @@ $config->set('projectRoot', __DIR__ . '/Fixture');
 $config->set('applicationRoot', $config->get('projectRoot') . '/src');
 $config->set('namespacePrefix', 'Faulancer\Fixture');
 $config->set('translationRoot', $config->get('applicationRoot') . '/translation');
-$config->set('routeCacheFile', __DIR__ . '/Fixture/cache/routes.conf');
+$config->set('routeCacheFile', __DIR__ . '/Fixture/cache/routes.json');

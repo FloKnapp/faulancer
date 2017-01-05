@@ -4,6 +4,7 @@ namespace Faulancer\Test\Unit;
 
 use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Service\Config;
+use Faulancer\Service\Factory\ConfigFactory;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
 
@@ -99,6 +100,12 @@ class ConfigTest extends TestCase
 
         }
 
+    }
+
+    public function testGetFactory()
+    {
+        $factory = ServiceLocator::instance()->get(ConfigFactory::class, false);
+        $this->assertInstanceOf(Config::class, $factory);
     }
 
 }

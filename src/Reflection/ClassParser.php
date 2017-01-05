@@ -50,10 +50,6 @@ class ClassParser extends \ReflectionClass
 
         preg_match('|@' . $name . '(.*)|', $methodDoc->getDocComment(), $arr);
 
-        if (empty($arr)) {
-            return false;
-        }
-
         $var = [];
 
         preg_match('|\((.*)\)|', $arr[1], $var);

@@ -45,7 +45,7 @@ class ServiceLocatorTest extends TestCase
     public function testGetServiceFactory()
     {
         $stubFactory = $this->serviceLocator->get(StubServiceFactory::class);
-        $this->assertInstanceOf(StubServiceFactory::class, $stubFactory);
+        $this->assertInstanceOf(StubService::class, $stubFactory);
     }
 
     public function testGetSameService()
@@ -73,12 +73,10 @@ class ServiceLocatorTest extends TestCase
 
     public function testCreationAndDestroying()
     {
-        $serviceLocator = ServiceLocator::instance();
-
-        $serviceLocator->destroy($serviceLocator);
+        $serviceLocator= ServiceLocator::instance();
+        ServiceLocator::destroy();
 
         $this->assertNotSame(ServiceLocator::instance(), $serviceLocator);
-        $this->assertNull($serviceLocator);
 
         $serviceLocatorNew = ServiceLocator::instance();
         $this->assertSame(ServiceLocator::instance(), $serviceLocatorNew);

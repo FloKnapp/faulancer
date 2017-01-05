@@ -16,6 +16,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     /** @var ServiceLocator */
     private static $instance = null;
 
+    /** @var array */
     private static $services = [];
 
     /**
@@ -64,13 +65,18 @@ class ServiceLocator implements ServiceLocatorInterface {
         return $class;
     }
 
+    /**
+     * @param  string $service
+     * @return mixed
+     * @throws ServiceNotFoundException
+     */
     private function getService(string $service)
     {
-        if (class_exists($service)) {
-            return new $service();
+        if (!class_exists($service)) {
+            throw new ServiceNotFoundException();
         }
 
-        throw new ServiceNotFoundException();
+        return new $service();
     }
 
     /**
@@ -82,20 +88,32 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     private function getFactory(string $service)
     {
+
         $parts     = explode('\\', $service);
         $className = array_splice($parts, count($parts) - 1, 1);
         $class     = implode('\\', $parts) . '\\Factory\\' . $className[0] . 'Factory';
 
-        if (class_exists($class) && in_array(FactoryInterface::class, class_implements($class))) {
+        $isAutoDetected = class_exists($class) && in_array(FactoryInterface::class, class_implements($class));
+        $isDirectAccess = class_exists($service) && in_array(FactoryInterface::class, class_implements($service));
+
+        if ($isAutoDetected) {
             return new $class();
+        }
+
+        // This is a direct factory access
+        if ($isDirectAccess) {
+            return new $service();
         }
 
         throw new FactoryMayIncompatibleException();
     }
 
-    public function destroy(ServiceLocator &$instance)
+    /**
+     * @internal
+     */
+    public static function destroy()
     {
-        $instance = null;
+        self::$instance = null;
     }
 
 }
