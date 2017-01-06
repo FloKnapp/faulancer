@@ -34,7 +34,7 @@ class ClassParser extends \ReflectionClass
             if ('\\' . $func->class === $this->className) {
                 $result[$this->className][] = $this->extractValues($name, $func->name);
             }
-
+          
         }
 
         return $result;

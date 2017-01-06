@@ -2,16 +2,18 @@
 
 namespace Faulancer\Fixture\Controller;
 
+use Faulancer\Controller\Controller;
+
 /**
  * File DummyController.php
  *
  * @author Florian Knapp <office@florianknapp.de>
  */
-class DummyController
+class DummyController extends Controller
 {
 
     /**
-     * @Route(path="/", name="StubStaticHome", method="get")
+     * @Route(path="/", name="StubStaticHome", method="GET")
      *
      * @return int
      */
