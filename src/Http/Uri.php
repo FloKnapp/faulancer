@@ -14,30 +14,31 @@ class Uri
 {
 
     /**
-     * @return string
-     */
-    public static function getUri()
-    {
-        return $_SERVER['REQUEST_URI'];
-    }
-
-    /**
      * @param string  $location
      * @param integer $code
-     * @return boolean
+     * @return mixed
      * @throws InvalidArgumentException
      */
-    public static function redirect(string $location, int $code = 301)
+    public function redirect(string $location, int $code = 301)
     {
+
         if (in_array($code, array_keys(Response::HTTP_STATUS_CODES))) {
 
             header('HTTP/2 ' . $code . ' ' . Response::HTTP_STATUS_CODES[$code]);
             header('Location: ' .  $location);
-            exit(0);
+            return $this->terminate();
 
         }
 
         throw new InvalidArgumentException('Target url is invalid or status code is unknown');
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function terminate()
+    {
+        exit(0);
     }
 
 }

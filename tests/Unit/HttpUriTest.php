@@ -14,20 +14,18 @@ use PHPUnit\Framework\TestCase;
 class HttpUriTest extends TestCase
 {
 
-    public function testGetUri()
-    {
-        $_SERVER['REQUEST_URI'] = '/stub';
-        $uri = Uri::getUri();
-        $this->assertTrue(is_string($uri));
-        $this->assertSame('/stub', $uri);
-    }
-
     /**
      * @runInSeparateProcess
      */
     public function testRedirect()
     {
-        $this->assertFalse(Uri::redirect('/test'));
+        $mock = $this->createPartialMock(Uri::class, ['terminate']);
+        $mock->method('terminate')->will($this->returnValue(true));
+
+        /** @var Uri $mock */
+        $result = $mock->redirect('/test', 301);
+
+        $this->assertTrue($result);
     }
 
     /**
@@ -36,7 +34,7 @@ class HttpUriTest extends TestCase
     public function testWrongCode()
     {
         $this->expectException(InvalidArgumentException::class);
-        Uri::redirect('/stub', 442);
+        (new Uri())->redirect('/stub', 442);
     }
 
 }

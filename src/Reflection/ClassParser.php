@@ -31,11 +31,10 @@ class ClassParser extends \ReflectionClass
 
         foreach ($this->getMethods() as $func) {
 
-            if ('\\' . $func->class !== $this->className) {
-                continue;
+            if ('\\' . $func->class === $this->className) {
+                $result[$this->className][] = $this->extractValues($name, $func->name);
             }
 
-            $result[$this->className][] = $this->extractValues($name, $func->name);
         }
 
         return $result;
