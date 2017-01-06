@@ -51,8 +51,7 @@ class Kernel
         $dispatcher = new Dispatcher($this->request, $config, $this->routeCacheEnabled);
 
         try {
-            echo $dispatcher->run()->getContent();
-            return true;
+            return $dispatcher->run()->getContent();
         } catch (DispatchFailureException $e) {
             return ErrorController::notFoundAction()->getContent();
         }

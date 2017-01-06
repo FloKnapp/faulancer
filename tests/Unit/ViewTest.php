@@ -141,11 +141,11 @@ class ViewTest extends TestCase
     public function testViewHelperSetGetFormError()
     {
         $data = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
-            'key4' => 'value4',
-            'key5' => 'value5',
+            'key1' => [ ['message' => 'value1'] ],
+            'key2' => [ ['message' => 'value2'] ],
+            'key3' => [ ['message' => 'value3'] ],
+            'key4' => [ ['message' => 'value4'] ],
+            'key5' => [ ['message' => 'value5'] ],
         ];
 
         SessionManager::instance()->setFlashbag('errors', $data);
@@ -159,7 +159,11 @@ class ViewTest extends TestCase
             $this->assertTrue($viewHelper->hasFormError($key));
 
             $this->assertSame($value, $data[$key]);
-            $this->assertTrue(strpos($viewHelper->getFormError($key), $value) !== false);
+            $this->assertArrayHasKey('message', $value[0]);
+
+            $err = $viewHelper->getFormError($key);
+
+            $this->assertStringStartsWith('<div class="form-error ' . $key . '">', $err);
 
         }
 
@@ -191,7 +195,7 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @outputBuffering enabled
+     * @runInSeparateProcess
      */
     public function testViewExtendedTemplate()
     {
@@ -307,6 +311,16 @@ class ViewTest extends TestCase
         $this->assertSame(ServiceLocator::instance(), $mock->getServiceLocator());
 
         $this->expectOutputString($mock);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testTranslateHelper()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+        $this->assertSame('Test-Item1', $viewHelper->translate('test_item_1'));
+
     }
 
 }

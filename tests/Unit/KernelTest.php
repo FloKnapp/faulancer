@@ -45,6 +45,7 @@ class KernelTest extends TestCase
     public function testFailure()
     {
         $request = new Request();
+        $request->setMethod('GET');
         $request->setUri('/test');
 
         $config = [];
@@ -71,9 +72,8 @@ class KernelTest extends TestCase
         $kernel = new Kernel($request, $config, false);
         $response = $kernel->run();
 
-        $this->expectOutputString('1');
         $this->assertNotEmpty($response);
-        $this->assertSame(true, $response);
+        $this->assertSame(1, $response);
     }
 
 }

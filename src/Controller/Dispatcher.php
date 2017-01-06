@@ -4,12 +4,14 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Helper\Reflection\ClassParser;
 use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
@@ -40,13 +42,17 @@ class Dispatcher
     /**
      * Bootstrap for every route call
      *
-     * @return Response
+     * @return Response|mixed
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
      * @throws DispatchFailureException
      */
     public function run()
     {
+        if ($formRequest = $this->handleFormRequest()) {
+            return $formRequest;
+        }
+
         $response = new Response();
 
         try {
@@ -215,6 +221,29 @@ class Dispatcher
         }
 
         return $routes;
+    }
+
+    /**
+     * @return boolean
+     */
+    private function handleFormRequest()
+    {
+        if (strpos($this->request->getUri(), '/formrequest/') !== 0 && $this->request->isPost()) {
+            return false;
+        }
+
+        $handlerName  = ucfirst(str_replace('/formrequest/', '', $this->request->getUri()));
+        $handlerClass = '\\' . $this->config->get('namespacePrefix') . '\\Form\\' . $handlerName . 'Handler';
+
+        if (class_exists($handlerClass)) {
+
+            /** @var AbstractFormHandler $handler */
+            $handler = new $handlerClass($this->request, SessionManager::instance());
+            return $handler->run();
+
+        }
+
+        return false;
     }
 
     /**
