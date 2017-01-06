@@ -56,12 +56,12 @@ class FormHandlerTest extends TestCase
         $result      = $formHandler->run();
 
         $this->assertSame('testError', $result);
-        $this->assertTrue(SessionManager::instance()->hasFlashbagErrorsKey('message'));
+        $this->assertTrue(SessionManager::instance()->hasFlashbagErrorsKey('text/message'));
 
         $errors = SessionManager::instance()->getFlashbag('errors');
 
-        $this->assertNotEmpty($errors['message']);
-        $this->assertArrayHasKey('message', $errors);
+        $this->assertNotEmpty($errors['text/message']);
+        $this->assertArrayHasKey('text/message', $errors);
     }
 
     /**
@@ -82,7 +82,7 @@ class FormHandlerTest extends TestCase
         $formHandler = new GenericHandler($request, SessionManager::instance());
         $result      = $formHandler->run();
 
-        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertEmpty(SessionManager::instance()->getFlashbagError('text/message'));
         $this->assertSame('testSuccess', $result);
     }
 

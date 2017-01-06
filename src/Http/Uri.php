@@ -33,7 +33,7 @@ class Uri
 
             header('HTTP/2 ' . $code . ' ' . Response::HTTP_STATUS_CODES[$code]);
             header('Location: ' .  $location);
-            return false;
+            exit(0);
 
         }
 

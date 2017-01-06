@@ -15,8 +15,10 @@ use Faulancer\Session\SessionManager;
 class Translator
 {
 
-    protected $config;
+    /** @var array */
+    protected $config = [];
 
+    /** @var string */
     protected $language;
 
     /**
@@ -26,12 +28,14 @@ class Translator
     public function __construct($language = 'ger_DE')
     {
         /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-        $translationFile = $config->get('translationFile');
-        $this->config = require_once $translationFile;
+        $config    = ServiceLocator::instance()->get(Config::class);
+        $transFile = $config->get('translationFile');
+
+        if (file_exists($transFile)) {
+            $this->config = require_once $transFile;
+        }
 
         $this->language = $language;
-
         $sessionManager = SessionManager::instance();
 
         if ($sessionManager->get('language')) {
@@ -46,6 +50,10 @@ class Translator
      */
     public function translate($key, $value = [])
     {
+        if (empty($this->config)) {
+            return $key;
+        }
+
         if (isset($this->config[$this->language][$key])) {
 
             if (!empty($value)) {

@@ -84,6 +84,8 @@ abstract class AbstractFormHandler
     {
         $result = [];
 
+        $this->sessionManager->setFlashbagFormData($this->request->getPostData());
+
         foreach ($this->request->getPostData() as $key => $data) {
 
             if (strpos($key, '/') === false) {
@@ -114,10 +116,10 @@ abstract class AbstractFormHandler
             $val     = new $validatorClass();
             $isValid = $val->process($value);
 
-            $result[$name]['valid'] = $isValid;
+            $result[$key]['valid'] = $isValid;
 
             if (!$isValid) {
-                $result[$name]['message'] = $val->getMessage();
+                $result[$key]['message'] = $val->getMessage();
             }
 
         }
