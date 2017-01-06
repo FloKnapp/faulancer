@@ -11,9 +11,16 @@ use Faulancer\Form\Validator\AbstractValidator;
 class Email extends AbstractValidator
 {
 
-    public function process(string $data)
+    /** @var string */
+    protected $errorMessage = 'validator_invalid_email';
+
+    /**
+     * @param $data
+     * @return boolean
+     */
+    public function process($data)
     {
-        return true;
+        return !!filter_var($data, FILTER_VALIDATE_EMAIL);
     }
 
 }

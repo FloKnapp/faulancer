@@ -3,7 +3,6 @@
 namespace Faulancer\Fixture\Form;
 
 use Faulancer\Form\AbstractFormHandler;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class GenericHandler
@@ -14,15 +13,14 @@ class GenericHandler extends AbstractFormHandler
 
     public function run()
     {
-
         $this->setSuccessUrl('testSuccess');
         $this->setErrorUrl('testError');
 
         if ($this->getForm()->isValid()) {
-            return true;
+            return $this->getSuccessUrl();
         }
 
-        return false;
+        return $this->getErrorUrl();
 
     }
 

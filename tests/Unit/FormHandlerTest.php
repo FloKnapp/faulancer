@@ -20,7 +20,6 @@ class FormHandlerTest extends TestCase
      */
     public function testFormHandler()
     {
-
         $request = new Request();
         $request->setMethod('POST');
 
@@ -30,14 +29,12 @@ class FormHandlerTest extends TestCase
             'text/message' => 'Test'
         ];
 
-        $_POST = $data;
-
+        $_POST       = $data;
         $formHandler = new GenericHandler($request, SessionManager::instance());
-        
-        $result = $formHandler->run();
+        $result      = $formHandler->run();
 
-        $this->assertTrue($result);
-
+        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertSame('testSuccess', $result);
     }
 
     /**
@@ -45,7 +42,6 @@ class FormHandlerTest extends TestCase
      */
     public function testInvalidFormData()
     {
-
         $request = new Request();
         $request->setMethod('POST');
 
@@ -55,19 +51,65 @@ class FormHandlerTest extends TestCase
             'text/message' => ''
         ];
 
-        $_POST = $data;
-
+        $_POST       = $data;
         $formHandler = new GenericHandler($request, SessionManager::instance());
+        $result      = $formHandler->run();
 
-        $result = $formHandler->run();
-
-        $this->assertFalse($result);
+        $this->assertSame('testError', $result);
         $this->assertTrue(SessionManager::instance()->hasFlashbagErrorsKey('message'));
 
         $errors = SessionManager::instance()->getFlashbag('errors');
 
         $this->assertNotEmpty($errors['message']);
         $this->assertArrayHasKey('message', $errors);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testMissingValidators()
+    {
+        $request = new Request();
+        $request->setMethod('POST');
+
+        $data = [
+            'text/name' => 'Florian Knapp',
+            'email'     => 'test@florianknapp.de',
+            'message'   => ''
+        ];
+
+        $_POST       = $data;
+        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $result      = $formHandler->run();
+
+        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertSame('testSuccess', $result);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testMissingValidator()
+    {
+        $request = new Request();
+        $request->setMethod('POST');
+
+        $data = [
+            'rofl/name'    => 'Florian Knapp',
+            'lol/email'    => 'test@florianknapp.de',
+            'kewl/message' => ''
+        ];
+
+        $_POST       = $data;
+        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $result      = $formHandler->run();
+
+        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertSame('testSuccess', $result);
+    }
+
+    public function testEmailValidator()
+    {
 
     }
 

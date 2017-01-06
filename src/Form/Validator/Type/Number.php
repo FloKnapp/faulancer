@@ -11,9 +11,16 @@ use Faulancer\Form\Validator\AbstractValidator;
 class Number extends AbstractValidator
 {
 
-    public function process(string $data)
+    /** @var string */
+    protected $errorMessage = 'validator_invalid_number';
+
+    /**
+     * @param string $data
+     * @return boolean
+     */
+    public function process($data)
     {
-        // TODO: Implement process() method.
+        return is_int($data) || is_float($data);
     }
 
 }

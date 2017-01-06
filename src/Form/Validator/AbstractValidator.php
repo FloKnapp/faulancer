@@ -16,6 +16,6 @@ abstract class AbstractValidator
         return $this->errorMessage;
     }
 
-    public abstract function process(string $data);
+    public abstract function process($data);
 
 }

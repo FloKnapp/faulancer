@@ -10,12 +10,17 @@ use Faulancer\Form\Validator\AbstractValidator;
  */
 class Text extends AbstractValidator
 {
-    
-    protected $errorMessage = 'Bitte tragen Sie einen Text ein';
 
-    public function process(string $data)
+    /** @var string */
+    protected $errorMessage = 'validator_invalid_text';
+
+    /**
+     * @param string $data
+     * @return boolean
+     */
+    public function process($data)
     {
-        return !empty($data) && is_string($data);
+        return !empty($data) && is_string($data) && !is_numeric($data);
     }
 
 }

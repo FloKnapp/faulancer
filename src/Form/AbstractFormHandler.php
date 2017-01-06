@@ -4,6 +4,8 @@ namespace Faulancer\Form;
 
 use Faulancer\Form\Validator\AbstractValidator;
 use Faulancer\Http\Request;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
@@ -21,6 +23,9 @@ abstract class AbstractFormHandler
 
     /** @var string */
     private $errorUrl;
+
+    /** @var SessionManager */
+    private $sessionManager;
 
     /**
      * AbstractFormHandler constructor.
@@ -93,21 +98,31 @@ abstract class AbstractFormHandler
             $validatorClass = '\Faulancer\Form\Validator\Type\\' . $validator;
 
             if (!class_exists($validatorClass)) {
-                continue;
+
+                /** @var Config $config */
+                $config         = ServiceLocator::instance()->get(Config::class);
+                $nsPrefix       = $config->get('namespacePrefix');
+                $validatorClass = str_replace('Faulancer', $nsPrefix, $validatorClass);
+
+                if (!class_exists($validatorClass)) {
+                    continue;
+                }
+
             }
 
             /** @var AbstractValidator $val */
-            $val = new $validatorClass();
+            $val     = new $validatorClass();
+            $isValid = $val->process($value);
 
-            $result[$name] = [
-                'valid'   => $val->process($value),
-                'message' => $val->getMessage()
-            ];
+            $result[$name]['valid'] = $isValid;
+
+            if (!$isValid) {
+                $result[$name]['message'] = $val->getMessage();
+            }
 
         }
 
         return $result;
-
     }
 
     /**
@@ -142,6 +157,9 @@ abstract class AbstractFormHandler
         $this->errorUrl = $errorUrl;
     }
 
-    protected abstract function run();
+    /**
+     * @return mixed
+     */
+    public abstract function run();
     
 }
