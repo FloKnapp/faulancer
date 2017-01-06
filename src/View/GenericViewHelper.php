@@ -4,6 +4,7 @@ namespace Faulancer\View;
 
 use Faulancer\Security\Csrf;
 use Faulancer\Session\SessionManager;
+use Faulancer\Translate\Translator;
 
 /**
  * Class GenericViewHelper
@@ -144,7 +145,17 @@ class GenericViewHelper
         $error = SessionManager::instance()->getFlashbagError($field);
 
         if (!empty($error)) {
-            return '<div class="form-error ' . $field . '"><span>' . $error . '</span></div>';
+
+            $result = '<div class="form-error ' . $field . '">';
+
+            foreach ($error as $err) {
+                $result .= '<span>' . $err['message'] . '</span>';
+            }
+
+            $result .= '</div>';
+
+            return $result;
+
         }
 
         return false;
@@ -206,14 +217,17 @@ class GenericViewHelper
 
         return false;
     }
+*/
 
-
+    /**
+     * @param string      $string
+     * @param null|string $value
+     * @return string
+     */
     public function translate($string, $value = null)
     {
         $translator = new Translator();
         return $translator->translate($string, $value);
     }
-
-    */
 
 }

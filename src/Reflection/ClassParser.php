@@ -11,6 +11,7 @@ namespace Faulancer\Reflection;
 class ClassParser extends \ReflectionClass
 {
 
+    /** @var string */
     private $className;
 
     public function __construct($argument)
@@ -21,21 +22,19 @@ class ClassParser extends \ReflectionClass
 
     /**
      * @param string $name
-     * @param string $method
      *
      * @return array
      */
-    public function getMethodDoc($name = '', string $method = '')
+    public function getMethodDoc($name = '')
     {
-        $result   = [];
+        $result = [];
 
         foreach ($this->getMethods() as $func) {
 
-            if ('\\' . $func->class !== $this->className) {
-                continue;
+            if ('\\' . $func->class === $this->className) {
+                $result[$this->className][] = $this->extractValues($name, $func->name);
             }
-
-            $result[$this->className][] = $this->extractValues($name, $func->name);
+          
         }
 
         return $result;

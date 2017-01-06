@@ -6,6 +6,7 @@ use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
+use Faulancer\Reflection\ClassParser;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;

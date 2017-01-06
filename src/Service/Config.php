@@ -52,7 +52,7 @@ class Config
             return $this->_config[$key];
         }
 
-        throw new ConfigInvalidException();
+        throw new ConfigInvalidException('No value for key ' . $key . ' found.');
     }
 
 }

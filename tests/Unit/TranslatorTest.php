@@ -2,6 +2,8 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use Faulancer\Translate\Translator;
 use PHPUnit\Framework\TestCase;
@@ -66,6 +68,24 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
 
         $this->assertSame('test_item_55', $translator->translate('test_item_55'));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testTranslationDontExists()
+    {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+        $transFile = $config->get('translationFile');
+        $config->set('translationFile', 'notExistent', true);
+
+        $translator = new Translator();
+        $this->assertFileNotExists($config->get('translationFile'));
+        $this->assertSame('test_item_1', $translator->translate('test_item_1'));
+
+        $config->set('translationFile', $transFile, true);
+
     }
     
 }
