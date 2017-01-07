@@ -4,4 +4,4 @@ composer.phar
 build/logs/*
 tests/Fixture/cache/*
 vendor/*
-.idea
+.idea/

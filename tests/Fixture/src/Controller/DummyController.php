@@ -42,4 +42,9 @@ class DummyController extends Controller
         return 2;
     }
 
+    public function stubWithoutAnnotationAction()
+    {
+        return 3;
+    }
+
 }

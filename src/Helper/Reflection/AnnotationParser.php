@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Reflection;
+namespace Faulancer\Helper\Reflection;
 
 /**
  * Class ClassParser
@@ -8,7 +8,7 @@ namespace Faulancer\Reflection;
  * @package Faulancer\Reflection
  * @author  Florian Knapp <office@florianknapp.de>
  */
-class ClassParser extends \ReflectionClass
+class AnnotationParser extends \ReflectionClass
 {
 
     /** @var string */
@@ -22,7 +22,6 @@ class ClassParser extends \ReflectionClass
 
     /**
      * @param string $name
-     *
      * @return array
      */
     public function getMethodDoc($name = '')
@@ -34,38 +33,42 @@ class ClassParser extends \ReflectionClass
             if ('\\' . $func->class === $this->className) {
                 $result[$this->className][] = $this->extractValues($name, $func->name);
             }
-          
+ 
         }
 
         return $result;
-
     }
 
     /**
      * @param $name
      * @param $method
      *
-     * @return bool
+     * @return array
      */
     private function extractValues($name, $method)
     {
         $arr       = [];
+        $vars      = [];
         $methodDoc = new \ReflectionMethod($this->className, $method);
 
         preg_match('|@' . $name . '(.*)|', $methodDoc->getDocComment(), $arr);
 
-        $var = [];
+        if (empty($arr)) {
+            return [];
+        }
 
-        preg_match('|\((.*)\)|', $arr[1], $var);
+        preg_match('|\((.*)\)|', $arr[1], $vars);
 
         $param = str_replace(
             ['"', ',', ' ', '+'],
             ['', '&', '', '___'],
-            $var[1]
+            $vars[1]
         );
 
+        // Parse uri conform string into key/value pairs
         parse_str($param, $result);
 
+        // Add class and action to result variable
         $result['action'] = $method;
         $result['class']  = $this->className;
 

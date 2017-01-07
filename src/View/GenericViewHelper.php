@@ -105,7 +105,7 @@ class GenericViewHelper
      */
     public function getAssets($type)
     {
-        $result = '%s';
+        $result = '';
 
         switch ($type) {
 

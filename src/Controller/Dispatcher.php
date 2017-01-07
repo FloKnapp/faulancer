@@ -5,9 +5,9 @@ namespace Faulancer\Controller;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Form\AbstractFormHandler;
+use Faulancer\Helper\Reflection\AnnotationParser;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\Reflection\ClassParser;
 use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
@@ -103,7 +103,9 @@ class Dispatcher
 
                 foreach ($methods as $data) {
 
-                    if ($target = $this->getDirectMatch($uri, $data)) {
+                    if (empty($data)) {
+                        break;
+                    } else if ($target = $this->getDirectMatch($uri, $data)) {
                         break;
                     } else if ($target = $this->getVariableMatch($uri, $data)) {
                         break;
@@ -213,7 +215,7 @@ class Dispatcher
             foreach ($files as $file) {
 
                 $class    = '\\' . $namespace . '\\' . str_replace('.php', '', $file);
-                $parser   = new ClassParser($class);
+                $parser   = new AnnotationParser($class);
                 $routes[] = $parser->getMethodDoc('Route');
 
             }

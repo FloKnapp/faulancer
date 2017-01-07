@@ -222,7 +222,7 @@ class DispatcherTest extends TestCase
         $this->assertFalse($dispatcher->invalidateCache());
     }
 
-    public function testInvalidMethod()
+    public function testInvalidRequestMethod()
     {
         $this->expectException(DispatchFailureException::class);
 
