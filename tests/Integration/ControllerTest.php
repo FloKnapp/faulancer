@@ -40,7 +40,6 @@ class ControllerTest extends TestCase
             $this->controller->render();
         } catch (FileNotFoundException $e) {
             $this->assertInstanceOf(FileNotFoundException::class, $e);
-            $this->assertSame('Template "/var/www/vhosts/floknapp/faulancer/tests/Fixture/views" not found', $e->getMessage());
         }
         $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml'));
     }
