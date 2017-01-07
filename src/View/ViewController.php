@@ -51,10 +51,10 @@ class ViewController
         $config = ServiceLocator::instance()->get(Config::class);
 
         if (strpos($template, $config->get('viewsRoot')) === false) {
-            $template = $config->get('viewsRoot') . '/' . $template;
+            $template = $config->get('viewsRoot') . $template;
         }
 
-        if (empty($template) || !file_exists($template)) {
+        if (empty($template) || !file_exists($template) || is_dir($template)) {
             throw new FileNotFoundException('Template "' . $template . '" not found');
         }
 
