@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Test\Unit;
+namespace Faulancer\Test\Integration;
 
 use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Service\Config;

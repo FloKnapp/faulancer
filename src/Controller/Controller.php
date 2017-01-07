@@ -15,6 +15,9 @@ use Faulancer\ServiceLocator\ServiceLocator;
 abstract class Controller
 {
 
+    /** @var array */
+    private $viewArray = [];
+
     /**
      * Returns the service locator
      *
@@ -32,7 +35,16 @@ abstract class Controller
      */
     public function getView()
     {
-        return new ViewController();
+        $calledClass = get_called_class();
+
+        if (in_array($calledClass, array_keys($this->viewArray))) {
+            return $this->viewArray[$calledClass];
+        }
+
+        $viewController = new ViewController();
+        $this->viewArray[$calledClass] = $viewController;
+
+        return $viewController;
     }
 
     /**
