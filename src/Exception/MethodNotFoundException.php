@@ -1,11 +1,14 @@
 <?php
-
+/**
+ * MethodNotFoundException | MethodNotFoundException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
 /**
- * File MethodNotFoundException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class MethodNotFoundException
  */
 class MethodNotFoundException extends \Exception
 {

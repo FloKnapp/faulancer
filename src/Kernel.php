@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class Kernel | File Kernel.php
+ *
+ * @package Faulancer
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer;
 
 use Faulancer\Controller\Dispatcher;
@@ -10,17 +15,21 @@ use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
- * File Kernel.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class Kernel
  */
 class Kernel
 {
 
-    /** @var Request */
+    /**
+     * The current request object
+     * @var Request
+     */
     protected $request;
 
-    /** @var boolean */
+    /**
+     * Enable/disable route cache
+     * @var boolean
+     */
     protected $routeCacheEnabled;
 
     /**
@@ -38,6 +47,7 @@ class Kernel
     }
 
     /**
+     * Initialize the application
      * @return mixed
      * @throws Exception\ConfigInvalidException
      */

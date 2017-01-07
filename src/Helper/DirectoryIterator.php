@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class DirectoryIterator
+ *
+ * @package Faulancer\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Helper;
 
 use Faulancer\Exception\ConstantMissingException;
@@ -8,20 +13,25 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class DirectoryIterator
- *
- * @package src\Helper
- * @author  Florian Knapp <office@florianknapp.de>
  */
 class DirectoryIterator
 {
 
+    /**
+     * The directories files
+     * @var array
+     */
     private static $files = [];
 
+    /**
+     * The initial directory
+     * @var string
+     */
     private static $defaultDirectory = '/Controller';
 
     /**
+     * Get files from directory
      * @param string $dir
-     *
      * @return array
      * @throws ConstantMissingException
      */
@@ -54,7 +64,6 @@ class DirectoryIterator
         }
 
         return self::$files;
-
     }
 
 }

@@ -1,13 +1,16 @@
 <?php
-
+/**
+ * Class ORM | ORM.php
+ *
+ * @package Faulancer\ORM
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\ORM;
 
 use ORM\EntityManager;
 
 /**
- * File ORM.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class ORM
  */
 class ORM extends EntityManager
 {

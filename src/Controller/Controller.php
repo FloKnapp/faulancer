@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class Controller
+ *
+ * @package Faulancer\Controller
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Controller;
 
 use Faulancer\ORM\ORM;
@@ -8,14 +13,14 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class Controller
- *
- * @package Faulancer\Controller
- * @author Florian Knapp <office@florianknapp.de>
  */
 abstract class Controller
 {
 
-    /** @var array */
+    /**
+     * Holds the views per controller request
+     * @var array
+     */
     private $viewArray = [];
 
     /**

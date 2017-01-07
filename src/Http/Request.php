@@ -1,26 +1,38 @@
 <?php
-
-namespace Faulancer\Http;
-
 /**
  * Class Request
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
  */
+namespace Faulancer\Http;
+
+/**
+ * Class Request
+ */
 class Request extends AbstractHttp
 {
 
-    /** @var string */
+    /**
+     * The current path string
+     * @var string
+     */
     protected $uri = '';
 
-    /** @var string */
+    /**
+     * The current method
+     * @var string
+     */
     protected $method = '';
 
-    /** @var string */
+    /**
+     * The current query string
+     * @var string
+     */
     protected $query = '';
 
     /**
+     * Set attributes automatically
      * @return void
      */
     public function createFromHeaders()
@@ -38,6 +50,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Set uri path
      * @param string $uri
      */
     public function setUri(string $uri)
@@ -46,6 +59,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Get uri path
      * @return string
      */
     public function getUri()
@@ -54,6 +68,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Set method
      * @param string $method
      */
     public function setMethod(string $method)
@@ -62,6 +77,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Get method
      * @return string
      */
     public function getMethod()
@@ -70,6 +86,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Set query string
      * @param string $query
      */
     public function setQuery($query)
@@ -78,6 +95,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Get query string
      * @return string
      */
     public function getQuery()
@@ -86,6 +104,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Determine if it's a post request
      * @return boolean
      */
     public function isPost()
@@ -94,6 +113,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Determine if it's a get request
      * @return boolean
      */
     public function isGet()
@@ -102,6 +122,7 @@ class Request extends AbstractHttp
     }
 
     /**
+     * Return the post data
      * @return array
      */
     public function getPostData()

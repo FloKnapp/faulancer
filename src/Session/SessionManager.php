@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Class SessionManager | SessionManager.php
+ *
+ * @package Faulancer\Session;
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Session;
 
+/**
+ * Class SessionManager
+ */
 class SessionManager
 {
 
-    /** @var self */
+    /**
+     * This instance
+     * @var self
+     */
     protected static $instance;
 
     /**
@@ -19,6 +30,7 @@ class SessionManager
     }
 
     /**
+     * Return self
      * @return self
      */
     public static function instance()
@@ -30,6 +42,7 @@ class SessionManager
     }
 
     /**
+     * Start session handler
      * @return void
      */
     private function startSession()
@@ -38,6 +51,7 @@ class SessionManager
     }
 
     /**
+     * Check if session exists
      * @return boolean
      */
     public function hasSession()
@@ -50,6 +64,7 @@ class SessionManager
     }
 
     /**
+     * Set session key with value
      * @param string $key
      * @param string|array $value
      */
@@ -59,6 +74,7 @@ class SessionManager
     }
 
     /**
+     * Get session value by key
      * @param string $key
      * @return null|string|array
      */
@@ -72,6 +88,7 @@ class SessionManager
     }
 
     /**
+     * Delete session value by key
      * @param string $key
      * @return boolean
      */
@@ -87,6 +104,7 @@ class SessionManager
     }
 
     /**
+     * Check if flashbag key exists
      * @param string $key
      * @return boolean
      */
@@ -96,6 +114,7 @@ class SessionManager
     }
 
     /**
+     * Check if flashbag error key exists
      * @param string $key
      * @return boolean
      */
@@ -105,6 +124,7 @@ class SessionManager
     }
 
     /**
+     * Set flashbag value by key
      * @param string|array      $key
      * @param null|string|array $value
      * @return boolean
@@ -127,6 +147,7 @@ class SessionManager
     }
 
     /**
+     * Get flashbag value by key
      * @param string $key
      * @return null|string|array
      */
@@ -144,6 +165,7 @@ class SessionManager
     }
 
     /**
+     * Get flashbag error by key
      * @param string $key
      * @return null|string|array
      */
@@ -161,6 +183,7 @@ class SessionManager
     }
 
     /**
+     * Set form data in session flashbag
      * @param array $formData
      */
     public function setFlashbagFormData(array $formData)
@@ -171,6 +194,7 @@ class SessionManager
     }
 
     /**
+     * Get form data from session flashbag
      * @param string $key
      * @return null|array|string
      */

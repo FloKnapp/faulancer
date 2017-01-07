@@ -1,11 +1,14 @@
 <?php
-
+/**
+ * Class ServiceNotFoundException | ServiceNotFoundException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
 /**
- * File ServiceNotFoundException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class ServiceNotFoundException
  */
 class ServiceNotFoundException extends \Exception
 {

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class ServiceLocator | ServiceLocator.php
+ *
+ * @package Faulancer\ServiceLocator
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\ServiceLocator;
 
 use Faulancer\Exception\FactoryMayIncompatibleException;
@@ -7,16 +12,19 @@ use Faulancer\Exception\ServiceNotFoundException;
 
 /**
  * Class ServiceLocator
- *
- * @package Faulancer\ServiceLocator
- * @author Florian Knapp <office@florianknapp.de>
  */
 class ServiceLocator implements ServiceLocatorInterface {
 
-    /** @var ServiceLocator */
+    /**
+     * Holds the service locator instance
+     * @var ServiceLocator
+     */
     private static $instance = null;
 
-    /** @var array */
+    /**
+     * Holds the requested services
+     * @var array
+     */
     private static $services = [];
 
     /**
@@ -25,6 +33,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     private function __construct() {}
 
     /**
+     * Return the instance of the service locator
      * @return ServiceLocator
      */
     public static function instance()
@@ -66,6 +75,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     }
 
     /**
+     * Get specific service by class name
      * @param  string $service
      * @return mixed
      * @throws ServiceNotFoundException
@@ -81,7 +91,6 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Check if we have a factory for this service
-     *
      * @param string $service
      * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
@@ -109,6 +118,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     }
 
     /**
+     * Reset the service locators instance
      * @internal
      */
     public static function destroy()

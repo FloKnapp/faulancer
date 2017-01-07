@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class ViewController | ViewController.php
+ *
+ * @package Faulancer\View
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\View;
 
 use Faulancer\Exception\ClassNotFoundException;
@@ -9,95 +14,79 @@ use Faulancer\Exception\ViewHelperIncompatibleException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
+/**
+ * Class ViewController
+ */
 class ViewController
 {
 
-    /** @var array */
+    /**
+     * Holds the view variables
+     * @var array
+     */
     private $variable           = [];
 
-    /** @var string */
+    /**
+     * Holds the view template
+     * @var string
+     */
     private $template           = "";
 
-    /** @var ViewController */
+    /**
+     * Holds the parent template
+     * @var ViewController
+     */
     private $extendedTemplate   = null;
 
-    /** @var array */
-    private $assetStylesheets   = [];
-
-    /** @var array */
-    private $assetScripts       = [];
-
     /**
+     * Set template for this view
      * @param string $template
-     * @throws FileNotFoundException
      * @return $this
      * @throws ConstantMissingException
+     * @throws FileNotFoundException
      */
     public function setTemplate(string $template = '')
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
-        if (empty($template)) {
-            throw new FileNotFoundException('Template name missing');
-        }
-
         if (strpos($template, $config->get('viewsRoot')) === false) {
             $template = $config->get('viewsRoot') . '/' . $template;
         }
 
-        $this->template = $template;
-
-        if (!file_exists($this->template)) {
-            throw new FileNotFoundException('Template "' . $this->template . '" not found');
+        if (empty($template) || !file_exists($template)) {
+            throw new FileNotFoundException('Template "' . $template . '" not found');
         }
+
+        $this->template = $template;
 
         return $this;
     }
 
     /**
+     * Add javascript from outside
      * @param string $file
      * @return $this
      */
     public function addScript(string $file)
     {
-        $this->assetScripts[] = $file;
+        $this->variable['assetsJs'][] = $file;
         return $this;
     }
 
     /**
+     * Add stylesheet from outside
      * @param string $file
      * @return $this
      */
     public function addStylesheet(string $file)
     {
-        $this->assetStylesheets[] = $file;
+        $this->variable['assetsCss'][] = $file;
         return $this;
     }
 
     /**
-     * @param array $assets
-     *
-     * @return $this
-     */
-    public function setAssetsJs(array $assets)
-    {
-        $this->setVariable('assetsJs', $assets);
-        return $this;
-    }
-
-    /**
-     * @param array $assets
-     *
-     * @return $this
-     */
-    public function setAssetsCss(array $assets)
-    {
-        $this->setVariable('assetsCss', $assets);
-        return $this;
-    }
-
-    /**
+     * Return current template
      * @return string
      */
     public function getTemplate()
@@ -106,6 +95,7 @@ class ViewController
     }
 
     /**
+     * Set a single variable
      * @param string $key
      * @param string|array $value
      */
@@ -115,6 +105,7 @@ class ViewController
     }
 
     /**
+     * Get a single variable
      * @param $key
      * @return boolean|string|array
      */
@@ -128,6 +119,7 @@ class ViewController
     }
 
     /**
+     * Check if variable exists
      * @param string $key
      * @return bool
      */
@@ -141,6 +133,7 @@ class ViewController
     }
 
     /**
+     * Set many variables at once
      * @param array $variables
      * @return ViewController $this
      */
@@ -154,6 +147,7 @@ class ViewController
     }
 
     /**
+     * Get all variables
      * @return array
      */
     public function getVariables()
@@ -162,6 +156,7 @@ class ViewController
     }
 
     /**
+     * Define parent template
      * @param ViewController $view
      */
     public function setExtendedTemplate(ViewController $view)
@@ -170,6 +165,7 @@ class ViewController
     }
 
     /**
+     * Get parent template
      * @return ViewController
      */
     public function getExtendedTemplate()
@@ -178,6 +174,7 @@ class ViewController
     }
 
     /**
+     * Strip spaces and tabs from output
      * @param $output
      * @return string
      */
@@ -187,6 +184,7 @@ class ViewController
     }
 
     /**
+     * Render the current view
      * @return string
      */
     public function render()
@@ -205,7 +203,7 @@ class ViewController
         ob_end_clean();
 
         if( $this->getExtendedTemplate() instanceof ViewController ) {
-            return $this->cleanOutput($this->getExtendedTemplate()->setVariables($this->getVariables())->setAssetsJs($this->assetScripts)->setAssetsCss($this->assetStylesheets)->render());
+            return $this->cleanOutput($this->getExtendedTemplate()->setVariables($this->getVariables())->render());
         } else {
             return $this->cleanOutput($content);
         }
@@ -213,10 +211,9 @@ class ViewController
 
     /**
      * Magic method for providing a view helper
-     *
      * @param $name
      * @param $arguments
-     * @return null
+     * @return AbstractViewHelper
      * @throws FileNotFoundException
      * @throws ViewHelperIncompatibleException
      * @throws ClassNotFoundException
@@ -237,6 +234,7 @@ class ViewController
 
         if (method_exists($className, '__construct')) {
             $ref = new \ReflectionClass($className);
+            /** @var AbstractViewHelper $class */
             $class = $ref->newInstanceArgs($arguments);
             return $class;
         }
@@ -244,10 +242,6 @@ class ViewController
         if (method_exists($className, '__toString')) {
             return new $className();
         }
-
-        //if (method_exists($className, '__toString')) {
-        //    return call_user_func_array([new $className, '__invoke'], $arguments);
-        //}
 
         throw new ViewHelperIncompatibleException('No compatible methods found');
     }

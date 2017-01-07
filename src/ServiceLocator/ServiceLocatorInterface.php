@@ -1,13 +1,15 @@
 <?php
-
-namespace Faulancer\ServiceLocator;
-
 /**
- * Interface ServiceLocatorInterface
+ * Interface ServiceLocatorInterface | ServiceLocatorInterface.php
  *
  * @package Faulancer\ServiceLocator
  * @author Florian Knapp <office@florianknapp.de>
  *
+ */
+namespace Faulancer\ServiceLocator;
+
+/**
+ * Interface ServiceLocatorInterface
  */
 interface ServiceLocatorInterface
 {
