@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Class AbstractViewHelper
+ *
+ * @method  __invoke()
+ * @package Faulancer\View
+ * @author  Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\View;
 
 use Faulancer\Exception\ConstantMissingException;
@@ -8,15 +14,12 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractViewHelper
- *
- * @method  __invoke()
- * @package Faulancer\View
- * @author  Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractViewHelper
 {
 
     /**
+     * Render a view with given template and variables
      * @param  string $template
      * @param  array  $variables
      * @return string
@@ -33,6 +36,7 @@ abstract class AbstractViewHelper
     }
 
     /**
+     * Get instance of service locator
      * @return ServiceLocator
      */
     public function getServiceLocator()
@@ -41,6 +45,7 @@ abstract class AbstractViewHelper
     }
 
     /**
+     * If view helper gets outputted return content
      * @return string
      */
     public function __toString()

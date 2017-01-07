@@ -1,11 +1,14 @@
 <?php
-
+/**
+ * Class ViewHelperIncompatibleException | ViewHelperIncompatibleException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
 /**
- * File ViewHelperIncompatibleException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class ViewHelperIncompatibleException
  */
 class ViewHelperIncompatibleException extends \Exception
 {

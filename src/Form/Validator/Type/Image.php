@@ -1,20 +1,28 @@
 <?php
-
+/**
+ * Class Image
+ * @package Faulancer\Form\Validator\Type
+ */
 namespace Faulancer\Form\Validator\Type;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class Image
- * @package Faulancer\Form\Validator\Type
  */
 class Image extends AbstractValidator
 {
 
-    /** @var string */
+    /**
+     * The error message as key for translation
+     * @var string
+     */
     protected $errorMessage = 'validator_invalid_image_type';
 
-    /** @var array */
+    /**
+     * Valid image mime-types
+     * @var array
+     */
     private $validImageMimeTypes = [
         'image/jpg',
         'image/jpeg',
@@ -27,6 +35,7 @@ class Image extends AbstractValidator
     ];
 
     /**
+     * Validate image type within it's mime-type
      * @param string $data
      * @return boolean
      */

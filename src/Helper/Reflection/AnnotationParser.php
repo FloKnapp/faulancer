@@ -1,19 +1,28 @@
 <?php
-
-namespace Faulancer\Helper\Reflection;
-
 /**
  * Class ClassParser
  *
- * @package Faulancer\Reflection
+ * @package Faulancer\Helper\Reflection
  * @author  Florian Knapp <office@florianknapp.de>
+ */
+namespace Faulancer\Helper\Reflection;
+
+/**
+ * Class AnnotationParser
  */
 class AnnotationParser extends \ReflectionClass
 {
 
-    /** @var string */
+    /**
+     * The class name which should be parsed
+     * @var string
+     */
     private $className;
 
+    /**
+     * AnnotationParser constructor.
+     * @param mixed $argument
+     */
     public function __construct($argument)
     {
         parent::__construct($argument);
@@ -21,7 +30,8 @@ class AnnotationParser extends \ReflectionClass
     }
 
     /**
-     * @param string $name
+     * Get class methods
+     * @param string $name The name of the annotation
      * @return array
      */
     public function getMethodDoc($name = '')
@@ -40,9 +50,9 @@ class AnnotationParser extends \ReflectionClass
     }
 
     /**
-     * @param $name
-     * @param $method
-     *
+     * Extract values from annotation
+     * @param string $name   The annotations name
+     * @param string $method The method name
      * @return array
      */
     private function extractValues($name, $method)

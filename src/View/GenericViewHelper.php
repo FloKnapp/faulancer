@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class GenericViewHelper
+ *
+ * @package Faulancer\View
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\View;
 
 use Faulancer\Security\Csrf;
@@ -8,20 +13,26 @@ use Faulancer\Translate\Translator;
 
 /**
  * Class GenericViewHelper
- *
- * @package Faulancer\View
- * @author Florian Knapp <office@florianknapp.de>
  */
 class GenericViewHelper
 {
 
-    /** @var ViewController $view */
+    /**
+     * Instance of view controller
+     * @var ViewController $view
+     */
     private $view;
 
-    /** @var string $blockName */
+    /**
+     * The block name
+     * @var string $blockName
+     */
     private $blockName;
 
-    /** @var string $blockContent */
+    /**
+     * The block content
+     * @var string $blockContent
+     */
     private $blockContent;
 
     /**
@@ -34,6 +45,7 @@ class GenericViewHelper
     }
 
     /**
+     * Render view
      * @param string $template
      * @param array $variables
      * @return string
@@ -47,6 +59,7 @@ class GenericViewHelper
     }
 
     /**
+     * Set parent template
      * @param string $template
      */
     public function extendsTemplate(string $template)
@@ -57,7 +70,8 @@ class GenericViewHelper
     }
 
     /**
-     * @param string $name
+     * Set block
+     * @param string $name The block name
      */
     public function block(string $name = "")
     {
@@ -78,8 +92,9 @@ class GenericViewHelper
     }
 
     /**
-     * @param string $name
-     * @param string $default
+     * Return block contents
+     * @param string $name    The block name
+     * @param string $default The default value
      * @return string
      */
     public function renderBlock(string $name, string $default = "")
@@ -91,6 +106,7 @@ class GenericViewHelper
     }
 
     /**
+     * Strip slashes from value
      * @param string $string
      * @return string
      */
@@ -100,12 +116,14 @@ class GenericViewHelper
     }
 
     /**
+     * Get assets by type
      * @param $type
      * @return string
      */
     public function getAssets($type)
     {
-        $result = '';
+        $result  = '';
+        $pattern = '';
 
         switch ($type) {
 
@@ -129,6 +147,7 @@ class GenericViewHelper
     }
 
     /**
+     * Generate a CSRF token
      * @return string
      */
     public function generateCsrfToken()
@@ -137,6 +156,7 @@ class GenericViewHelper
     }
 
     /**
+     * Get form error by input field
      * @param $field
      * @return bool|string
      */
@@ -162,6 +182,7 @@ class GenericViewHelper
     }
 
     /**
+     * Check if form error exists
      * @param $field
      * @return boolean
      */
@@ -171,6 +192,7 @@ class GenericViewHelper
     }
 
     /**
+     * Get form data for specific input field
      * @param $key
      * @return array|null|string
      */
@@ -180,51 +202,12 @@ class GenericViewHelper
     }
 
     /**
-     * @param $routeName
-     * @param $parameter
-     * @param bool $absolute
-     * @return string|boolean
-     */
-    /*
-    public function url($routeName, $parameter = [], $absolute = false)
-    {
-        $config = Config::get('routes');
-
-        if (isset($config[$routeName]) || $routeName === null) {
-
-            if ($routeName === null) {
-                $url = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
-            } else {
-                $url = $config[$routeName]['route'];
-            }
-
-            if ($absolute === true) {
-                $url = HOSTNAME . $url;
-            }
-
-            if (is_array($parameter) && !empty($parameter)) {
-
-                if (strpos($parameter[0], '=') !== false) {
-                    return $url . '?' . $parameter[0];
-                }
-
-                $params = implode('/', $parameter);
-                return $url . '/' . $params;
-            }
-
-            return $config[$routeName]['route'];
-        }
-
-        return false;
-    }
-*/
-
-    /**
-     * @param string      $string
-     * @param null|string $value
+     * Translate key
+     * @param string $string The key which holds the translated value
+     * @param array  $value  The variable content for the placeholder
      * @return string
      */
-    public function translate($string, $value = null)
+    public function translate($string, $value = [])
     {
         $translator = new Translator();
         return $translator->translate($string, $value);

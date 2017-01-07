@@ -1,11 +1,14 @@
 <?php
-
+/**
+ * Class FileIncludeException | FileIncludeException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
 /**
- * File FileIncludeException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class FileIncludeException
  */
 class FileIncludeException extends \Exception
 {

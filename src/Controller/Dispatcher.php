@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class Dispatcher
+ *
+ * @package Faulancer\Controller
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
@@ -15,14 +20,14 @@ use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
- *
- * @package Controller
- * @author Florian Knapp <office@florianknapp.de>
  */
 class Dispatcher
 {
 
-    /** @var Request */
+    /**
+     * The current request object
+     * @var Request
+     */
     protected $request;
 
     /**
@@ -226,6 +231,8 @@ class Dispatcher
     }
 
     /**
+     * Detect a form request
+     *
      * @return boolean
      */
     private function handleFormRequest()

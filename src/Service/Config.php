@@ -1,25 +1,32 @@
 <?php
-
+/**
+ * Config.php
+ *
+ * @package Faulancer\Service
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Service;
 
 use Faulancer\Exception\ConfigInvalidException;
 
 /**
- * File Config.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Represents a configuration array
  */
 class Config
 {
 
-    /** @var array */
+    /**
+     * Holds the configuration data
+     * @var array
+     */
     protected $_config = [];
 
     /**
+     * Set configuration value by key
+     *
      * @param string $key
      * @param mixed  $value
      * @param boolean $force
-     *
      * @return boolean
      * @throws ConfigInvalidException
      */
@@ -41,8 +48,8 @@ class Config
     }
 
     /**
+     * Get configuration value by key
      * @param string $key
-     *
      * @return mixed
      * @throws ConfigInvalidException
      */

@@ -1,34 +1,38 @@
 <?php
-
-namespace Faulancer\Http;
-
 /**
  * Class Client
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
  */
+namespace Faulancer\Http;
+
+/**
+ * Class Client
+ */
 class Client
 {
 
     /**
-     * @param string   $url
-     * @param string[] $headers
+     * Get resource by uri
+     * @param string   $uri     The uri
+     * @param string[] $headers Custom headers
      * @return string
      */
-    public static function get($url, $headers = [])
+    public static function get($uri, $headers = [])
     {
-        return self::sendCurl($url, $headers);
+        return self::sendCurl($uri, $headers);
     }
 
     /**
-     * @param string   $url
+     * Send request through curl
+     * @param string   $uri
      * @param string[] $headers
      * @return string
      */
-    protected static function sendCurl($url, $headers)
+    protected static function sendCurl($uri, $headers)
     {
-        $ch = curl_init($url);
+        $ch = curl_init($uri);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 

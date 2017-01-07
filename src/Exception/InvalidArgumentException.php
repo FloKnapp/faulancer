@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * Class InvalidArgumentException | InvalidArgumentException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
-
 /**
- * File InvalidArgumentException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class InvalidArgumentException
  */
 class InvalidArgumentException extends \Exception
 {

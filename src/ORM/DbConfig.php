@@ -1,13 +1,16 @@
 <?php
-
+/**
+ * Class DbConfig | DbConfig.php
+ *
+ * @package Faulancer\ORM
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\ORM;
 
 use ORM\DbConfig as ORMDbConfig;
 
 /**
- * File DbConfig.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class DbConfig
  */
 class DbConfig extends ORMDbConfig
 {

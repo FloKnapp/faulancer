@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * Class DispatchFailureException | DispatchFailureException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
-
 /**
- * File DispatchFailureException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class DispatchFailureException
  */
 class DispatchFailureException extends \Exception
 {

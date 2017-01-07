@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * Class FileNotFoundException | FileNotFoundException.php
+ *
+ * @package Faulancer\Exception
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Exception;
 
-
 /**
- * File FileNotFoundException.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * Class FileNotFoundException
  */
 class FileNotFoundException extends \Exception
 {
