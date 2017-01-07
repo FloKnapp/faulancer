@@ -205,10 +205,10 @@
 </span><span id="51" class="l">        <span class="php-var">$config</span> = ServiceLocator::instance()-&gt;get(Config::<span class="php-keyword1">class</span>);
 </span><span id="52" class="l">
 </span><span id="53" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword2">strpos</span>(<span class="php-var">$template</span>, <span class="php-var">$config</span>-&gt;get(<span class="php-quote">'viewsRoot'</span>)) === <span class="php-keyword1">false</span>) {
-</span><span id="54" class="l">            <span class="php-var">$template</span> = <span class="php-var">$config</span>-&gt;get(<span class="php-quote">'viewsRoot'</span>) . <span class="php-quote">'/'</span> . <span class="php-var">$template</span>;
+</span><span id="54" class="l">            <span class="php-var">$template</span> = <span class="php-var">$config</span>-&gt;get(<span class="php-quote">'viewsRoot'</span>) . <span class="php-var">$template</span>;
 </span><span id="55" class="l">        }
 </span><span id="56" class="l">
-</span><span id="57" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$template</span>) || !<span class="php-keyword2">file_exists</span>(<span class="php-var">$template</span>)) {
+</span><span id="57" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$template</span>) || !<span class="php-keyword2">file_exists</span>(<span class="php-var">$template</span>) || <span class="php-keyword2">is_dir</span>(<span class="php-var">$template</span>)) {
 </span><span id="58" class="l">            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> FileNotFoundException(<span class="php-quote">'Template &quot;'</span> . <span class="php-var">$template</span> . <span class="php-quote">'&quot; not found'</span>);
 </span><span id="59" class="l">        }
 </span><span id="60" class="l">
