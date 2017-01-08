@@ -1,18 +1,18 @@
 <?php
 /**
- * Class ORM | ORM.php
+ * Class ORM | EntityManager.php
  *
  * @package Faulancer\ORM
  * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\ORM;
 
-use ORM\EntityManager;
+use ORM\EntityManager as ORMEntityManager;
 
 /**
  * Class ORM
  */
-class ORM extends EntityManager
+class EntityManager extends ORMEntityManager
 {
 
 }
