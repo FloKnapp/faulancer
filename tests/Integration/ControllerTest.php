@@ -4,6 +4,7 @@ namespace Faulancer\Test\Integration;
 
 use Faulancer\Controller\Controller;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\ORM\EntityManager;
 use Faulancer\ORM\ORM;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +32,7 @@ class ControllerTest extends TestCase
 
     public function testGetOrm()
     {
-        $this->assertInstanceOf(ORM::class, $this->controller->getDatabase());
+        $this->assertInstanceOf(EntityManager::class, $this->controller->getDatabase());
     }
 
     public function testRender()
