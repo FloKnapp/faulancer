@@ -1,12 +1,14 @@
 <?php
-
-namespace Faulancer\ServiceLocator;
-
 /**
  * Interface FactoryInterface
  *
  * @package Faulancer\ServiceLocator
  * @author Florian Knapp <office@florianknapp.de>
+ */
+namespace Faulancer\ServiceLocator;
+
+/**
+ * Interface FactoryInterface
  */
 interface FactoryInterface
 {

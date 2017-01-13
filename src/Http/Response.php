@@ -1,12 +1,14 @@
 <?php
-
-namespace Faulancer\Http;
-
 /**
  * Class Response
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
+ */
+namespace Faulancer\Http;
+
+/**
+ * Class Response
  */
 class Response extends AbstractHttp
 {
@@ -33,13 +35,20 @@ class Response extends AbstractHttp
         507 => 'Insufficient Storage',
     ];
 
-    /** @var integer */
+    /**
+     * The status code (default: 200)
+     * @var integer
+     */
     protected $code = 200;
 
-    /** @var string */
+    /**
+     * The response body
+     * @var string
+     */
     protected $content;
 
     /**
+     * Set response code
      * @param integer $code
      */
     public function setCode(int $code = 200)
@@ -48,6 +57,7 @@ class Response extends AbstractHttp
     }
 
     /**
+     * Get response code
      * @return integer
      */
     public function getCode()
@@ -56,6 +66,7 @@ class Response extends AbstractHttp
     }
 
     /**
+     * Set response body
      * @param $content
      */
     public function setContent($content)
@@ -64,6 +75,7 @@ class Response extends AbstractHttp
     }
 
     /**
+     * Get response body and set headers
      * @return string
      */
     public function getContent()
@@ -74,6 +86,10 @@ class Response extends AbstractHttp
         return $this->content;
     }
 
+    /**
+     * If object is getting outputted
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->getContent();

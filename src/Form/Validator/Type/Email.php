@@ -1,20 +1,26 @@
 <?php
-
+/**
+ * Class Email | Email.php
+ * @package Faulancer\Form\Validator\Type
+ */
 namespace Faulancer\Form\Validator\Type;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class Email
- * @package Faulancer\Form\Validator\Type
  */
 class Email extends AbstractValidator
 {
 
-    /** @var string */
+    /**
+     * The error message as key for translation
+     * @var string
+     */
     protected $errorMessage = 'validator_invalid_email';
 
     /**
+     * Validate email with filter_var
      * @param $data
      * @return boolean
      */

@@ -106,8 +106,13 @@ class ViewTest extends TestCase
             'script5.js'
         ];
 
-        $view->setAssetsCss($css);
-        $view->setAssetsJs($js);
+        foreach ($css as $stylesheet) {
+            $view->addStylesheet($stylesheet);
+        }
+
+        foreach ($js as $javascript) {
+            $view->addScript($javascript);
+        }
 
         $viewHelper = new GenericViewHelper($view);
 

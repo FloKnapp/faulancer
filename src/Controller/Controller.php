@@ -1,21 +1,26 @@
 <?php
-
-namespace Faulancer\Controller;
-
-use Faulancer\ORM\ORM;
-use Faulancer\View\ViewController;
-use Faulancer\ServiceLocator\ServiceLocator;
-
 /**
  * Class Controller
  *
  * @package Faulancer\Controller
  * @author Florian Knapp <office@florianknapp.de>
  */
+namespace Faulancer\Controller;
+
+use Faulancer\ORM\EntityManager;
+use Faulancer\View\ViewController;
+use Faulancer\ServiceLocator\ServiceLocator;
+
+/**
+ * Class Controller
+ */
 abstract class Controller
 {
 
-    /** @var array */
+    /**
+     * Holds the views per controller request
+     * @var array
+     */
     private $viewArray = [];
 
     /**
@@ -50,11 +55,11 @@ abstract class Controller
     /**
      * Returns the orm/entity manager
      *
-     * @return ORM
+     * @return EntityManager
      */
     public function getDatabase()
     {
-        return $this->getServiceLocator()->get(ORM::class);
+        return $this->getServiceLocator()->get(EntityManager::class);
     }
 
     /**

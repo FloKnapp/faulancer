@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Class AbstractFormHandler | AbstractFormHandler.php
+ * @package Faulancer\Form
+ */
 namespace Faulancer\Form;
 
 use Faulancer\Form\Validator\AbstractValidator;
@@ -9,22 +12,33 @@ use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
- * Class FormHandler
- * @package Faulancer\Form
+ * Class AbstractFormHandler
  */
 abstract class AbstractFormHandler
 {
 
-    /** @var Request */
+    /**
+     * Holds the request object
+     * @var Request
+     */
     private $request;
 
-    /** @var string */
+    /**
+     * Holds the success url where can be redirect to after success
+     * @var string
+     */
     private $successUrl;
 
-    /** @var string */
+    /**
+     * Holds the error url where can be redirect to after failed validation
+     * @var string
+     */
     private $errorUrl;
 
-    /** @var SessionManager */
+    /**
+     * Holds the session manager
+     * @var SessionManager
+     */
     private $sessionManager;
 
     /**
@@ -40,6 +54,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Return the called form handler
      * @return self
      */
     protected function getForm()
@@ -48,6 +63,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Check data validity
      * @return boolean
      */
     protected function isValid()
@@ -78,6 +94,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Validate with the defined validators
      * @return array
      */
     private function validate()
@@ -94,7 +111,6 @@ abstract class AbstractFormHandler
 
             $parts      = explode('/', $key);
             $validator  = ucfirst($parts[0]);
-            $name       = $parts[1];
             $value      = $data;
 
             $validatorClass = '\Faulancer\Form\Validator\Type\\' . $validator;
@@ -128,6 +144,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Returns the success url
      * @return string
      */
     protected function getSuccessUrl()
@@ -136,6 +153,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Set the success url
      * @param string $successUrl
      */
     protected function setSuccessUrl(string $successUrl)
@@ -144,6 +162,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Return the error url
      * @return string
      */
     protected function getErrorUrl()
@@ -152,6 +171,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Set the error url
      * @param string $errorUrl
      */
     protected function setErrorUrl(string $errorUrl)
@@ -160,6 +180,7 @@ abstract class AbstractFormHandler
     }
 
     /**
+     * Init method which must be implemented
      * @return mixed
      */
     public abstract function run();

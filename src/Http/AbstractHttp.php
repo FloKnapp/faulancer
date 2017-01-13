@@ -1,22 +1,28 @@
 <?php
-
-namespace Faulancer\Http;
-
-use Faulancer\Session\SessionManager;
-
 /**
  * Class AbstractHttp
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
  */
+namespace Faulancer\Http;
+
+use Faulancer\Session\SessionManager;
+
+/**
+ * Class AbstractHttp
+ */
 abstract class AbstractHttp
 {
 
-    /** @var SessionManager */
+    /**
+     * The session manager
+     * @var SessionManager
+     */
     protected $session;
 
     /**
+     * Set session manager
      * @param SessionManager $session
      */
     public function setSession(SessionManager $session)
@@ -25,6 +31,7 @@ abstract class AbstractHttp
     }
 
     /**
+     * Get current session manager
      * @return SessionManager
      */
     public function getSession()

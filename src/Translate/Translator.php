@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Class Translator | Translator.php
+ *
+ * @package Faulancer\Translate
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Translate;
 
 use Faulancer\Service\Config;
@@ -7,18 +12,21 @@ use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
- * File Translator.php
- *
- * @author Florian Knapp <office@florianknapp.de>
- *
+ * Class Translator
  */
 class Translator
 {
 
-    /** @var array */
+    /**
+     * Holds the translation data
+     * @var array
+     */
     protected $config = [];
 
-    /** @var string */
+    /**
+     * Holds the current language key
+     * @var string
+     */
     protected $language;
 
     /**
@@ -44,6 +52,7 @@ class Translator
     }
 
     /**
+     * Translate given key
      * @param string $key
      * @param array  $value
      * @return string

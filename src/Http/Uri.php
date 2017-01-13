@@ -1,21 +1,24 @@
 <?php
-
+/**
+ * Class Uri
+ *
+ * @package Faulancer\Http
+ * @author Florian Knapp <office@florianknapp.de>
+ */
 namespace Faulancer\Http;
 
 use Faulancer\Exception\InvalidArgumentException;
 
 /**
  * Class Uri
- *
- * @package Core\Utility
- * @author Florian Knapp <office@florianknapp.de>
  */
 class Uri
 {
 
     /**
-     * @param string  $location
-     * @param integer $code
+     * Redirect to specific uri path
+     * @param string  $location The path as string
+     * @param integer $code     The status code
      * @return mixed
      * @throws InvalidArgumentException
      */
@@ -34,7 +37,9 @@ class Uri
     }
 
     /**
+     * Workaround to mock this method in phpunit
      * @codeCoverageIgnore
+     * @return void
      */
     public function terminate()
     {
