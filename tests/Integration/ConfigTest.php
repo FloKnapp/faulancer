@@ -108,4 +108,18 @@ class ConfigTest extends TestCase
         $this->assertInstanceOf(Config::class, $factory);
     }
 
+    public function testGetRecursive()
+    {
+        /** @var Config $config */
+        $config = $this->serviceLocator->get(Config::class);
+        $this->assertSame('test', $config->get('recursiveTest:layer:layer2'));
+    }
+
+    public function testGetRecursiveNonExistent()
+    {
+        /** @var Config $config */
+        $config = $this->serviceLocator->get(Config::class);
+        $this->assertEmpty($config->get('recursiveTest:layer:layer2:layerNonExistent'));
+    }
+
 }

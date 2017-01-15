@@ -12,7 +12,4 @@ use ORM\Entity as ORMEntity;
 /**
  * Class Entity
  */
-class Entity extends ORMEntity
-{
-
-}
+abstract class Entity extends ORMEntity {}

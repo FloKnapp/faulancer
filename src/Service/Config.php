@@ -21,6 +21,8 @@ class Config
      */
     protected $_config = [];
 
+    protected $temp_conf = [];
+
     /**
      * Set configuration value by key
      *
@@ -55,11 +57,37 @@ class Config
      */
     public function get($key)
     {
-        if (!empty($this->_config[$key])) {
-            return $this->_config[$key];
+        if (strpos($key, ':') !== false) {
+            return $this->recursive($key);
         }
 
-        throw new ConfigInvalidException('No value for key ' . $key . ' found.');
+        if (empty($this->_config[$key])) {
+            throw new ConfigInvalidException('No value for key "' . $key . '" found.');
+        }
+
+        return $this->_config[$key];
+    }
+
+    /**
+     * @param $key
+     * @return array|mixed
+     * @throws ConfigInvalidException
+     */
+    private function recursive($key)
+    {
+        $parts  = explode(':', $key);
+        $result = $this->_config;
+
+        foreach ($parts as $part) {
+
+            if (empty($result[$part])) {
+                return '';
+            }
+
+            $result = $result[$part];
+        }
+
+        return $result;
     }
 
 }

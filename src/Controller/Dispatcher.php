@@ -62,17 +62,17 @@ class Dispatcher
 
         try {
 
-            $target = $this->getRoute($this->request->getUri(), $this->routeCacheEnabled);
+            $target = $this->getRoute($this->request->getUri());
             $class  = $target['class'];
-            $action = $target['action'];
+            $action = $target['action'] . 'Action';
 
             $class = new $class();
 
             if (isset($target['var'])) {
                 $response->setContent(call_user_func_array([$class, $action], $target['var']));
+            } else {
+                $response->setContent($class->$action());
             }
-
-            $response->setContent($class->$action());
 
         } catch (MethodNotFoundException $e) {
 
@@ -86,53 +86,26 @@ class Dispatcher
     /**
      * Get data for specific route path
      *
-     * @param string $uri
-     * @param boolean $routeCacheEnabled
+     * @param string $path
      *
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getRoute(string $uri = '', $routeCacheEnabled)
+    private function getRoute($path)
     {
-        $target = null;
+        $routes = require $this->config->get('routeFile');
 
-        if ($routeCacheEnabled && $target = $this->fromCache($uri)) {
-            return $target;
-        }
+        foreach ($routes as $name => $data) {
 
-        $routes = $this->getRoutes();
-
-        foreach ($routes as $route) {
-
-            foreach ($route as $class => $methods) {
-
-                foreach ($methods as $data) {
-
-                    if (empty($data)) {
-                        break;
-                    } else if ($target = $this->getDirectMatch($uri, $data)) {
-                        break;
-                    } else if ($target = $this->getVariableMatch($uri, $data)) {
-                        break;
-                    }
-
-                }
-
+            if ($target = $this->getDirectMatch($path, $data)) {
+                return $target;
+            } else if ($target = $this->getVariableMatch($path, $data)) {
+                return $target;
             }
 
         }
 
-        if ($target) {
-
-            if ($routeCacheEnabled) {
-                $this->saveIntoCache($uri, $target);
-            }
-
-            return $target;
-
-        }
-
-        throw new MethodNotFoundException('Could not resolve route ' . $uri);
+        throw new MethodNotFoundException();
     }
 
     /**
@@ -151,10 +124,8 @@ class Dispatcher
             if (strcasecmp($data['method'], $this->request->getMethod()) === 0) {
 
                 return [
-                    'class'  => $data['class'],
-                    'action' => $data['action'],
-                    'name'   => $data['name'],
-                    'method' => $data['method']
+                    'class'  => $data['controller'],
+                    'action' => $data['action']
                 ];
 
             }
@@ -194,40 +165,14 @@ class Dispatcher
             array_splice($var, 0, 1);
 
             return [
-                'class'  => $data['class'],
+                'class'  => $data['controller'],
                 'action' => $data['action'],
-                'name'   => $data['name'],
                 'var'    => $var
             ];
 
         }
 
         return [];
-    }
-
-    /**
-     * Get all defined routes
-     *
-     * @return array
-     */
-    private function getRoutes()
-    {
-        $routes  = [];
-        $classes = DirectoryIterator::getFiles();
-
-        foreach ($classes as $namespace => $files) {
-
-            foreach ($files as $file) {
-
-                $class    = '\\' . $namespace . '\\' . str_replace('.php', '', $file);
-                $parser   = new AnnotationParser($class);
-                $routes[] = $parser->getMethodDoc('Route');
-
-            }
-
-        }
-
-        return $routes;
     }
 
     /**
@@ -250,70 +195,6 @@ class Dispatcher
             $handler = new $handlerClass($this->request, SessionManager::instance());
             return $handler->run();
 
-        }
-
-        return false;
-    }
-
-    /**
-     * Retrieve route params from cache
-     *
-     * @param string  $uri
-     * @param boolean $wholeContent
-     *
-     * @return array
-     */
-    private function fromCache($uri, $wholeContent = false)
-    {
-        if (file_exists($this->config->get('routeCacheFile'))) {
-
-            $target = json_decode(file_get_contents($this->config->get('routeCacheFile')), true);
-
-            if ($wholeContent) {
-                return $target;
-            }
-
-            if (!empty($target[$uri])) {
-                return $target[$uri];
-            }
-
-        }
-
-        return [];
-    }
-
-    /**
-     * Save route params into cache
-     *
-     * @param $uri
-     * @param $target
-     *
-     * @return boolean
-     */
-    private function saveIntoCache($uri, $target)
-    {
-        if (!is_dir($this->config->get('projectRoot') . '/cache')) {
-            mkdir($this->config->get('projectRoot') . '/cache');
-        }
-
-        $routeSet = [$uri => $target];
-        $cache    = $this->fromCache($uri, true);
-        $cache    = $cache + $routeSet;
-
-        file_put_contents($this->config->get('routeCacheFile'), json_encode($cache, JSON_PRETTY_PRINT));
-
-        return true;
-    }
-
-    /**
-     * Invalidates the whole cache
-     *
-     * @return boolean
-     */
-    public function invalidateCache()
-    {
-        if (file_exists($this->config->get('routeCacheFile'))) {
-            return unlink($this->config->get('routeCacheFile'));
         }
 
         return false;

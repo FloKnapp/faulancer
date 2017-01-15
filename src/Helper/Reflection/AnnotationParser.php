@@ -22,6 +22,7 @@ class AnnotationParser extends \ReflectionClass
     /**
      * AnnotationParser constructor.
      * @param mixed $argument
+     * @codeCoverageIgnore
      */
     public function __construct($argument)
     {
@@ -33,6 +34,7 @@ class AnnotationParser extends \ReflectionClass
      * Get class methods
      * @param string $name The name of the annotation
      * @return array
+     * @codeCoverageIgnore
      */
     public function getMethodDoc($name = '')
     {
@@ -54,6 +56,7 @@ class AnnotationParser extends \ReflectionClass
      * @param string $name   The annotations name
      * @param string $method The method name
      * @return array
+     * @codeCoverageIgnore
      */
     private function extractValues($name, $method)
     {

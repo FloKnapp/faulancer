@@ -32,7 +32,7 @@ class ControllerTest extends TestCase
 
     public function testGetOrm()
     {
-        $this->assertInstanceOf(EntityManager::class, $this->controller->getDatabase());
+        $this->assertInstanceOf(\Faulancer\Service\ORM::class, $this->controller->getDb());
     }
 
     public function testRender()
