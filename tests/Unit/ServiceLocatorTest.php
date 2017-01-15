@@ -2,6 +2,7 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Fixture\Service\StubServiceWithoutFactory;
 use PHPUnit\Framework\TestCase;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -69,6 +70,12 @@ class ServiceLocatorTest extends TestCase
         $this->expectException(ServiceNotFoundException::class);
         $result = ServiceLocator::instance()->get('NonExistentService');
         $this->assertNull($result);
+    }
+
+    public function testServiceWithoutFactory()
+    {
+        $result = ServiceLocator::instance()->get(StubServiceWithoutFactory::class);
+        $this->assertInstanceOf(StubServiceWithoutFactory::class, $result);
     }
 
     public function testCreationAndDestroying()

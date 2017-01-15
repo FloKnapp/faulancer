@@ -7,6 +7,7 @@
  */
 namespace Faulancer\Translate;
 
+use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
@@ -32,6 +33,7 @@ class Translator
     /**
      * Translator constructor.
      * @param string $language
+     * @throws FileNotFoundException
      */
     public function __construct($language = 'ger_DE')
     {
@@ -39,10 +41,11 @@ class Translator
         $config    = ServiceLocator::instance()->get(Config::class);
         $transFile = $config->get('translationFile');
 
-        if (file_exists($transFile)) {
-            $this->config = require_once $transFile;
+        if (!file_exists($transFile)) {
+            throw new FileNotFoundException('Translation file couldn\'t be found');
         }
 
+        $this->config   = require $transFile;
         $this->language = $language;
         $sessionManager = SessionManager::instance();
 
@@ -63,17 +66,15 @@ class Translator
             return $key;
         }
 
-        if (isset($this->config[$this->language][$key])) {
-
-            if (!empty($value)) {
-                return vsprintf($this->config[$this->language][$key], $value);
-            }
-
-            return $this->config[$this->language][$key];
-
+        if (empty($this->config[$this->language][$key])) {
+            return $key;
         }
 
-        return $key;
+        if (!empty($value)) {
+            return vsprintf($this->config[$this->language][$key], $value);
+        }
+
+        return $this->config[$this->language][$key];
     }
 
 }

@@ -29,8 +29,8 @@ interface ServiceLocatorInterface
      *
      * @param string $service
      *
-     * @return object
+     * @return ServiceInterface
      */
-    public function get(string $service);
+    public function get($service = '');
 
 }

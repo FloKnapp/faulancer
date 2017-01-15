@@ -52,10 +52,10 @@ class ServiceLocator implements ServiceLocatorInterface {
      *
      * @param string  $service
      * @param boolean $shared
-     * @return FactoryInterface
+     * @return ServiceInterface|FactoryInterface
      * @throws ServiceNotFoundException
      */
-    public function get(string $service, $shared = true)
+    public function get($service = '', $shared = true)
     {
         if ($shared && isset(self::$services[$service])) {
             return self::$services[$service];

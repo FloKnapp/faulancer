@@ -8,6 +8,8 @@
 namespace Faulancer\View;
 
 use Faulancer\Security\Csrf;
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use Faulancer\Translate\Translator;
 
@@ -169,7 +171,7 @@ class GenericViewHelper
             $result = '<div class="form-error ' . $field . '">';
 
             foreach ($error as $err) {
-                $result .= '<span>' . $err['message'] . '</span>';
+                $result .= '<span>' . $this->translate($err['message']) . '</span>';
             }
 
             $result .= '</div>';
@@ -199,6 +201,28 @@ class GenericViewHelper
     public function getFormData($key)
     {
         return SessionManager::instance()->getFlashbagFormData($key);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     * @throws \Exception
+     */
+    public function route($name)
+    {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+        $routes = require $config->get('routeFile');
+
+        foreach ($routes as $routeName => $data) {
+
+            if ($routeName === $name) {
+                return $data['path'];
+            }
+
+        }
+
+        throw new \Exception('No route for name "' . $name . '" found');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Faulancer\Test\Integration;
 
+use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
@@ -73,8 +74,10 @@ class TranslatorTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testTranslationDontExists()
+    public function testTranslationFileDontExists()
     {
+        $this->expectException(FileNotFoundException::class);
+
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $transFile = $config->get('translationFile');
@@ -85,7 +88,22 @@ class TranslatorTest extends TestCase
         $this->assertSame('test_item_1', $translator->translate('test_item_1'));
 
         $config->set('translationFile', $transFile, true);
+    }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testTranslationFileIsEmpty()
+    {
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+        $transFile = $config->get('translationFile');
+        $config->set('translationFile', $config->get('projectRoot') . '/config/translation_empty.php', true);
+
+        $translator = new Translator();
+        $this->assertSame('test_item_1', $translator->translate('test_item_1'));
+
+        $config->set('translationFile', $transFile, true);
     }
     
 }

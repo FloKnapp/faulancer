@@ -13,8 +13,6 @@ class DummyController extends Controller
 {
 
     /**
-     * @Route(path="/", name="StubStaticHome", method="GET")
-     *
      * @return int
      */
     public function stubHomeAction()
@@ -23,8 +21,6 @@ class DummyController extends Controller
     }
 
     /**
-     * @Route(path="/stub", name="StubStaticRoute", method="get")
-     *
      * @return int
      */
     public function stubStaticAction()
@@ -33,18 +29,11 @@ class DummyController extends Controller
     }
 
     /**
-     * @Route(path="/stub/(\w+)", name="StubDynamicRoute", method="get")
-     *
      * @return int
      */
     public function stubDynamicAction()
     {
         return 2;
-    }
-
-    public function stubWithoutAnnotationAction()
-    {
-        return 3;
     }
 
 }

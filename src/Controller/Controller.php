@@ -8,6 +8,8 @@
 namespace Faulancer\Controller;
 
 use Faulancer\ORM\EntityManager;
+use Faulancer\Service\ORM;
+use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -55,11 +57,11 @@ abstract class Controller
     /**
      * Returns the orm/entity manager
      *
-     * @return EntityManager
+     * @return ORM|ServiceInterface
      */
-    public function getDatabase()
+    public function getDb()
     {
-        return $this->getServiceLocator()->get(EntityManager::class);
+        return $this->getServiceLocator()->get(ORM::class);
     }
 
     /**

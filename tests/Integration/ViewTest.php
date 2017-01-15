@@ -325,7 +325,19 @@ class ViewTest extends TestCase
     {
         $viewHelper = new GenericViewHelper(new ViewController());
         $this->assertSame('Test-Item1', $viewHelper->translate('test_item_1'));
+    }
 
+    public function testGetRouteByName()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+        $this->assertSame('/stub', $viewHelper->route('stub'));
+    }
+
+    public function testGetNonExistentRouteByName()
+    {
+        $this->expectException(\Exception::class);
+        $viewHelper = new GenericViewHelper(new ViewController());
+        $this->assertNotSame('/stub', $viewHelper->route('stubNonExistent'));
     }
 
 }
