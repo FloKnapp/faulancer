@@ -6,3 +6,6 @@
 
 # Faulancer
 A simple configuration minimized framework to kickstart your project
+
+## APIGEN Documentation
+https://floknapp.github.io/faulancer/
