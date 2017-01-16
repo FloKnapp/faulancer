@@ -340,4 +340,10 @@ class ViewTest extends TestCase
         $this->assertNotSame('/stub', $viewHelper->route('stubNonExistent'));
     }
 
+    public function testGetRouteNameWithParameters()
+    {
+        $viewHelper = new GenericViewHelper(new ViewController());
+        $this->assertSame('/stub/test', $viewHelper->route('stub', ['test']));
+    }
+
 }

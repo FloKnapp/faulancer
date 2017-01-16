@@ -205,24 +205,36 @@ class GenericViewHelper
 
     /**
      * @param string $name
+     * @param array $parameters
      * @return string
      * @throws \Exception
      */
-    public function route($name)
+    public function route($name, $parameters = [])
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $routes = require $config->get('routeFile');
+        $path   = '';
 
         foreach ($routes as $routeName => $data) {
 
             if ($routeName === $name) {
-                return $data['path'];
+
+                $path = preg_replace('|/\((.*)\)|', '', $data['path']);;
+                break;
             }
 
         }
 
-        throw new \Exception('No route for name "' . $name . '" found');
+        if (empty($path)) {
+            throw new \Exception('No route for name "' . $name . '" found');
+        }
+
+        if (!empty($parameters)) {
+            $path = $path . '/' . implode('/', $parameters);
+        }
+
+        return $path;
     }
 
     /**
