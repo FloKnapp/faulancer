@@ -23,17 +23,17 @@
     "repositories": [
       {
         "type": "path",
-        "url": "../../tflori/orm",
-        "bin": [ "bin/orm-console" ]
+        "url": "../../tflori/orm"
       }
     ],
     "require": {
       "php": "^7.0",
-      "tflori/orm": "dev-feature-console"
+      "tflori/orm": "1.0.0-alpha4"
     },
     "require-dev": {
       "phpunit/phpunit": "^5.6",
       "apigen/apigen": "^4.2@dev"
     },
-    "minimum-stability": "alpha"
+    "minimum-stability": "alpha",
+    "bin": [ "bin/console" ]
 }

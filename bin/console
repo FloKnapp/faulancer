@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$logo = <<<LOGO
+  _    __ _         _   __             
+ | |_ / _| |___ _ _(_) / /__ _ _ _ __  
+ |  _|  _| / _ \ '_| |/ / _ \ '_| '  \ 
+  \__|_| |_\___/_| |_/_/\___/_| |_|_|_|
+
+LOGO;
+
+\Faulancer\Console\Output::writeLine($logo, 'notice');
+
+try {
+    $argumentParser = new \Faulancer\Console\ArgumentParser($argv);
+} catch (\Exception $e) {
+    \Faulancer\Console\Output::writeLine('Error: ' . $e->getMessage(), 'error');
+}
+
+\Faulancer\Console\Output::writeEmptyLine();
