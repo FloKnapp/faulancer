@@ -20,9 +20,16 @@
         "Faulancer\\Fixture\\": "tests/Fixture/src/"
       }
     },
+    "repositories": [
+      {
+        "type": "path",
+        "url": "../../tflori/orm",
+        "bin": [ "bin/orm-console" ]
+      }
+    ],
     "require": {
       "php": "^7.0",
-        "tflori/orm": "1.0.0-alpha3"
+      "tflori/orm": "dev-feature-console"
     },
     "require-dev": {
       "phpunit/phpunit": "^5.6",

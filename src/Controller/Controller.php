@@ -7,7 +7,6 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\ORM\EntityManager;
 use Faulancer\Service\ORM;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
