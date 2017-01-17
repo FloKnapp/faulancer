@@ -18,25 +18,17 @@ class KernelTest extends TestCase
 
     public function testConfigSet()
     {
-
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
         $request = new Request();
         $request->setUri('/test');
 
-        $conf = [
-            'applicationRoot' => 'test',
-            'projectRoot'     => 'test',
-            'viewsRoot'       => 'test'
-        ];
-
-        new Kernel($request, $conf, false);
+        new Kernel($request, $config, false);
 
         $this->assertNotEmpty($config->get('applicationRoot'));
         $this->assertNotEmpty($config->get('projectRoot'));
         $this->assertNotEmpty($config->get('viewsRoot'));
-
     }
 
     /**
@@ -44,6 +36,8 @@ class KernelTest extends TestCase
      */
     public function testFailure()
     {
+        $this->expectException(\TypeError::class);
+
         $request = new Request();
         $request->setMethod('GET');
         $request->setUri('/test');
@@ -63,6 +57,8 @@ class KernelTest extends TestCase
      */
     public function testSuccess()
     {
+        $this->expectException(\TypeError::class);
+
         $request = new Request();
         $request->setMethod('GET');
         $request->setUri('/stub');

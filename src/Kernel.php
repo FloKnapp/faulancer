@@ -36,29 +36,23 @@ class Kernel
      * Kernel constructor.
      *
      * @param Request $request
-     * @param array   $config
-     * @param boolean $routeCacheEnabled
+     * @param Config  $config
      */
-    public function __construct(Request $request, array $config, $routeCacheEnabled = true)
+    public function __construct(Request $request, Config $config)
     {
-        $this->request           = $request;
-        $this->config            = $config;
-        $this->routeCacheEnabled = $routeCacheEnabled;
+        $this->request = $request;
+        $this->config  = $config;
     }
 
     /**
      * Initialize the application
      * @return mixed
      * @throws Exception\ConfigInvalidException
+     * @codeCoverageIgnore
      */
     public function run()
     {
-        /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-        $config->set($this->config);
-        $config->set('routeCacheFile', $config->get('projectRoot') . '/cache/routes.json', true);
-
-        $dispatcher = new Dispatcher($this->request, $config, $this->routeCacheEnabled);
+        $dispatcher = new Dispatcher($this->request, $this->config, $this->routeCacheEnabled);
 
         try {
             return $dispatcher->run()->getContent();

@@ -8,10 +8,14 @@ namespace Faulancer\Console\Handler;
 
 use Faulancer\Console\ArgumentParser;
 use Faulancer\Console\ConsoleInterface;
+use Faulancer\Console\Helper\DbTables;
+use Faulancer\Console\Helper\TableRelationResolver;
+use Faulancer\Console\Output;
 use Faulancer\ServiceLocator\ServiceLocator;
 use ORM\DbConfig;
 use ORM\EntityManager;
 use Faulancer\Service\Config;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class Generate
@@ -19,43 +23,100 @@ use Faulancer\Service\Config;
 class Generate implements ConsoleInterface
 {
 
+    /** @var array */
+    private $mysqlTypeMapping = [
+        '/@property text/'         => '@property string',
+        '/@property int\((\d+)\)/' => '@property integer',
+        '/@property datetime/'     => '@property string',
+        '/@property timestamp/'    => '@property string',
+        '/varchar\((\d+)\)/'       => 'string'
+    ];
+
+    /** @var Config */
+    protected $config;
+
+    /** @var ArgumentParser */
+    protected $args;
+
     /**
+     * Generate constructor.
+     * @param Config         $config
      * @param ArgumentParser $args
      * @codeCoverageIgnore
      */
-    public function schemeAction(ArgumentParser $args)
+    public function __construct(Config $config, ArgumentParser $args)
     {
-        $dir = getcwd() . '/src/Entity';
+        $this->config = $config;
+        $this->args   = $args;
     }
 
     /**
-     * @param ArgumentParser $args
      * @throws \Exception
      * @throws \ORM\Exceptions\NoConnection
      * @codeCoverageIgnore
      */
-    public function entitiesAction(ArgumentParser $args)
+    public function entitiesAction()
     {
+        $creationCount = 0;
+        $entitiesRoot  = $this->config->get('projectRoot') . '/src/Entity';
 
-        /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
+        if (!is_dir($entitiesRoot)) {
+            mkdir($entitiesRoot);
+        }
 
-        /*
-        $dbConf = new DbConfig($conf['type'], $conf['name'], $conf['username'], $conf['password'], $conf['host']);
+        $result = DbTables::getTableData($this->config);
 
-        $entityManager = new EntityManager([EntityManager::OPT_CONNECTION => $dbConf]);
+        foreach ($result as $table => $fields) {
 
-        $tables = $entityManager->getConnection()->query('SHOW TABLES')->fetch(\PDO::FETCH_ASSOC);
+            $properties = [];
+            $namespace  = $this->config->get('namespacePrefix') . '\\Entity';
+            $className  = ucfirst($table) . 'Entity';
 
-        foreach ($tables as $table) {
+            Output::writeLine('Process table "' . $table . '"', 'warning');
 
-            $result[$table] = $entityManager->getConnection()->query('SHOW COLUMNS FROM ' . $table)->fetch(\PDO::FETCH_ASSOC);
+            $targetFile = $entitiesRoot . '/' . $className . '.php';
+
+            if (file_exists($targetFile)) {
+                Output::writeLine('Entity "' . $className . '" already exists... skipping.', 'error');
+                continue;
+            }
+
+            $properties[] = '/**';
+
+            foreach ($fields as $field) {
+
+                $properties[] = ' * @property ' . $field['Type'] . ' $' . $field['Field'];
+                Output::writeLine('Create property ' . $field['Field']);
+                
+            }
+
+            $properties[] = ' */';
+
+            $props     = implode(PHP_EOL, $properties);
+            $props     = preg_replace(
+                array_keys($this->mysqlTypeMapping),
+                array_values($this->mysqlTypeMapping),
+                $props
+            );
+
+            $fixture = str_replace(
+                ['{$namespace}', '{$props}', '{$table}', '{$className}'],
+                [$namespace, $props, $table, $className],
+                file_get_contents(__DIR__ . '/../Fixture/Entity.fixture')
+            );
+
+
+            file_put_contents($entitiesRoot . '/' . $className . '.php', $fixture);
+
+            Output::writeLine('Entity for table "' . $table . '" successfully generated', 'success');
+
+            $creationCount++;
+
+            Output::writeEmptyLine();
 
         }
 
-        var_dump($tables);
-
-        */
+        Output::writeLine($creationCount . ' entities generated', 'success');
 
     }
 

@@ -6,6 +6,8 @@
  */
 namespace Faulancer\Console;
 
+use Faulancer\Service\Config;
+
 /**
  * Class ArgumentParser
  */
@@ -15,13 +17,18 @@ class ArgumentParser
     /** @var array */
     protected $arguments = [];
 
+    /** @var array */
+    protected $config;
+
     /**
      * ArgumentParser constructor.
      * @param array $argv
+     * @param Config $config
      * @codeCoverageIgnore
      */
-    public function __construct($argv)
+    public function __construct($argv, $config)
     {
+        $this->config = $config;
         $this->parseInput($argv);
     }
 
@@ -43,6 +50,8 @@ class ArgumentParser
 
             if (strpos($args[$i], '-') === false) {
                 continue;
+            } else if (empty($args[$i+1])) {
+                break;
             }
 
             $this->set(str_replace('-', '', $args[$i]), $args[$i+1]);
@@ -56,7 +65,9 @@ class ArgumentParser
             $method = $parts[1] . 'Action';
             $ns     = '\Faulancer\Console\Handler\\' . ucfirst($class);
 
-            return call_user_func([new $ns(), $method], $this);
+            $class = new $ns($this->config, $this);
+
+            return call_user_func([$class, $method], $this);
 
         }
 

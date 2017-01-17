@@ -56,6 +56,10 @@ class Output
     {
         switch ($type) {
 
+            case 'success':
+                print self::$foregroundColors['light_green'];
+                break;
+
             case 'notice':
                 print self::$foregroundColors['light_blue'];
                 break;
@@ -75,6 +79,7 @@ class Output
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public static function writeEmptyLine()
     {
