@@ -156,7 +156,7 @@ abstract class AbstractFormHandler
      * Set the success url
      * @param string $successUrl
      */
-    protected function setSuccessUrl(string $successUrl)
+    protected function setSuccessUrl($successUrl)
     {
         $this->successUrl = $successUrl;
     }
@@ -174,7 +174,7 @@ abstract class AbstractFormHandler
      * Set the error url
      * @param string $errorUrl
      */
-    protected function setErrorUrl(string $errorUrl)
+    protected function setErrorUrl($errorUrl)
     {
         $this->errorUrl = $errorUrl;
     }

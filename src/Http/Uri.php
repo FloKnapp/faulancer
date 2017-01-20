@@ -22,7 +22,7 @@ class Uri
      * @return mixed
      * @throws InvalidArgumentException
      */
-    public function redirect(string $location, int $code = 301)
+    public function redirect($location, $code = 301)
     {
 
         if (in_array($code, array_keys(Response::HTTP_STATUS_CODES))) {

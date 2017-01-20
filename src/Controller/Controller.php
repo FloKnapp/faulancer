@@ -70,7 +70,7 @@ abstract class Controller
      * @param  array $variables
      * @return string
      */
-    public function render(string $template = '', $variables = [])
+    public function render($template = '', $variables = [])
     {
         return $this->getView()->setTemplate($template)->setVariables($variables)->render();
     }

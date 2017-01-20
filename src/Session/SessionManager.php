@@ -68,7 +68,7 @@ class SessionManager
      * @param string $key
      * @param string|array $value
      */
-    public function set(string $key, $value)
+    public function set($key, $value)
     {
         $_SESSION[$key] = $value;
     }
@@ -78,7 +78,7 @@ class SessionManager
      * @param string $key
      * @return null|string|array
      */
-    public function get(string $key)
+    public function get($key)
     {
         if (!isset($_SESSION[$key])) {
             return null;
@@ -92,7 +92,7 @@ class SessionManager
      * @param string $key
      * @return boolean
      */
-    public function delete(string $key)
+    public function delete($key)
     {
         if (!isset($_SESSION[$key])) {
             return false;
@@ -108,7 +108,7 @@ class SessionManager
      * @param string $key
      * @return boolean
      */
-    public function hasFlashbagKey(string $key)
+    public function hasFlashbagKey($key)
     {
         return isset($_SESSION['flashbag'][$key]) ? true : false;
     }
@@ -118,7 +118,7 @@ class SessionManager
      * @param string $key
      * @return boolean
      */
-    public function hasFlashbagErrorsKey(string $key)
+    public function hasFlashbagErrorsKey($key)
     {
         return isset($_SESSION['flashbag']['errors'][$key]) ? true : false;
     }
@@ -151,7 +151,7 @@ class SessionManager
      * @param string $key
      * @return null|string|array
      */
-    public function getFlashbag(string $key)
+    public function getFlashbag($key)
     {
         if (!isset($_SESSION['flashbag'][$key])) {
             return null;
@@ -169,7 +169,7 @@ class SessionManager
      * @param string $key
      * @return null|string|array
      */
-    public function getFlashbagError(string $key)
+    public function getFlashbagError($key)
     {
         if (!isset($_SESSION['flashbag']['errors'][$key])) {
             return [];
@@ -198,7 +198,7 @@ class SessionManager
      * @param string $key
      * @return null|array|string
      */
-    public function getFlashbagFormData(string $key)
+    public function getFlashbagFormData($key)
     {
         if (!isset($_SESSION['flashbag']['formData'][$key])) {
             return null;

@@ -21,8 +21,6 @@ class Config
      */
     protected $_config = [];
 
-    protected $temp_conf = [];
-
     /**
      * Set configuration value by key
      *

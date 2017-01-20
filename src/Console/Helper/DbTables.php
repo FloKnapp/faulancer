@@ -17,11 +17,12 @@ class DbTables
 {
 
     /**
+     * @param Config $config
+     * @return array
      * @codeCoverageIgnore
      */
     public static function getTableData(Config $config)
     {
-
         $result = [];
 
         $dbConf = new DbConfig(
@@ -46,7 +47,6 @@ class DbTables
         }
 
         return $result;
-
     }
 
 }

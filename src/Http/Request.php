@@ -53,7 +53,7 @@ class Request extends AbstractHttp
      * Set uri path
      * @param string $uri
      */
-    public function setUri(string $uri)
+    public function setUri($uri)
     {
         $this->uri = $uri;
     }
@@ -71,7 +71,7 @@ class Request extends AbstractHttp
      * Set method
      * @param string $method
      */
-    public function setMethod(string $method)
+    public function setMethod($method)
     {
         $this->method = $method;
     }

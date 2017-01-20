@@ -51,7 +51,7 @@ class Response extends AbstractHttp
      * Set response code
      * @param integer $code
      */
-    public function setCode(int $code = 200)
+    public function setCode($code = 200)
     {
         $this->code = $code;
     }

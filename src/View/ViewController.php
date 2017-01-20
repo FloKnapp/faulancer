@@ -24,19 +24,19 @@ class ViewController
      * Holds the view variables
      * @var array
      */
-    private $variable           = [];
+    private $variable = [];
 
     /**
      * Holds the view template
      * @var string
      */
-    private $template           = "";
+    private $template = '';
 
     /**
      * Holds the parent template
      * @var ViewController
      */
-    private $extendedTemplate   = null;
+    private $extendedTemplate = null;
 
     /**
      * Set template for this view
@@ -45,7 +45,7 @@ class ViewController
      * @throws ConstantMissingException
      * @throws FileNotFoundException
      */
-    public function setTemplate(string $template = '')
+    public function setTemplate($template = '')
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
@@ -68,7 +68,7 @@ class ViewController
      * @param string $file
      * @return $this
      */
-    public function addScript(string $file)
+    public function addScript($file)
     {
         $this->variable['assetsJs'][] = $file;
         return $this;
@@ -79,7 +79,7 @@ class ViewController
      * @param string $file
      * @return $this
      */
-    public function addStylesheet(string $file)
+    public function addStylesheet($file)
     {
         $this->variable['assetsCss'][] = $file;
         return $this;
@@ -99,7 +99,7 @@ class ViewController
      * @param string $key
      * @param string|array $value
      */
-    public function setVariable(string $key = '', $value = null)
+    public function setVariable($key = '', $value = null)
     {
         $this->variable[$key] = $value;
     }
@@ -109,7 +109,7 @@ class ViewController
      * @param $key
      * @return boolean|string|array
      */
-    public function getVariable(string $key)
+    public function getVariable($key)
     {
         if(isset($this->variable[$key])) {
             return $this->variable[$key];
@@ -123,7 +123,7 @@ class ViewController
      * @param string $key
      * @return bool
      */
-    public function hasVariable(string $key)
+    public function hasVariable($key)
     {
         if(isset($this->variable[$key])) {
             return true;

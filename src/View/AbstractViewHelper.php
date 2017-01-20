@@ -25,7 +25,7 @@ abstract class AbstractViewHelper
      * @return string
      * @throws ConstantMissingException
      */
-    protected function renderView(string $template = '', array $variables = [])
+    protected function renderView($template = '', array $variables = [])
     {
         /** @var Config $config */
         $config = $this->getServiceLocator()->get(Config::class);

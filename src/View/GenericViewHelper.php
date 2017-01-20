@@ -52,7 +52,7 @@ class GenericViewHelper
      * @param array $variables
      * @return string
      */
-    public function render(string $template = "", array $variables = [])
+    public function render($template = '', array $variables = [])
     {
         $view = new ViewController();
         $view->setTemplate( $template );
@@ -64,7 +64,7 @@ class GenericViewHelper
      * Set parent template
      * @param string $template
      */
-    public function extendsTemplate(string $template)
+    public function extendsTemplate($template)
     {
         $view = new ViewController();
         $view->setTemplate($template);
@@ -75,7 +75,7 @@ class GenericViewHelper
      * Set block
      * @param string $name The block name
      */
-    public function block(string $name = "")
+    public function block($name = "")
     {
 
         if (!empty($name)) {
@@ -99,7 +99,7 @@ class GenericViewHelper
      * @param string $default The default value
      * @return string
      */
-    public function renderBlock(string $name, string $default = "")
+    public function renderBlock($name, string $default = "")
     {
         if($this->view->getVariable($name) == null) {
             return $default;
@@ -112,7 +112,7 @@ class GenericViewHelper
      * @param string $string
      * @return string
      */
-    public function escape(string $string)
+    public function escape($string)
     {
         return stripslashes( strip_tags( $string ) );
     }

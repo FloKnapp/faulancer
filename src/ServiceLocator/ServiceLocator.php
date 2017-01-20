@@ -80,7 +80,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return mixed
      * @throws ServiceNotFoundException
      */
-    private function getService(string $service)
+    private function getService($service)
     {
         if (!class_exists($service)) {
             throw new ServiceNotFoundException();
@@ -95,7 +95,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
      */
-    private function getFactory(string $service)
+    private function getFactory($service)
     {
 
         $parts     = explode('\\', $service);

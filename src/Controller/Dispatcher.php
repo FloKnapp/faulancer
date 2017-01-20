@@ -10,10 +10,8 @@ namespace Faulancer\Controller;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Form\AbstractFormHandler;
-use Faulancer\Helper\Reflection\AnnotationParser;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\Helper\DirectoryIterator;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\Session\SessionManager;
@@ -35,13 +33,11 @@ class Dispatcher
      *
      * @param Request $request
      * @param Config  $config
-     * @param boolean $routeCacheEnabled
      */
-    public function __construct(Request $request, Config $config, $routeCacheEnabled = true)
+    public function __construct(Request $request, Config $config)
     {
-        $this->request           = $request;
-        $this->routeCacheEnabled = $routeCacheEnabled;
-        $this->config            = $config;
+        $this->request = $request;
+        $this->config  = $config;
     }
 
     /**
@@ -117,7 +113,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getDirectMatch(string $uri, array $data)
+    private function getDirectMatch($uri, array $data)
     {
         if ($uri === $data['path']) {
 
@@ -146,7 +142,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getVariableMatch(string $uri, array $data)
+    private function getVariableMatch($uri, array $data)
     {
         $var = [];
 

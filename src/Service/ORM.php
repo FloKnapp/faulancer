@@ -35,7 +35,7 @@ class ORM implements ServiceInterface
      * @return EntityFetcher
      * @codeCoverageIgnore
      */
-    public function fetch(string $entity, $primaryKey = null)
+    public function fetch($entity, $primaryKey = null)
     {
         return $this->entityManager->fetch($entity, $primaryKey);
     }
