@@ -187,7 +187,7 @@
 </span></span><span id="21" class="l"><span class="php-comment">     */</span>
 </span><span id="22" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getToken()
 </span><span id="23" class="l">    {
-</span><span id="24" class="l">        <span class="php-var">$token</span> = <span class="php-keyword2">bin2hex</span>(random_bytes(<span class="php-num">32</span>));
+</span><span id="24" class="l">        <span class="php-var">$token</span> = <span class="php-keyword2">bin2hex</span>(<span class="php-keyword2">openssl_random_pseudo_bytes</span>(<span class="php-num">32</span>));
 </span><span id="25" class="l">        self::saveToSession(<span class="php-var">$token</span>);
 </span><span id="26" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$token</span>;
 </span><span id="27" class="l">    }
