@@ -21,7 +21,7 @@ class Csrf
      */
     public static function getToken()
     {
-        $token = bin2hex(random_bytes(32));
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
         self::saveToSession($token);
         return $token;
     }
