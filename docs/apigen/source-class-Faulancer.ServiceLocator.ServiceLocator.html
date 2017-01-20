@@ -252,7 +252,7 @@
 </span></span><span id="80" class="l"><span class="php-comment">     * @return mixed
 </span></span><span id="81" class="l"><span class="php-comment">     * @throws ServiceNotFoundException
 </span></span><span id="82" class="l"><span class="php-comment">     */</span>
-</span><span id="83" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> getService(string <span class="php-var">$service</span>)
+</span><span id="83" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> getService(<span class="php-var">$service</span>)
 </span><span id="84" class="l">    {
 </span><span id="85" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword2">class_exists</span>(<span class="php-var">$service</span>)) {
 </span><span id="86" class="l">            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> ServiceNotFoundException();
@@ -267,7 +267,7 @@
 </span></span><span id="95" class="l"><span class="php-comment">     * @return FactoryInterface|null
 </span></span><span id="96" class="l"><span class="php-comment">     * @throws FactoryMayIncompatibleException
 </span></span><span id="97" class="l"><span class="php-comment">     */</span>
-</span><span id="98" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> getFactory(string <span class="php-var">$service</span>)
+</span><span id="98" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> getFactory(<span class="php-var">$service</span>)
 </span><span id="99" class="l">    {
 </span><span id="100" class="l">
 </span><span id="101" class="l">        <span class="php-var">$parts</span>     = <span class="php-keyword2">explode</span>(<span class="php-quote">'\\'</span>, <span class="php-var">$service</span>);
@@ -307,6 +307,6 @@
 	</div>
 </div>
 <script src="resources/combined.js?c1429350b95e619d5d5703d6263f73fddc816cd9"></script>
-<script src="elementlist.js?14adec87efaac82f7c3296ce07aa6ac2c6cbf841"></script>
+<script src="elementlist.js?8487af4e699e25b42fa7323ce2b30c52233bf5f7"></script>
 </body>
 </html>
