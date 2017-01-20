@@ -99,7 +99,7 @@ class GenericViewHelper
      * @param string $default The default value
      * @return string
      */
-    public function renderBlock($name, string $default = "")
+    public function renderBlock($name, $default = "")
     {
         if($this->view->getVariable($name) == null) {
             return $default;
