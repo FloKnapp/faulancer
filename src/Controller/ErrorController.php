@@ -17,6 +17,7 @@ class ErrorController
     /**
      * Return a 404 status code with corresponding body
      * @return Response
+     * @codeCoverageIgnore
      */
     public static function notFoundAction()
     {
