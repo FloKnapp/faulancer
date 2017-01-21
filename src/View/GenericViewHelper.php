@@ -99,7 +99,7 @@ class GenericViewHelper
      * @param string $default The default value
      * @return string
      */
-    public function renderBlock($name, $default = "")
+    public function renderBlock(string $name, string $default = '')
     {
         if($this->view->getVariable($name) == null) {
             return $default;
@@ -112,9 +112,9 @@ class GenericViewHelper
      * @param string $string
      * @return string
      */
-    public function escape($string)
+    public function escape(string $string)
     {
-        return stripslashes( strip_tags( $string ) );
+        return stripslashes(strip_tags($string));
     }
 
     /**
@@ -122,7 +122,7 @@ class GenericViewHelper
      * @param $type
      * @return string
      */
-    public function getAssets($type)
+    public function getAssets(string $type) :string
     {
         $result  = '';
         $pattern = '';
@@ -152,7 +152,7 @@ class GenericViewHelper
      * Generate a CSRF token
      * @return string
      */
-    public function generateCsrfToken()
+    public function generateCsrfToken() :string
     {
         return Csrf::getToken();
     }
@@ -160,11 +160,13 @@ class GenericViewHelper
     /**
      * Get form error by input field
      * @param $field
-     * @return bool|string
+     * @return string
      */
-    public function getFormError($field)
+    public function getFormError($field) :string
     {
         $error = SessionManager::instance()->getFlashbagError($field);
+
+        $result = '';
 
         if (!empty($error)) {
 
@@ -176,19 +178,17 @@ class GenericViewHelper
 
             $result .= '</div>';
 
-            return $result;
-
         }
 
-        return false;
+        return $result;
     }
 
     /**
      * Check if form error exists
      * @param $field
-     * @return boolean
+     * @return bool
      */
-    public function hasFormError($field)
+    public function hasFormError($field) :bool
     {
         return SessionManager::instance()->hasFlashbagErrorsKey($field);
     }
@@ -209,7 +209,7 @@ class GenericViewHelper
      * @return string
      * @throws \Exception
      */
-    public function route($name, $parameters = [])
+    public function route(string $name, array $parameters = []) :string
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
@@ -243,7 +243,7 @@ class GenericViewHelper
      * @param array  $value  The variable content for the placeholder
      * @return string
      */
-    public function translate($string, $value = [])
+    public function translate(string $string, array $value = []) :string
     {
         $translator = new Translator();
         return $translator->translate($string, $value);

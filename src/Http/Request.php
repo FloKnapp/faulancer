@@ -53,7 +53,7 @@ class Request extends AbstractHttp
      * Set uri path
      * @param string $uri
      */
-    public function setUri($uri)
+    public function setUri(string $uri)
     {
         $this->uri = $uri;
     }
@@ -62,7 +62,7 @@ class Request extends AbstractHttp
      * Get uri path
      * @return string
      */
-    public function getUri()
+    public function getUri() :string
     {
         return $this->uri;
     }
@@ -71,7 +71,7 @@ class Request extends AbstractHttp
      * Set method
      * @param string $method
      */
-    public function setMethod($method)
+    public function setMethod(string $method)
     {
         $this->method = $method;
     }
@@ -80,7 +80,7 @@ class Request extends AbstractHttp
      * Get method
      * @return string
      */
-    public function getMethod()
+    public function getMethod() :string
     {
         return empty($this->method) ? $_SERVER['REQUEST_METHOD'] : $this->method;
     }
@@ -89,7 +89,7 @@ class Request extends AbstractHttp
      * Set query string
      * @param string $query
      */
-    public function setQuery($query)
+    public function setQuery(string $query)
     {
         $this->query = $query;
     }
@@ -98,7 +98,7 @@ class Request extends AbstractHttp
      * Get query string
      * @return string
      */
-    public function getQuery()
+    public function getQuery() :string
     {
         return $this->query;
     }
@@ -107,7 +107,7 @@ class Request extends AbstractHttp
      * Determine if it's a post request
      * @return boolean
      */
-    public function isPost()
+    public function isPost() :bool
     {
         return $this->getMethod() === 'POST';
     }
@@ -116,7 +116,7 @@ class Request extends AbstractHttp
      * Determine if it's a get request
      * @return boolean
      */
-    public function isGet()
+    public function isGet() :bool
     {
         return $this->getMethod() === 'GET';
     }
@@ -125,7 +125,7 @@ class Request extends AbstractHttp
      * Return the post data
      * @return array
      */
-    public function getPostData()
+    public function getPostData() :array
     {
         return empty($_POST) ? [] : $_POST;
     }

@@ -55,7 +55,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return ServiceInterface|FactoryInterface
      * @throws ServiceNotFoundException
      */
-    public function get($service = '', $shared = true)
+    public function get(string $service = '', $shared = true)
     {
         if ($shared && isset(self::$services[$service])) {
             return self::$services[$service];
@@ -80,7 +80,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return mixed
      * @throws ServiceNotFoundException
      */
-    private function getService($service)
+    private function getService(string $service)
     {
         if (!class_exists($service)) {
             throw new ServiceNotFoundException();
@@ -95,7 +95,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
      */
-    private function getFactory($service)
+    private function getFactory(string $service)
     {
 
         $parts     = explode('\\', $service);

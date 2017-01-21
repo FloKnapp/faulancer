@@ -157,7 +157,7 @@ class ViewTest extends TestCase
 
         $viewHelper = new GenericViewHelper(new ViewController());
 
-        $this->assertFalse($viewHelper->getFormError('key6'));
+        $this->assertEmpty($viewHelper->getFormError('key6'));
 
         foreach ($data as $key => $value) {
 
@@ -269,7 +269,7 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $var = $view->getVariable('nonExistend');
-        $this->assertFalse($var);
+        $this->assertEmpty($var);
     }
 
     public function testHasVariable()

@@ -19,7 +19,7 @@ class Client
      * @param string[] $headers Custom headers
      * @return string
      */
-    public static function get($uri, $headers = [])
+    public static function get(string $uri, array $headers = []) :string
     {
         return self::sendCurl($uri, $headers);
     }
@@ -30,7 +30,7 @@ class Client
      * @param string[] $headers
      * @return string
      */
-    protected static function sendCurl($uri, $headers)
+    protected static function sendCurl(string $uri, $headers) :string
     {
         $ch = curl_init($uri);
 

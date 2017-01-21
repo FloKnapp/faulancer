@@ -25,7 +25,7 @@ abstract class AbstractViewHelper
      * @return string
      * @throws ConstantMissingException
      */
-    protected function renderView($template = '', array $variables = [])
+    protected function renderView($template = '', array $variables = []) :string
     {
         /** @var Config $config */
         $config = $this->getServiceLocator()->get(Config::class);
@@ -39,7 +39,7 @@ abstract class AbstractViewHelper
      * Get instance of service locator
      * @return ServiceLocator
      */
-    public function getServiceLocator()
+    public function getServiceLocator() :ServiceLocator
     {
         return ServiceLocator::instance();
     }
@@ -48,7 +48,7 @@ abstract class AbstractViewHelper
      * If view helper gets outputted return content
      * @return string
      */
-    public function __toString()
+    public function __toString() :string
     {
         return (string)$this->__invoke();
     }

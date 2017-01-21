@@ -35,7 +35,7 @@ class Translator
      * @param string $language
      * @throws FileNotFoundException
      */
-    public function __construct($language = 'ger_DE')
+    public function __construct(string $language = 'ger_DE')
     {
         /** @var Config $config */
         $config    = ServiceLocator::instance()->get(Config::class);
@@ -60,7 +60,7 @@ class Translator
      * @param array  $value
      * @return string
      */
-    public function translate($key, $value = [])
+    public function translate(string $key, $value = []) :string
     {
         if (empty($this->config)) {
             return $key;

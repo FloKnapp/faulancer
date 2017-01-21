@@ -101,7 +101,7 @@ class Dispatcher
 
         }
 
-        throw new MethodNotFoundException();
+        throw new MethodNotFoundException('No matching route for path "' . $path . '" found');
     }
 
     /**
@@ -113,7 +113,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getDirectMatch($uri, array $data)
+    private function getDirectMatch($uri, array $data) :array
     {
         if ($uri === $data['path']) {
 
@@ -142,7 +142,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getVariableMatch($uri, array $data)
+    private function getVariableMatch($uri, array $data) :array
     {
         $var = [];
 

@@ -38,7 +38,7 @@ class ArgumentParser
      * @throws \Exception
      * @codeCoverageIgnore
      */
-    protected function parseInput(array $argv)
+    protected function parseInput(array $argv) :ConsoleInterface
     {
         $args = array_splice($argv, 1, count($argv));
 
@@ -72,7 +72,6 @@ class ArgumentParser
         }
 
         throw new \Exception('No matching handler found');
-
     }
 
     /**
@@ -87,7 +86,7 @@ class ArgumentParser
 
     /**
      * @param string $arg
-     * @return string
+     * @return string|array
      * @codeCoverageIgnore
      */
     public function get($arg)

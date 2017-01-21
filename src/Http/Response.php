@@ -51,23 +51,23 @@ class Response extends AbstractHttp
      * Set response code
      * @param integer $code
      */
-    public function setCode($code = 200)
+    public function setCode(int $code = 200)
     {
         $this->code = $code;
     }
 
     /**
      * Get response code
-     * @return integer
+     * @return int
      */
-    public function getCode()
+    public function getCode() :int
     {
         return $this->code;
     }
 
     /**
      * Set response body
-     * @param $content
+     * @param mixed $content
      */
     public function setContent($content)
     {
@@ -76,7 +76,7 @@ class Response extends AbstractHttp
 
     /**
      * Get response body and set headers
-     * @return string
+     * @return mixed
      */
     public function getContent()
     {

@@ -41,11 +41,11 @@ class ViewController
     /**
      * Set template for this view
      * @param string $template
-     * @return $this
+     * @return self
      * @throws ConstantMissingException
      * @throws FileNotFoundException
      */
-    public function setTemplate($template = '')
+    public function setTemplate(string $template = '') :self
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
@@ -66,9 +66,9 @@ class ViewController
     /**
      * Add javascript from outside
      * @param string $file
-     * @return $this
+     * @return self
      */
-    public function addScript($file)
+    public function addScript($file) :self
     {
         $this->variable['assetsJs'][] = $file;
         return $this;
@@ -77,9 +77,9 @@ class ViewController
     /**
      * Add stylesheet from outside
      * @param string $file
-     * @return $this
+     * @return self
      */
-    public function addStylesheet($file)
+    public function addStylesheet($file) :self
     {
         $this->variable['assetsCss'][] = $file;
         return $this;
@@ -89,9 +89,9 @@ class ViewController
      * Return current template
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate() :string
     {
-        return (string) $this->template;
+        return (string)$this->template;
     }
 
     /**
@@ -99,7 +99,7 @@ class ViewController
      * @param string $key
      * @param string|array $value
      */
-    public function setVariable($key = '', $value = null)
+    public function setVariable(string $key = '', $value = '')
     {
         $this->variable[$key] = $value;
     }
@@ -107,7 +107,7 @@ class ViewController
     /**
      * Get a single variable
      * @param $key
-     * @return boolean|string|array
+     * @return string|array
      */
     public function getVariable($key)
     {
@@ -115,7 +115,7 @@ class ViewController
             return $this->variable[$key];
         }
 
-        return false;
+        return '';
     }
 
     /**
@@ -123,7 +123,7 @@ class ViewController
      * @param string $key
      * @return bool
      */
-    public function hasVariable($key)
+    public function hasVariable(string $key) :bool
     {
         if(isset($this->variable[$key])) {
             return true;
@@ -135,9 +135,9 @@ class ViewController
     /**
      * Set many variables at once
      * @param array $variables
-     * @return ViewController $this
+     * @return self
      */
-    public function setVariables(array $variables = [])
+    public function setVariables(array $variables = []) :self
     {
         foreach($variables AS $key=>$value) {
             $this->setVariable($key, $value);
@@ -150,7 +150,7 @@ class ViewController
      * Get all variables
      * @return array
      */
-    public function getVariables()
+    public function getVariables() :array
     {
         return $this->variable;
     }
@@ -178,7 +178,7 @@ class ViewController
      * @param $output
      * @return string
      */
-    private function cleanOutput($output)
+    private function cleanOutput($output) :string
     {
         return str_replace(array("\t", "\r", "  "), "", trim($output));
     }
@@ -187,7 +187,7 @@ class ViewController
      * Render the current view
      * @return string
      */
-    public function render()
+    public function render() :string
     {
         /** @var GenericViewHelper $viewFunctions Expose View Functions to its Template*/
         $v = new GenericViewHelper($this);
@@ -218,7 +218,7 @@ class ViewController
      * @throws ViewHelperIncompatibleException
      * @throws ClassNotFoundException
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments) :AbstractViewHelper
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);

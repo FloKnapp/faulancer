@@ -19,7 +19,7 @@ class Csrf
      * Generates a token and save it to session
      * @return string
      */
-    public static function getToken()
+    public static function getToken() :string
     {
         $token = bin2hex(openssl_random_pseudo_bytes(32));
         self::saveToSession($token);
@@ -28,18 +28,18 @@ class Csrf
 
     /**
      * Check if token is valid
-     * @return boolean
+     * @return bool
      */
-    public static function isValid()
+    public static function isValid() :bool
     {
         return isset($_POST['csrf']) && $_POST['csrf'] === SessionManager::instance()->getFlashbag('csrf');
     }
 
     /**
      * Saves token into session
-     * @param $token
+     * @param string $token
      */
-    private static function saveToSession($token)
+    private static function saveToSession(string $token)
     {
         SessionManager::instance()->setFlashbag('csrf', $token);
     }

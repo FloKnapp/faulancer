@@ -50,6 +50,7 @@ class Output
     /**
      * @param string $message
      * @param string $type
+     * @return void
      * @codeCoverageIgnore
      */
     public static function writeLine($message = '', $type = 'notice')
@@ -78,7 +79,7 @@ class Output
     }
 
     /**
-     * @return string
+     * @return void
      * @codeCoverageIgnore
      */
     public static function writeEmptyLine()

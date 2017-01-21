@@ -21,7 +21,7 @@ class DbTables
      * @return array
      * @codeCoverageIgnore
      */
-    public static function getTableData(Config $config)
+    public static function getTableData(Config $config) :array
     {
         $result = [];
 

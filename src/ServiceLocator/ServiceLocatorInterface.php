@@ -31,6 +31,6 @@ interface ServiceLocatorInterface
      *
      * @return ServiceInterface
      */
-    public function get($service = '');
+    public function get(string $service = '');
 
 }

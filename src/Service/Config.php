@@ -24,8 +24,8 @@ class Config
     /**
      * Set configuration value by key
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $key
+     * @param mixed $value
      * @param boolean $force
      * @return boolean
      * @throws ConfigInvalidException

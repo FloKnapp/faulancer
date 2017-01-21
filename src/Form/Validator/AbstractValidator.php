@@ -28,7 +28,7 @@ abstract class AbstractValidator
 
     /**
      * Init method which must be implemented by every validator
-     * @param $data
+     * @param mixed $data
      * @return mixed
      */
     public abstract function process($data);

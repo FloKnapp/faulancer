@@ -29,7 +29,7 @@ abstract class Controller
      *
      * @return ServiceLocator
      */
-    public function getServiceLocator()
+    public function getServiceLocator() :ServiceLocator
     {
         return ServiceLocator::instance();
     }
@@ -39,7 +39,7 @@ abstract class Controller
      *
      * @return ViewController
      */
-    public function getView()
+    public function getView() :ViewController
     {
         $calledClass = get_called_class();
 
@@ -58,7 +58,7 @@ abstract class Controller
      *
      * @return ORM|ServiceInterface
      */
-    public function getDb()
+    public function getDb() :ORM
     {
         return $this->getServiceLocator()->get(ORM::class);
     }
@@ -70,7 +70,7 @@ abstract class Controller
      * @param  array $variables
      * @return string
      */
-    public function render($template = '', $variables = [])
+    public function render(string $template = '', $variables = []) :string
     {
         return $this->getView()->setTemplate($template)->setVariables($variables)->render();
     }

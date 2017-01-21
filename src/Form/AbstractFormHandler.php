@@ -57,7 +57,7 @@ abstract class AbstractFormHandler
      * Return the called form handler
      * @return self
      */
-    protected function getForm()
+    protected function getForm() :self
     {
         return $this;
     }
@@ -66,7 +66,7 @@ abstract class AbstractFormHandler
      * Check data validity
      * @return boolean
      */
-    protected function isValid()
+    protected function isValid() :bool
     {
         $result = $this->validate();
         $errors = [];
@@ -97,7 +97,7 @@ abstract class AbstractFormHandler
      * Validate with the defined validators
      * @return array
      */
-    private function validate()
+    private function validate() :array
     {
         $result = [];
 
@@ -147,7 +147,7 @@ abstract class AbstractFormHandler
      * Returns the success url
      * @return string
      */
-    protected function getSuccessUrl()
+    protected function getSuccessUrl() :string
     {
         return $this->successUrl;
     }
@@ -156,7 +156,7 @@ abstract class AbstractFormHandler
      * Set the success url
      * @param string $successUrl
      */
-    protected function setSuccessUrl($successUrl)
+    protected function setSuccessUrl(string $successUrl)
     {
         $this->successUrl = $successUrl;
     }
@@ -165,7 +165,7 @@ abstract class AbstractFormHandler
      * Return the error url
      * @return string
      */
-    protected function getErrorUrl()
+    protected function getErrorUrl() :string
     {
         return $this->errorUrl;
     }
@@ -174,7 +174,7 @@ abstract class AbstractFormHandler
      * Set the error url
      * @param string $errorUrl
      */
-    protected function setErrorUrl($errorUrl)
+    protected function setErrorUrl(string $errorUrl)
     {
         $this->errorUrl = $errorUrl;
     }

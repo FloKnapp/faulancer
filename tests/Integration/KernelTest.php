@@ -34,7 +34,7 @@ class KernelTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testFailure()
+    public function testFailureDispatch()
     {
         $this->expectException(\TypeError::class);
 
@@ -55,15 +55,14 @@ class KernelTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSuccess()
+    public function testSuccessDispatch()
     {
-        $this->expectException(\TypeError::class);
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
 
         $request = new Request();
         $request->setMethod('GET');
         $request->setUri('/stub');
-
-        $config = [];
 
         $kernel = new Kernel($request, $config, false);
         $response = $kernel->run();

@@ -52,7 +52,7 @@ class Kernel
      */
     public function run()
     {
-        $dispatcher = new Dispatcher($this->request, $this->config, $this->routeCacheEnabled);
+        $dispatcher = new Dispatcher($this->request, $this->config);
 
         try {
             return $dispatcher->run()->getContent();
