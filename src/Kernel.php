@@ -27,10 +27,10 @@ class Kernel
     protected $request;
 
     /**
-     * Enable/disable route cache
-     * @var boolean
+     * The configuration object
+     * @var Config
      */
-    protected $routeCacheEnabled;
+    protected $config;
 
     /**
      * Kernel constructor.

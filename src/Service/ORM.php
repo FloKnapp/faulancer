@@ -32,7 +32,7 @@ class ORM implements ServiceInterface
     /**
      * @param string       $entity
      * @param integer|null $primaryKey
-     * @return EntityFetcher
+     * @return Entity|EntityFetcher
      * @codeCoverageIgnore
      */
     public function fetch(string $entity, $primaryKey = null)

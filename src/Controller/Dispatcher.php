@@ -29,6 +29,12 @@ class Dispatcher
     protected $request;
 
     /**
+     * The configuration object
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * Dispatcher constructor.
      *
      * @param Request $request

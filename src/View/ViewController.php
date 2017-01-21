@@ -191,7 +191,7 @@ class ViewController
     {
         /** @var GenericViewHelper $viewFunctions Expose View Functions to its Template*/
         $v = new GenericViewHelper($this);
-        extract([$v]);
+        extract([&$v]);
         extract($this->variable);
 
         ob_start();

@@ -14,6 +14,7 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractViewHelper
+ * @method __invoke()
  */
 abstract class AbstractViewHelper
 {

@@ -183,6 +183,6 @@ abstract class AbstractFormHandler
      * Init method which must be implemented
      * @return mixed
      */
-    public abstract function run();
+    abstract public function run();
     
 }

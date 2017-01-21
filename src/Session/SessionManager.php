@@ -167,7 +167,7 @@ class SessionManager
     /**
      * Get flashbag error by key
      * @param string $key
-     * @return null|string|array
+     * @return string|array
      */
     public function getFlashbagError(string $key)
     {
@@ -196,12 +196,12 @@ class SessionManager
     /**
      * Get form data from session flashbag
      * @param string $key
-     * @return null|array|string
+     * @return array|string
      */
     public function getFlashbagFormData(string $key)
     {
         if (!isset($_SESSION['flashbag']['formData'][$key])) {
-            return null;
+            return [];
         }
 
         $result = $_SESSION['flashbag']['formData'][$key];

@@ -139,10 +139,11 @@ class GenericViewHelper
 
         }
 
+        /** @var array $files */
         $files = $this->view->getVariable('assets'.ucfirst($type));
 
         foreach ($files AS $file) {
-            $result .= sprintf($pattern, $file). "\n";
+            $result .= sprintf($pattern, $file) . "\n";
         }
 
         return $result;
