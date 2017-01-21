@@ -170,7 +170,7 @@ class SessionManagerTest extends TestCase
     {
         $result = $this->sessionManager->getFlashbagFormData('nonExistent');
 
-        $this->assertNull($result);
+        $this->assertEmpty($result);
     }
 
     /**
