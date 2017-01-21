@@ -17,7 +17,7 @@ class ArgumentParser
     /** @var array */
     protected $arguments = [];
 
-    /** @var array */
+    /** @var Config */
     protected $config;
 
     /**
@@ -26,7 +26,7 @@ class ArgumentParser
      * @param Config $config
      * @codeCoverageIgnore
      */
-    public function __construct($argv, $config)
+    public function __construct($argv, Config $config)
     {
         $this->config = $config;
         $this->parseInput($argv);
@@ -46,7 +46,9 @@ class ArgumentParser
             throw new \Exception('Not enough parameters given.');
         }
 
-        for ($i = 0; $i < count($args); $i++) {
+        $argsCount = count($args);
+
+        for ($i = 0; $i < $argsCount; $i++) {
 
             if (strpos($args[$i], '-') === false) {
                 continue;

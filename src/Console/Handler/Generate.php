@@ -117,7 +117,6 @@ class Generate implements ConsoleInterface
         }
 
         Output::writeLine($creationCount . ' entities generated', 'success');
-
     }
 
 }
