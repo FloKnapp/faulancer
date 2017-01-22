@@ -36,7 +36,13 @@ class ViewController
      * Holds the parent template
      * @var ViewController
      */
-    private $extendedTemplate = null;
+    private $parentTemplate = null;
+
+    /**
+     * Holds the registered view helper
+     * @var array
+     */
+    public $viewHelper = [];
 
     /**
      * Set template for this view
@@ -159,18 +165,18 @@ class ViewController
      * Define parent template
      * @param ViewController $view
      */
-    public function setExtendedTemplate(ViewController $view)
+    public function setParentTemplate(ViewController $view)
     {
-        $this->extendedTemplate = $view;
+        $this->parentTemplate = $view;
     }
 
     /**
      * Get parent template
      * @return ViewController
      */
-    public function getExtendedTemplate()
+    public function getParentTemplate()
     {
-        return $this->extendedTemplate;
+        return $this->parentTemplate;
     }
 
     /**
@@ -189,9 +195,6 @@ class ViewController
      */
     public function render() :string
     {
-        /** @var GenericViewHelper $viewFunctions Expose View Functions to its Template*/
-        $v = new GenericViewHelper($this);
-        extract([&$v]);
         extract($this->variable);
 
         ob_start();
@@ -202,8 +205,8 @@ class ViewController
 
         ob_end_clean();
 
-        if( $this->getExtendedTemplate() instanceof ViewController ) {
-            return $this->cleanOutput($this->getExtendedTemplate()->setVariables($this->getVariables())->render());
+        if( $this->getParentTemplate() instanceof ViewController ) {
+            return $this->cleanOutput($this->getParentTemplate()->setVariables($this->getVariables())->render());
         } else {
             return $this->cleanOutput($content);
         }
@@ -213,37 +216,36 @@ class ViewController
      * Magic method for providing a view helper
      * @param $name
      * @param $arguments
-     * @return AbstractViewHelper
+     * @return string
      * @throws FileNotFoundException
      * @throws ViewHelperIncompatibleException
      * @throws ClassNotFoundException
      */
-    public function __call($name, $arguments) :AbstractViewHelper
+    public function __call($name, $arguments)
     {
-        /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
+        $coreViewHelper = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
-        $className = $name;
+        if (class_exists($coreViewHelper)) {
+            $class = new $coreViewHelper;
+            array_unshift($arguments, $this);
+            $this->viewHelper[$coreViewHelper] = call_user_func_array($class, $arguments);
+            return $this->viewHelper[$coreViewHelper];
+        }
+
+        /** @var Config $config */
+        $config    = ServiceLocator::instance()->get(Config::class);
         $namespace = '\\' . $config->get('namespacePrefix');
 
-        $className = $namespace . '\\View\\' . $className;
+        $customViewHelper = $namespace . '\\View\\' . ucfirst($name);
 
-        if (!class_exists($className)) {
-            throw new ClassNotFoundException('ViewHelper ' . $name . ' couldn\'t be found');
+        if (class_exists($customViewHelper)) {
+            $class = new $customViewHelper;
+            array_unshift($arguments, $this);
+            $this->viewHelper[$customViewHelper] = $class($arguments);
+            return $this->viewHelper[$customViewHelper];
         }
 
-        if (method_exists($className, '__construct')) {
-            $ref = new \ReflectionClass($className);
-            /** @var AbstractViewHelper $class */
-            $class = $ref->newInstanceArgs($arguments);
-            return $class;
-        }
-
-        if (method_exists($className, '__toString')) {
-            return new $className();
-        }
-
-        throw new ViewHelperIncompatibleException('No compatible methods found');
+        throw new ClassNotFoundException('No compatible view helper for "' . $name . '" found.');
     }
 
     /**

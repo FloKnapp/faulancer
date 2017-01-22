@@ -31,6 +31,6 @@ abstract class AbstractValidator
      * @param mixed $data
      * @return mixed
      */
-    public abstract function process($data);
+    abstract public function process($data);
 
 }
