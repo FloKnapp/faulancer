@@ -114,10 +114,8 @@ class ViewTest extends TestCase
             $view->addScript($javascript);
         }
 
-        $viewHelper = new GenericViewHelper($view);
-
-        $resultCss = $viewHelper->getAssets('css');
-        $resultJs = $viewHelper->getAssets('js');
+        $resultCss = $view->assetList('css');
+        $resultJs = $view->assetList('js');
 
         foreach ($css as $stylesheet) {
             $this->assertTrue(strpos($resultCss, $stylesheet) !== false);
@@ -134,7 +132,7 @@ class ViewTest extends TestCase
      */
     public function testViewHelperCsrf()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
+        $viewHelper = new ViewController();
         $token = $viewHelper->generateCsrfToken();
 
         $this->assertSame(SessionManager::instance()->getFlashbag('csrf'), $token);
@@ -155,18 +153,18 @@ class ViewTest extends TestCase
 
         SessionManager::instance()->setFlashbag('errors', $data);
 
-        $viewHelper = new GenericViewHelper(new ViewController());
+        $view = new ViewController();
 
-        $this->assertEmpty($viewHelper->getFormError('key6'));
+        $this->assertEmpty($view->formError('key6')->get());
 
         foreach ($data as $key => $value) {
 
-            $this->assertTrue($viewHelper->hasFormError($key));
+            $this->assertTrue($view->formError($key)->has());
 
             $this->assertSame($value, $data[$key]);
             $this->assertArrayHasKey('message', $value[0]);
 
-            $err = $viewHelper->getFormError($key);
+            $err = $view->formError($key)->get();
 
             $this->assertStringStartsWith('<div class="form-error ' . $key . '">', $err);
 
@@ -187,13 +185,13 @@ class ViewTest extends TestCase
             'key5' => 'value5',
         ];
 
-        $viewHelper = new GenericViewHelper(new ViewController());
+        $view = new ViewController();
 
         SessionManager::instance()->setFlashbagFormData($data);
 
         foreach ($data as $key => $value) {
 
-            $this->assertSame($value, $viewHelper->getFormData($key));
+            $this->assertSame($value, $view->formData($key));
 
         }
 
@@ -202,7 +200,7 @@ class ViewTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testViewExtendedTemplate()
+    public function testViewParentTemplate()
     {
         $view = new ViewController();
         $view->setTemplate('/stubBody.phtml');
@@ -214,28 +212,24 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @outputBuffering enabled
+     * @runInSeparateProcess
      */
-    public function testGenericViewHelperBlock()
+    public function testRenderBlockDefaultValue()
     {
-        $view       = new ViewController();
-        $viewHelper = new GenericViewHelper($view);
+        $view = new ViewController();
+        $view->setTemplate('/stubBodyEmpty.phtml');
 
-        $viewHelper->block('content');
-        echo 'Test';
-        ob_end_flush();
-        $this->expectOutputString('Test');
+        $content = $view->render();
 
-        $block = $viewHelper->renderBlock('content', 'test');
-        $this->assertNotEmpty($block);
-        $this->assertSame('test', $block);
-
+        $this->assertInstanceOf(ViewController::class, $view);
+        $this->assertSame('LayoutdefaultValue', $content);
     }
+
 
     public function testCustomViewHelper()
     {
         $view = new ViewController();
-        $viewHelper = $view->StubViewHelper();
+        $viewHelper = $view->stubViewHelper();
 
         $returnValue = (string)$viewHelper;
 
@@ -248,21 +242,6 @@ class ViewTest extends TestCase
         $this->expectException(ClassNotFoundException::class);
         $view = new ViewController();
         $view->NonExistingViewHelper();
-    }
-
-    public function testViewHelperWithoutConstructor()
-    {
-        $this->expectException(ViewHelperIncompatibleException::class);
-        $view = new ViewController();
-        $view->StubViewHelperWithoutConstructor();
-    }
-
-    public function testViewHelperWithConstructor()
-    {
-        $view = new ViewController();
-        $viewHelper = $view->StubViewHelperWithConstructor('value');
-        $this->assertNotEmpty($viewHelper->getValue());
-        $this->assertSame('value', $viewHelper->getValue());
     }
 
     public function testGetMissingVariable()
@@ -287,9 +266,9 @@ class ViewTest extends TestCase
 
     public function testGenericViewHelperRender()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
+        $view = new ViewController();
 
-        $response = $viewHelper->render('/stubView.phtml');
+        $response = $view->renderView('/stubView.phtml');
 
         $this->assertNotEmpty($response);
         $this->assertTrue(is_string($response));
@@ -297,13 +276,13 @@ class ViewTest extends TestCase
 
     public function testGenericViewHelperEscape()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
+        $view = new ViewController();
 
         $string = 'Test\\';
 
         $this->assertTrue(is_string($string));
 
-        $stripped = $viewHelper->escape($string);
+        $stripped = $view->escapeString($string);
 
         $this->assertFalse(strpos($stripped, '\\') > 0);
 
@@ -323,27 +302,27 @@ class ViewTest extends TestCase
      */
     public function testTranslateHelper()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
-        $this->assertSame('Test-Item1', $viewHelper->translate('test_item_1'));
+        $view = new ViewController();
+        $this->assertSame('Test-Item1', $view->translate('test_item_1'));
     }
 
     public function testGetRouteByName()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
-        $this->assertSame('/stub', $viewHelper->route('stub'));
+        $view = new ViewController();
+        $this->assertSame('/stub', $view->route('stub'));
     }
 
     public function testGetNonExistentRouteByName()
     {
         $this->expectException(\Exception::class);
-        $viewHelper = new GenericViewHelper(new ViewController());
-        $this->assertNotSame('/stub', $viewHelper->route('stubNonExistent'));
+        $view = new ViewController();
+        $this->assertNotSame('/stub', $view->route('stubNonExistent'));
     }
 
     public function testGetRouteNameWithParameters()
     {
-        $viewHelper = new GenericViewHelper(new ViewController());
-        $this->assertSame('/stub/test', $viewHelper->route('stub', ['test']));
+        $view = new ViewController();
+        $this->assertSame('/stub/test', $view->route('stub', ['test']));
     }
 
 }

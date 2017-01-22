@@ -14,7 +14,6 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractViewHelper
- * @method __invoke()
  */
 abstract class AbstractViewHelper
 {
@@ -43,15 +42,6 @@ abstract class AbstractViewHelper
     public function getServiceLocator() :ServiceLocator
     {
         return ServiceLocator::instance();
-    }
-
-    /**
-     * If view helper gets outputted return content
-     * @return string
-     */
-    public function __toString() :string
-    {
-        return (string)$this->__invoke();
     }
 
 }
