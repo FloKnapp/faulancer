@@ -309,7 +309,7 @@ class ViewTest extends TestCase
     public function testGetRouteByName()
     {
         $view = new ViewController();
-        $this->assertSame('/stub', $view->route('stub'));
+        $this->assertSame('/stub', $view->route('stubStatic'));
     }
 
     public function testGetNonExistentRouteByName()
@@ -322,7 +322,7 @@ class ViewTest extends TestCase
     public function testGetRouteNameWithParameters()
     {
         $view = new ViewController();
-        $this->assertSame('/stub/test', $view->route('stub', ['test']));
+        $this->assertSame('/stub/test', $view->route('stubStatic', ['test']));
     }
 
 }
