@@ -17,12 +17,14 @@ abstract class AbstractHttp
 
     /**
      * The session manager
+     *
      * @var SessionManager
      */
     protected $session;
 
     /**
      * Set session manager
+     *
      * @param SessionManager $session
      */
     public function setSession(SessionManager $session)
@@ -32,6 +34,7 @@ abstract class AbstractHttp
 
     /**
      * Get current session manager
+     *
      * @return SessionManager
      */
     public function getSession()

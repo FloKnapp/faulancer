@@ -6,9 +6,6 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\FactoryMayIncompatibleException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;

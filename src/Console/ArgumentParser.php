@@ -22,6 +22,7 @@ class ArgumentParser
 
     /**
      * ArgumentParser constructor.
+     *
      * @param array $argv
      * @param Config $config
      * @codeCoverageIgnore
@@ -33,6 +34,8 @@ class ArgumentParser
     }
 
     /**
+     * Parse input data
+     *
      * @param array $argv
      * @return ConsoleInterface
      * @throws \Exception
@@ -77,6 +80,8 @@ class ArgumentParser
     }
 
     /**
+     * Set argument by parameter key
+     *
      * @param string $arg
      * @param string $value
      * @codeCoverageIgnore
@@ -87,6 +92,8 @@ class ArgumentParser
     }
 
     /**
+     * Get argument by parameter key
+     *
      * @param string $arg
      * @return string|array
      * @codeCoverageIgnore

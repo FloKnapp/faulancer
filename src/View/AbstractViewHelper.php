@@ -20,6 +20,7 @@ abstract class AbstractViewHelper
 
     /**
      * Render a view with given template and variables
+     *
      * @param  string $template
      * @param  array  $variables
      * @return string
@@ -37,6 +38,7 @@ abstract class AbstractViewHelper
 
     /**
      * Get instance of service locator
+     *
      * @return ServiceLocator
      */
     public function getServiceLocator() :ServiceLocator

@@ -33,6 +33,7 @@ class Request extends AbstractHttp
 
     /**
      * Set attributes automatically
+     *
      * @return void
      */
     public function createFromHeaders()
@@ -51,6 +52,7 @@ class Request extends AbstractHttp
 
     /**
      * Set uri path
+     *
      * @param string $uri
      */
     public function setUri(string $uri)
@@ -60,6 +62,7 @@ class Request extends AbstractHttp
 
     /**
      * Get uri path
+     *
      * @return string
      */
     public function getUri() :string
@@ -69,6 +72,7 @@ class Request extends AbstractHttp
 
     /**
      * Set method
+     *
      * @param string $method
      */
     public function setMethod(string $method)
@@ -78,6 +82,7 @@ class Request extends AbstractHttp
 
     /**
      * Get method
+     *
      * @return string
      */
     public function getMethod() :string
@@ -87,6 +92,7 @@ class Request extends AbstractHttp
 
     /**
      * Set query string
+     *
      * @param string $query
      */
     public function setQuery(string $query)
@@ -96,6 +102,7 @@ class Request extends AbstractHttp
 
     /**
      * Get query string
+     *
      * @return string
      */
     public function getQuery() :string
@@ -105,6 +112,7 @@ class Request extends AbstractHttp
 
     /**
      * Determine if it's a post request
+     *
      * @return boolean
      */
     public function isPost() :bool
@@ -114,6 +122,7 @@ class Request extends AbstractHttp
 
     /**
      * Determine if it's a get request
+     *
      * @return boolean
      */
     public function isGet() :bool
@@ -123,6 +132,7 @@ class Request extends AbstractHttp
 
     /**
      * Return the post data
+     *
      * @return array
      */
     public function getPostData() :array

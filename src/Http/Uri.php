@@ -17,6 +17,7 @@ class Uri
 
     /**
      * Redirect to specific uri path
+     *
      * @param string  $location The path as string
      * @param integer $code     The status code
      * @return mixed
@@ -38,6 +39,7 @@ class Uri
 
     /**
      * Workaround to mock this method in phpunit
+     *
      * @codeCoverageIgnore
      * @return void
      */

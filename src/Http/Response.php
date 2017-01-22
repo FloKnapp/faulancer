@@ -49,6 +49,7 @@ class Response extends AbstractHttp
 
     /**
      * Set response code
+     *
      * @param integer $code
      */
     public function setCode(int $code = 200)
@@ -58,6 +59,7 @@ class Response extends AbstractHttp
 
     /**
      * Get response code
+     *
      * @return int
      */
     public function getCode() :int
@@ -67,6 +69,7 @@ class Response extends AbstractHttp
 
     /**
      * Set response body
+     *
      * @param mixed $content
      */
     public function setContent($content)
@@ -76,6 +79,7 @@ class Response extends AbstractHttp
 
     /**
      * Get response body and set headers
+     *
      * @return mixed
      */
     public function getContent()
@@ -88,6 +92,7 @@ class Response extends AbstractHttp
 
     /**
      * If object is getting outputted
+     *
      * @return string
      */
     public function __toString()

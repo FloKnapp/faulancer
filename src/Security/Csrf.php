@@ -17,6 +17,7 @@ class Csrf
 
     /**
      * Generates a token and save it to session
+     *
      * @return string
      */
     public static function getToken() :string
@@ -28,6 +29,7 @@ class Csrf
 
     /**
      * Check if token is valid
+     *
      * @return bool
      */
     public static function isValid() :bool
@@ -37,6 +39,7 @@ class Csrf
 
     /**
      * Saves token into session
+     *
      * @param string $token
      */
     private static function saveToSession(string $token)

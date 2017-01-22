@@ -40,6 +40,7 @@ class Generate implements ConsoleInterface
 
     /**
      * Generate constructor.
+     *
      * @param Config         $config
      * @param ArgumentParser $args
      * @codeCoverageIgnore
@@ -51,6 +52,8 @@ class Generate implements ConsoleInterface
     }
 
     /**
+     * Generate entities
+     *
      * @throws \Exception
      * @throws \ORM\Exceptions\NoConnection
      * @codeCoverageIgnore

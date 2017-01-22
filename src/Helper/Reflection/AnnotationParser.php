@@ -15,12 +15,14 @@ class AnnotationParser extends \ReflectionClass
 
     /**
      * The class name which should be parsed
+     *
      * @var string
      */
     private $className;
 
     /**
      * AnnotationParser constructor.
+     *
      * @param mixed $argument
      * @codeCoverageIgnore
      */
@@ -32,6 +34,7 @@ class AnnotationParser extends \ReflectionClass
 
     /**
      * Get class methods
+     *
      * @param string $name The name of the annotation
      * @return array
      * @codeCoverageIgnore
@@ -53,6 +56,7 @@ class AnnotationParser extends \ReflectionClass
 
     /**
      * Extract values from annotation
+     * 
      * @param string $name   The annotations name
      * @param string $method The method name
      * @return array

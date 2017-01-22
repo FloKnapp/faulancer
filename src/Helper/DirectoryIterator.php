@@ -31,6 +31,7 @@ class DirectoryIterator
 
     /**
      * Get files from directory
+     *
      * @param string $dir
      * @return array
      * @throws ConstantMissingException

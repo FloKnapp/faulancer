@@ -19,6 +19,7 @@ class ConfigFactory implements FactoryInterface
 
     /**
      * Create config service
+     *
      * @param ServiceLocatorInterface $serviceLocator
      * @return Config
      */

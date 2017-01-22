@@ -47,8 +47,7 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Try to get the service.
-     * Returns always a new instance of the service/factory.
-     * Can be configured in future to share the instance.
+     * Returns per default always a new instance of the service/factory.
      *
      * @param string  $service
      * @param boolean $shared
@@ -76,6 +75,7 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Get specific service by class name
+     *
      * @param  string $service
      * @return mixed
      * @throws ServiceNotFoundException
@@ -91,6 +91,7 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Check if we have a factory for this service
+     *
      * @param string $service
      * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
@@ -119,6 +120,7 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Reset the service locators instance
+     *
      * @internal
      */
     public static function destroy()
