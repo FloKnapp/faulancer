@@ -148,6 +148,7 @@ class SessionManager
 
     /**
      * Get flashbag value by key
+     *
      * @param string $key
      * @return null|string|array
      */
@@ -166,6 +167,7 @@ class SessionManager
 
     /**
      * Get flashbag error by key
+     *
      * @param string $key
      * @return null|string|array
      */

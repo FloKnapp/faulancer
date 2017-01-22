@@ -21,6 +21,8 @@ class ORMFactory implements FactoryInterface
 {
 
     /**
+     * Create an entity manager
+     *
      * @param ServiceLocatorInterface $serviceLocator
      * @return ORM
      * @codeCoverageIgnore

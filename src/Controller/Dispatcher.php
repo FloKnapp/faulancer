@@ -24,12 +24,14 @@ class Dispatcher
 
     /**
      * The current request object
+     *
      * @var Request
      */
     protected $request;
 
     /**
      * The configuration object
+     *
      * @var Config
      */
     protected $config;

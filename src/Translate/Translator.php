@@ -32,6 +32,7 @@ class Translator
 
     /**
      * Translator constructor.
+     *
      * @param string $language
      * @throws FileNotFoundException
      */
@@ -56,6 +57,7 @@ class Translator
 
     /**
      * Translate given key
+     *
      * @param string $key
      * @param array  $value
      * @return string

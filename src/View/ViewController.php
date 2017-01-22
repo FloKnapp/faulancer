@@ -39,13 +39,8 @@ class ViewController
     private $parentTemplate = null;
 
     /**
-     * Holds the registered view helper
-     * @var array
-     */
-    public $viewHelper = [];
-
-    /**
      * Set template for this view
+     *
      * @param string $template
      * @return self
      * @throws ConstantMissingException
@@ -71,6 +66,7 @@ class ViewController
 
     /**
      * Add javascript from outside
+     *
      * @param string $file
      * @return self
      */
@@ -82,6 +78,7 @@ class ViewController
 
     /**
      * Add stylesheet from outside
+     *
      * @param string $file
      * @return self
      */
@@ -93,6 +90,7 @@ class ViewController
 
     /**
      * Return current template
+     *
      * @return string
      */
     public function getTemplate() :string
@@ -102,6 +100,7 @@ class ViewController
 
     /**
      * Set a single variable
+     *
      * @param string $key
      * @param string|array $value
      */
@@ -112,10 +111,11 @@ class ViewController
 
     /**
      * Get a single variable
-     * @param $key
+     *
+     * @param string $key
      * @return string|array
      */
-    public function getVariable($key)
+    public function getVariable(string $key)
     {
         if(isset($this->variable[$key])) {
             return $this->variable[$key];
@@ -126,6 +126,7 @@ class ViewController
 
     /**
      * Check if variable exists
+     *
      * @param string $key
      * @return bool
      */
@@ -140,6 +141,7 @@ class ViewController
 
     /**
      * Set many variables at once
+     *
      * @param array $variables
      * @return self
      */
@@ -154,6 +156,7 @@ class ViewController
 
     /**
      * Get all variables
+     *
      * @return array
      */
     public function getVariables() :array
@@ -163,6 +166,7 @@ class ViewController
 
     /**
      * Define parent template
+     *
      * @param ViewController $view
      */
     public function setParentTemplate(ViewController $view)
@@ -172,6 +176,7 @@ class ViewController
 
     /**
      * Get parent template
+     *
      * @return ViewController
      */
     public function getParentTemplate()
@@ -181,6 +186,7 @@ class ViewController
 
     /**
      * Strip spaces and tabs from output
+     *
      * @param $output
      * @return string
      */
@@ -191,6 +197,7 @@ class ViewController
 
     /**
      * Render the current view
+     *
      * @return string
      */
     public function render() :string
@@ -214,6 +221,7 @@ class ViewController
 
     /**
      * Magic method for providing a view helper
+     *
      * @param $name
      * @param $arguments
      * @return string
@@ -223,14 +231,17 @@ class ViewController
      */
     public function __call($name, $arguments)
     {
+        // Search in core view helpers first
+
         $coreViewHelper = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
         if (class_exists($coreViewHelper)) {
             $class = new $coreViewHelper;
             array_unshift($arguments, $this);
-            $this->viewHelper[$coreViewHelper] = call_user_func_array($class, $arguments);
-            return $this->viewHelper[$coreViewHelper];
+            return call_user_func_array($class, $arguments);
         }
+
+        // No core implementations found; search in custom view helpers
 
         /** @var Config $config */
         $config    = ServiceLocator::instance()->get(Config::class);
@@ -241,8 +252,7 @@ class ViewController
         if (class_exists($customViewHelper)) {
             $class = new $customViewHelper;
             array_unshift($arguments, $this);
-            $this->viewHelper[$customViewHelper] = $class($arguments);
-            return $this->viewHelper[$customViewHelper];
+            return $class($arguments);
         }
 
         throw new ClassNotFoundException('No compatible view helper for "' . $name . '" found.');

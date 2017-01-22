@@ -46,6 +46,7 @@ class Kernel
 
     /**
      * Initialize the application
+     *
      * @return mixed
      * @throws Exception\ConfigInvalidException
      * @codeCoverageIgnore

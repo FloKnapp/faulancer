@@ -55,6 +55,7 @@ abstract class AbstractFormHandler
 
     /**
      * Return the called form handler
+     *
      * @return self
      */
     protected function getForm() :self
@@ -64,6 +65,7 @@ abstract class AbstractFormHandler
 
     /**
      * Check data validity
+     *
      * @return boolean
      */
     protected function isValid() :bool
@@ -95,6 +97,7 @@ abstract class AbstractFormHandler
 
     /**
      * Validate with the defined validators
+     *
      * @return array
      */
     private function validate() :array
@@ -145,6 +148,7 @@ abstract class AbstractFormHandler
 
     /**
      * Returns the success url
+     *
      * @return string
      */
     protected function getSuccessUrl() :string
@@ -154,6 +158,7 @@ abstract class AbstractFormHandler
 
     /**
      * Set the success url
+     *
      * @param string $successUrl
      */
     protected function setSuccessUrl(string $successUrl)
@@ -163,6 +168,7 @@ abstract class AbstractFormHandler
 
     /**
      * Return the error url
+     *
      * @return string
      */
     protected function getErrorUrl() :string
@@ -172,6 +178,7 @@ abstract class AbstractFormHandler
 
     /**
      * Set the error url
+     *
      * @param string $errorUrl
      */
     protected function setErrorUrl(string $errorUrl)
@@ -181,6 +188,7 @@ abstract class AbstractFormHandler
 
     /**
      * Init method which must be implemented
+     * 
      * @return mixed
      */
     abstract public function run();

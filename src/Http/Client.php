@@ -15,6 +15,7 @@ class Client
 
     /**
      * Get resource by uri
+     *
      * @param string   $uri     The uri
      * @param string[] $headers Custom headers
      * @return string
@@ -25,7 +26,8 @@ class Client
     }
 
     /**
-     * Send request through curl
+     * Send request within curl
+     *
      * @param string   $uri
      * @param string[] $headers
      * @return string

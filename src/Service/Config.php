@@ -49,6 +49,7 @@ class Config
 
     /**
      * Get configuration value by key
+     *
      * @param string $key
      * @return mixed
      * @throws ConfigInvalidException
@@ -67,6 +68,8 @@ class Config
     }
 
     /**
+     * Iterate through configuration till given key is found
+     *
      * @param $key
      * @return array|mixed
      * @throws ConfigInvalidException

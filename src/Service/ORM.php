@@ -22,6 +22,7 @@ class ORM implements ServiceInterface
 
     /**
      * ORM constructor.
+     *
      * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
@@ -30,6 +31,8 @@ class ORM implements ServiceInterface
     }
 
     /**
+     * Return the EntityFetcher
+     *
      * @param string       $entity
      * @param integer|null $primaryKey
      * @return Entity|EntityFetcher
@@ -41,6 +44,8 @@ class ORM implements ServiceInterface
     }
 
     /**
+     * Save an entity
+     *
      * @param Entity $entity
      * @codeCoverageIgnore
      */
