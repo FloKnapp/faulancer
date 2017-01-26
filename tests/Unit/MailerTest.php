@@ -27,11 +27,11 @@ class MailerTest extends TestCase
         $mock = $this->createPartialMock(Mailer::class, ['sendMail']);
         $mock->method('sendMail')->will($this->returnValue(true));
 
-        $mock->addTo('flozn27@gmail.com');
-        $mock->addCc('flozn27@gmail.com');
-        $mock->addBcc('flozn27@gmail.com');
-        $mock->setFrom('flozn27@gmail.com');
-        $mock->setReplyTo('flozn27@gmail.com');
+        $mock->addTo('test@test.de');
+        $mock->addCc('test@test.de');
+        $mock->addBcc('test@test.de');
+        $mock->setFrom('test@test.de');
+        $mock->setReplyTo('test@test.de');
         $mock->setSubject('Testsubject');
         $mock->addAttachment('42_attachment.jpg', $projectRoot . '/public/images/img.jpg');
         $mock->addAttachment('42_inline.jpg', $projectRoot . '/public/images/img.jpg', true);
@@ -50,10 +50,10 @@ class MailerTest extends TestCase
         $mock = $this->createPartialMock(Mailer::class, ['sendMail']);
         $mock->method('sendMail')->will($this->returnValue(true));
 
-        $mock->addTo('flozn27@gmail.com');
-        $mock->addCc('flozn27@gmail.com');
-        $mock->addBcc('flozn27@gmail.com');
-        $mock->setFrom('flozn27@gmail.com');
+        $mock->addTo('test@test.de');
+        $mock->addCc('test@test.de');
+        $mock->addBcc('test@test.de');
+        $mock->setFrom('test@test.de');
         $mock->setSubject('Testsubject');
         $mock->addAttachment('42_attachment.jpg', $projectRoot . '/public/images/img.jpg');
         $mock->addAttachment('42_inline.jpg', $projectRoot . '/public/images/img.jpg', true);
@@ -72,10 +72,10 @@ class MailerTest extends TestCase
         $mock = $this->createPartialMock(Mailer::class, ['sendMail']);
         $mock->method('sendMail')->will($this->returnValue(true));
 
-        $mock->addTo('flozn27@gmail.com');
-        $mock->addCc('flozn27@gmail.com');
-        $mock->addBcc('flozn27@gmail.com');
-        $mock->setFrom('flozn27@gmail.com');
+        $mock->addTo('test@test.de');
+        $mock->addCc('test@test.de');
+        $mock->addBcc('test@test.de');
+        $mock->setFrom('test@test.de');
         $mock->setSubject('Testsubject');
         $mock->addAttachment('42_attachment.jpg', $projectRoot . '/public/images/img.jpg');
         $mock->addAttachment('42_inline.jpg', $projectRoot . '/public/images/img.jpg', true);
