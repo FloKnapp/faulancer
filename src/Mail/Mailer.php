@@ -195,11 +195,11 @@ class Mailer
             $headers .= 'Reply-To: ' . $this->from . PHP_EOL;
         }
 
-        if ($this->carbonCopies) {
+        if (!empty($this->carbonCopies)) {
             $headers .= 'CC: ' . implode(',', $this->carbonCopies) . PHP_EOL;
         }
 
-        if ($this->blindCarbonCopies) {
+        if (!empty($this->blindCarbonCopies)) {
             $headers .= 'BCC: ' . implode(',', $this->blindCarbonCopies) . PHP_EOL;
         }
 
@@ -225,7 +225,7 @@ class Mailer
         $body .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
         $body .= chunk_split(base64_encode($this->content));
 
-        if ($this->attachment) {
+        if (!empty($this->attachment)) {
 
             foreach ($this->attachment as $attachment) {
 
