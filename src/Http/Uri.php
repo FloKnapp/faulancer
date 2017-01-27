@@ -30,8 +30,8 @@ class Uri
 
             header('HTTP/2 ' . $code . ' ' . Response::HTTP_STATUS_CODES[$code]);
             header('Location: ' .  $location);
-            return $this->terminate();
-
+            $this->terminate();
+            return true;
         }
 
         throw new InvalidArgumentException('Target url is invalid or status code is unknown');

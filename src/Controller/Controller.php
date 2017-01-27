@@ -7,6 +7,8 @@
  */
 namespace Faulancer\Controller;
 
+use Faulancer\Auth\Authenticator;
+use Faulancer\Http\Uri;
 use Faulancer\Service\ORM;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
@@ -73,6 +75,23 @@ abstract class Controller
     public function render(string $template = '', $variables = []) :string
     {
         return $this->getView()->setTemplate($template)->setVariables($variables)->render();
+    }
+
+    /**
+     * Set required authentication
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function requireAuth($role)
+    {
+        $authenticator = new Authenticator();
+
+        if ($authenticator->isAuthenticated($role) === false) {
+            (new Uri())->redirect('/user/login');
+        }
+
+        return true;
     }
 
 }
