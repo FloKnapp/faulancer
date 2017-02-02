@@ -8,6 +8,7 @@ namespace Faulancer\Service;
 
 use Faulancer\Controller\Controller;
 use Faulancer\ORM\User\Entity as UserEntity;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Authenticator
@@ -54,14 +55,13 @@ class Authenticator
             ->andWhere('password', '=', $user->password)
             ->one();
 
-        if ($userData) {
-
+        if ($userData instanceof UserEntity) {
             $this->saveUserInSession($userData);
             return $this->controller->redirect($this->redirectAfterAuth);
-
         }
 
-        return false;
+        SessionManager::instance()->setFlashbag('loginError', 'No valid username/password combination found.');
+        return $this->redirectToAuthentication();
     }
 
     /**

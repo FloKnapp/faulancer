@@ -101,7 +101,7 @@ class Controller
     /**
      * Set required authentication
      *
-     * @param string $role
+     * @param array $role
      * @return bool
      */
     public function requireAuth($role) :bool

@@ -17,18 +17,6 @@ abstract class AbstractFormHandler extends Controller
 {
 
     /**
-     * Holds the success url where can be redirect to after success
-     * @var string
-     */
-    private $successUrl;
-
-    /**
-     * Holds the error url where can be redirect to after failed validation
-     * @var string
-     */
-    private $errorUrl;
-
-    /**
      * Return the called form handler
      *
      * @return self
@@ -128,46 +116,6 @@ abstract class AbstractFormHandler extends Controller
         }
 
         return $result;
-    }
-
-    /**
-     * Returns the success url
-     *
-     * @return string
-     */
-    protected function getSuccessUrl() :string
-    {
-        return $this->successUrl;
-    }
-
-    /**
-     * Set the success url
-     *
-     * @param string $successUrl
-     */
-    protected function setSuccessUrl(string $successUrl)
-    {
-        $this->successUrl = $successUrl;
-    }
-
-    /**
-     * Return the error url
-     *
-     * @return string
-     */
-    protected function getErrorUrl() :string
-    {
-        return $this->errorUrl;
-    }
-
-    /**
-     * Set the error url
-     *
-     * @param string $errorUrl
-     */
-    protected function setErrorUrl(string $errorUrl)
-    {
-        $this->errorUrl = $errorUrl;
     }
 
     /**
