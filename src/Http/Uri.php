@@ -43,7 +43,7 @@ class Uri
      * @codeCoverageIgnore
      * @return void
      */
-    public function terminate()
+    protected function terminate()
     {
         exit(0);
     }

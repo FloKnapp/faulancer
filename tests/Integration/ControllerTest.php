@@ -22,7 +22,7 @@ class ControllerTest extends TestCase
 
     public function setUp()
     {
-        $this->controller = $this->getMockForAbstractClass(Controller::class);
+        $this->controller = $this->getMockForAbstractClass(Controller::class, [], '', false);
     }
 
     public function testGetView()

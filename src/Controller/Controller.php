@@ -7,17 +7,19 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\Auth\Authenticator;
+use Faulancer\Http\Request;
 use Faulancer\Http\Uri;
+use Faulancer\Service\Authenticator;
 use Faulancer\Service\ORM;
 use Faulancer\ServiceLocator\ServiceInterface;
+use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class Controller
  */
-abstract class Controller
+class Controller
 {
 
     /**
@@ -27,6 +29,15 @@ abstract class Controller
     private $viewArray = [];
 
     /**
+     * Controller constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
      * Returns the service locator
      *
      * @return ServiceLocator
@@ -34,6 +45,16 @@ abstract class Controller
     public function getServiceLocator() :ServiceLocator
     {
         return ServiceLocator::instance();
+    }
+
+    /**
+     * Returns the session manager
+     *
+     * @return SessionManager
+     */
+    public function getSessionManager() :SessionManager
+    {
+        return SessionManager::instance();
     }
 
     /**
@@ -83,15 +104,34 @@ abstract class Controller
      * @param string $role
      * @return bool
      */
-    public function requireAuth($role)
+    public function requireAuth($role) :bool
     {
-        $authenticator = new Authenticator();
+        /** @var Authenticator $authenticator */
+        $authenticator = $this->getServiceLocator()->get(Authenticator::class);
 
         if ($authenticator->isAuthenticated($role) === false) {
-            (new Uri())->redirect('/user/login');
+            $authenticator->redirectToAuthentication();
         }
 
         return true;
+    }
+
+    /**
+     * @param string $uri
+     * @return bool
+     */
+    public function redirect(string $uri) :bool
+    {
+        $http = new Uri();
+        return $http->redirect($uri);
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest() :Request
+    {
+        return $this->request;
     }
 
 }

@@ -12,6 +12,7 @@ use Faulancer\View\ViewController;
 
 /**
  * Class FormError
+ * @method $this->view->translate()
  */
 class FormError extends AbstractViewHelper
 {

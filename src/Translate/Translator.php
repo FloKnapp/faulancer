@@ -22,7 +22,7 @@ class Translator
      * Holds the translation data
      * @var array
      */
-    protected $config = [];
+    protected $translation = [];
 
     /**
      * Holds the current language key
@@ -34,21 +34,17 @@ class Translator
      * Translator constructor.
      *
      * @param string $language
+     * @param SessionManager $sessionManager
      * @throws FileNotFoundException
      */
-    public function __construct(string $language = 'ger_DE')
+    public function __construct(string $language = 'ger_DE', SessionManager $sessionManager = null)
     {
         /** @var Config $config */
-        $config    = ServiceLocator::instance()->get(Config::class);
-        $transFile = $config->get('translationFile');
+        $config = ServiceLocator::instance()->get(Config::class);
 
-        if (!file_exists($transFile)) {
-            throw new FileNotFoundException('Translation file couldn\'t be found');
-        }
-
-        $this->config   = require $transFile;
-        $this->language = $language;
-        $sessionManager = SessionManager::instance();
+        $this->language    = $language;
+        $this->translation = $config->get('translation');
+        $sessionManager    = empty($sessionManager) ? SessionManager::instance() : $sessionManager;
 
         if ($sessionManager->get('language')) {
             $this->language = $sessionManager->get('language');
@@ -64,19 +60,19 @@ class Translator
      */
     public function translate(string $key, $value = []) :string
     {
-        if (empty($this->config)) {
+        if (empty($this->translation)) {
             return $key;
         }
 
-        if (empty($this->config[$this->language][$key])) {
+        if (empty($this->translation[$this->language][$key])) {
             return $key;
         }
 
         if (!empty($value)) {
-            return vsprintf($this->config[$this->language][$key], $value);
+            return vsprintf($this->translation[$this->language][$key], $value);
         }
 
-        return $this->config[$this->language][$key];
+        return $this->translation[$this->language][$key];
     }
 
 }

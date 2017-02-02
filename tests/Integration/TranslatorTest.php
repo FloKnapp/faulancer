@@ -2,6 +2,7 @@
 
 namespace Faulancer\Test\Integration;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -74,36 +75,38 @@ class TranslatorTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testTranslationFileDontExists()
+    public function testTranslationDontExists()
     {
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(ConfigInvalidException::class);
 
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
-        $transFile = $config->get('translationFile');
-        $config->set('translationFile', 'notExistent', true);
+        $trans  = $config->get('translation');
+        $config->delete('translation');
 
         $translator = new Translator();
-        $this->assertFileNotExists($config->get('translationFile'));
+        $this->assertEmpty($config->get('translation'));
         $this->assertSame('test_item_1', $translator->translate('test_item_1'));
 
-        $config->set('translationFile', $transFile, true);
+        $config->set('translation', $trans, true);
     }
 
     /**
      * @runInSeparateProcess
      */
-    public function testTranslationFileIsEmpty()
+    public function testTranslationIsEmpty()
     {
         /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-        $transFile = $config->get('translationFile');
-        $config->set('translationFile', $config->get('projectRoot') . '/config/translation_empty.php', true);
+        $config     = ServiceLocator::instance()->get(Config::class);
+        $trans      = $config->get('translation');
+        $emptyTrans = require $config->get('projectRoot') . '/config/translation_empty.conf.php';
+
+        $config->set('translation', $emptyTrans, true);
 
         $translator = new Translator();
         $this->assertSame('test_item_1', $translator->translate('test_item_1'));
 
-        $config->set('translationFile', $transFile, true);
+        $config->set('translation', $trans, true);
     }
     
 }
