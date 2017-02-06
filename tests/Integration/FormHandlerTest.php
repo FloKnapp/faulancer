@@ -108,6 +108,30 @@ class FormHandlerTest extends TestCase
         $this->assertSame('testSuccess', $result);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testGetFormData()
+    {
+        $request = new Request();
+        $request->setMethod('POST');
+
+        $data = [
+            'rofl/name'    => 'Florian Knapp',
+            'lol/email'    => 'test@florianknapp.de',
+            'kewl/message' => ''
+        ];
+
+        $_POST       = $data;
+        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $result      = $formHandler->run();
+
+        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertSame('Florian Knapp', $formHandler->getFormData('rofl/name'));
+        $this->assertSame('test@florianknapp.de', $formHandler->getFormData('lol/email'));
+        $this->assertSame('testSuccess', $result);
+    }
+
     public function testEmailValidator()
     {
 

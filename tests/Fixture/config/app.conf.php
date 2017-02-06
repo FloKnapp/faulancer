@@ -7,5 +7,12 @@ return [
     'namespacePrefix' => 'Faulancer\Fixture',
     'translation'     => require __DIR__ . '/translation.conf.php',
     'routes'          => require __DIR__ . '/routes.conf.php',
-    'recursiveTest'   => ['layer' => ['layer2' => 'test']]
+    'recursiveTest'   => [
+        'layer' => [
+            'layer2' => 'test'
+        ]
+    ],
+    'auth' => [
+        'authUrl' => '/test'
+    ]
 ];

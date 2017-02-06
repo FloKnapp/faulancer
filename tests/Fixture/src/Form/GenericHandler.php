@@ -13,15 +13,11 @@ class GenericHandler extends AbstractFormHandler
 
     public function run()
     {
-        $this->setSuccessUrl('testSuccess');
-        $this->setErrorUrl('testError');
-
         if ($this->getForm()->isValid()) {
-            return $this->getSuccessUrl();
+            return 'testSuccess';
         }
 
-        return $this->getErrorUrl();
-
+        return 'testError';
     }
 
 }

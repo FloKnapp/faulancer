@@ -1,30 +1,30 @@
 <?php
 /**
- * Class ORMFactory | ORMFactory.php
+ * Class DbServiceFactory | DbServiceFactory.php
  * @package Faulancer\Service\Factory
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Service\Factory;
 
+use Faulancer\Service\DbService;
 use ORM\DbConfig;
 use ORM\EntityManager;
 use Faulancer\Service\Config;
-use Faulancer\Service\ORM;
 use Faulancer\ServiceLocator\FactoryInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\ServiceLocator\ServiceLocatorInterface;
 
 /**
- * Class ORMFactory
+ * Class DbServiceFactory
  */
-class ORMFactory implements FactoryInterface
+class DbServiceFactory implements FactoryInterface
 {
 
     /**
      * Create an entity manager
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return ORM
+     * @return DbService
      * @codeCoverageIgnore
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -64,7 +64,7 @@ class ORMFactory implements FactoryInterface
 
         $entityManager = new EntityManager([EntityManager::OPT_CONNECTION => $dbConf]);
 
-        return new ORM($entityManager);
+        return new DbService($entityManager);
     }
 
 }

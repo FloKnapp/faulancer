@@ -21,13 +21,7 @@ class Crypt
      */
     public function hashPassword(string $password) :string
     {
-        $hash = password_hash($password, CRYPT_BLOWFISH);
-
-        if ($hash) {
-            return $hash;
-        }
-
-        throw new \Exception('Hashing failed');
+        return password_hash($password, CRYPT_BLOWFISH);
     }
 
     /**

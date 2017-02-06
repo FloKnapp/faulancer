@@ -9,8 +9,9 @@ namespace Faulancer\Controller;
 
 use Faulancer\Http\Request;
 use Faulancer\Http\Uri;
-use Faulancer\Service\Authenticator;
-use Faulancer\Service\ORM;
+use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\DbService;
+use Faulancer\Service\HttpService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
@@ -19,7 +20,7 @@ use Faulancer\ServiceLocator\ServiceLocator;
 /**
  * Class Controller
  */
-class Controller
+abstract class Controller
 {
 
     /**
@@ -79,11 +80,11 @@ class Controller
     /**
      * Returns the orm/entity manager
      *
-     * @return ORM|ServiceInterface
+     * @return DbService|ServiceInterface
      */
-    public function getDb() :ORM
+    public function getDb() :DbService
     {
-        return $this->getServiceLocator()->get(ORM::class);
+        return $this->getServiceLocator()->get(DbService::class);
     }
 
     /**
@@ -106,11 +107,11 @@ class Controller
      */
     public function requireAuth($role) :bool
     {
-        /** @var Authenticator $authenticator */
-        $authenticator = $this->getServiceLocator()->get(Authenticator::class);
+        /** @var AuthenticatorService $authenticator */
+        $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
 
         if ($authenticator->isAuthenticated($role) === false) {
-            $authenticator->redirectToAuthentication();
+            return $authenticator->redirectToAuthentication();
         }
 
         return true;
@@ -122,8 +123,9 @@ class Controller
      */
     public function redirect(string $uri) :bool
     {
-        $http = new Uri();
-        return $http->redirect($uri);
+        /** @var HttpService $httpService */
+        $httpService = $this->getServiceLocator()->get(HttpService::class);
+        return $httpService->redirect($uri);
     }
 
     /**

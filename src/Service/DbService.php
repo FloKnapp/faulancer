@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ORM | ORM.php
+ * Class DbService | DbService.php
  * @package Faulancer\Service
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -12,9 +12,9 @@ use Faulancer\ORM\Entity;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
- * Class ORM
+ * Class DbService
  */
-class ORM implements ServiceInterface
+class DbService implements ServiceInterface
 {
 
     /** @var EntityManager */
@@ -28,6 +28,14 @@ class ORM implements ServiceInterface
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getManager()
+    {
+        return $this->entityManager;
     }
 
     /**

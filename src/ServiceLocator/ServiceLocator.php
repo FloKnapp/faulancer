@@ -27,6 +27,9 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     private static $services = [];
 
+    /** @var array */
+    private static $backup = [];
+
     /**
      * ServiceLocator private constructor.
      */
@@ -70,6 +73,10 @@ class ServiceLocator implements ServiceLocatorInterface {
             self::$services[$service] = $class;
         }
 
+        if (in_array($service, array_keys(self::$backup))) {
+            self::$services[$service] = self::$backup[$service];
+        }
+
         return $class;
     }
 
@@ -83,7 +90,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     private function getService(string $service)
     {
         if (!class_exists($service)) {
-            throw new ServiceNotFoundException();
+            throw new ServiceNotFoundException($service . ' not found');
         }
 
         return new $service();
@@ -98,7 +105,6 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     private function getFactory(string $service)
     {
-
         $parts     = explode('\\', $service);
         $className = array_splice($parts, count($parts) - 1, 1);
         $class     = implode('\\', $parts) . '\\Factory\\' . $className[0] . 'Factory';
@@ -116,6 +122,25 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         throw new FactoryMayIncompatibleException();
+    }
+
+    /**
+     * @param string           $name
+     * @param ServiceInterface $service
+     * @internal
+     */
+    public static function set($name, $service)
+    {
+        if (!empty(self::$services[$name])) {
+            self::$backup[$name] = self::$services[$name];
+        }
+
+        self::$services[$name] = $service;
+    }
+
+    public static function reset($name)
+    {
+
     }
 
     /**

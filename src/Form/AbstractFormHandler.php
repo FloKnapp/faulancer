@@ -30,7 +30,7 @@ abstract class AbstractFormHandler extends Controller
      * @param string $field
      * @return string
      */
-    protected function getFormData(string $field) :string
+    public function getFormData(string $field) :string
     {
         return $this->getRequest()->getPostData()[$field];
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Authenticator | Authenticator.php
+ * Class AuthenticatorService | AuthenticatorService.php
  * @package Faulancer\Auth
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -8,16 +8,23 @@ namespace Faulancer\Service;
 
 use Faulancer\Controller\Controller;
 use Faulancer\ORM\User\Entity as UserEntity;
+use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\Session\SessionManager;
 
 /**
- * Class Authenticator
+ * Class AuthenticatorService
  */
-class Authenticator
+class AuthenticatorService implements ServiceInterface
 {
 
     /** @var Controller */
     protected $controller;
+
+    /** @var DbService */
+    protected $orm;
+
+    /** @var Config */
+    protected $config;
 
     /** @var string */
     protected $redirectAfterAuth;
@@ -25,18 +32,12 @@ class Authenticator
     /**
      * Authenticator constructor.
      * @param Controller $controller
+     * @param Config     $config
      */
-    public function __construct(Controller $controller)
+    public function __construct(Controller $controller, Config $config)
     {
         $this->controller = $controller;
-    }
-
-    /**
-     * @param UserEntity $userData
-     */
-    public function registerUser(UserEntity $userData)
-    {
-
+        $this->config     = $config;
     }
 
     /**
@@ -45,11 +46,9 @@ class Authenticator
      */
     public function loginUser(UserEntity $user)
     {
-        /** @var ORM $orm */
-        $orm = $this->controller->getServiceLocator()->get(ORM::class);
-
         /** @var UserEntity $userData */
-        $userData = $orm
+        $userData = $this->controller
+            ->getDb()
             ->fetch(get_class($user))
             ->where('login', '=', $user->login)
             ->andWhere('password', '=', $user->password)
@@ -92,10 +91,6 @@ class Authenticator
     {
         /** @var UserEntity $user */
         $user = $this->getUserFromSession();
-
-        if (!$user instanceof UserEntity) {
-            return false;
-        }
 
         foreach ($user->roles as $userRole) {
 

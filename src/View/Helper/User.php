@@ -6,7 +6,7 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Service\Authenticator;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
@@ -28,8 +28,8 @@ class User extends AbstractViewHelper
 
     public function get()
     {
-        /** @var Authenticator $authenticator */
-        $authenticator = $this->getServiceLocator()->get(Authenticator::class);
+        /** @var AuthenticatorService $authenticator */
+        $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
         return $authenticator->getUserFromSession();
     }
 
