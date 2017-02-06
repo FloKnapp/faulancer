@@ -66,9 +66,6 @@ class AuthenticatorServiceTest extends TestCase
         $this->assertSame(1, $this->sessionManager->get('user'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetUserFromSession()
     {
         $this->assertInstanceOf(EntityFetcher::class, $this->authenticator->getUserFromSession());

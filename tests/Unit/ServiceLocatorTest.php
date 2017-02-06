@@ -102,7 +102,7 @@ class ServiceLocatorTest extends TestCase
         $mock = $this->createPartialMock(StubService::class, ['getDependency']);
         $mock->method('getDependency')->will($this->returnValue(true));
 
-        $this->serviceLocator->set('Faulancer\Fixture\Service\StubService', $mock);
+        $this->serviceLocator->set(StubService::class, $mock);
 
         /** @var StubService $mockedResult */
         $mockedResult = $this->serviceLocator->get(StubService::class);

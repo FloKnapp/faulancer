@@ -9,6 +9,7 @@ use Faulancer\Http\Uri;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\ControllerService;
 use Faulancer\Service\HttpService;
+use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
@@ -112,6 +113,7 @@ class ControllerTest extends TestCase
      */
     public function testRequireAuthRedirectToLogin()
     {
+        /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $authMock */
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['isAuthenticated', 'redirectToAuthentication']);
         $authMock->method('isAuthenticated')->will($this->returnValue(false));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(false));

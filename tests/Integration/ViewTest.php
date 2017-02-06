@@ -200,7 +200,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
      * @throws FileNotFoundException
      */
     public function testViewParentTemplate()
@@ -215,7 +214,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess 
      * @throws FileNotFoundException
      */
     public function testRenderBlockDefaultValue()
@@ -348,12 +346,12 @@ class ViewTest extends TestCase
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
-        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
 
-        $this->assertNotEmpty($view->user()->get());
-        $this->assertInstanceOf(Entity::class, $view->user()->get());
+        $userEntity = $view->user()->get();
 
-
+        $this->assertNotEmpty($userEntity);
+        $this->assertInstanceOf(Entity::class, $userEntity);
     }
 
 }

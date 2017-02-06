@@ -60,12 +60,15 @@ class ServiceLocator implements ServiceLocatorInterface {
     public function get(string $service = '', $shared = true)
     {
         if (in_array($service, array_keys(self::$backup))) {
+
+            $overriddenService = self::$services[$service];
             self::$services[$service] = self::$backup[$service];
             unset(self::$backup[$service]);
-            return self::$services[$service];
+            return $overriddenService;
+
         }
 
-        if ($shared && isset(self::$services[$service])) {
+        if ($shared && !empty(self::$services[$service])) {
             return self::$services[$service];
         }
 
@@ -131,7 +134,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     public static function set($name, $service)
     {
-        if (!empty(self::$services[$name])) {
+        if (isset(self::$services[$name])) {
             self::$backup[$name] = self::$services[$name];
         }
 

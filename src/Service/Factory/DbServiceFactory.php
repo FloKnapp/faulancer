@@ -11,7 +11,6 @@ use ORM\DbConfig;
 use ORM\EntityManager;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\FactoryInterface;
-use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\ServiceLocator\ServiceLocatorInterface;
 
 /**
@@ -30,7 +29,7 @@ class DbServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
+        $config = $serviceLocator->get(Config::class);
 
         $type = $config->get('db:type');
         $name = $config->get('db:name');
