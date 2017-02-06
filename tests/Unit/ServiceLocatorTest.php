@@ -9,7 +9,6 @@ use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Fixture\Service\Factory\StubServiceFactory;
 use Faulancer\Fixture\Service\StubService;
-use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * File ServiceLocatorTest.php

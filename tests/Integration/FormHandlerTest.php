@@ -3,11 +3,9 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Fixture\Form\GenericHandler;
-use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
 
 /**

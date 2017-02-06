@@ -3,7 +3,6 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Http\Request;
-use Faulancer\Http\Response;
 use Faulancer\Kernel;
 use Faulancer\Service\Config;
 use Faulancer\Service\ResponseService;

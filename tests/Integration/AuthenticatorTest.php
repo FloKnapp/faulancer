@@ -39,7 +39,7 @@ class AuthenticatorServiceTest extends TestCase
         $httpMock = $this->createPartialMock(HttpService::class, ['triggerRedirect']);
         $httpMock->method('triggerRedirect')->will($this->returnValue(true));
 
-        ServiceLocator::set('Faulancer\Service\HttpService', $httpMock);
+        ServiceLocator::instance()->set('Faulancer\Service\HttpService', $httpMock);
 
         /** @var AuthenticatorService $authenticator */
         $this->authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
