@@ -6,12 +6,13 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Session\SessionManager;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
 /**
  * Class FormError
+ * @method $this->view->translate()
  */
 class FormError extends AbstractViewHelper
 {
@@ -21,6 +22,9 @@ class FormError extends AbstractViewHelper
 
     /** @var string */
     protected $field;
+
+    /** @var SessionManagerService */
+    protected $sessionManager;
 
     /**
      * Initializing form error helper
@@ -34,6 +38,8 @@ class FormError extends AbstractViewHelper
         $this->view  = $view;
         $this->field = $field;
 
+        $this->sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+
         return $this;
     }
 
@@ -44,7 +50,7 @@ class FormError extends AbstractViewHelper
      */
     public function get()
     {
-        $error = SessionManager::instance()->getFlashbagError($this->field);
+        $error = $this->sessionManager->getFlashbagError($this->field);
 
         $result = '';
 
@@ -70,7 +76,7 @@ class FormError extends AbstractViewHelper
      */
     public function has()
     {
-        return SessionManager::instance()->hasFlashbagErrorsKey($this->field);
+        return $this->sessionManager->hasFlashbagErrorsKey($this->field);
     }
 
 }

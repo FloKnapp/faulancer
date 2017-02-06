@@ -12,42 +12,27 @@ namespace Faulancer\Session;
  */
 class SessionManager
 {
-
-    /**
-     * This instance
-     * @var self
-     */
-    protected static $instance;
-
-    /**
-     * SessionStorage constructor.
-     */
-    private function __construct()
-    {
-        if (!$this->hasSession()) {
-            $this->startSession();
-        }
-    }
-
-    /**
-     * Return self
-     * @return self
-     */
-    public static function instance() :self
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
     /**
      * Start session handler
      * @return void
+     * @codeCoverageIgnore
      */
-    private function startSession()
+    public function startSession()
     {
-        session_start();
+        if (!$this->hasSession()) {
+            session_start();
+        }
+    }
+
+    /**
+     * Destroy session at all
+     * @return void
+     */
+    public function destroySession()
+    {
+        if ($this->hasSession()) {
+            session_destroy();
+        }
     }
 
     /**
@@ -56,7 +41,7 @@ class SessionManager
      */
     public function hasSession()
     {
-        if (isset($_SESSION)) {
+        if (!empty(session_id())) {
             return true;
         }
 

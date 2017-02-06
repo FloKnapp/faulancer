@@ -24,8 +24,8 @@ class Config
     /**
      * Set configuration value by key
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param mixed   $key
+     * @param mixed   $value
      * @param boolean $force
      * @return boolean
      * @throws ConfigInvalidException
@@ -60,11 +60,23 @@ class Config
             return $this->recursive($key);
         }
 
-        if (empty($this->_config[$key])) {
+        if (!isset($this->_config[$key])) {
             throw new ConfigInvalidException('No value for key "' . $key . '" found.');
         }
 
         return $this->_config[$key];
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function delete($key)
+    {
+        if (isset($this->_config[$key])) {
+            unset($this->_config[$key]);
+        }
+        return true;
     }
 
     /**

@@ -3,11 +3,13 @@
 namespace Faulancer\Test\Unit;
 
 use Faulancer\Fixture\Service\StubServiceWithoutFactory;
+use Faulancer\ServiceLocator\ServiceInterface;
 use PHPUnit\Framework\TestCase;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Fixture\Service\Factory\StubServiceFactory;
 use Faulancer\Fixture\Service\StubService;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * File ServiceLocatorTest.php
@@ -87,6 +89,29 @@ class ServiceLocatorTest extends TestCase
 
         $serviceLocatorNew = ServiceLocator::instance();
         $this->assertSame(ServiceLocator::instance(), $serviceLocatorNew);
+    }
+    
+    public function testOverrideService()
+    {
+        /** @var StubService $originalService */
+        $originalService = $this->serviceLocator->get(StubService::class);
+
+        $this->assertSame('here', $originalService->getDependency());
+
+        /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $mock */
+        $mock = $this->createPartialMock(StubService::class, ['getDependency']);
+        $mock->method('getDependency')->will($this->returnValue(true));
+
+        $this->serviceLocator->set(StubService::class, $mock);
+
+        /** @var StubService $mockedResult */
+        $mockedResult = $this->serviceLocator->get(StubService::class);
+
+        $this->assertTrue($mockedResult->getDependency());
+
+        $originalService = $this->serviceLocator->get(StubService::class);
+
+        $this->assertSame('here', $originalService->getDependency());
     }
 
 }

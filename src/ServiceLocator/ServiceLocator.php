@@ -27,6 +27,9 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     private static $services = [];
 
+    /** @var array */
+    private static $backup = [];
+
     /**
      * ServiceLocator private constructor.
      */
@@ -56,7 +59,16 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     public function get(string $service = '', $shared = true)
     {
-        if ($shared && isset(self::$services[$service])) {
+        if (in_array($service, array_keys(self::$backup))) {
+
+            $overriddenService = self::$services[$service];
+            self::$services[$service] = self::$backup[$service];
+            unset(self::$backup[$service]);
+            return $overriddenService;
+
+        }
+
+        if ($shared && !empty(self::$services[$service])) {
             return self::$services[$service];
         }
 
@@ -66,9 +78,7 @@ class ServiceLocator implements ServiceLocatorInterface {
             $class = $this->getService($service);
         }
 
-        if ($shared) {
-            self::$services[$service] = $class;
-        }
+        self::$services[$service] = $class;
 
         return $class;
     }
@@ -83,7 +93,7 @@ class ServiceLocator implements ServiceLocatorInterface {
     private function getService(string $service)
     {
         if (!class_exists($service)) {
-            throw new ServiceNotFoundException();
+            throw new ServiceNotFoundException($service . ' not found');
         }
 
         return new $service();
@@ -98,7 +108,6 @@ class ServiceLocator implements ServiceLocatorInterface {
      */
     private function getFactory(string $service)
     {
-
         $parts     = explode('\\', $service);
         $className = array_splice($parts, count($parts) - 1, 1);
         $class     = implode('\\', $parts) . '\\Factory\\' . $className[0] . 'Factory';
@@ -116,6 +125,20 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         throw new FactoryMayIncompatibleException();
+    }
+
+    /**
+     * @param string           $name
+     * @param ServiceInterface $service
+     * @internal
+     */
+    public static function set($name, $service)
+    {
+        if (isset(self::$services[$name])) {
+            self::$backup[$name] = self::$services[$name];
+        }
+
+        self::$services[$name] = $service;
     }
 
     /**

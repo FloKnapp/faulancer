@@ -30,13 +30,13 @@ class Route extends AbstractViewHelper
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
-        $routes = require $config->get('routeFile');
+        $routes = $config->get('routes');
         $path   = '';
 
         foreach ($routes as $routeName => $data) {
 
             if ($routeName === $name) {
-                $path = preg_replace('|/\((.*)\)|', '', $data['path']);;
+                $path = preg_replace('|/\((.*)\)|', '', $data['path']);
                 break;
             }
 

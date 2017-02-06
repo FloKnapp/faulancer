@@ -108,7 +108,7 @@ class Mailer
         $this->from = $name;
     }
 
-    public function setReplyto(string $name)
+    public function setReplyTo(string $name)
     {
         $this->replyTo = $name;
     }

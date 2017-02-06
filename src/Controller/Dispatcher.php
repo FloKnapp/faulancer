@@ -14,6 +14,8 @@ use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Service\ResponseService;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
@@ -62,7 +64,8 @@ class Dispatcher
             return $formRequest;
         }
 
-        $response = new Response();
+        /** @var ResponseService $response */
+        $response = ServiceLocator::instance()->get(ResponseService::class);
 
         try {
 
@@ -70,7 +73,7 @@ class Dispatcher
             $class  = $target['class'];
             $action = $target['action'] . 'Action';
 
-            $class = new $class();
+            $class = new $class($this->request);
 
             if (isset($target['var'])) {
                 $response->setContent(call_user_func_array([$class, $action], $target['var']));
@@ -97,7 +100,7 @@ class Dispatcher
      */
     private function getRoute($path)
     {
-        $routes = require $this->config->get('routeFile');
+        $routes = $this->config->get('routes');
 
         foreach ($routes as $name => $data) {
 
@@ -152,17 +155,12 @@ class Dispatcher
      */
     private function getVariableMatch($uri, array $data) :array
     {
-        $var = [];
-
         if ($data['path'] === '/') {
             return [];
         }
 
-        $regex = str_replace(
-            ['/', '___'],
-            ['\/', '+'],
-            $data['path']
-        );
+        $var   = [];
+        $regex = str_replace(['/', '___'], ['\/', '+'], $data['path']);
 
         if (preg_match('|^' . $regex . '$|', $uri, $var)) {
 
@@ -196,7 +194,7 @@ class Dispatcher
         if (class_exists($handlerClass)) {
 
             /** @var AbstractFormHandler $handler */
-            $handler = new $handlerClass($this->request, SessionManager::instance());
+            $handler = new $handlerClass($this->request);
             return $handler->run();
 
         }

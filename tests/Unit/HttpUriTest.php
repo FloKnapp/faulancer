@@ -3,7 +3,7 @@
 namespace Faulancer\Test\Unit;
 
 use Faulancer\Exception\InvalidArgumentException;
-use Faulancer\Http\Uri;
+use Faulancer\Http\Http;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,26 +15,26 @@ class HttpUriTest extends TestCase
 {
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testRedirect()
     {
-        $mock = $this->createPartialMock(Uri::class, ['terminate']);
-        $mock->method('terminate')->will($this->returnValue(true));
+        $mock = $this->createPartialMock(Http::class, ['triggerRedirect']);
+        $mock->method('triggerRedirect')->will($this->returnValue(true));
 
-        /** @var Uri $mock */
+        /** @var Http $mock */
         $result = $mock->redirect('/test', 301);
 
         $this->assertTrue($result);
     }
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testWrongCode()
     {
         $this->expectException(InvalidArgumentException::class);
-        (new Uri())->redirect('/stub', 442);
+        (new Http())->redirect('/stub', 442);
     }
 
 }

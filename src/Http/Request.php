@@ -34,7 +34,7 @@ class Request extends AbstractHttp
     /**
      * Set attributes automatically
      *
-     * @return void
+     * @return self
      */
     public function createFromHeaders()
     {
@@ -48,6 +48,8 @@ class Request extends AbstractHttp
 
         $this->setUri($uri);
         $this->setMethod($_SERVER['REQUEST_METHOD']);
+
+        return $this;
     }
 
     /**

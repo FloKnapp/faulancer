@@ -6,7 +6,7 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Session\SessionManager;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
@@ -25,7 +25,8 @@ class FormData extends AbstractViewHelper
      */
     public function __invoke(ViewController $view, string $key)
     {
-        return SessionManager::instance()->getFlashbagFormData($key);
+        $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+        return $sessionManager->getFlashbagFormData($key);
     }
 
 }

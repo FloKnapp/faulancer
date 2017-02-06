@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ORM | ORM.php
+ * Class DbService | DbService.php
  * @package Faulancer\Service
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -12,9 +12,9 @@ use Faulancer\ORM\Entity;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
- * Class ORM
+ * Class DbService
  */
-class ORM implements ServiceInterface
+class DbService implements ServiceInterface
 {
 
     /** @var EntityManager */
@@ -31,12 +31,20 @@ class ORM implements ServiceInterface
     }
 
     /**
+     * @return EntityManager
+     */
+    public function getManager()
+    {
+        return $this->entityManager;
+    }
+
+    /**
      * Return the EntityFetcher
      *
      * @param string       $entity
      * @param integer|null $primaryKey
      * @return Entity|EntityFetcher
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore Is covered by tflori/orm
      */
     public function fetch(string $entity, $primaryKey = null)
     {
@@ -47,7 +55,7 @@ class ORM implements ServiceInterface
      * Save an entity
      *
      * @param Entity $entity
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore Is covered by tflori/orm
      */
     public function save(Entity $entity)
     {

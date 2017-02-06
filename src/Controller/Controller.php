@@ -7,8 +7,14 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\Service\ORM;
+use Faulancer\Http\Request;
+use Faulancer\Http\Uri;
+use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\DbService;
+use Faulancer\Service\HttpService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
+use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -25,6 +31,15 @@ abstract class Controller
     private $viewArray = [];
 
     /**
+     * Controller constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
      * Returns the service locator
      *
      * @return ServiceLocator
@@ -32,6 +47,16 @@ abstract class Controller
     public function getServiceLocator() :ServiceLocator
     {
         return ServiceLocator::instance();
+    }
+
+    /**
+     * Returns the session manager
+     *
+     * @return SessionManager
+     */
+    public function getSessionManager() :SessionManager
+    {
+        return $this->getServiceLocator()->get(SessionManagerService::class);
     }
 
     /**
@@ -56,11 +81,11 @@ abstract class Controller
     /**
      * Returns the orm/entity manager
      *
-     * @return ORM|ServiceInterface
+     * @return DbService|ServiceInterface
      */
-    public function getDb() :ORM
+    public function getDb() :DbService
     {
-        return $this->getServiceLocator()->get(ORM::class);
+        return $this->getServiceLocator()->get(DbService::class);
     }
 
     /**
@@ -73,6 +98,43 @@ abstract class Controller
     public function render(string $template = '', $variables = []) :string
     {
         return $this->getView()->setTemplate($template)->setVariables($variables)->render();
+    }
+
+    /**
+     * Set required authentication
+     *
+     * @param array $role
+     * @return bool
+     */
+    public function requireAuth($role) :bool
+    {
+        /** @var AuthenticatorService $authenticator */
+        $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
+
+        if ($authenticator->isAuthenticated($role) === false) {
+            return $authenticator->redirectToAuthentication();
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $uri
+     * @return bool
+     */
+    public function redirect(string $uri) :bool
+    {
+        /** @var HttpService $httpService */
+        $httpService = $this->getServiceLocator()->get(HttpService::class);
+        return $httpService->redirect($uri);
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest() :Request
+    {
+        return $this->request;
     }
 
 }

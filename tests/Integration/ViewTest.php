@@ -4,11 +4,14 @@ namespace Faulancer\Test\Integration;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
-use Faulancer\Exception\ViewHelperIncompatibleException;
+use Faulancer\Fixture\Entity\RoleAuthorEntity;
+use Faulancer\Fixture\Entity\UserEntity;
+use Faulancer\ORM\User\Entity;
+use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\GenericViewHelper;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;
 
@@ -19,6 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ViewTest extends TestCase
 {
+
+    /** @var SessionManagerService */
+    protected $sessionManager;
+
+    public function setUp()
+    {
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+    }
 
     public function testViewSetTemplate()
     {
@@ -127,20 +138,14 @@ class ViewTest extends TestCase
 
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testViewHelperCsrf()
     {
         $viewHelper = new ViewController();
         $token = $viewHelper->generateCsrfToken();
 
-        $this->assertSame(SessionManager::instance()->getFlashbag('csrf'), $token);
+        $this->assertSame($this->sessionManager->getFlashbag('csrf'), $token);
     }
-
-    /**
-     * @runInSeparateProcess
-     */
+    
     public function testViewHelperSetGetFormError()
     {
         $data = [
@@ -151,7 +156,7 @@ class ViewTest extends TestCase
             'key5' => [ ['message' => 'value5'] ],
         ];
 
-        SessionManager::instance()->setFlashbag('errors', $data);
+        $this->sessionManager->setFlashbag('errors', $data);
 
         $view = new ViewController();
 
@@ -172,9 +177,6 @@ class ViewTest extends TestCase
 
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetGetFormData()
     {
         $data = [
@@ -187,7 +189,7 @@ class ViewTest extends TestCase
 
         $view = new ViewController();
 
-        SessionManager::instance()->setFlashbagFormData($data);
+        $this->sessionManager->setFlashbagFormData($data);
 
         foreach ($data as $key => $value) {
 
@@ -198,7 +200,7 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     * @throws FileNotFoundException
      */
     public function testViewParentTemplate()
     {
@@ -212,7 +214,7 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     * @throws FileNotFoundException
      */
     public function testRenderBlockDefaultValue()
     {
@@ -297,9 +299,6 @@ class ViewTest extends TestCase
         $this->expectOutputString($mock);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslateHelper()
     {
         $view = new ViewController();
@@ -323,6 +322,36 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $this->assertSame('/stub/test', $view->route('stubStatic', ['test']));
+    }
+
+    public function testFlashBagViewHelper()
+    {
+        $view = new ViewController();
+        $this->sessionManager->setFlashbag('test', 'test');
+        $this->assertSame('test', $view->flashBag()->get('test'));
+    }
+
+    public function testUserViewHelper()
+    {
+        $view = new ViewController();
+
+        $this->sessionManager->set('user', 1);
+
+        $this->assertTrue($view->user()->isLoggedIn());
+
+        $user = new UserEntity();
+        $user->roles[] = new RoleAuthorEntity();
+
+        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
+        $authMock->method('getUserFromSession')->will($this->returnValue($user));
+
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
+
+        $userEntity = $view->user()->get();
+
+        $this->assertNotEmpty($userEntity);
+        $this->assertInstanceOf(Entity::class, $userEntity);
     }
 
 }

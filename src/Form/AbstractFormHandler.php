@@ -5,53 +5,16 @@
  */
 namespace Faulancer\Form;
 
+use Faulancer\Controller\Controller;
 use Faulancer\Form\Validator\AbstractValidator;
-use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class AbstractFormHandler
  */
-abstract class AbstractFormHandler
+abstract class AbstractFormHandler extends Controller
 {
-
-    /**
-     * Holds the request object
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * Holds the success url where can be redirect to after success
-     * @var string
-     */
-    private $successUrl;
-
-    /**
-     * Holds the error url where can be redirect to after failed validation
-     * @var string
-     */
-    private $errorUrl;
-
-    /**
-     * Holds the session manager
-     * @var SessionManager
-     */
-    private $sessionManager;
-
-    /**
-     * AbstractFormHandler constructor.
-     *
-     * @param Request        $request
-     * @param SessionManager $sessionManager
-     */
-    public function __construct(Request $request, SessionManager $sessionManager)
-    {
-        $this->request        = $request;
-        $this->sessionManager = $sessionManager;
-    }
 
     /**
      * Return the called form handler
@@ -61,6 +24,15 @@ abstract class AbstractFormHandler
     protected function getForm() :self
     {
         return $this;
+    }
+
+    /**
+     * @param string $field
+     * @return string
+     */
+    public function getFormData(string $field) :string
+    {
+        return $this->getRequest()->getPostData()[$field];
     }
 
     /**
@@ -89,7 +61,7 @@ abstract class AbstractFormHandler
             return true;
         }
 
-        $this->sessionManager->setFlashbag('errors', $errors);
+        $this->getSessionManager()->setFlashbag('errors', $errors);
 
         return false;
 
@@ -104,9 +76,9 @@ abstract class AbstractFormHandler
     {
         $result = [];
 
-        $this->sessionManager->setFlashbagFormData($this->request->getPostData());
+        $this->getSessionManager()->setFlashbagFormData($this->getRequest()->getPostData());
 
-        foreach ($this->request->getPostData() as $key => $data) {
+        foreach ($this->getRequest()->getPostData() as $key => $data) {
 
             if (strpos($key, '/') === false) {
                 continue;
@@ -147,50 +119,10 @@ abstract class AbstractFormHandler
     }
 
     /**
-     * Returns the success url
-     *
-     * @return string
-     */
-    protected function getSuccessUrl() :string
-    {
-        return $this->successUrl;
-    }
-
-    /**
-     * Set the success url
-     *
-     * @param string $successUrl
-     */
-    protected function setSuccessUrl(string $successUrl)
-    {
-        $this->successUrl = $successUrl;
-    }
-
-    /**
-     * Return the error url
-     *
-     * @return string
-     */
-    protected function getErrorUrl() :string
-    {
-        return $this->errorUrl;
-    }
-
-    /**
-     * Set the error url
-     *
-     * @param string $errorUrl
-     */
-    protected function setErrorUrl(string $errorUrl)
-    {
-        $this->errorUrl = $errorUrl;
-    }
-
-    /**
      * Init method which must be implemented
-     * 
+     *
      * @return mixed
      */
     abstract public function run();
-    
+
 }

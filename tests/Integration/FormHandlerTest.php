@@ -5,6 +5,8 @@ namespace Faulancer\Test\Integration;
 use Faulancer\Fixture\Form\GenericHandler;
 use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
+use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
 
@@ -15,9 +17,14 @@ use PHPUnit\Framework\TestCase;
 class FormHandlerTest extends TestCase
 {
 
-    /**
-     * @runInSeparateProcess
-     */
+    /** @var SessionManagerService */
+    protected $sessionManager;
+
+    public function setUp()
+    {
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+    }
+
     public function testFormHandler()
     {
         $request = new Request();
@@ -30,16 +37,13 @@ class FormHandlerTest extends TestCase
         ];
 
         $_POST       = $data;
-        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $formHandler = new GenericHandler($request, $this->sessionManager);
         $result      = $formHandler->run();
 
-        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertEmpty($this->sessionManager->getFlashbagError('message'));
         $this->assertSame('testSuccess', $result);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInvalidFormData()
     {
         $request = new Request();
@@ -52,21 +56,18 @@ class FormHandlerTest extends TestCase
         ];
 
         $_POST       = $data;
-        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $formHandler = new GenericHandler($request, $this->sessionManager);
         $result      = $formHandler->run();
 
         $this->assertSame('testError', $result);
-        $this->assertTrue(SessionManager::instance()->hasFlashbagErrorsKey('text/message'));
+        $this->assertTrue($this->sessionManager->hasFlashbagErrorsKey('text/message'));
 
-        $errors = SessionManager::instance()->getFlashbag('errors');
+        $errors = $this->sessionManager->getFlashbag('errors');
 
         $this->assertNotEmpty($errors['text/message']);
         $this->assertArrayHasKey('text/message', $errors);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testMissingValidators()
     {
         $request = new Request();
@@ -79,16 +80,13 @@ class FormHandlerTest extends TestCase
         ];
 
         $_POST       = $data;
-        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $formHandler = new GenericHandler($request, $this->sessionManager);
         $result      = $formHandler->run();
 
-        $this->assertEmpty(SessionManager::instance()->getFlashbagError('text/message'));
+        $this->assertEmpty($this->sessionManager->getFlashbagError('text/message'));
         $this->assertSame('testSuccess', $result);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testMissingValidator()
     {
         $request = new Request();
@@ -101,10 +99,31 @@ class FormHandlerTest extends TestCase
         ];
 
         $_POST       = $data;
-        $formHandler = new GenericHandler($request, SessionManager::instance());
+        $formHandler = new GenericHandler($request, $this->sessionManager);
         $result      = $formHandler->run();
 
-        $this->assertEmpty(SessionManager::instance()->getFlashbagError('message'));
+        $this->assertEmpty($this->sessionManager->getFlashbagError('message'));
+        $this->assertSame('testSuccess', $result);
+    }
+    
+    public function testGetFormData()
+    {
+        $request = new Request();
+        $request->setMethod('POST');
+
+        $data = [
+            'rofl/name'    => 'Florian Knapp',
+            'lol/email'    => 'test@florianknapp.de',
+            'kewl/message' => ''
+        ];
+
+        $_POST       = $data;
+        $formHandler = new GenericHandler($request, $this->sessionManager);
+        $result      = $formHandler->run();
+
+        $this->assertEmpty($this->sessionManager->getFlashbagError('message'));
+        $this->assertSame('Florian Knapp', $formHandler->getFormData('rofl/name'));
+        $this->assertSame('test@florianknapp.de', $formHandler->getFormData('lol/email'));
         $this->assertSame('testSuccess', $result);
     }
 

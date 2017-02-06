@@ -12,7 +12,7 @@ use Faulancer\Exception\InvalidArgumentException;
 /**
  * Class Uri
  */
-class Uri
+class Http extends AbstractHttp
 {
 
     /**
@@ -25,13 +25,9 @@ class Uri
      */
     public function redirect(string $location, int $code = 301)
     {
-
         if (in_array($code, array_keys(Response::HTTP_STATUS_CODES))) {
-
-            header('HTTP/2 ' . $code . ' ' . Response::HTTP_STATUS_CODES[$code]);
-            header('Location: ' .  $location);
-            return $this->terminate();
-
+            $this->triggerRedirect($location, $code);
+            return true;
         }
 
         throw new InvalidArgumentException('Target url is invalid or status code is unknown');
@@ -40,11 +36,17 @@ class Uri
     /**
      * Workaround to mock this method in phpunit
      *
+     * @param string $location
+     * @param int    $code
+     *
      * @codeCoverageIgnore
      * @return void
      */
-    public function terminate()
+    protected function triggerRedirect($location = '/', $code = 301)
     {
+        header('HTTP/2 ' . $code . ' ' . Response::HTTP_STATUS_CODES[$code]);
+        header('Location: ' .  $location);
+
         exit(0);
     }
 

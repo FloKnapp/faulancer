@@ -3,6 +3,7 @@
 namespace Faulancer\Test\Unit;
 
 use Faulancer\Http\Response;
+use Faulancer\Service\ResponseService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,7 +19,9 @@ class ResponseTest extends TestCase
 
     public function setUp()
     {
-        $this->response = new Response();
+        $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $response->method('setResponseHeader')->will($this->returnValue(true));
+        $this->response = $response;
     }
 
     public function testResponseCode()
@@ -29,7 +32,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testResponseContent()
     {
@@ -43,13 +46,12 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testToString()
     {
-        $response = new Response();
-        $response->setContent('Test');
-        echo $response;
+        $this->response->setContent('Test');
+        echo $this->response;
 
         $this->expectOutputString('Test');
     }
