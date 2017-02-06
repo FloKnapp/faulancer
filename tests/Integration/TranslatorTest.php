@@ -5,10 +5,12 @@ namespace Faulancer\Test\Integration;
 use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use Faulancer\Translate\Translator;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class TranslatorTest
@@ -17,9 +19,23 @@ use PHPUnit\Framework\TestCase;
 class TranslatorTest extends TestCase
 {
 
-    /**
-     * @runInSeparateProcess
-     */
+    /** @var SessionManagerService */
+    protected $sessionManager;
+
+    /** @var array */
+    protected $backupTrans;
+
+    public function setUp()
+    {
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        $this->backupTrans    = ServiceLocator::instance()->get(Config::class)->get('translation');
+    }
+
+    public function tearDown()
+    {
+        ServiceLocator::instance()->get(Config::class)->set('translation', $this->backupTrans, true);
+    }
+
     public function testTranslation()
     {
         $translator = new Translator();
@@ -32,14 +48,9 @@ class TranslatorTest extends TestCase
 
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslationOtherLanguage()
     {
-        $sessionManager = SessionManager::instance();
-
-        $sessionManager->set('language', 'en_EN');
+        $this->sessionManager->set('language', 'en_EN');
 
         $translator = new Translator();
 
@@ -51,20 +62,16 @@ class TranslatorTest extends TestCase
 
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslationVariableContent()
     {
+        $this->sessionManager->set('language', 'ger_DE');
+
         $translator = new Translator();
 
         $this->assertSame('Test-Item6', $translator->translate('test_item_6', ['Item6']));
         $this->assertSame('Test-Item7', $translator->translate('test_item_7', ['Item', '7']));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslationDontExist()
     {
         $translator = new Translator();
@@ -72,41 +79,29 @@ class TranslatorTest extends TestCase
         $this->assertSame('test_item_55', $translator->translate('test_item_55'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslationDontExists()
     {
         $this->expectException(ConfigInvalidException::class);
 
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
-        $trans  = $config->get('translation');
         $config->delete('translation');
 
         $translator = new Translator();
         $this->assertEmpty($config->get('translation'));
         $this->assertSame('test_item_1', $translator->translate('test_item_1'));
-
-        $config->set('translation', $trans, true);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testTranslationIsEmpty()
     {
         /** @var Config $config */
         $config     = ServiceLocator::instance()->get(Config::class);
-        $trans      = $config->get('translation');
         $emptyTrans = require $config->get('projectRoot') . '/config/translation_empty.conf.php';
 
         $config->set('translation', $emptyTrans, true);
 
         $translator = new Translator();
         $this->assertSame('test_item_1', $translator->translate('test_item_1'));
-
-        $config->set('translation', $trans, true);
     }
     
 }

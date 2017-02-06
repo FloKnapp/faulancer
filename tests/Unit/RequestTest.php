@@ -55,7 +55,7 @@ class RequestTest extends TestCase
             $this->assertSame($value, $_POST[$key]);
         }
 
-        unset($_POST['key1'], $_POST['key2'], $_POST['key3'], $_POST['key4'], $_POST['key5']);
+        unset($_POST);
 
         $this->assertEmpty($request->getPostData());
     }

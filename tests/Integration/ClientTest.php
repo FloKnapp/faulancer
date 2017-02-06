@@ -21,7 +21,6 @@ class ClientTest extends TestCase
 
     public function testClientResponseWithHeaders()
     {
-
         $headers = [
             'Content-Type: text/html'
         ];

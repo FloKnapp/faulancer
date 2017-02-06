@@ -6,12 +6,13 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Session\SessionManager;
+use Faulancer\Service\SessionManagerService;
+use Faulancer\View\AbstractViewHelper;
 
 /**
  * Class FlashBag
  */
-class FlashBag
+class FlashBag extends AbstractViewHelper
 {
 
     /**
@@ -28,7 +29,7 @@ class FlashBag
      */
     public function get(string $key)
     {
-        return SessionManager::instance()->getFlashbag($key);
+        return $this->getServiceLocator()->get(SessionManagerService::class)->getFlashbag($key);
     }
 
 }

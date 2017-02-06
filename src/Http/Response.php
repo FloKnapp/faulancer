@@ -84,10 +84,17 @@ class Response extends AbstractHttp
      */
     public function getContent()
     {
-        $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/2.0';
-
-        header($protocol . ' ' . $this->getCode() . ' ' . self::HTTP_STATUS_CODES[$this->getCode()]);
+        $this->setResponseHeader();
         return $this->content;
+    }
+
+    /**
+     * @codeCoverageIgnore Is covered because usage of php built-in function
+     */
+    public function setResponseHeader()
+    {
+        $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/2.0';
+        header($protocol . ' ' . $this->getCode() . ' ' . self::HTTP_STATUS_CODES[$this->getCode()]);
     }
 
     /**

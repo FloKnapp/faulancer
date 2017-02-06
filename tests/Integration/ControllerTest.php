@@ -42,15 +42,13 @@ class ControllerTest extends TestCase
     /**
      * Test get orm
      */
-    public function testGetOrm()
+    public function testGetDbService()
     {
         $this->assertInstanceOf(\Faulancer\Service\DbService::class, $this->controller->getDb());
     }
 
     /**
      * Test get session manager
-     *
-     * @runInSeparateProcess
      */
     public function testGetSessionManager()
     {
@@ -80,8 +78,6 @@ class ControllerTest extends TestCase
 
     /**
      * Test redirect
-     *
-     * @runInSeparateProcess
      */
     public function testRedirect()
     {
@@ -98,7 +94,6 @@ class ControllerTest extends TestCase
 
     /**
      * Test require auth
-     * @runInSeparateProcess
      */
     public function testRequireAuthSuccess()
     {
@@ -107,14 +102,13 @@ class ControllerTest extends TestCase
         $authMock->method('isAuthenticated')->will($this->returnValue(true));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('AuthenticatorService', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
         $this->assertTrue($this->controller->requireAuth(['test']));
     }
 
     /**
      * Test redirect to auth
-     * @runInSeparateProcess
      */
     public function testRequireAuthRedirectToLogin()
     {
@@ -122,7 +116,7 @@ class ControllerTest extends TestCase
         $authMock->method('isAuthenticated')->will($this->returnValue(false));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(false));
 
-        ServiceLocator::instance()->set('AuthenticatorService', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
         $this->assertFalse($this->controller->requireAuth(['test']));
     }

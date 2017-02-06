@@ -43,6 +43,7 @@ class AuthenticatorService implements ServiceInterface
     /**
      * @param UserEntity $user
      * @return bool
+     * @codeCoverageIgnore
      */
     public function loginUser(UserEntity $user)
     {
@@ -59,7 +60,9 @@ class AuthenticatorService implements ServiceInterface
             return $this->controller->redirect($this->redirectAfterAuth);
         }
 
-        SessionManager::instance()->setFlashbag('loginError', 'No valid username/password combination found.');
+        /** @var SessionManagerService $sessionManager */
+        $sessionManager = $this->controller->getServiceLocator()->get(SessionManagerService::class);
+        $sessionManager->setFlashbag('loginError', 'No valid username/password combination found.');
         return $this->redirectToAuthentication();
     }
 
@@ -77,6 +80,7 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * @param string $uri
+     * @codeCoverageIgnore
      */
     public function redirectAfterAuthentication(string $uri)
     {
@@ -91,6 +95,10 @@ class AuthenticatorService implements ServiceInterface
     {
         /** @var UserEntity $user */
         $user = $this->getUserFromSession();
+
+        if (!$user instanceof UserEntity) {
+            return false;
+        }
 
         foreach ($user->roles as $userRole) {
 

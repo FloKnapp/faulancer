@@ -7,6 +7,7 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
@@ -23,7 +24,7 @@ class User extends AbstractViewHelper
 
     public function isLoggedIn()
     {
-        return SessionManager::instance()->get('user') > 0;
+        return $this->getServiceLocator()->get(SessionManagerService::class)->get('user') > 0;
     }
 
     public function get()

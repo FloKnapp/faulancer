@@ -16,7 +16,7 @@ class FormRequestTest extends TestCase
 {
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testSuccessFormHandling()
     {
@@ -40,7 +40,7 @@ class FormRequestTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     * 
      */
     public function testInvalidFormHandling()
     {

@@ -14,6 +14,8 @@ use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Service\ResponseService;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 
 /**
@@ -62,7 +64,8 @@ class Dispatcher
             return $formRequest;
         }
 
-        $response = new Response();
+        /** @var ResponseService $response */
+        $response = ServiceLocator::instance()->get(ResponseService::class);
 
         try {
 

@@ -3,8 +3,11 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use Faulancer\Kernel;
 use Faulancer\Service\Config;
+use Faulancer\Service\ResponseService;
+use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
 
@@ -31,9 +34,6 @@ class KernelTest extends TestCase
         $this->assertNotEmpty($config->get('viewsRoot'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testFailureDispatch()
     {
         $this->expectException(\TypeError::class);
@@ -52,13 +52,16 @@ class KernelTest extends TestCase
         $this->assertSame('Not found', $response);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSuccessDispatch()
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
+
+        /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $responseMock */
+        $responseMock = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $responseMock->method('setResponseHeader')->will($this->returnValue(true));
+
+        ServiceLocator::instance()->set('Faulancer\Service\ResponseService', $responseMock);
 
         $request = new Request();
         $request->setMethod('GET');

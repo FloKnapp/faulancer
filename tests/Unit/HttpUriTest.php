@@ -15,7 +15,7 @@ class HttpUriTest extends TestCase
 {
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testRedirect()
     {
@@ -29,7 +29,7 @@ class HttpUriTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testWrongCode()
     {

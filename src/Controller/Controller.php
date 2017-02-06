@@ -12,6 +12,7 @@ use Faulancer\Http\Uri;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
@@ -55,7 +56,7 @@ abstract class Controller
      */
     public function getSessionManager() :SessionManager
     {
-        return SessionManager::instance();
+        return $this->getServiceLocator()->get(SessionManagerService::class);
     }
 
     /**

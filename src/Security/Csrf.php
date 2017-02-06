@@ -7,7 +7,8 @@
  */
 namespace Faulancer\Security;
 
-use Faulancer\Session\SessionManager;
+use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class Csrf
@@ -34,7 +35,7 @@ class Csrf
      */
     public static function isValid() :bool
     {
-        return isset($_POST['csrf']) && $_POST['csrf'] === SessionManager::instance()->getFlashbag('csrf');
+        return isset($_POST['csrf']) && $_POST['csrf'] === self::getSessionManager()->getFlashbag('csrf');
     }
 
     /**
@@ -44,7 +45,15 @@ class Csrf
      */
     private static function saveToSession(string $token)
     {
-        SessionManager::instance()->setFlashbag('csrf', $token);
+        self::getSessionManager()->setFlashbag('csrf', $token);
+    }
+
+    /**
+     * @return SessionManagerService
+     */
+    private static function getSessionManager()
+    {
+        return ServiceLocator::instance()->get(SessionManagerService::class);
     }
 
 }

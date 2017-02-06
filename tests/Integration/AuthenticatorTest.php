@@ -6,21 +6,20 @@
  */
 namespace Integration;
 
-use Faulancer\Controller\Controller;
-use Faulancer\Http\Request;
+use Faulancer\Fixture\Entity\RoleAnonymousEntity;
+use Faulancer\Fixture\Entity\RoleAuthorEntity;
+use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
 use Faulancer\ORM\User\RoleEntity;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\Config;
-use Faulancer\Service\ControllerService;
-use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
-use Faulancer\Service\RequestService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use ORM\EntityFetcher;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class AuthenticatorTest
@@ -30,6 +29,9 @@ class AuthenticatorServiceTest extends TestCase
 
     /** @var AuthenticatorService */
     protected $authenticator;
+
+    /** @var SessionManagerService */
+    protected $sessionManager;
 
     public function setUp()
     {
@@ -41,6 +43,9 @@ class AuthenticatorServiceTest extends TestCase
 
         /** @var AuthenticatorService $authenticator */
         $this->authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
+
+        /** @var SessionManagerService sessionManager */
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
     }
 
     public function testRedirectToAuthentication()
@@ -58,7 +63,7 @@ class AuthenticatorServiceTest extends TestCase
 
         $this->authenticator->saveUserInSession($user);
 
-        $this->assertSame(1, SessionManager::instance()->get('user'));
+        $this->assertSame(1, $this->sessionManager->get('user'));
     }
 
     /**
@@ -69,17 +74,13 @@ class AuthenticatorServiceTest extends TestCase
         $this->assertInstanceOf(EntityFetcher::class, $this->authenticator->getUserFromSession());
     }
 
+    /**
+     * Test if user can be authenticated
+     */
     public function testIsAuthenticated()
     {
-
-        $userRole = new \stdClass();
-        $userRole->roleName = 'author';
-
-        $user = new \stdClass();
-        $user->id = 1;
-        $user->firstname = 'Test';
-        $user->lastname = 'Test';
-        $user->roles[] = $userRole;
+        $user = new UserEntity();
+        $user->roles[] = new RoleAuthorEntity();
 
         /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
@@ -91,16 +92,30 @@ class AuthenticatorServiceTest extends TestCase
 
     }
 
+    /**
+     * Test if user hasn't sufficient rights
+     */
     public function testIsAuthenticatedFails()
     {
-        $userRole = new \stdClass();
-        $userRole->roleName = 'admin';
+        $user = new UserEntity();
+        $user->roles[] = new RoleAnonymousEntity();
+
+        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
+        $authMock->method('getUserFromSession')->will($this->returnValue($user));
+
+        $result = $authMock->isAuthenticated(['author']);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test if user isn't logged in
+     */
+    public function testIsAuthenticatedNoUserObject()
+    {
 
         $user = new \stdClass();
-        $user->id = 1;
-        $user->firstname = 'Test';
-        $user->lastname = 'Test';
-        $user->roles[] = $userRole;
 
         /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);

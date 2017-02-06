@@ -30,8 +30,6 @@ class DispatcherTest extends TestCase
 
     /**
      * Test static routing
-     *
-     * @runInSeparateProcess
      */
     public function testStaticRoute()
     {
@@ -48,8 +46,6 @@ class DispatcherTest extends TestCase
 
     /**
      * Test static routing
-     *
-     * @runInSeparateProcess
      */
     public function testDynamicRoute()
     {
@@ -81,8 +77,6 @@ class DispatcherTest extends TestCase
 
     /**
      * Test if dispatcher returns a response object
-     *
-     * @runInSeparateProcess
      */
     public function testReturnResponse()
     {
@@ -99,8 +93,6 @@ class DispatcherTest extends TestCase
 
     /**
      * Test error page
-     *
-     * @runInSeparateProcess
      */
     public function test404Route()
     {

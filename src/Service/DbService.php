@@ -44,7 +44,7 @@ class DbService implements ServiceInterface
      * @param string       $entity
      * @param integer|null $primaryKey
      * @return Entity|EntityFetcher
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore Is covered by tflori/orm
      */
     public function fetch(string $entity, $primaryKey = null)
     {
@@ -55,7 +55,7 @@ class DbService implements ServiceInterface
      * Save an entity
      *
      * @param Entity $entity
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore Is covered by tflori/orm
      */
     public function save(Entity $entity)
     {

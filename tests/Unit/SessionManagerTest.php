@@ -2,6 +2,8 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
 
@@ -17,24 +19,18 @@ class SessionManagerTest extends TestCase
     protected $sessionManager;
 
     /**
-     *
+     * Define session manager instance
      */
     public function setUp()
     {
-        $this->sessionManager = SessionManager::instance();
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testInstance()
+    public function tearDown()
     {
-        $this->assertSame(SessionManager::instance(), $this->sessionManager);
+        $this->sessionManager->destroySession();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetSetKey()
     {
         $this->sessionManager->set('testKey', 'testValue');
@@ -43,9 +39,6 @@ class SessionManagerTest extends TestCase
         $this->assertSame('testValue', $this->sessionManager->get('testKey'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testDeleteKey()
     {
         $this->sessionManager->set('testKey', 'testValue');
@@ -54,9 +47,6 @@ class SessionManagerTest extends TestCase
         $this->assertEmpty($this->sessionManager->get('testKey'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetSetFlashbag()
     {
         $this->sessionManager->setFlashbag('testKey', 'testValue');
@@ -83,12 +73,8 @@ class SessionManagerTest extends TestCase
             $this->assertNull($this->sessionManager->getFlashbag($key));
 
         }
-
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetSetFlashbagFormData()
     {
         $this->sessionManager->setFlashbagFormData([
@@ -112,25 +98,16 @@ class SessionManagerTest extends TestCase
         $this->assertNull($this->sessionManager->getFlashbag('formData'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testHasSession()
     {
-        $this->assertTrue($this->sessionManager->hasSession());
+        $this->assertFalse($this->sessionManager->hasSession());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testDeleteNonExistentKey()
     {
         $this->assertFalse($this->sessionManager->delete('nonExistent'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testHasFlashbagKey()
     {
         $this->sessionManager->setFlashbag('testKey', 'testValue');
@@ -138,9 +115,6 @@ class SessionManagerTest extends TestCase
         $this->assertTrue(is_string($this->sessionManager->getFlashbag('testKey')));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetGetFlashbagFormData()
     {
         $data = [
@@ -160,25 +134,16 @@ class SessionManagerTest extends TestCase
             $this->assertSame($data[$key], $val);
 
         }
-
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetNonExistentFormDataKey()
     {
         $result = $this->sessionManager->getFlashbagFormData('nonExistent');
-
         $this->assertEmpty($result);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetGetFlashbagErrors()
     {
-
         $data = [
             'error1' => 'errorValue1',
             'error2' => 'errorValue2',
@@ -196,7 +161,12 @@ class SessionManagerTest extends TestCase
             $this->assertEmpty($this->sessionManager->getFlashbagError($key));
 
         }
+    }
 
+    public function testDestroyAndCheckForSession()
+    {
+        $this->sessionManager->destroySession();
+        $this->assertFalse($this->sessionManager->hasSession());
     }
 
 }

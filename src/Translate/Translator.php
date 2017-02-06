@@ -9,8 +9,10 @@ namespace Faulancer\Translate;
 
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class Translator
@@ -34,17 +36,18 @@ class Translator
      * Translator constructor.
      *
      * @param string $language
-     * @param SessionManager $sessionManager
      * @throws FileNotFoundException
      */
-    public function __construct(string $language = 'ger_DE', SessionManager $sessionManager = null)
+    public function __construct(string $language = 'ger_DE')
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
+        /** @var SessionManagerService $sessionManager */
+        $sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+
         $this->language    = $language;
         $this->translation = $config->get('translation');
-        $sessionManager    = empty($sessionManager) ? SessionManager::instance() : $sessionManager;
 
         if ($sessionManager->get('language')) {
             $this->language = $sessionManager->get('language');
