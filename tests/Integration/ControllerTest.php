@@ -5,7 +5,6 @@ namespace Faulancer\Test\Integration;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
-use Faulancer\Http\Uri;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\ControllerService;
 use Faulancer\Service\HttpService;

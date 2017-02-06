@@ -8,7 +8,6 @@
 namespace Faulancer\Controller;
 
 use Faulancer\Http\Request;
-use Faulancer\Http\Uri;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
@@ -29,6 +28,11 @@ abstract class Controller
      * @var array
      */
     private $viewArray = [];
+
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * Controller constructor.
@@ -52,9 +56,9 @@ abstract class Controller
     /**
      * Returns the session manager
      *
-     * @return SessionManager
+     * @return SessionManagerService|ServiceInterface
      */
-    public function getSessionManager() :SessionManager
+    public function getSessionManager() :SessionManagerService
     {
         return $this->getServiceLocator()->get(SessionManagerService::class);
     }

@@ -3,14 +3,11 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 use Faulancer\Translate\Translator;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class TranslatorTest

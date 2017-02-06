@@ -22,9 +22,9 @@ class Translator
 
     /**
      * Holds the translation data
-     * @var array
+     * @var mixed
      */
-    protected $translation = [];
+    protected $translation;
 
     /**
      * Holds the current language key

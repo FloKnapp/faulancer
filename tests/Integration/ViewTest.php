@@ -10,7 +10,6 @@ use Faulancer\ORM\User\Entity;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;

@@ -132,7 +132,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @param ServiceInterface $service
      * @internal
      */
-    public static function set($name, $service)
+    public function set($name, $service)
     {
         if (isset(self::$services[$name])) {
             self::$backup[$name] = self::$services[$name];
