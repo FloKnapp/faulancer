@@ -8,6 +8,7 @@
 namespace Faulancer\Security;
 
 use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
@@ -49,7 +50,7 @@ class Csrf
     }
 
     /**
-     * @return SessionManagerService
+     * @return SessionManagerService|ServiceInterface
      */
     private static function getSessionManager()
     {

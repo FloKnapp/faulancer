@@ -9,7 +9,6 @@ namespace Faulancer\Service;
 use Faulancer\Controller\Controller;
 use Faulancer\ORM\User\Entity as UserEntity;
 use Faulancer\ServiceLocator\ServiceInterface;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class AuthenticatorService
