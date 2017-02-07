@@ -7,23 +7,27 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\Http\Response;
+use Faulancer\Exception\Exception;
 
 /**
  * Class ErrorController
  */
 class ErrorController
 {
+
     /**
-     * Return a 404 status code with corresponding body
-     * @return Response
-     * @codeCoverageIgnore
+     * ErrorController constructor.
+     * @param Exception $e
      */
-    public static function notFoundAction()
+    public function __construct(Exception $e)
     {
-        $response = new Response();
-        $response->setCode(404);
-        $response->setContent('Not found');
-        return $response;
+        $this->exception = $e;
+    }
+
+    public function displayError()
+    {
+        var_dump($_ENV);
+
+        return true;
     }
 }

@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class FactoryMayIncompatibleException
  */
-class FactoryMayIncompatibleException extends \Exception
+class FactoryMayIncompatibleException extends Exception
 {
 
 }

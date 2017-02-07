@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class ClassNotFoundException
  */
-class ClassNotFoundException extends \Exception
+class ClassNotFoundException extends Exception
 {
 
 }

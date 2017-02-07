@@ -9,6 +9,7 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\IncompatibleResponse;
 use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
@@ -57,37 +58,34 @@ class Dispatcher
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
      * @throws DispatchFailureException
+     * @throws IncompatibleResponse
      */
     public function run()
     {
+        // Check for form submit
         if ($formRequest = $this->handleFormRequest()) {
             return $formRequest;
         }
 
-        /** @var ResponseService $response */
-        $response = ServiceLocator::instance()->get(ResponseService::class);
+        /** @var Response $response */
+        $response = null;
 
-        try {
+        $target = $this->getRoute($this->request->getUri());
+        $class  = $target['class'];
+        $action = $target['action'] . 'Action';
+        $class  = new $class($this->request);
 
-            $target = $this->getRoute($this->request->getUri());
-            $class  = $target['class'];
-            $action = $target['action'] . 'Action';
-
-            $class = new $class($this->request);
-
-            if (isset($target['var'])) {
-                $response->setContent(call_user_func_array([$class, $action], $target['var']));
-            } else {
-                $response->setContent($class->$action());
-            }
-
-        } catch (MethodNotFoundException $e) {
-
-            throw new DispatchFailureException();
-
+        if (isset($target['var'])) {
+            $response = call_user_func_array([$class, $action], $target['var']);
+        } else {
+            $response = $class->$action();
         }
 
-        return $response;
+        if ($response instanceof Response) {
+            throw new IncompatibleResponse('No valid response');
+        }
+
+        return $response->getContent();
     }
 
     /**

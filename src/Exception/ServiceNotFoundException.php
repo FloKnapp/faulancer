@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class ServiceNotFoundException
  */
-class ServiceNotFoundException extends \Exception
+class ServiceNotFoundException extends Exception
 {
 
 }

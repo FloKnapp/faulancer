@@ -10,6 +10,7 @@ namespace Faulancer;
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -48,7 +49,7 @@ class Kernel
      * Initialize the application
      *
      * @return mixed
-     * @throws Exception\ConfigInvalidException
+     * @throws Exception
      * @codeCoverageIgnore
      */
     public function run()
@@ -57,9 +58,11 @@ class Kernel
 
         try {
             return $dispatcher->run()->getContent();
-        } catch (DispatchFailureException $e) {
-            return ErrorController::notFoundAction()->getContent();
+        } catch (Exception $e) {
+            $errorController = new ErrorController($e);
+            return $errorController->displayError();
         }
+
     }
 
 }

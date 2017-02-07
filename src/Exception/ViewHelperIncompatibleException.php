@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class ViewHelperIncompatibleException
  */
-class ViewHelperIncompatibleException extends \Exception
+class ViewHelperIncompatibleException extends Exception
 {
 
 }
