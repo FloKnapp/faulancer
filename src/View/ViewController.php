@@ -36,6 +36,11 @@ class ViewController
     private $template = '';
 
     /**
+     * @var string
+     */
+    private $templatePath = '';
+
+    /**
      * Holds the parent template
      * @var ViewController
      */
@@ -45,7 +50,7 @@ class ViewController
      * Set template for this view
      *
      * @param string $template
-     * @return self
+     * @return ViewController
      * @throws ConstantMissingException
      * @throws FileNotFoundException
      */
@@ -54,8 +59,10 @@ class ViewController
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
-        if (strpos($template, $config->get('viewsRoot')) === false) {
+        if (empty($this->templatePath) && strpos($template, $config->get('viewsRoot')) === false) {
             $template = $config->get('viewsRoot') . $template;
+        } else {
+            $template = $this->templatePath . $template;
         }
 
         if (empty($template) || !file_exists($template) || is_dir($template)) {
@@ -65,6 +72,21 @@ class ViewController
         $this->template = $template;
 
         return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return ViewController
+     */
+    public function setTemplatePath(string $path = '') :self
+    {
+        $this->templatePath = $path;
+        return $this;
+    }
+
+    public function getTemplatePath()
+    {
+        return $this->templatePath;
     }
 
     /**
@@ -257,6 +279,7 @@ class ViewController
 
             return $class($arguments);
         }
+
 
         throw new ViewHelperException('No view helper for "' . $name . '" found.');
     }

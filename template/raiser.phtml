@@ -1,0 +1,32 @@
+
+<h1><?= $exception->getMessage(); ?></h1>
+
+<hr>
+
+<?php
+
+$arguments = [];
+
+$argumentsList = function() use ($item, $arguments) {
+
+    foreach ($item[0]['args'] as $key => $arg) {
+
+        if (is_object($arg)) {
+            $arg = '<span class="arg">(object)' . get_class($arg) . '</span>';
+        } else if (is_array($arg)) {
+            $arg = '<span class="arg">(array)[' . implode(', ', $arg) . ']</span>';
+        } else {
+            $arg = '<span class="arg">(string)\'' . $arg . '\'</span>';
+        }
+
+        $arguments[] = $arg;
+
+    }
+
+    return implode(', ', $arguments);
+
+}
+?>
+
+in <b><?= $exception->getFile(); ?></b><br />
+at <b><?= $item[0]['class'] . $item[0]['type'] . $item[0]['function']; ?>(<?= $argumentsList(); ?>):<?= $exception->getLine(); ?></b>

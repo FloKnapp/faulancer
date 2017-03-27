@@ -9,11 +9,9 @@ namespace Faulancer;
 
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
-use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class Kernel
@@ -57,12 +55,19 @@ class Kernel
         $dispatcher = new Dispatcher($this->request, $this->config);
 
         try {
-            return $dispatcher->run()->getContent();
-        } catch (Exception $e) {
-            $errorController = new ErrorController($e);
-            return $errorController->displayError();
-        }
 
+            ob_start();
+            echo $dispatcher->dispatch();
+            $content = ob_get_contents();
+            ob_end_clean();
+            return $content;
+
+        } catch (Exception $e) {
+
+            $errorController = new ErrorController($this->request, $e);
+            return $errorController->displayError();
+
+        }
     }
 
 }

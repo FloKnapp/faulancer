@@ -60,11 +60,16 @@ class Dispatcher
      * @throws DispatchFailureException
      * @throws IncompatibleResponse
      */
-    public function run()
+    public function dispatch()
     {
         // Check for form submit
         if ($formRequest = $this->handleFormRequest()) {
             return $formRequest;
+        }
+
+        // Check for core assets path
+        if ($assets = $this->resolveAssetsPath()) {
+            return $assets;
         }
 
         /** @var Response $response */
@@ -82,10 +87,32 @@ class Dispatcher
         }
 
         if ($response instanceof Response) {
-            throw new IncompatibleResponse('No valid response');
+            return $response->getContent();
         }
 
-        return $response->getContent();
+        throw new IncompatibleResponse('No valid response');
+    }
+
+    /**
+     * @return boolean|string
+     */
+    private function resolveAssetsPath()
+    {
+        if (strpos($this->request->getUri(), 'css') !== false) {
+
+            $path = $this->request->getUri();
+
+            if (strpos($path, 'core') !== false) {
+
+                $path = str_replace('/core', '', $path);
+                header('Content-Type: text/css');
+                return file_get_contents(__DIR__ . '/../../public/assets' . $path);
+
+            }
+
+        }
+
+        return false;
     }
 
     /**
