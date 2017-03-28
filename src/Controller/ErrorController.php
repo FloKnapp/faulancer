@@ -22,6 +22,7 @@ class ErrorController extends Controller
      * ErrorController constructor.
      * @param Request   $request
      * @param Exception $e
+     * @codeCoverageIgnore
      */
     public function __construct(Request $request, Exception $e)
     {
@@ -29,6 +30,10 @@ class ErrorController extends Controller
         $this->exception = $e;
     }
 
+    /**
+     * @return \Faulancer\Http\Response
+     * @codeCoverageIgnore
+     */
     public function displayError()
     {
         ob_end_clean();
@@ -41,6 +46,10 @@ class ErrorController extends Controller
 
     }
 
+    /**
+     * @return \Faulancer\Http\Response
+     * @codeCoverageIgnore
+     */
     private function renderDebugPage()
     {
         $this->getView()->addStylesheet('/core/css/main.css');
@@ -52,6 +61,9 @@ class ErrorController extends Controller
         return $this->render('/debug.phtml', ['exception' => $this->exception, 'raiser' => $raiser, 'trace' => $trace]);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function renderNotFoundPage()
     {
 

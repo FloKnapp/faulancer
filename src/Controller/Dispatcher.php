@@ -100,19 +100,29 @@ class Dispatcher
     {
         if (strpos($this->request->getUri(), 'css') !== false) {
 
-            $path = $this->request->getUri();
+            $file = $this->request->getUri();
 
-            if (strpos($path, 'core') !== false) {
+            if (strpos($file, 'core') !== false) {
 
-                $path = str_replace('/core', '', $path);
-                header('Content-Type: text/css');
-                return file_get_contents(__DIR__ . '/../../public/assets' . $path);
+                $path = str_replace('/core', '', $file);
+                return $this->sendCssFileHeader($path);
 
             }
 
         }
 
         return false;
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendCssFileHeader($file)
+    {
+        header('Content-Type: text/css');
+        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
     }
 
     /**

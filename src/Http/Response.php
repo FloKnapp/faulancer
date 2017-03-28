@@ -48,6 +48,15 @@ class Response extends AbstractHttp
     protected $content;
 
     /**
+     * Response constructor.
+     * @param mixed $content
+     */
+    public function __construct($content = null)
+    {
+        $this->setContent($content);
+    }
+
+    /**
      * Set response code
      *
      * @param integer $code
@@ -71,10 +80,12 @@ class Response extends AbstractHttp
      * Set response body
      *
      * @param mixed $content
+     * @return self
      */
     public function setContent($content)
     {
         $this->content = $content;
+        return $this;
     }
 
     /**

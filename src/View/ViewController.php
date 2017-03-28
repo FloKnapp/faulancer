@@ -84,6 +84,9 @@ class ViewController
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getTemplatePath()
     {
         return $this->templatePath;

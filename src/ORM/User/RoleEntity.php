@@ -12,7 +12,6 @@ use Faulancer\ORM\Entity as BaseEntity;
  * Class RoleEntity
  *
  * @property string $roleName
- *
  */
 class RoleEntity extends BaseEntity
 {

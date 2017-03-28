@@ -65,15 +65,11 @@ class ControllerTest extends TestCase
 
     /**
      * Test render view
+     * @runInSeparateProcess
      */
     public function testRender()
     {
-        try {
-            $this->controller->render();
-        } catch (FileNotFoundException $e) {
-            $this->assertInstanceOf(FileNotFoundException::class, $e);
-        }
-        $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml'));
+        $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml')->getContent());
     }
 
     /**
@@ -120,6 +116,13 @@ class ControllerTest extends TestCase
         ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
         $this->assertFalse($this->controller->requireAuth(['test']));
+    }
+
+    public function testGetSameView()
+    {
+        $controller = $this->controller->getView();
+
+        $this->assertSame($this->controller->getView(), $controller);
     }
 
 }
