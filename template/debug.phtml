@@ -7,15 +7,15 @@ $this->parentTemplate('/layout_debug.phtml'); ?>
 
 <?php $this->block('left_content'); ?>
 
-<div class="inline" style="padding-right: 40px;">
-
     <h2>Stacktrace</h2>
     <?php
+
+    $trace = $raiser + $trace;
+
     foreach ($trace as $item) {
         echo $this->renderView('/stacktrace.phtml', ['item' => $item]);
     }
     ?>
-</div>
 
 <?php $this->endBlock('left_content'); ?>
 

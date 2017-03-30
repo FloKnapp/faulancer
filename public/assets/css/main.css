@@ -18,16 +18,20 @@ html, body {
 
 .stacktrace {
     float: left;
-    width: calc(20% - 1px);
+    width: calc(25% - 1px);
     height: 100%;
     overflow: auto;
     border-right: 1px solid #FFF;
     font-size: 0.9em;
 }
 
+.stacktrace h2 {
+    padding-left: 10px;
+}
+
 .debug {
     float: right;
-    width: 80%;
+    width: 75%;
     height: 100%;
     overflow-y: scroll;
 
@@ -35,7 +39,6 @@ html, body {
 
 .content .inline {
     padding: 20px;
-    width: 90%;
 }
 
 .arg {
@@ -44,7 +47,7 @@ html, body {
 
 h1 {
     font-size: 2.5em;
-    color: #ca8a04;
+    color: #AAAAAA;
 }
 
 h2 {
@@ -63,4 +66,107 @@ hr {
     border-left: none;
     border-right: none;
     border-radius: 0;
+    margin: 20px 0;
+    padding: 0;
+}
+
+hr.low-margin {
+    margin: 0;
+}
+
+.sourceField {
+    padding: 10px;
+    background: #181818;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2em;
+    border-bottom: 1px solid #303030;
+}
+
+.codeBlock {
+    padding: 0 10px 10px 10px;
+    background: #151515;
+    margin-top: 0;
+    line-height: 1.4em;
+    border-radius: 0 0 5px 5px;
+}
+
+.serverData {
+    display: table;
+    width: 100%;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+code {
+    font-family: "Courier New", sans-serif;
+    font-size: 1.1em;
+    white-space: pre-line;
+    margin: 0;
+    padding: 0;
+}
+
+code .line-nr {
+    -moz-user-select: none;
+    min-width: 40px;
+    display: inline-block;
+    color: #505050;
+}
+
+code .line {
+    padding: 3px 2px;
+    margin-left: 5px;
+    display: block;
+}
+
+code .line.highlight {
+    background: #303030;
+}
+
+code .line.highlight .line-nr {
+    color: #AAAAAA;
+}
+
+code .base_keys {
+    color: darkorange;
+    font-weight: bold;
+}
+
+code .variable {
+    color: #766591;
+
+}
+
+code .string_text {
+    color: darkolivegreen;
+}
+
+code .methods {
+    color: #c6a901;
+}
+
+.previousStack {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.previousStack h3 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.previousStack.selected,
+.previousStack:hover {
+    background: #191919;
+    transition: background 0.3s;
 }

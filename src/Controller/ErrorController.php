@@ -21,10 +21,10 @@ class ErrorController extends Controller
     /**
      * ErrorController constructor.
      * @param Request   $request
-     * @param Exception $e
+     * @param \Exception $e
      * @codeCoverageIgnore
      */
-    public function __construct(Request $request, Exception $e)
+    public function __construct(Request $request, \Exception $e)
     {
         parent::__construct($request);
         $this->exception = $e;
@@ -53,6 +53,8 @@ class ErrorController extends Controller
     private function renderDebugPage()
     {
         $this->getView()->addStylesheet('/core/css/main.css');
+        $this->getView()->addScript('/core/js/namespace.js');
+        $this->getView()->addScript('/core/js/engine.js');
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
         $trace  = $this->exception->getTrace();

@@ -13,6 +13,7 @@ use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 
+
 /**
  * Class Kernel
  */
@@ -52,9 +53,12 @@ class Kernel
      */
     public function run()
     {
+
         $dispatcher = new Dispatcher($this->request, $this->config);
 
         try {
+
+            $this->registerErrorHandler();
 
             ob_start();
             echo $dispatcher->dispatch();
@@ -67,7 +71,37 @@ class Kernel
             $errorController = new ErrorController($this->request, $e);
             return $errorController->displayError();
 
+        } catch (\ErrorException $e) {
+
+            $errorController = new ErrorController($this->request, $e);
+            return $errorController->displayError();
+
         }
     }
 
+    /**
+     * Register error handler
+     */
+    public function registerErrorHandler()
+    {
+        set_error_handler([$this, 'errorHandler'], E_ALL);
+    }
+
+    /**
+     * Custom error handler
+     *
+     * @param $errno
+     * @param $errmsg
+     * @param $errfile
+     * @param $errline
+     * @throws \ErrorException
+     */
+    public function errorHandler($errno, $errmsg, $errfile, $errline)
+    {
+        throw new \ErrorException($errmsg, $errno, 1, $errfile, $errline);
+    }
+
 }
+
+
+

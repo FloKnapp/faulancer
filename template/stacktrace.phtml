@@ -4,7 +4,22 @@
  */
 ?>
 
-<h3><?= $item['function']; ?></h3>
-<?= $item['file']; ?>:<?= $item['line']; ?>
+<div class="previousStack selected" data-stack-identifier="<?= md5($item['file'].$item['line']); ?>">
 
-<hr>
+    <h3><?= $item['function']; ?></h3>
+
+    <?php
+
+    $text = $item['file'] . '<b>:' . $item['line'] . '</b>';
+
+    if (strlen($text) > 65) {
+        $text = '...' . substr($text, strlen($text) - 65, 65);
+    }
+
+    echo $text;
+
+    ?>
+
+</div>
+
+<hr class="low-margin" />

@@ -9,6 +9,7 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\Exception;
 use Faulancer\Exception\IncompatibleResponse;
 use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
@@ -18,6 +19,8 @@ use Faulancer\Service\Config;
 use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
+
+
 
 /**
  * Class Dispatcher
@@ -98,14 +101,21 @@ class Dispatcher
      */
     private function resolveAssetsPath()
     {
-        if (strpos($this->request->getUri(), 'css') !== false) {
+        $matches = [];
+
+        if (preg_match('/(?<style>css)|(?<script>js)/', $this->request->getUri(), $matches)) {
 
             $file = $this->request->getUri();
 
             if (strpos($file, 'core') !== false) {
 
                 $path = str_replace('/core', '', $file);
-                return $this->sendCssFileHeader($path);
+
+                if ($matches['style'] === 'css') {
+                    return $this->sendCssFileHeader($path);
+                } else if ($matches['script'] === 'js') {
+                    return $this->sendJsFileHeader($path);
+                }
 
             }
 
@@ -122,6 +132,17 @@ class Dispatcher
     public function sendCssFileHeader($file)
     {
         header('Content-Type: text/css');
+        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendJsFileHeader($file)
+    {
+        header('Content-Type: text/javascript');
         return file_get_contents(__DIR__ . '/../../public/assets' . $file);
     }
 
