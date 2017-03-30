@@ -95,6 +95,7 @@ class Kernel
      * @param $errfile
      * @param $errline
      * @throws \ErrorException
+     * @codeCoverageIgnore
      */
     public function errorHandler($errno, $errmsg, $errfile, $errline)
     {

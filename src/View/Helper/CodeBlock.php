@@ -15,6 +15,13 @@ use Faulancer\View\ViewController;
 class CodeBlock extends AbstractViewHelper
 {
 
+    /**
+     * @param ViewController $view
+     * @param                $filename
+     * @param int            $actualLine
+     * @return string
+     * @codeCoverageIgnore
+     */
     public function __invoke(ViewController $view, $filename, $actualLine = 0)
     {
 

@@ -1,17 +1,21 @@
+@font-face {
+    font-family: "Inconsolata", monospace;
+    src: url("https://fonts.googleapis.com/css?family=Inconsolata");
+}
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     background: #202020;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: "Inconsolata", monospace;
     font-size: 1em;
     color: #808080;
 }
 
 .content {
     height: 100%;
-    font-family: Consolas, "Courier New", serif;
-    letter-spacing: -0.05em;
+    font-family: "Inconsolata", monospace;
     font-size: 0.8em;
     line-height: 1.8em;
 }
@@ -143,16 +147,23 @@ code .base_keys {
 }
 
 code .variable {
-    color: #766591;
-
+    color: #9A76AA;
 }
 
 code .string_text {
     color: darkolivegreen;
 }
 
+code .annotation {
+    color: darkolivegreen;
+}
+
 code .methods {
-    color: #c6a901;
+    color: #FFC66D;
+}
+
+code .constant {
+    color: #9876AA;
 }
 
 .previousStack {

@@ -158,4 +158,25 @@ class DispatcherTest extends TestCase
         $this->assertTrue($dispatcherMock->dispatch());
     }
 
+    public function testCustomJsPath()
+    {
+        $request = new Request();
+        $request->setUri('/core/assets/js/engine.js');
+        $request->setMethod('GET');
+
+        $this->assertSame($request->getUri(), '/core/assets/js/engine.js');
+
+        $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
+            ->setMethods(['sendJsFileHeader'])
+            ->setConstructorArgs([$request, $this->config])
+            ->getMock();
+
+        $dispatcherMock
+            ->expects($this->any())
+            ->method('sendJsFileHeader')
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($dispatcherMock->dispatch());
+    }
+
 }

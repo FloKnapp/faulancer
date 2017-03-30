@@ -21,7 +21,9 @@ class Highlighter extends AbstractViewHelper
         'else',
         'new',
         'throw',
+        'echo',
         'return',
+        'null',
         'public',
         'private',
         'protected',
@@ -32,15 +34,22 @@ class Highlighter extends AbstractViewHelper
         'use[^a-zA-Z]',
         'namespace',
         'unset',
-        'include[^_once]',
-        'require[^_once]',
         'include_once',
         'require_once',
+        'include',
+        'require',
         '&lt;\?php',
         '&lt;\?=',
         '\?&gt;'
     ];
 
+    /**
+     * @param ViewController $view
+     * @param string         $data
+     * @param string         $language
+     * @return mixed|string
+     * @codeCoverageIgnore
+     */
     public function __invoke(ViewController $view, $data = '', $language = 'php')
     {
         $data = htmlentities($data, ENT_IGNORE, null, false);
@@ -48,6 +57,8 @@ class Highlighter extends AbstractViewHelper
         $data = preg_replace('/\$(\w+)/', '<span class="variable">$$1</span>', $data);
         $data = preg_replace('/\'(.*)\'/', '<span class="string_text">\'$1\'</span>', $data);
         $data = preg_replace('/-&gt;(\w+)/', '-><span class="methods">$1</span>', $data);
+        $data = preg_replace('/\/\*\*(.*)\*\//s', '<span class="annotation">/**$1*/</span>', $data);
+        $data = preg_replace('/(_*)([A-Z]{2,})(_*)/', '<span class="constant">$1$2$3</span>', $data);
 
         return $data;
     }

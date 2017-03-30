@@ -4,31 +4,9 @@
 
 <?php
 
-$arguments = [];
-
-$argumentsList = function() use ($item, $arguments) {
-
-    foreach ($item[0]['args'] as $key => $arg) {
-
-        if (is_object($arg)) {
-            $arg = '<span class="arg">(object)' . get_class($arg) . '</span>';
-        } else if (is_array($arg)) {
-            $arg = '<span class="arg">(array)[' . implode(', ', $arg) . ']</span>';
-        } else {
-            $arg = '<span class="arg">(string)\'' . $arg . '\'</span>';
-        }
-
-        $arguments[] = $arg;
-
-    }
-
-    return implode(', ', $arguments);
-
-};
-
 $s = 0;
 
-foreach ($exception->getTrace() as $trace) {
+foreach ($exception->getTrace() as $trace) :
 
     $codeBlock = $this->codeBlock($trace['file'], $trace['line']);
 ?>
@@ -47,8 +25,10 @@ foreach ($exception->getTrace() as $trace) {
     </div>
 
 <?php
+
     $s++;
-}
+
+endforeach;
 ?>
 
 <hr>
@@ -97,6 +77,25 @@ foreach ($exception->getTrace() as $trace) {
         </div>
 
     <?php
+    }
+    ?>
+
+</div>
+
+<hr>
+
+<h2>$_COOKIE</h2>
+<div class="serverData">
+
+    <?php
+    foreach ($_COOKIE as $ckey => $cvalue) { ?>
+
+        <div class="row">
+            <div class="cell width-30"><?= $ckey; ?></div>
+            <div class="cell"><?= $cvalue; ?></div>
+        </div>
+
+        <?php
     }
     ?>
 
