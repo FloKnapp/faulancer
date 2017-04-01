@@ -9,18 +9,12 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
-use Faulancer\Exception\Exception;
 use Faulancer\Exception\IncompatibleResponse;
 use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
-use Faulancer\Service\ResponseService;
-use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
-
-
 
 /**
  * Class Dispatcher

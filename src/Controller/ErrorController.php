@@ -24,7 +24,7 @@ class ErrorController extends Controller
      * @param \Exception $e
      * @codeCoverageIgnore
      */
-    public function __construct(Request $request, \Exception $e)
+    public function __construct(Request $request, $e)
     {
         parent::__construct($request);
         $this->exception = $e;
@@ -57,10 +57,24 @@ class ErrorController extends Controller
         $this->getView()->addScript('/core/js/engine.js');
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
-        $trace  = $this->exception->getTrace();
-        $raiser = array_splice($trace, 0, 1);
+        $raiser = [
+            'function'=> !empty($this->exception->getTrace()[0]['function']) ? $this->exception->getTrace()[0]['function'] : 'unkown',
+            'message' => $this->exception->getMessage(),
+            'type'    => $this->exception->getCode(),
+            'file'    => $this->exception->getFile(),
+            'line'    => $this->exception->getLine()
+        ];
 
-        return $this->render('/debug.phtml', ['exception' => $this->exception, 'raiser' => $raiser, 'trace' => $trace]);
+        $trace  = $this->exception->getTrace();
+
+        if ($trace[0]['line'] !== $raiser['line']) {
+            array_unshift($trace, $raiser);
+        } else {
+            array_shift($trace);
+            array_unshift($trace, $raiser);
+        }
+
+        return $this->render('/debug.phtml', ['exception' => $this->exception, 'trace' => $trace]);
     }
 
     /**

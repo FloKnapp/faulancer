@@ -1,4 +1,4 @@
-<h1><?= $exception->getMessage(); ?></h1>
+<h1><?= $trace[0]['message']; ?></h1>
 
 <hr>
 
@@ -6,14 +6,14 @@
 
 $s = 0;
 
-foreach ($exception->getTrace() as $trace) :
+foreach ($trace as $item) :
 
-    $codeBlock = $this->codeBlock($trace['file'], $trace['line']);
+    $codeBlock = $this->codeBlock($item['file'], $item['line']);
 ?>
-    <div class="stack" id="<?= md5($trace['file'].$trace['line']); ?>"<?= $s === 0 ?: ' style="display: none;"'; ?>>
+    <div class="stack" id="<?= md5($item['file'].$item['line']); ?>"<?= $s === 0 ?: ' style="display: none;"'; ?>>
 
         <div class="sourceField">
-            <b><?= $trace['file']; ?>:<?= $trace['line'] ?></b>
+            <b><?= $item['file']; ?>:<?= $item['line'] ?></b>
         </div>
 
         <div class="codeBlock">

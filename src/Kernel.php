@@ -53,7 +53,6 @@ class Kernel
      */
     public function run()
     {
-
         $dispatcher = new Dispatcher($this->request, $this->config);
 
         try {
@@ -67,22 +66,31 @@ class Kernel
             return $content;
 
         } catch (Exception $e) {
-
-            $errorController = new ErrorController($this->request, $e);
-            return $errorController->displayError();
-
+            return $this->showErrorPage($this->request, $e);
         } catch (\ErrorException $e) {
-
-            $errorController = new ErrorController($this->request, $e);
-            return $errorController->displayError();
-
+            return $this->showErrorPage($this->request, $e);
+        } catch (\Error $e) {
+            return $this->showErrorPage($this->request, $e);
         }
+
+    }
+
+    /**
+     * @param $request
+     * @param $e
+     * @return Http\Response
+     * @codeCoverageIgnore
+     */
+    private function showErrorPage($request, $e)
+    {
+        $errorController = new ErrorController($request, $e);
+        return $errorController->displayError();
     }
 
     /**
      * Register error handler
      */
-    public function registerErrorHandler()
+    protected function registerErrorHandler()
     {
         set_error_handler([$this, 'errorHandler'], E_ALL);
     }

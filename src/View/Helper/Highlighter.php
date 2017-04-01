@@ -6,7 +6,6 @@
  */
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
