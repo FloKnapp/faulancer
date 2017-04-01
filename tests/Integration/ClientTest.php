@@ -15,8 +15,13 @@ class ClientTest extends TestCase
     public function testClientPlainResponse()
     {
         $response = Client::get('https://www.google.de');
+        self::assertStringStartsWith('<!doctype', $response);
+    }
 
-        $this->assertStringStartsWith('<!doctype', $response);
+    public function testClientPostRequest()
+    {
+        $response = Client::post('https://www.posttestserver.com/', [], ['test' => true]);
+        self::assertStringStartsWith('<html>', $response);
     }
 
     public function testClientResponseWithHeaders()
@@ -26,8 +31,7 @@ class ClientTest extends TestCase
         ];
 
         $response = Client::get('https://www.google.de', $headers);
-
-        $this->assertStringStartsWith('<!doctype', $response);
+        self::assertStringStartsWith('<!doctype', $response);
     }
 
 }

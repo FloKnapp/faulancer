@@ -89,7 +89,8 @@ class Request extends AbstractHttp
      */
     public function getMethod() :string
     {
-        return empty($this->method) ? $_SERVER['REQUEST_METHOD'] : $this->method;
+        $serverRequestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
+        return empty($this->method) ? $serverRequestMethod : $this->method;
     }
 
     /**
@@ -142,9 +143,10 @@ class Request extends AbstractHttp
         return empty($_POST) ? [] : $_POST;
     }
 
-    public function getRequestContent()
+    public function setPostData($data)
     {
-        return file_get_contents('php://input');
+        $_POST = $data;
+        return true;
     }
 
 }

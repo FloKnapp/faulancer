@@ -82,7 +82,6 @@ class Dispatcher
 
         if (strpos($this->request->getUri(), '/api') === 0) {
             $this->requestType = 'api';
-            //$response = ServiceLocator::instance()->get(JsonResponseService::class);
         }
 
         $target = $this->getRoute($this->request->getUri());
@@ -92,9 +91,11 @@ class Dispatcher
         $isRestRequest = strpos($this->request->getUri(), '/api') === 0 ? true : false;
 
         if ($isRestRequest) {
+
             $this->requestType = 'api';
-            $action = $this->getRestfulAction();
-            $target['var'] = $this->request->getRequestContent();
+            $action            = $this->getRestfulAction();
+            $target['var']     = [$_GET + $_POST];
+
         }
 
         /** @var Response $class */
@@ -308,7 +309,7 @@ class Dispatcher
      */
     private function handleFormRequest()
     {
-        if (strpos($this->request->getUri(), '/formrequest/') !== 0 && $this->request->isPost()) {
+        if (strpos($this->request->getUri(), '/formrequest/') !== 0 && !$this->request->isPost()) {
             return false;
         }
 

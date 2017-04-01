@@ -52,11 +52,11 @@ class DispatcherTest extends TestCase
         $request->setUri('/stub');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/stub');
+        self::assertSame($request->getUri(), '/stub');
 
         $dispatcher = new Dispatcher($request, $this->config);
-        $this->assertInstanceOf(Response::class, $dispatcher->dispatch());
-        $this->assertSame(1, $dispatcher->dispatch()->getContent());
+        self::assertInstanceOf(Response::class, $dispatcher->dispatch());
+        self::assertSame(1, $dispatcher->dispatch()->getContent());
     }
 
     /**
@@ -68,10 +68,10 @@ class DispatcherTest extends TestCase
         $request->setUri('/stub/dynamic');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/stub/dynamic');
+        self::assertSame($request->getUri(), '/stub/dynamic');
 
         $dispatcher = new Dispatcher($request, $this->config);
-        $this->assertSame(2, $dispatcher->dispatch()->getContent());
+        self::assertSame(2, $dispatcher->dispatch()->getContent());
     }
 
     public function testDynamicRouteTooLong()
@@ -82,7 +82,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/stub/dynamic/all');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/stub/dynamic/all');
+        self::assertSame($request->getUri(), '/stub/dynamic/all');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $dispatcher->dispatch();
@@ -98,10 +98,10 @@ class DispatcherTest extends TestCase
         $request->setUri('/stub/dynamic');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/stub/dynamic');
+        self::assertSame($request->getUri(), '/stub/dynamic');
 
         $dispatcher = new Dispatcher($request, $this->config);
-        $this->assertSame(2, $dispatcher->dispatch()->getContent());
+        self::assertSame(2, $dispatcher->dispatch()->getContent());
     }
 
     /**
@@ -115,7 +115,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/stubs');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/stubs');
+        self::assertSame($request->getUri(), '/stubs');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $dispatcher->dispatch();
@@ -151,7 +151,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/core/assets/css/main.css');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/core/assets/css/main.css');
+        self::assertSame($request->getUri(), '/core/assets/css/main.css');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -164,7 +164,7 @@ class DispatcherTest extends TestCase
             ->method('sendCssFileHeader')
             ->will($this->returnValue(true));
 
-        $this->assertTrue($dispatcherMock->dispatch());
+        self::assertTrue($dispatcherMock->dispatch());
     }
 
     public function testCustomJsPath()
@@ -173,7 +173,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/core/assets/js/engine.js');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/core/assets/js/engine.js');
+        self::assertSame($request->getUri(), '/core/assets/js/engine.js');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -186,7 +186,7 @@ class DispatcherTest extends TestCase
             ->method('sendJsFileHeader')
             ->will($this->returnValue(true));
 
-        $this->assertTrue($dispatcherMock->dispatch());
+        self::assertTrue($dispatcherMock->dispatch());
     }
 
     public function testApiRequest()
@@ -195,7 +195,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/api/v1/test');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/api/v1/test');
+        self::assertSame($request->getUri(), '/api/v1/test');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -208,7 +208,7 @@ class DispatcherTest extends TestCase
             ->method('sendJsFileHeader')
             ->will($this->returnValue(true));
 
-        $this->assertInstanceOf(Response::class, $dispatcherMock->dispatch());
+        self::assertInstanceOf(Response::class, $dispatcherMock->dispatch());
     }
 
     public function testDynamicApiRequest()
@@ -217,14 +217,14 @@ class DispatcherTest extends TestCase
         $request->setUri('/api/v1/test/word');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getUri(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
 
         $response = $dispatcher->dispatch();
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame('{"param":"word"}', $response->getContent());
+        self::assertInstanceOf(JsonResponse::class, $response);
+        self::assertSame('{"test":true}', $response->getContent());
     }
 
     public function testDynamicApiRequestTooLong()
@@ -235,7 +235,7 @@ class DispatcherTest extends TestCase
         $request->setUri('/api/v1/test/word/not-covered');
         $request->setMethod('GET');
 
-        $this->assertSame($request->getUri(), '/api/v1/test/word/not-covered');
+        self::assertSame($request->getUri(), '/api/v1/test/word/not-covered');
 
         $dispatcher = new Dispatcher($request, $this->config);
 
@@ -244,17 +244,77 @@ class DispatcherTest extends TestCase
 
     public function testApiPostRequest()
     {
+        unset($_POST);
         $request = new Request();
         $request->setUri('/api/v1/test/word');
         $request->setMethod('POST');
+        $request->setPostData(['test' => 'test']);
 
-        $this->assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getUri(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
 
         $response = $dispatcher->dispatch();
 
-        $this->assertSame('');
+        self::assertInstanceOf(JsonResponse::class, $response);
+
+        self::assertSame('{"test":"test"}', $response->getContent());
+    }
+
+    public function testApiUpdateRequest()
+    {
+        unset($_POST);
+        $request = new Request();
+        $request->setUri('/api/v1/test/word');
+        $request->setMethod('UPDATE');
+        $request->setPostData(['test' => 'test']);
+
+        self::assertSame($request->getUri(), '/api/v1/test/word');
+
+        $dispatcher = new Dispatcher($request, $this->config);
+
+        $response = $dispatcher->dispatch();
+
+        self::assertInstanceOf(JsonResponse::class, $response);
+
+        self::assertSame('{"test":"test"}', $response->getContent());
+    }
+
+    public function testApiDeleteRequest()
+    {
+        unset($_POST);
+        $request = new Request();
+        $request->setUri('/api/v1/test/word');
+        $request->setMethod('DELETE');
+        $request->setPostData(['test' => 'test']);
+
+        self::assertSame($request->getUri(), '/api/v1/test/word');
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response   = $dispatcher->dispatch();
+
+        self::assertInstanceOf(JsonResponse::class, $response);
+        self::assertSame('{"test":"test"}', $response->getContent());
+    }
+
+    /**
+     * Expect regular get call without method
+     */
+    public function testApiNoMethod()
+    {
+        unset($_POST);
+        $request = new Request();
+        $request->setUri('/api/v1/test/word');
+        $request->setMethod('');
+        $request->setPostData(['test' => 'test']);
+
+        self::assertSame($request->getUri(), '/api/v1/test/word');
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response   = $dispatcher->dispatch();
+
+        self::assertInstanceOf(JsonResponse::class, $response);
+        self::assertSame('{"param":{"test":"test"}}', $response->getContent());
     }
 
 }

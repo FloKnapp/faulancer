@@ -13,6 +13,3 @@ use Faulancer\ServiceLocator\ServiceInterface;
  * Class JsonResponseService
  */
 class JsonResponseService extends JsonResponse implements ServiceInterface {}
-{
-
-}

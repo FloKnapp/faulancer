@@ -67,7 +67,7 @@ class ErrorController extends Controller
 
         $trace  = $this->exception->getTrace();
 
-        if ($trace[0]['line'] !== $raiser['line']) {
+        if (isset($trace[0]['line']) && $trace[0]['line'] !== $raiser['line']) {
             array_unshift($trace, $raiser);
         } else {
             array_shift($trace);

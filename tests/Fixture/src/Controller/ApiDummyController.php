@@ -40,7 +40,7 @@ class ApiDummyController extends RestfulController
             return $this->jsonResponse->setContent(['param' => $param]);
         }
 
-        return $this->jsonResponse->setContent((['test' => true]));
+        return $this->jsonResponse->setContent(['test' => true]);
     }
 
     /**
@@ -67,7 +67,7 @@ class ApiDummyController extends RestfulController
      */
     public function delete($id)
     {
-        return $this->jsonResponse->setContent([$id]);
+        return $this->jsonResponse->setContent($id);
     }
 
 }
