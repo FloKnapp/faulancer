@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class ConstantMissingException
  */
-class ConstantMissingException extends \Exception
+class ConstantMissingException extends Exception
 {
 
 }

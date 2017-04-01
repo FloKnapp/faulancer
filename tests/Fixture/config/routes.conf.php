@@ -18,5 +18,11 @@ return [
         'method' => 'GET',
         'action' => 'stubDynamic',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubNoResponse' => [
+        'path' => '/stub-no-response',
+        'method' => 'GET',
+        'action' => 'stubNoResponse',
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
     ]
 ];

@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class KernelException
  */
-class KernelException extends \Exception
+class KernelException extends Exception
 {
 
 }

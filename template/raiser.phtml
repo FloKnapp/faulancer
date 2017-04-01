@@ -1,0 +1,121 @@
+<h1><?= $trace[0]['message']; ?></h1>
+
+<hr>
+
+<?php
+
+$s = 0;
+
+foreach ($trace as $item) :
+
+    $codeBlock = $this->codeBlock($item['file'], $item['line']);
+?>
+    <div class="stack" id="<?= md5($item['file'].$item['line']); ?>"<?= $s === 0 ?: ' style="display: none;"'; ?>>
+
+        <div class="sourceField">
+            <b><?= $item['file']; ?>:<?= $item['line'] ?></b>
+        </div>
+
+        <div class="codeBlock">
+            <code>
+                <?= $codeBlock; ?>
+            </code>
+        </div>
+
+    </div>
+
+<?php
+
+    $s++;
+
+endforeach;
+?>
+
+<hr>
+
+<h2>$_GET</h2>
+<div class="serverData">
+
+    <?php
+
+    if (empty($_GET)) {
+    ?>
+        No data found...
+    <?php
+    }
+
+    foreach ($_GET as $gkey => $gvalue) { ?>
+
+        <div class="row">
+            <div class="cell width-30"><?= $gkey; ?></div>
+            <div class="cell"><?= $gvalue; ?></div>
+        </div>
+
+    <?php
+    }
+    ?>
+
+</div>
+
+<hr>
+
+<h2>$_POST</h2>
+<div class="serverData">
+    <?php
+
+    if (empty($_POST)) {
+        ?>
+        No data found...
+        <?php
+    }
+
+    foreach ($_POST as $pkey => $pvalue) { ?>
+
+        <div class="row">
+            <div class="cell width-30"><?= $pkey; ?></div>
+            <div class="cell"><?= $pvalue; ?></div>
+        </div>
+
+    <?php
+    }
+    ?>
+
+</div>
+
+<hr>
+
+<h2>$_COOKIE</h2>
+<div class="serverData">
+
+    <?php
+    foreach ($_COOKIE as $ckey => $cvalue) { ?>
+
+        <div class="row">
+            <div class="cell width-30"><?= $ckey; ?></div>
+            <div class="cell"><?= $cvalue; ?></div>
+        </div>
+
+        <?php
+    }
+    ?>
+
+</div>
+
+<hr>
+
+<h2>$_SERVER</h2>
+<div class="serverData">
+
+    <?php
+    foreach ($_SERVER as $skey => $svalue) { ?>
+
+        <div class="row">
+            <div class="cell width-30"><?= $skey; ?></div>
+            <div class="cell"><?= $svalue; ?></div>
+        </div>
+
+    <?php
+    }
+    ?>
+
+</div>

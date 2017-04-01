@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class FileNotFoundException
  */
-class FileNotFoundException extends \Exception
+class FileNotFoundException extends Exception
 {
 
 }

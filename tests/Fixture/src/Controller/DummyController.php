@@ -3,6 +3,9 @@
 namespace Faulancer\Fixture\Controller;
 
 use Faulancer\Controller\Controller;
+use Faulancer\Http\Request;
+use Faulancer\Http\Response;
+use Faulancer\Service\ResponseService;
 
 /**
  * File DummyController.php
@@ -12,28 +15,49 @@ use Faulancer\Controller\Controller;
 class DummyController extends Controller
 {
 
+    /** @var Response  */
+    private $response;
+
     /**
-     * @return int
+     * DummyController constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+        $this->response = $this->getServiceLocator()->get(ResponseService::class);
+    }
+
+    /**
+     * @return Response
      */
     public function stubHomeAction()
     {
-        return 0;
+        return $this->response->setContent(0);
     }
 
     /**
-     * @return int
+     * @return Response
      */
     public function stubStaticAction()
     {
-        return 1;
+        return $this->response->setContent(1);
     }
 
     /**
-     * @return int
+     * @return Response
      */
     public function stubDynamicAction()
     {
-        return 2;
+        return $this->response->setContent(2);
+    }
+
+    /**
+     * @return integer
+     */
+    public function stubNoResponseAction()
+    {
+        return 3;
     }
 
 }

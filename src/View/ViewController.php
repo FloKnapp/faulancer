@@ -9,9 +9,12 @@ namespace Faulancer\View;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\ConstantMissingException;
+use Faulancer\Exception\Exception;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ViewHelperException;
 use Faulancer\Exception\ViewHelperIncompatibleException;
 use Faulancer\Service\Config;
+use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
@@ -33,6 +36,11 @@ class ViewController
     private $template = '';
 
     /**
+     * @var string
+     */
+    private $templatePath = '';
+
+    /**
      * Holds the parent template
      * @var ViewController
      */
@@ -42,7 +50,7 @@ class ViewController
      * Set template for this view
      *
      * @param string $template
-     * @return self
+     * @return ViewController
      * @throws ConstantMissingException
      * @throws FileNotFoundException
      */
@@ -51,8 +59,10 @@ class ViewController
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
-        if (strpos($template, $config->get('viewsRoot')) === false) {
+        if (empty($this->templatePath) && strpos($template, $config->get('viewsRoot')) === false) {
             $template = $config->get('viewsRoot') . $template;
+        } else {
+            $template = $this->templatePath . $template;
         }
 
         if (empty($template) || !file_exists($template) || is_dir($template)) {
@@ -62,6 +72,24 @@ class ViewController
         $this->template = $template;
 
         return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return ViewController
+     */
+    public function setTemplatePath(string $path = '') :self
+    {
+        $this->templatePath = $path;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return $this->templatePath;
     }
 
     /**
@@ -200,7 +228,7 @@ class ViewController
      *
      * @return string
      */
-    public function render() :string
+    public function render()
     {
         extract($this->variable);
 
@@ -212,7 +240,7 @@ class ViewController
 
         ob_end_clean();
 
-        if( $this->getParentTemplate() instanceof ViewController ) {
+        if ($this->getParentTemplate() instanceof ViewController) {
             return $this->cleanOutput($this->getParentTemplate()->setVariables($this->getVariables())->render());
         } else {
             return $this->cleanOutput($content);
@@ -222,12 +250,10 @@ class ViewController
     /**
      * Magic method for providing a view helper
      *
-     * @param $name
-     * @param $arguments
-     * @return string
-     * @throws FileNotFoundException
-     * @throws ViewHelperIncompatibleException
-     * @throws ClassNotFoundException
+     * @param  string $name      The class name
+     * @param  array  $arguments Arguments if given
+     * @return AbstractViewHelper
+     * @throws ViewHelperException
      */
     public function __call($name, $arguments)
     {
@@ -238,13 +264,14 @@ class ViewController
         if (class_exists($coreViewHelper)) {
             $class = new $coreViewHelper;
             array_unshift($arguments, $this);
+
             return call_user_func_array($class, $arguments);
         }
 
         // No core implementations found; search in custom view helpers
 
         /** @var Config $config */
-        $config    = ServiceLocator::instance()->get(Config::class);
+        $config = ServiceLocator::instance()->get(Config::class);
         $namespace = '\\' . $config->get('namespacePrefix');
 
         $customViewHelper = $namespace . '\\View\\' . ucfirst($name);
@@ -252,10 +279,12 @@ class ViewController
         if (class_exists($customViewHelper)) {
             $class = new $customViewHelper;
             array_unshift($arguments, $this);
+
             return $class($arguments);
         }
 
-        throw new ClassNotFoundException('No compatible view helper for "' . $name . '" found.');
+
+        throw new ViewHelperException('No view helper for "' . $name . '" found.');
     }
 
     /**

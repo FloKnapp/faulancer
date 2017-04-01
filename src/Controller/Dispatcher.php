@@ -9,14 +9,12 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
+use Faulancer\Exception\IncompatibleResponse;
 use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
-use Faulancer\Service\ResponseService;
-use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
@@ -57,37 +55,89 @@ class Dispatcher
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
      * @throws DispatchFailureException
+     * @throws IncompatibleResponse
      */
-    public function run()
+    public function dispatch()
     {
+        // Check for form submit
         if ($formRequest = $this->handleFormRequest()) {
             return $formRequest;
         }
 
-        /** @var ResponseService $response */
-        $response = ServiceLocator::instance()->get(ResponseService::class);
+        // Check for core assets path
+        if ($assets = $this->resolveAssetsPath()) {
+            return $assets;
+        }
 
-        try {
+        /** @var Response $response */
+        $response = null;
 
-            $target = $this->getRoute($this->request->getUri());
-            $class  = $target['class'];
-            $action = $target['action'] . 'Action';
+        $target = $this->getRoute($this->request->getUri());
+        $class  = $target['class'];
+        $action = $target['action'] . 'Action';
+        $class  = new $class($this->request);
 
-            $class = new $class($this->request);
+        if (isset($target['var'])) {
+            $response = call_user_func_array([$class, $action], $target['var']);
+        } else {
+            $response = $class->$action();
+        }
 
-            if (isset($target['var'])) {
-                $response->setContent(call_user_func_array([$class, $action], $target['var']));
-            } else {
-                $response->setContent($class->$action());
+        if ($response instanceof Response) {
+            return $response->getContent();
+        }
+
+        throw new IncompatibleResponse('No valid response');
+    }
+
+    /**
+     * @return boolean|string
+     */
+    private function resolveAssetsPath()
+    {
+        $matches = [];
+
+        if (preg_match('/(?<style>css)|(?<script>js)/', $this->request->getUri(), $matches)) {
+
+            $file = $this->request->getUri();
+
+            if (strpos($file, 'core') !== false) {
+
+                $path = str_replace('/core', '', $file);
+
+                if ($matches['style'] === 'css') {
+                    return $this->sendCssFileHeader($path);
+                } else if ($matches['script'] === 'js') {
+                    return $this->sendJsFileHeader($path);
+                }
+
             }
-
-        } catch (MethodNotFoundException $e) {
-
-            throw new DispatchFailureException();
 
         }
 
-        return $response;
+        return false;
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendCssFileHeader($file)
+    {
+        header('Content-Type: text/css');
+        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendJsFileHeader($file)
+    {
+        header('Content-Type: text/javascript');
+        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
     }
 
     /**

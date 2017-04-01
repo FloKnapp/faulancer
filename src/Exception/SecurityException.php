@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class SecurityException
  */
-class SecurityException extends \Exception
+class SecurityException extends Exception
 {
 
 }

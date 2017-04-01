@@ -6,6 +6,7 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
@@ -24,7 +25,7 @@ class Route extends AbstractViewHelper
      * @param string         $name
      * @param array          $parameters
      * @return string
-     * @throws \Exception
+     * @throws RouteInvalidException
      */
     public function __invoke(ViewController $view, string $name, array $parameters = [])
     {
@@ -43,7 +44,7 @@ class Route extends AbstractViewHelper
         }
 
         if (empty($path)) {
-            throw new \Exception('No route for name "' . $name . '" found');
+            throw new RouteInvalidException('No route for name "' . $name . '" found');
         }
 
         if (!empty($parameters)) {

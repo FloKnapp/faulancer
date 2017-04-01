@@ -51,6 +51,9 @@ class KernelTest extends TestCase
         $this->assertSame('Not found', $response);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSuccessDispatch()
     {
         /** @var Config $config */
@@ -70,7 +73,7 @@ class KernelTest extends TestCase
         $response = $kernel->run();
 
         $this->assertNotEmpty($response);
-        $this->assertSame(1, $response);
+        $this->assertSame('1', $response);
     }
 
 }

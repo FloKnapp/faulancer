@@ -4,6 +4,7 @@ namespace Faulancer\Test\Integration;
 
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ViewHelperException;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
@@ -35,6 +36,13 @@ class ViewTest extends TestCase
         $view = new ViewController();
         $view->setTemplate('/stubView.phtml');
         $this->assertTrue(is_string($view->getTemplate()));
+    }
+
+    public function testViewSetTemplatePath()
+    {
+        $view = new ViewController();
+        $view->setTemplatePath('/path/to/templates');
+        $this->assertSame('/path/to/templates', $view->getTemplatePath());
     }
 
     public function testViewMissingTemplate()
@@ -205,11 +213,21 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $view->setTemplate('/stubBody.phtml');
-
         $content = $view->render();
-
         $this->assertInstanceOf(ViewController::class, $view);
         $this->assertSame('LayoutTestContent', $content);
+    }
+
+    /**
+     * @throws FileNotFoundException
+     */
+    public function testViewParentTemplateWithInvalidPath()
+    {
+        $this->expectException(FileNotFoundException::class);
+        $view = new ViewController();
+        $view->setTemplatePath('/path/to/nowhere');
+        $view->parentTemplate('/layout.phtml');
+        $view->render();
     }
 
     /**
@@ -240,7 +258,7 @@ class ViewTest extends TestCase
 
     public function testGetMissingViewHelper()
     {
-        $this->expectException(ClassNotFoundException::class);
+        $this->expectException(ViewHelperException::class);
         $view = new ViewController();
         $view->NonExistingViewHelper();
     }
@@ -268,11 +286,18 @@ class ViewTest extends TestCase
     public function testGenericViewHelperRender()
     {
         $view = new ViewController();
-
         $response = $view->renderView('/stubView.phtml');
-
         $this->assertNotEmpty($response);
         $this->assertTrue(is_string($response));
+    }
+
+    public function testGenericViewHelperRenderWithInvalidPath()
+    {
+        $this->expectException(FileNotFoundException::class);
+
+        $view = new ViewController();
+        $view->setTemplatePath('/path/to/nowhere');
+        $view->renderView('/stubView.phtml');
     }
 
     public function testGenericViewHelperEscape()

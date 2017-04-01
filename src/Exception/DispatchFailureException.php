@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class DispatchFailureException
  */
-class DispatchFailureException extends \Exception
+class DispatchFailureException extends Exception
 {
 
 }

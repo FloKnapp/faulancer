@@ -34,7 +34,7 @@ class FormRequestTest extends TestCase
 
         $dispatcher = new Dispatcher($request, $config);
 
-        $result = $dispatcher->run();
+        $result = $dispatcher->dispatch();
 
         $this->assertSame('testSuccess', $result);
     }
@@ -58,7 +58,7 @@ class FormRequestTest extends TestCase
 
         $dispatcher = new Dispatcher($request, $config);
 
-        $result = $dispatcher->run();
+        $result = $dispatcher->dispatch();
 
         $this->assertSame('testError', $result);
     }
