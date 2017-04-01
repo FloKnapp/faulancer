@@ -24,5 +24,15 @@ return [
         'method' => 'GET',
         'action' => 'stubNoResponse',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'rest' => [
+        'testRoute' => [
+            'path' => '/api/v1/test',
+            'controller' => \Faulancer\Fixture\Controller\ApiDummyController::class
+        ],
+        'testDynamicRoute' => [
+            'path' => '/api/v1/test/(\w+)',
+            'controller' => \Faulancer\Fixture\Controller\ApiDummyController::class
+        ]
     ]
 ];

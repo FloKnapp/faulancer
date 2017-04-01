@@ -142,4 +142,9 @@ class Request extends AbstractHttp
         return empty($_POST) ? [] : $_POST;
     }
 
+    public function getRequestContent()
+    {
+        return file_get_contents('php://input');
+    }
+
 }

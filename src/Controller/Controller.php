@@ -12,7 +12,6 @@ use Faulancer\Http\Response;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
-use Faulancer\Service\ResponseService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
@@ -102,12 +101,7 @@ abstract class Controller
      */
     public function render(string $template = '', $variables = []) :Response
     {
-        /** @var ResponseService $response */
-        $response = $this->getServiceLocator()->get(ResponseService::class);
-        $response->setContent(
-            $this->getView()->setTemplate($template)->setVariables($variables)->render()
-        );
-        return $response;
+        return new Response($this->getView()->setTemplate($template)->setVariables($variables)->render());
     }
 
     /**

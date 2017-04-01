@@ -12,14 +12,12 @@ namespace Faulancer\Controller;
 abstract class RestfulController extends Controller
 {
 
-    public function get() {}
+    public function get($id = null) {}
 
-    public function getList() {}
+    public function create($data) {}
 
-    public function create() {}
+    public function update($data) {}
 
-    public function update() {}
-
-    public function delete() {}
+    public function delete($id) {}
 
 }
