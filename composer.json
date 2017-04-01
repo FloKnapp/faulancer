@@ -29,5 +29,7 @@
       "apigen/apigen": "^4.2@dev"
     },
     "minimum-stability": "alpha",
-    "bin": [ "bin/console" ]
+    "scripts": {
+      "test": "./vendor/bin/phpunit -c phpunit.xml --colors=always"
+    }
 }

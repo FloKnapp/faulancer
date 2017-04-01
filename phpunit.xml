@@ -16,7 +16,7 @@
     <filter>
         <blacklist>
             <directory>./vendor/</directory>
-            <directory>./tests/</directory>
+            <directory>./tests/Fixture</directory>
         </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src/</directory>
