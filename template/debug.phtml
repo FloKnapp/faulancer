@@ -11,6 +11,11 @@ $this->parentTemplate('/layout_debug.phtml'); ?>
     <?php
 
     foreach ($trace as $item) {
+
+        if (empty($item['line']) || empty($item['file']) || empty($item['function'])) {
+            continue;
+        }
+
         echo $this->renderView('/stacktrace.phtml', ['item' => $item]);
     }
     ?>

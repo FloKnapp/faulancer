@@ -28,6 +28,8 @@ class DispatcherTest extends TestCase
 
     public function setUp()
     {
+        unset($_POST);
+
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $responseMock */
         $responseMock = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
         $responseMock->method('setResponseHeader')->will($this->returnValue(true));
@@ -208,7 +210,10 @@ class DispatcherTest extends TestCase
             ->method('sendJsFileHeader')
             ->will($this->returnValue(true));
 
-        self::assertInstanceOf(Response::class, $dispatcherMock->dispatch());
+        $response = $dispatcherMock->dispatch();
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertSame('{"param":false}', $response->getContent());
     }
 
     public function testDynamicApiRequest()
@@ -220,11 +225,10 @@ class DispatcherTest extends TestCase
         self::assertSame($request->getUri(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
-
-        $response = $dispatcher->dispatch();
+        $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-        self::assertSame('{"test":true}', $response->getContent());
+        self::assertSame('{"param":"word"}', $response->getContent());
     }
 
     public function testDynamicApiRequestTooLong()
@@ -244,49 +248,39 @@ class DispatcherTest extends TestCase
 
     public function testApiPostRequest()
     {
-        unset($_POST);
         $request = new Request();
         $request->setUri('/api/v1/test/word');
         $request->setMethod('POST');
-        $request->setPostData(['test' => 'test']);
 
         self::assertSame($request->getUri(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
-
-        $response = $dispatcher->dispatch();
+        $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-
-        self::assertSame('{"test":"test"}', $response->getContent());
+        self::assertSame('"word"', $response->getContent());
     }
 
     public function testApiUpdateRequest()
     {
-        unset($_POST);
         $request = new Request();
         $request->setUri('/api/v1/test/word');
         $request->setMethod('UPDATE');
-        $request->setPostData(['test' => 'test']);
 
         self::assertSame($request->getUri(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
-
-        $response = $dispatcher->dispatch();
+        $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-
-        self::assertSame('{"test":"test"}', $response->getContent());
+        self::assertSame('"word"', $response->getContent());
     }
 
     public function testApiDeleteRequest()
     {
-        unset($_POST);
         $request = new Request();
         $request->setUri('/api/v1/test/word');
         $request->setMethod('DELETE');
-        $request->setPostData(['test' => 'test']);
 
         self::assertSame($request->getUri(), '/api/v1/test/word');
 
@@ -294,19 +288,32 @@ class DispatcherTest extends TestCase
         $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-        self::assertSame('{"test":"test"}', $response->getContent());
+        self::assertSame('"word"', $response->getContent());
+    }
+
+    public function testApiWithQueryParam()
+    {
+        $request = new Request();
+        $request->setUri('/api/v1/test?test=yolo');
+        $request->setMethod('');
+
+        self::assertSame($request->getUri(), '/api/v1/test');
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response   = $dispatcher->dispatch();
+
+        self::assertInstanceOf(JsonResponse::class, $response);
+        self::assertSame('{"param":"yolo"}', $response->getContent());
     }
 
     /**
-     * Expect regular get call without method
+     * Expect regular GET call without method
      */
     public function testApiNoMethod()
     {
-        unset($_POST);
         $request = new Request();
         $request->setUri('/api/v1/test/word');
         $request->setMethod('');
-        $request->setPostData(['test' => 'test']);
 
         self::assertSame($request->getUri(), '/api/v1/test/word');
 
@@ -314,7 +321,7 @@ class DispatcherTest extends TestCase
         $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-        self::assertSame('{"param":{"test":"test"}}', $response->getContent());
+        self::assertSame('{"param":"word"}', $response->getContent());
     }
 
 }

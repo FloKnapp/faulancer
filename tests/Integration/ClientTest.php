@@ -20,7 +20,7 @@ class ClientTest extends TestCase
 
     public function testClientPostRequest()
     {
-        $response = Client::post('https://www.posttestserver.com/', [], ['test' => true]);
+        $response = Client::post('https://www.posttestserver.com/', ['Content-Type' => 'application/json'], ['test' => true]);
         self::assertStringStartsWith('<html>', $response);
     }
 

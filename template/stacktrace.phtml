@@ -4,6 +4,16 @@
  */
 ?>
 
+<?php
+
+if (empty($item['file'])) {
+    $item['file'] = 1;
+}
+if (empty($item['line'])) {
+    $item['line'] = 1;
+}
+?>
+
 <div class="previousStack selected" data-stack-identifier="<?= md5($item['file'].$item['line']); ?>">
 
     <h3><?= $item['function']; ?></h3>

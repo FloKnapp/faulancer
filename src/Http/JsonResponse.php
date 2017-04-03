@@ -20,6 +20,8 @@ class JsonResponse extends Response
      */
     public function setContent($content = [])
     {
+        $this->setResponseHeader(['Content-Type' => 'application/json']);
+
         $this->content = json_encode($content);
         return $this;
     }

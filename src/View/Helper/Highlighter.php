@@ -16,7 +16,7 @@ class Highlighter extends AbstractViewHelper
 {
     
     private static $keys = [
-        'if',
+        '\bif',
         'else',
         'new',
         'throw',
@@ -27,11 +27,11 @@ class Highlighter extends AbstractViewHelper
         'private',
         'protected',
         'function',
-        'class[?!class=][?!$class]',
+        'class[?!class\=|?!\$class]',
         'extends',
         'implements',
-        'use[^a-zA-Z]',
-        '\bnamespace\b',
+        'use',
+        'namespace',
         'unset',
         'include_once',
         'require_once',
@@ -44,7 +44,7 @@ class Highlighter extends AbstractViewHelper
         '\bas\b',
         '&lt;\?php',
         '&lt;\?=',
-        '\?&gt;'
+        '\?&gt;\n'
     ];
 
     /**
@@ -57,7 +57,7 @@ class Highlighter extends AbstractViewHelper
     public function __invoke(ViewController $view, $data = '', $language = 'php')
     {
         $data = htmlentities($data, ENT_IGNORE, null, false);
-        $data = preg_replace('/(' . implode('|', self::$keys) . ')/', '<span class="base_keys">$1</span>', $data);
+        $data = preg_replace('/(' . implode('\b|\b', self::$keys) . ')/', '<span class="base_keys">$1</span>', $data);
         $data = preg_replace('/\$(\w+)/', '<span class="variable">$$1</span>', $data);
         $data = preg_replace('/\'(.*)\'/', '<span class="string_text">\'$1\'</span>', $data);
         $data = preg_replace('/-&gt;(\w+)/', '-><span class="methods">$1</span>', $data);

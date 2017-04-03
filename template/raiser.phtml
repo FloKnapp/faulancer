@@ -8,6 +8,10 @@ $s = 0;
 
 foreach ($trace as $item) :
 
+    if (empty($item['line']) || empty($item['file'])) {
+        continue;
+    }
+
     $codeBlock = $this->codeBlock($item['file'], $item['line']);
 ?>
     <div class="stack" id="<?= md5($item['file'].$item['line']); ?>"<?= $s === 0 ?: ' style="display: none;"'; ?>>

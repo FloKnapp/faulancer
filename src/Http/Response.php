@@ -100,12 +100,19 @@ class Response extends AbstractHttp
     }
 
     /**
+     * @param array $headers
      * @codeCoverageIgnore Is covered because usage of php built-in function
      */
-    public function setResponseHeader()
+    public function setResponseHeader(array $headers = [])
     {
         $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/2.0';
-        header($protocol . ' ' . $this->getCode() . ' ' . self::HTTP_STATUS_CODES[$this->getCode()]);
+        header($protocol . ' ' . $this->getCode() . ' ' . self::HTTP_STATUS_CODES[$this->getCode()] . PHP_EOL);
+
+        if ($headers) {
+            foreach ($headers as $name => $value) {
+                header($name . ': ' . $value . PHP_EOL);
+            }
+        }
     }
 
     /**

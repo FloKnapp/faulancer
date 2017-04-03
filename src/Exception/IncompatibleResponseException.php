@@ -9,7 +9,7 @@ namespace Faulancer\Exception;
 /**
  * Class IncompatibleResponseException
  */
-class IncompatibleResponseException extends \Exception
+class IncompatibleResponseException extends Exception
 {
 
 }

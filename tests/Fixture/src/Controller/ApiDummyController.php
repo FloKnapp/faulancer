@@ -31,16 +31,20 @@ class ApiDummyController extends RestfulController
     }
 
     /**
-     * @param bool $param
+     * @param mixed $id
      * @return JsonResponse
      */
-    public function get($param = null)
+    public function get($id = null)
     {
-        if ($param) {
-            return $this->jsonResponse->setContent(['param' => $param]);
+        if (!empty($id)) {
+            return $this->jsonResponse->setContent(['param' => $id]);
         }
 
-        return $this->jsonResponse->setContent(['test' => true]);
+        if (!empty($this->request->getParam('test'))) {
+            return $this->jsonResponse->setContent(['param' => $this->request->getParam('test')]);
+        }
+
+        return $this->jsonResponse->setContent(['param' => false]);
     }
 
     /**
@@ -62,10 +66,10 @@ class ApiDummyController extends RestfulController
     }
 
     /**
-     * @param $id
+     * @param mixed $id
      * @return JsonResponse
      */
-    public function delete($id)
+    public function delete($id = null)
     {
         return $this->jsonResponse->setContent($id);
     }

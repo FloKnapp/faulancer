@@ -60,7 +60,7 @@ class Kernel
             $this->registerErrorHandler();
 
             ob_start();
-            echo $dispatcher->dispatch();
+            echo $dispatcher->dispatch()->getContent();
             $content = ob_get_contents();
             ob_end_clean();
             return $content;

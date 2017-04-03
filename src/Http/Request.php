@@ -7,6 +7,8 @@
  */
 namespace Faulancer\Http;
 
+use Faulancer\Exception\InvalidArgumentException;
+
 /**
  * Class Request
  */
@@ -26,10 +28,21 @@ class Request extends AbstractHttp
     protected $method = '';
 
     /**
+     * Custom headers
+     * @var array
+     */
+    protected $headers = [];
+
+    /**
      * The current query string
      * @var string
      */
     protected $query = '';
+
+    /**
+     * @var string
+     */
+    protected $body = '';
 
     /**
      * Set attributes automatically
@@ -53,12 +66,34 @@ class Request extends AbstractHttp
     }
 
     /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers = [])
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
      * Set uri path
      *
      * @param string $uri
      */
     public function setUri(string $uri)
     {
+        if (strpos($uri, '?') !== false) {
+            $uri = explode('?', $uri);
+            $this->setQuery($uri[1]);
+            $uri = $uri[0];
+        }
+
         $this->uri = $uri;
     }
 
@@ -114,6 +149,22 @@ class Request extends AbstractHttp
     }
 
     /**
+     * @param array $body
+     */
+    public function setBody($body)
+    {
+       $this->body = $body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
      * Determine if it's a post request
      *
      * @return boolean
@@ -134,6 +185,29 @@ class Request extends AbstractHttp
     }
 
     /**
+     * @param string $key
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
+    public function getParam(string $key)
+    {
+        $post = !empty($_POST) ? $_POST : [];
+        $get  = !empty($_GET) ? $_GET : [];
+
+        if (!empty($this->getQuery())) {
+            parse_str($this->getQuery(), $get);
+        }
+
+        $combined = $post + $get;
+
+        if (!empty($combined[$key])) {
+            return $combined[$key];
+        }
+
+        return null;
+    }
+
+    /**
      * Return the post data
      *
      * @return array
@@ -143,10 +217,13 @@ class Request extends AbstractHttp
         return empty($_POST) ? [] : $_POST;
     }
 
+    /**
+     * @param $data
+     * @return void
+     */
     public function setPostData($data)
     {
         $_POST = $data;
-        return true;
     }
 
 }

@@ -84,28 +84,19 @@ class Dispatcher
             $this->requestType = 'api';
         }
 
-        $target = $this->getRoute($this->request->getUri());
-        $class  = $target['class'];
-        $action = $target['action'];
-
-        $isRestRequest = strpos($this->request->getUri(), '/api') === 0 ? true : false;
-
-        if ($isRestRequest) {
-
-            $this->requestType = 'api';
-            $action            = $this->getRestfulAction();
-            $target['var']     = [$_GET + $_POST];
-
-        }
+        $target  = $this->getRoute($this->request->getUri());
+        $class   = $target['class'];
+        $action  = $this->requestType === 'api' ? $this->getRestfulAction() : $target['action'];
+        $payload = !empty($target['var']) ? $target['var'] : [];
 
         /** @var Response $class */
         $class = new $class($this->request);
 
-        if (isset($target['var'])) {
-            $response = call_user_func_array([$class, $action], $target['var']);
-        } else {
-            $response = $class->$action();
+        if (!method_exists($class, $action)) {
+            throw new MethodNotFoundException('Class "' . get_class($class) . '" doesn\'t have the method ' . $action);
         }
+
+        $response = call_user_func_array([$class, $action], $payload);
 
         if (!$response instanceof Response) {
             throw new IncompatibleResponseException('No valid response returned.');
@@ -151,7 +142,8 @@ class Dispatcher
     public function sendCssFileHeader($file)
     {
         header('Content-Type: text/css');
-        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        echo file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        exit(0);
     }
 
     /**
@@ -162,7 +154,8 @@ class Dispatcher
     public function sendJsFileHeader($file)
     {
         header('Content-Type: text/javascript');
-        return file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        echo file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        exit(0);
     }
 
     /**
