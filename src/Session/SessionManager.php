@@ -15,7 +15,7 @@ class SessionManager
     /**
      * Start session handler
      * @return void
-     * @codeCoverageIgnore
+     * @codeCoverageIgnore Covered by php
      */
     public function startSession()
     {

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class Faulancer\Service\Factory\ORMFactory</title>
+	<title>Class Faulancer\Service\Factory\SessionManagerServiceFactory</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -24,18 +24,6 @@
 					</a>
 
 						<ul>
-				<li>
-					<a href="namespace-Faulancer.Console.html">
-						Console<span></span>
-					</a>
-
-						<ul>
-				<li>
-					<a href="namespace-Faulancer.Console.Handler.html">
-						Handler					</a>
-
-						</li>
-							</ul></li>
 				<li>
 					<a href="namespace-Faulancer.Controller.html">
 						Controller					</a>
@@ -82,10 +70,22 @@
 
 						</li>
 				<li>
-					<a href="namespace-Faulancer.ORM.html">
-						ORM					</a>
+					<a href="namespace-Faulancer.Mail.html">
+						Mail					</a>
 
 						</li>
+				<li>
+					<a href="namespace-Faulancer.ORM.html">
+						ORM<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Faulancer.ORM.User.html">
+						User					</a>
+
+						</li>
+							</ul></li>
 				<li class="active">
 					<a href="namespace-Faulancer.Service.html">
 						Service<span></span>
@@ -101,6 +101,11 @@
 				<li>
 					<a href="namespace-Faulancer.ServiceLocator.html">
 						ServiceLocator					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Faulancer.Session.html">
+						Session					</a>
 
 						</li>
 				<li>
@@ -124,8 +129,13 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Faulancer.Service.Factory.AuthenticatorServiceFactory.html">AuthenticatorServiceFactory</a></li>
 				<li><a href="class-Faulancer.Service.Factory.ConfigFactory.html">ConfigFactory</a></li>
-				<li class="active"><a href="class-Faulancer.Service.Factory.ORMFactory.html">ORMFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.ControllerServiceFactory.html">ControllerServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.DbServiceFactory.html">DbServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.DispatcherServiceFactory.html">DispatcherServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.HttpServiceFactory.html">HttpServiceFactory</a></li>
+				<li class="active"><a href="class-Faulancer.Service.Factory.SessionManagerServiceFactory.html">SessionManagerServiceFactory</a></li>
 			</ul>
 
 
@@ -164,16 +174,16 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class ORMFactory</h1>
+	<h1>Class SessionManagerServiceFactory</h1>
 
 
 	<div class="description">
-	<p>Class ORMFactory</p>
+	<p>Interface FactoryInterface</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-<b><span>Faulancer\Service\Factory\ORMFactory</span></b>			
+<b><span>Faulancer\Service\Factory\SessionManagerServiceFactory</span></b>			
 			 implements 
 				<a href="class-Faulancer.ServiceLocator.FactoryInterface.html"><span>Faulancer\ServiceLocator\FactoryInterface</span></a>
 			
@@ -194,7 +204,7 @@
 		<b>Namespace:</b> <a href="namespace-Faulancer.html">Faulancer</a>\<a href="namespace-Faulancer.Service.html">Service</a>\<a href="namespace-Faulancer.Service.Factory.html">Factory</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-Faulancer.Service.Factory.ORMFactory.html#17-70" title="Go to source code">Service/Factory/ORMFactory.php</a>
+			<b>Located at</b> <a href="source-class-Faulancer.Service.Factory.SessionManagerServiceFactory.html#13-26" title="Go to source code">Service/Factory/SessionManagerServiceFactory.php</a>
 		<br>
 	</div>
 
@@ -207,21 +217,21 @@
 		<td class="attributes"><code>
 			 public 
 
-			<code><a href="class-Faulancer.Service.ORM.html">Faulancer\Service\ORM</a></code>
+			<code><a href="class-Faulancer.Service.SessionManagerService.html">Faulancer\Service\SessionManagerService</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_createService">#</a>
-		<code><a href="source-class-Faulancer.Service.Factory.ORMFactory.html#23-68" title="Go to source code">createService</a>( <span><code><a href="class-Faulancer.ServiceLocator.ServiceLocatorInterface.html">Faulancer\ServiceLocator\ServiceLocatorInterface</a></code> <var>$serviceLocator</var></span> )</code>
+		<code><a href="source-class-Faulancer.Service.Factory.SessionManagerServiceFactory.html#16-24" title="Go to source code">createService</a>( <span><code><a href="class-Faulancer.ServiceLocator.ServiceLocatorInterface.html">Faulancer\ServiceLocator\ServiceLocatorInterface</a></code> <var>$serviceLocator</var></span> )</code>
 
 		<div class="description short">
-			<p>Create an entity manager</p>
+			
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Create an entity manager</p>
+			
 
 
 				<h4>Parameters</h4>
@@ -232,7 +242,7 @@
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code><a href="class-Faulancer.Service.ORM.html">Faulancer\Service\ORM</a></code>
+					<code><a href="class-Faulancer.Service.SessionManagerService.html">Faulancer\Service\SessionManagerService</a></code>
 				</div>
 
 
@@ -273,6 +283,6 @@
 </div>
 </div>
 <script src="resources/combined.js?3dd218485acb7d951fd2e0762b77648c071015ef"></script>
-<script src="elementlist.js?82af3cdfaf8e2b79453cb5e1e79a90827db2b99b"></script>
+<script src="elementlist.js?b6115e77a8759c64e985c11683b45b2b455f78ec"></script>
 </body>
 </html>
