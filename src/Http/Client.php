@@ -52,6 +52,7 @@ class Client
      *
      * @param Request $request
      * @return string
+     * @codeCoverageIgnore
      */
     protected static function sendCurl(Request $request) :string
     {

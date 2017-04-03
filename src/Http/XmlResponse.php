@@ -18,6 +18,7 @@ class XmlResponse extends Response
     /**
      * @param array             $data
      * @param \SimpleXMLElement $xml
+     * @codeCoverageIgnore
      */
     private function convertArrayToXml(\SimpleXMLElement &$xml, $data)
     {
@@ -44,6 +45,7 @@ class XmlResponse extends Response
      * @param string            $key
      * @param null|array        $value
      * @return null|\SimpleXMLElement
+     * @codeCoverageIgnore
      */
     private function generateNode(\SimpleXMLElement &$xml, $key, $value = null)
     {
@@ -71,6 +73,7 @@ class XmlResponse extends Response
     /**
      * @param array $content
      * @return self
+     * @codeCoverageIgnore
      */
     public function setContent($content = [])
     {

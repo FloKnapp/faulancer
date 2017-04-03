@@ -25,6 +25,12 @@ return [
         'action' => 'stubNoResponse',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
     ],
+    'stubNoMethod' => [
+        'path' => '/stub-no-method',
+        'method' => 'GET',
+        'action' => 'stubNoMethod',
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
     'rest' => [
         'testRoute' => [
             'path' => '/api/v1/test',

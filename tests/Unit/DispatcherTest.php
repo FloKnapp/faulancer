@@ -324,4 +324,18 @@ class DispatcherTest extends TestCase
         self::assertSame('{"param":"word"}', $response->getContent());
     }
 
+    public function testMethodDoesntExist()
+    {
+        $this->expectException(MethodNotFoundException::class);
+
+        $request = new Request();
+        $request->setUri('/stub-no-method');
+        $request->setMethod('GET');
+
+        self::assertSame($request->getUri(), '/stub-no-method');
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response   = $dispatcher->dispatch();
+    }
+
 }

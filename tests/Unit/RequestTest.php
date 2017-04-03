@@ -93,5 +93,21 @@ class RequestTest extends TestCase
         $this->assertNotEmpty($request->getQuery());
     }
 
+    public function testSetGetBody()
+    {
+        $request = new Request();
+
+        $request->setBody(['test' => true]);
+        self::assertSame(['test' => true], $request->getBody());
+    }
+
+    public function testSetPostData()
+    {
+        $request = new Request();
+
+        $request->setPostData(['test' => true]);
+        self::assertSame(['test' => true], $_POST);
+    }
+
 
 }
