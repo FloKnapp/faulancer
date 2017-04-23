@@ -1,7 +1,7 @@
 <?php
 /**
  * Class Entity | Entity.php
- * @package Faulancer\ORM\User
+ * @package Faulancer\ORM\UserEntity
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\ORM\User;

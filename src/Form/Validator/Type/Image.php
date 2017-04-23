@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Image
+ * Class ImageEntity
  * @package Faulancer\Form\Validator\Type
  */
 namespace Faulancer\Form\Validator\Type;
@@ -8,7 +8,7 @@ namespace Faulancer\Form\Validator\Type;
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
- * Class Image
+ * Class ImageEntity
  */
 class Image extends AbstractValidator
 {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class User | User.php
+ * Class UserEntity | UserEntityEntity.php
  * @package Faulancer\View\Helper
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -12,7 +12,7 @@ use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
 /**
- * Class User
+ * Class UserEntity
  */
 class User extends AbstractViewHelper
 {
