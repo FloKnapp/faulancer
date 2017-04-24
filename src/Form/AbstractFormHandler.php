@@ -16,6 +16,8 @@ use Faulancer\ServiceLocator\ServiceLocator;
 abstract class AbstractFormHandler extends Controller
 {
 
+    private $isConfirm = false;
+
     /**
      * Return the called form handler
      *
@@ -109,6 +111,11 @@ abstract class AbstractFormHandler extends Controller
             /** @var AbstractValidator $val */
             $val     = new $validatorClass();
             $isValid = $val->process($value);
+
+            if ($validator === 'Confirm' && $this->isConfirm === false) {
+                $this->isConfirm = true;
+                continue;
+            }
 
             $result[$key]['valid'] = $isValid;
 

@@ -307,7 +307,7 @@ class Dispatcher
         }
 
         $handlerName  = ucfirst(str_replace('/formrequest/', '', $this->request->getUri()));
-        $handlerClass = '\\' . $this->config->get('namespacePrefix') . '\\Form\\' . $handlerName . 'Handler';
+        $handlerClass = '\\' . $this->config->get('namespacePrefix') . '\\Form\\Handler\\' . $handlerName . 'Handler';
 
         if (class_exists($handlerClass)) {
 
