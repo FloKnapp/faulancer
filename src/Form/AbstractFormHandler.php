@@ -57,6 +57,8 @@ abstract class AbstractFormHandler extends Controller
 
         }
 
+
+
         if (empty($errors)) {
             return true;
         }
@@ -74,11 +76,12 @@ abstract class AbstractFormHandler extends Controller
      */
     private function validate() :array
     {
-        $result = [];
+        $result   = [];
+        $postData = $this->getRequest()->getPostData();
 
-        $this->getSessionManager()->setFlashbagFormData($this->getRequest()->getPostData());
+        $this->getSessionManager()->setFlashbagFormData($postData);
 
-        foreach ($this->getRequest()->getPostData() as $key => $data) {
+        foreach ($postData as $key => $data) {
 
             if (strpos($key, '/') === false) {
                 continue;
@@ -111,6 +114,17 @@ abstract class AbstractFormHandler extends Controller
 
             if (!$isValid) {
                 $result[$key]['message'] = $val->getMessage();
+            }
+
+            if ($key === 'csrf') {
+
+                $token = $this->getSessionManager()->getFlashbag('csrf');
+
+                if ($token !== $value) {
+                    $result['csrf']['valid']   = false;
+                    $result['csrf']['message'] = 'invalid_csrf_token';
+                }
+
             }
 
         }
