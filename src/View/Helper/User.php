@@ -34,4 +34,12 @@ class User extends AbstractViewHelper
         return $authenticator->getUserFromSession();
     }
 
+    public function isAuthenticated(array $roles)
+    {
+        /** @var AuthenticatorService $authenticator */
+        $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
+
+        return $authenticator->isAuthenticated($roles);
+    }
+
 }
