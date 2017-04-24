@@ -55,8 +55,16 @@ class AuthenticatorService implements ServiceInterface
             ->one();
 
         if ($userData instanceof UserEntity) {
+
+            $sessionManager = $this->controller->getSessionManager();
+
+            if ($sessionManager->hasFlashbagKey('redirectAfterAuth')) {
+                $this->redirectAfterAuth = $sessionManager->getFlashbag('redirectAfterAuth');
+            }
+
             $this->saveUserInSession($userData);
             return $this->controller->redirect($this->redirectAfterAuth);
+
         }
 
         /** @var SessionManagerService $sessionManager */
@@ -70,6 +78,11 @@ class AuthenticatorService implements ServiceInterface
      */
     public function redirectToAuthentication()
     {
+        $this->controller->getSessionManager()->setFlashbag(
+            'redirectAfterAuth',
+            $this->controller->getRequest()->getUri()
+        );
+
         /** @var Config $config */
         $config  = $this->controller->getServiceLocator()->get(Config::class);
         $authUrl = $config->get('auth:authUrl');
