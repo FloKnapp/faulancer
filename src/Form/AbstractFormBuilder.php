@@ -72,11 +72,11 @@ abstract class AbstractFormBuilder
         /** @var AbstractType $value */
         foreach ($this->fields as $key => $value) {
 
-            if ($value->getInputType() === 'submit') {
+            if ($value->getType() === 'submit') {
                 continue;
             }
 
-            $result[$key] = $value->getInputValue();
+            $result[$key] = $value->getValue();
 
         }
 
@@ -89,7 +89,7 @@ abstract class AbstractFormBuilder
     public function setData(array $data)
     {
         foreach ($data as $key => $value) {
-            $this->fields[$key]->setInputValue($value);
+            $this->fields[$key]->setValue($value);
         }
     }
 

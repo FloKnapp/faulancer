@@ -32,7 +32,7 @@ abstract class AbstractValidator
      */
     public function validate()
     {
-        if (!$this->process($this->field->getInputValue())) {
+        if (!$this->process($this->field->getValue())) {
 
             $this->field->setErrorMessage($this->getMessage());
             return false;

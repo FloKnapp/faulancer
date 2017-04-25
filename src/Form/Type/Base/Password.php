@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Text | Text.php
+ * Class Password | Password.php
  * @package Faulancer\Form\Type\Base
  * @author Florian Knapp <office@florianknapp.de>
  */
@@ -11,7 +11,7 @@ use Faulancer\Form\Type\AbstractType;
 /**
  * Class Text
  */
-class Text extends AbstractType
+class Password extends AbstractType
 {
 
     /** @var string */

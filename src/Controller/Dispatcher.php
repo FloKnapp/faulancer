@@ -66,11 +66,6 @@ class Dispatcher
      */
     public function dispatch()
     {
-        // Check for form submit
-        if ($formRequest = $this->handleFormRequest()) {
-            return $formRequest;
-        }
-
         // Check for core assets path
         if ($assets = $this->resolveAssetsPath()) {
             return $assets;
@@ -292,31 +287,6 @@ class Dispatcher
                 return 'get';
 
         }
-    }
-
-    /**
-     * Detect a form request
-     *
-     * @return boolean
-     */
-    private function handleFormRequest()
-    {
-        if (strpos($this->request->getUri(), '/formrequest/') !== 0 && !$this->request->isPost()) {
-            return false;
-        }
-
-        $handlerName  = ucfirst(str_replace('/formrequest/', '', $this->request->getUri()));
-        $handlerClass = '\\' . $this->config->get('namespacePrefix') . '\\Form\\Handler\\' . $handlerName . 'Handler';
-
-        if (class_exists($handlerClass)) {
-
-            /** @var AbstractFormHandler $handler */
-            $handler = new $handlerClass($this->request);
-            return $handler->run();
-
-        }
-
-        return false;
     }
 
 }
