@@ -200,7 +200,7 @@ class Dispatcher
     {
         if (!empty($data['path']) && $uri === $data['path']) {
 
-            if ($this->requestType === 'default' && strcasecmp($data['method'], $this->request->getMethod()) === 0) {
+            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
                     'class'  => $data['controller'],
@@ -245,7 +245,7 @@ class Dispatcher
 
             array_splice($var, 0, 1);
 
-            if ($this->requestType === 'default' && strcasecmp($data['method'], $this->request->getMethod()) === 0) {
+            if ($this->requestType === 'default'  && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
                     'class'  => $data['controller'],

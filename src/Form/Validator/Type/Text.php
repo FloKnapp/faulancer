@@ -21,7 +21,7 @@ class Text extends AbstractValidator
 
     /**
      * Validate type string
-     * @param string $data
+     * @param $data
      * @return boolean
      */
     public function process($data)

@@ -8,16 +8,13 @@ namespace Faulancer\Form\Type;
 /**
  * Class Text
  */
-class Text extends AbstractType
+class Submit extends AbstractType
 {
 
-    /** @var array */
     protected $definition = [];
 
-    /** @var string */
     protected $type = 'input';
 
-    /** @var string */
     protected $element = '';
 
     /**
@@ -25,9 +22,9 @@ class Text extends AbstractType
      */
     public function create()
     {
-        $this->inputLabel = $this->definition['label'];
-
         $output = '<' . $this->type;
+
+        $this->inputLabel = $this->definition['label'];
 
         foreach ($this->definition['attributes'] as $attr => $value) {
             $output .= ' ' . $attr . '="' . $value . '" ';

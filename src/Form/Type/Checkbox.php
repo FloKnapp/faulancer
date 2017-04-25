@@ -11,7 +11,7 @@ namespace Faulancer\Form\Type;
 class Checkbox extends AbstractType
 {
 
-    public function build()
+    protected function build(array $definition)
     {
 
     }
