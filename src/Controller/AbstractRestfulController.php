@@ -1,15 +1,15 @@
 <?php
 /**
- * Class RestfulController | RestfulController.php
- * @package Faulancer\Controller
+ * Class RestfulAbstractController | AbstractRestfulController.php
+ * @package Faulancer\AbstractController
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Controller;
 
 /**
- * Class RestfulController
+ * Class RestfulAbstractController
  */
-abstract class RestfulController extends Controller
+abstract class AbstractRestfulController extends AbstractController
 {
 
     /**

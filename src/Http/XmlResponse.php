@@ -77,7 +77,7 @@ class XmlResponse extends Response
      */
     public function setContent($content = [])
     {
-        $this->setResponseHeader(['Content-Type' => 'text/xml']);
+        $this->setResponseHeader(['Content-Base' => 'text/xml']);
 
         $xml = new \SimpleXMLElement('<?xml version="1.0"?><root></root>');
         $this->convertArrayToXml($xml, $content);

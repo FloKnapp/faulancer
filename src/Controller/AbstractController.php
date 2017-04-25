@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Controller
+ * Class AbstractController
  *
- * @package Faulancer\Controller
+ * @package Faulancer\AbstractController
  * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Controller;
@@ -18,9 +18,9 @@ use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
- * Class Controller
+ * Class AbstractController
  */
-abstract class Controller
+abstract class AbstractController
 {
 
     /**
@@ -35,7 +35,7 @@ abstract class Controller
     protected $request;
 
     /**
-     * Controller constructor.
+     * AbstractController constructor.
      * @param Request $request
      */
     public function __construct(Request $request)

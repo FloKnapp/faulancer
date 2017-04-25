@@ -6,7 +6,7 @@ use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\ControllerService;
+use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\HttpService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -22,13 +22,13 @@ use PHPUnit\Framework\TestCase;
 class ControllerTest extends TestCase
 {
 
-    /** @var ControllerService */
+    /** @var AbstractControllerService */
     protected $controller;
 
     public function setUp()
     {
         $serviceLocator   = ServiceLocator::instance();
-        $this->controller = $serviceLocator->get(ControllerService::class);
+        $this->controller = $serviceLocator->get(AbstractControllerService::class);
     }
 
     /**

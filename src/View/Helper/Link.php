@@ -22,6 +22,7 @@ class Link extends AbstractViewHelper
      * @param ViewController $view
      * @param string         $routeName
      * @return string
+     * @codeCoverageIgnore
      */
     public function __invoke(ViewController $view, $routeName)
     {

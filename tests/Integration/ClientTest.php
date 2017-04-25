@@ -20,14 +20,14 @@ class ClientTest extends TestCase
 
     public function testClientPostRequest()
     {
-        $response = Client::post('https://www.posttestserver.com/', ['Content-Type' => 'application/json'], ['test' => true]);
-        self::assertStringStartsWith('<html>', $response);
+        $response = Client::post('https://httpbin.org', ['Content-Type' => 'application/json'], ['test' => true]);
+        self::assertStringStartsWith('<!DOCTYPE html>', $response);
     }
 
     public function testClientResponseWithHeaders()
     {
         $headers = [
-            'Content-Type: text/html'
+            'Content-Base: text/html'
         ];
 
         $response = Client::get('https://www.google.de', $headers);

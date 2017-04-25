@@ -36,7 +36,7 @@ class Csrf
      */
     public static function isValid() :bool
     {
-        return isset($_POST['csrf']) && $_POST['csrf'] === self::getSessionManager()->getFlashbag('csrf');
+        return isset($_POST['csrf']) && $_POST['csrf'] === self::getSessionManager()->getFlashMessage('csrf');
     }
 
     /**
@@ -46,7 +46,7 @@ class Csrf
      */
     private static function saveToSession(string $token)
     {
-        self::getSessionManager()->setFlashbag('csrf', $token);
+        self::getSessionManager()->setFlashMessage('csrf', $token);
     }
 
     /**

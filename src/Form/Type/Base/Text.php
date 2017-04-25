@@ -1,18 +1,18 @@
 <?php
 /**
- * Class Text
- * @package Faulancer\Form\Type
+ * Class Text | Text.php
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Form\Type;
+namespace Faulancer\Form\Type\Base;
+
+use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Text
  */
 class Text extends AbstractType
 {
-
-    /** @var array */
-    protected $definition = [];
 
     /** @var string */
     protected $type = 'input';
@@ -25,7 +25,7 @@ class Text extends AbstractType
      */
     public function create()
     {
-        $this->inputLabel = $this->definition['label'];
+        $this->setLabel($this->definition['label']);
 
         $output = '<' . $this->type;
 

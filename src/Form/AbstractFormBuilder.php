@@ -1,11 +1,11 @@
 <?php
 /**
- * Class AbstractFormBuilder
- * @package Faulancer\Form
+ * Class AbstractFormBuilder | AbstractFormBuilder.php
+ * @package Faulancer\Form\Type
+ * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Form;
 
-use Faulancer\Controller\Controller;
 use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
@@ -21,11 +21,11 @@ abstract class AbstractFormBuilder
     /** @var array */
     protected $formAttributes = [];
 
-    /** @var array */
+    /** @var AbstractType[] */
     protected $fields = [];
 
     /**
-     * @return mixed
+     * AbstractFormBuilder Abstract Constructor
      */
     abstract public function __construct();
 
@@ -62,6 +62,40 @@ abstract class AbstractFormBuilder
         return '</form>';
     }
 
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        $result = [];
+
+        /** @var AbstractType $value */
+        foreach ($this->fields as $key => $value) {
+
+            if ($value->getInputType() === 'submit') {
+                continue;
+            }
+
+            $result[$key] = $value->getInputValue();
+
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function setData(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->fields[$key]->setInputValue($value);
+        }
+    }
+
+    /**
+     * @return boolean
+     */
     public function isValid()
     {
         /** @var Request $request */
@@ -81,7 +115,7 @@ abstract class AbstractFormBuilder
 
         }
 
-        return in_array(false, $errors, true);
+        return !in_array(false, $errors, true);
     }
 
     /**
@@ -93,9 +127,11 @@ abstract class AbstractFormBuilder
         $type = $definition['attributes']['type'];
         $name = $definition['attributes']['name'];
 
-        if (class_exists('\Faulancer\Form\Type\\' . ucfirst($type))) {
+        $namespace = '\Faulancer\Form\Type\Base\\' . ucfirst($type);
 
-            $typeClassNs = '\Faulancer\Form\Type\\' . ucfirst($type);
+        if (class_exists($namespace)) {
+
+            $typeClassNs = $namespace;
             /** @var AbstractType $typeClass */
             $typeClass = new $typeClassNs($definition);
 
@@ -104,36 +140,15 @@ abstract class AbstractFormBuilder
         }
 
         $typeClass->setName($name);
-        $typeClass->setInputType($type);
+        $typeClass->setType($type);
 
-        $validator = '\Faulancer\Form\Validator\Type\\' . ucfirst($type);
+        $validator = '\Faulancer\Form\Validator\Base\\' . ucfirst($type);
 
         if (class_exists($validator)) {
             $typeClass->setValidator(new $validator($typeClass));
         }
 
         $this->fields[$name] = $typeClass->create();
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        $result = [];
-
-        /** @var AbstractType $value */
-        foreach ($this->fields as $key => $value) {
-
-            if ($value->getInputType() === 'submit') {
-                continue;
-            }
-
-            $result[$key] = $value->getValue();
-
-        }
-
-        return $result;
     }
 
 }

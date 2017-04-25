@@ -1,7 +1,8 @@
 <?php
 /**
  * Class AbstractValidator | AbstractValidator.php
- * @package Faulancer\Form
+ * @package Faulancer\Form\Validator
+ * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Form\Validator;
 
@@ -31,7 +32,7 @@ abstract class AbstractValidator
      */
     public function validate()
     {
-        if (!$this->process($this->field->getValue())) {
+        if (!$this->process($this->field->getInputValue())) {
 
             $this->field->setErrorMessage($this->getMessage());
             return false;

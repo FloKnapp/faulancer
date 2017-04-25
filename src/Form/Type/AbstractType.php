@@ -1,8 +1,8 @@
 <?php
-
 /**
  * Class AbstractType
- * @package Faulancer\Form\Type
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Form\Type;
 
@@ -18,16 +18,16 @@ abstract class AbstractType
     protected $definition = [];
 
     /** @var string */
-    protected $inputType = '';
+    protected $type = '';
 
     /** @var string */
-    protected $inputLabel = '';
+    protected $label = '';
 
     /** @var string */
-    protected $inputValue = '';
+    protected $value = '';
 
     /** @var string */
-    protected $inputName = '';
+    protected $name = '';
 
     /** @var string */
     protected $outputPattern = '';
@@ -85,17 +85,17 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getInputType()
+    public function getType()
     {
-        return $this->inputType;
+        return $this->type;
     }
 
     /**
      * @param string $type
      */
-    public function setInputType(string $type)
+    public function setType(string $type)
     {
-        $this->inputType = $type;
+        $this->type = $type;
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class AbstractType
      */
     public function getLabel()
     {
-        return $this->inputLabel;
+        return $this->label;
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class AbstractType
      */
     public function setLabel(string $label)
     {
-        $this->inputLabel = $label;
+        $this->label = $label;
     }
 
     /**
@@ -119,15 +119,15 @@ abstract class AbstractType
      */
     public function getValue()
     {
-        return $this->inputValue;
+        return $this->value;
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setValue(string $value)
     {
-        $this->inputValue = $value;
+        $this->value = $value;
     }
 
     /**
@@ -135,7 +135,7 @@ abstract class AbstractType
      */
     public function getName()
     {
-        return $this->inputName;
+        return $this->name;
     }
 
     /**
@@ -143,7 +143,7 @@ abstract class AbstractType
      */
     public function setName(string $name)
     {
-        $this->inputName = $name;
+        $this->name = $name;
     }
 
     /**

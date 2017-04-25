@@ -203,7 +203,7 @@ class Mailer
             $headers .= 'BCC: ' . implode(',', $this->blindCarbonCopies) . PHP_EOL;
         }
 
-        $headers .= 'Content-Type: multipart/mixed; boundary = ' . $boundary . PHP_EOL;
+        $headers .= 'Content-Base: multipart/mixed; boundary = ' . $boundary . PHP_EOL;
 
         return $headers;
     }
@@ -217,9 +217,9 @@ class Mailer
         $body = '--' . $boundary . PHP_EOL;
 
         if ($this->isHtml) {
-            $body .= 'Content-Type: text/html; charset=utf-8' . PHP_EOL;
+            $body .= 'Content-Base: text/html; charset=utf-8' . PHP_EOL;
         } else {
-            $body .= 'Content-Type: text/plain; charset=utf-8' . PHP_EOL;
+            $body .= 'Content-Base: text/plain; charset=utf-8' . PHP_EOL;
         }
 
         $body .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
@@ -234,7 +234,7 @@ class Mailer
                 $fileName       = $attachment['name'];
 
                 $body .= '--' . $boundary . PHP_EOL;
-                $body .= 'Content-Type: ' . $fileType . '; name=' . $fileName . PHP_EOL;
+                $body .= 'Content-Base: ' . $fileType . '; name=' . $fileName . PHP_EOL;
 
                 if ($attachment['inline']) {
                     $body .= 'Content-ID: <' . $fileName . '>' . PHP_EOL;

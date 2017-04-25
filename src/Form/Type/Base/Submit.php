@@ -1,20 +1,22 @@
 <?php
 /**
- * Class Text
- * @package Faulancer\Form\Type
+ * Class Submit | Submit.php
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Form\Type;
+namespace Faulancer\Form\Type\Base;
+
+use Faulancer\Form\Type\AbstractType;
 
 /**
- * Class Text
+ * Class Submit
  */
 class Submit extends AbstractType
 {
-
-    protected $definition = [];
-
+    /** @var string */
     protected $type = 'input';
 
+    /** @var string */
     protected $element = '';
 
     /**

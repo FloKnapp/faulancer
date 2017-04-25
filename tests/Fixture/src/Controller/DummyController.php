@@ -2,17 +2,15 @@
 
 namespace Faulancer\Fixture\Controller;
 
-use Faulancer\Controller\Controller;
+use Faulancer\Controller\AbstractController;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Service\ResponseService;
 
 /**
- * File DummyController.php
- *
- * @author Florian Knapp <office@florianknapp.de>
+ * File DummyController.phpauthor Florian Knapp <office@florianknapp.de>
  */
-class DummyController extends Controller
+class DummyController extends AbstractController
 {
 
     /** @var Response  */

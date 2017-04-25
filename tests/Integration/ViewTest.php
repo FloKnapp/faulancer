@@ -150,60 +150,7 @@ class ViewTest extends TestCase
         $viewHelper = new ViewController();
         $token = $viewHelper->generateCsrfToken();
 
-        $this->assertSame($this->sessionManager->getFlashbag('csrf'), $token);
-    }
-    
-    public function testViewHelperSetGetFormError()
-    {
-        $data = [
-            'key1' => [ ['message' => 'value1'] ],
-            'key2' => [ ['message' => 'value2'] ],
-            'key3' => [ ['message' => 'value3'] ],
-            'key4' => [ ['message' => 'value4'] ],
-            'key5' => [ ['message' => 'value5'] ],
-        ];
-
-        $this->sessionManager->setFlashbag('errors', $data);
-
-        $view = new ViewController();
-
-        $this->assertEmpty($view->formError('key6')->get());
-
-        foreach ($data as $key => $value) {
-
-            $this->assertTrue($view->formError($key)->has());
-
-            $this->assertSame($value, $data[$key]);
-            $this->assertArrayHasKey('message', $value[0]);
-
-            $err = $view->formError($key)->get();
-
-            $this->assertStringStartsWith('<div class="form-error ' . $key . '">', $err);
-
-        }
-
-    }
-
-    public function testSetGetFormData()
-    {
-        $data = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
-            'key4' => 'value4',
-            'key5' => 'value5',
-        ];
-
-        $view = new ViewController();
-
-        $this->sessionManager->setFlashbagFormData($data);
-
-        foreach ($data as $key => $value) {
-
-            $this->assertSame($value, $view->formData($key));
-
-        }
-
+        $this->assertSame($this->sessionManager->getFlashMessage('csrf'), $token);
     }
 
     /**
@@ -351,8 +298,8 @@ class ViewTest extends TestCase
     public function testFlashBagViewHelper()
     {
         $view = new ViewController();
-        $this->sessionManager->setFlashbag('test', 'test');
-        $this->assertSame('test', $view->flashBag()->get('test'));
+        $this->sessionManager->setFlashMessage('test', 'test');
+        $this->assertSame('test', $view->flashMessage()->get('test'));
     }
 
     public function testUserViewHelper()

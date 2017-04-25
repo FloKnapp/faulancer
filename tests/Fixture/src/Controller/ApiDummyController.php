@@ -1,12 +1,12 @@
 <?php
 /**
  * Class ApiDummyController | ApiDummyController.php
- * @package Faulancer\Fixture\Controller
+ * @package Faulancer\Fixture\AbstractController
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Fixture\Controller;
 
-use Faulancer\Controller\RestfulController;
+use Faulancer\Controller\AbstractRestfulController;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Service\JsonResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -14,7 +14,7 @@ use Faulancer\ServiceLocator\ServiceInterface;
 /**
  * Class ApiDummyController
  */
-class ApiDummyController extends RestfulController
+class ApiDummyController extends AbstractRestfulController
 {
 
     /** @var ServiceInterface|JsonResponse */

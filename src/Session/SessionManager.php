@@ -89,23 +89,13 @@ class SessionManager
     }
 
     /**
-     * Check if flashbag key exists
+     * Check if flash message key exists
      * @param string $key
      * @return boolean
      */
-    public function hasFlashbagKey(string $key)
+    public function hasFlashMessage(string $key)
     {
-        return isset($_SESSION['flashbag'][$key]) ? true : false;
-    }
-
-    /**
-     * Check if flashbag error key exists
-     * @param string $key
-     * @return boolean
-     */
-    public function hasFlashbagErrorsKey($key)
-    {
-        return isset($_SESSION['flashbag']['errors'][$key]) ? true : false;
+        return isset($_SESSION['flashMessage'][$key]) ? true : false;
     }
 
     /**
@@ -114,86 +104,38 @@ class SessionManager
      * @param null|string|array $value
      * @return boolean
      */
-    public function setFlashbag($key, $value = null)
+    public function setFlashMessage($key, $value = null)
     {
         if (is_array($key)) {
 
             foreach ($key AS $k => $val) {
-                $_SESSION['flashbag'][$k] = $val;
+                $_SESSION['flashMessage'][$k] = $val;
             }
 
             return true;
 
         }
 
-        $_SESSION['flashbag'][$key] = $value;
+        $_SESSION['flashMessage'][$key] = $value;
 
         return true;
     }
 
     /**
-     * Get flashbag value by key
+     * Get flash message value by key
      *
      * @param string $key
      * @return null|string|array
      */
-    public function getFlashbag(string $key)
+    public function getFlashMessage(string $key)
     {
-        if (!isset($_SESSION['flashbag'][$key])) {
+        if (!isset($_SESSION['flashMessage'][$key])) {
             return null;
         }
 
-        $result = $_SESSION['flashbag'][$key];
+        $result = $_SESSION['flashMessage'][$key];
 
-        unset($_SESSION['flashbag'][$key]);
-
-        return $result;
-    }
-
-    /**
-     * Get flashbag error by key
-     *
-     * @param string $key
-     * @return null|string|array
-     */
-    public function getFlashbagError(string $key)
-    {
-        if (!isset($_SESSION['flashbag']['errors'][$key])) {
-            return null;
-        }
-
-        $result = $_SESSION['flashbag']['errors'][$key];
-
-        unset($_SESSION['flashbag']['errors'][$key]);
-
-        return $result;
-    }
-
-    /**
-     * Set form data in session flashbag
-     * @param array $formData
-     */
-    public function setFlashbagFormData(array $formData)
-    {
-        if (is_array($formData)) {
-            $_SESSION['flashbag']['formData'] = $formData;
-        }
-    }
-
-    /**
-     * Get form data from session flashbag
-     * @param string $key
-     * @return null|array|string
-     */
-    public function getFlashbagFormData(string $key)
-    {
-        if (!isset($_SESSION['flashbag']['formData'][$key])) {
-            return null;
-        }
-
-        $result = $_SESSION['flashbag']['formData'][$key];
-
-        unset($_SESSION['flashbag']['formData'][$key]);
+        unset($_SESSION['flashMessage'][$key]);
 
         return $result;
     }

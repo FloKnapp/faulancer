@@ -1,6 +1,6 @@
 <?php
 /**
- * Class FlashBag | FlashBag.php
+ * Class FlashMessage | FlashMessagesage.php
  * @package Faulancer\View\Helper
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -10,9 +10,9 @@ use Faulancer\Service\SessionManagerService;
 use Faulancer\View\AbstractViewHelper;
 
 /**
- * Class FlashBag
+ * Class FlashMessage
  */
-class FlashBag extends AbstractViewHelper
+class FlashMessage extends AbstractViewHelper
 {
 
     /**
@@ -29,7 +29,7 @@ class FlashBag extends AbstractViewHelper
      */
     public function get(string $key)
     {
-        return $this->getServiceLocator()->get(SessionManagerService::class)->getFlashbag($key);
+        return $this->getServiceLocator()->get(SessionManagerService::class)->getFlashMessage($key);
     }
 
 }

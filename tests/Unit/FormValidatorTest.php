@@ -2,12 +2,13 @@
 
 namespace Unit;
 
+use Faulancer\Form\Type\AbstractType;
 use Faulancer\Form\Validator\AbstractValidator;
-use Faulancer\Form\Validator\Type\DateTime;
-use Faulancer\Form\Validator\Type\Email;
-use Faulancer\Form\Validator\Type\Image;
-use Faulancer\Form\Validator\Type\Number;
-use Faulancer\Form\Validator\Type\Text;
+use Faulancer\Form\Validator\Base\DateTime;
+use Faulancer\Form\Validator\Base\Email;
+use Faulancer\Form\Validator\Base\Image;
+use Faulancer\Form\Validator\Base\Number;
+use Faulancer\Form\Validator\Base\Text;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
@@ -68,8 +69,13 @@ class FormValidatorTest extends TestCase
      */
     private function getValidator($validator, $data)
     {
+        $mock = $this
+            ->getMockBuilder(AbstractType::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         /** @var AbstractValidator $class */
-        $class = new $validator();
+        $class = new $validator($mock);
         return $class->process($data);
     }
 

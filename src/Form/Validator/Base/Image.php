@@ -1,9 +1,10 @@
 <?php
 /**
- * Class ImageEntity
- * @package Faulancer\Form\Validator\Type
+ * Class ImageEntity | ImageEntity.php
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Form\Validator\Type;
+namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 

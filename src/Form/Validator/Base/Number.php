@@ -1,9 +1,10 @@
 <?php
 /**
- * Class Number
- * @package Faulancer\Form\Validator\Type
+ * Class Number | Number.php
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Form\Validator\Type;
+namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 

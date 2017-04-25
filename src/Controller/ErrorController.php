@@ -2,7 +2,7 @@
 /**
  * Class ErrorController | ErrorController.php
  *
- * @package Faulancer\Controller
+ * @package Faulancer\AbstractController
  * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Controller;
@@ -11,9 +11,9 @@ use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 
 /**
- * Class ErrorController
+ * Class ErrorAbstractController
  */
-class ErrorController extends Controller
+class ErrorController extends AbstractController
 {
 
     private $exception;

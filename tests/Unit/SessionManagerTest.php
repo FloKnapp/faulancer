@@ -49,12 +49,12 @@ class SessionManagerTest extends TestCase
 
     public function testGetSetFlashbag()
     {
-        $this->sessionManager->setFlashbag('testKey', 'testValue');
+        $this->sessionManager->setFlashMessage('testKey', 'testValue');
 
-        $value = $this->sessionManager->getFlashbag('testKey');
+        $value = $this->sessionManager->getFlashMessage('testKey');
         $this->assertTrue(is_string($value));
-        $this->assertEmpty($this->sessionManager->getFlashbag('testKey'));
-        $this->assertNull($this->sessionManager->getFlashbag('testKey'));
+        $this->assertEmpty($this->sessionManager->getFlashMessage('testKey'));
+        $this->assertNull($this->sessionManager->getFlashMessage('testKey'));
 
         $data = [
             'flashbagKey1' => 'flashbagValue1',
@@ -64,38 +64,15 @@ class SessionManagerTest extends TestCase
             'flashbagKey5' => 'flashbagValue5',
         ];
 
-        $this->sessionManager->setFlashbag($data);
+        $this->sessionManager->setFlashMessage($data);
 
         foreach ($data as $key => $value) {
 
-            $this->assertTrue($this->sessionManager->hasFlashbagKey($key));
-            $this->assertSame($value, $this->sessionManager->getFlashbag($key));
-            $this->assertNull($this->sessionManager->getFlashbag($key));
+            $this->assertTrue($this->sessionManager->hasFlashMessage($key));
+            $this->assertSame($value, $this->sessionManager->getFlashMessage($key));
+            $this->assertNull($this->sessionManager->getFlashMessage($key));
 
         }
-    }
-
-    public function testGetSetFlashbagFormData()
-    {
-        $this->sessionManager->setFlashbagFormData([
-            'field1' => 'value1',
-            'field2' => 'value2',
-            'field3' => 'value3',
-            'field4' => 'value4',
-            'field5' => 'value5',
-            'field6' => 'value6'
-        ]);
-
-        $formData = $this->sessionManager->getFlashbag('formData');
-
-        foreach ($formData as $key => $value) {
-            $this->assertArrayHasKey($key, $formData);
-            $this->assertTrue(is_string($value));
-        }
-
-        $this->assertTrue(is_array($formData));
-        $this->assertEmpty($this->sessionManager->getFlashbag('formData'));
-        $this->assertNull($this->sessionManager->getFlashbag('formData'));
     }
 
     public function testHasSession()
@@ -110,57 +87,9 @@ class SessionManagerTest extends TestCase
 
     public function testHasFlashbagKey()
     {
-        $this->sessionManager->setFlashbag('testKey', 'testValue');
-        $this->assertTrue($this->sessionManager->hasFlashbagKey('testKey'));
-        $this->assertTrue(is_string($this->sessionManager->getFlashbag('testKey')));
-    }
-
-    public function testSetGetFlashbagFormData()
-    {
-        $data = [
-            'field1' => 'value1',
-            'field2' => 'value2',
-            'field3' => 'value3',
-            'field4' => 'value4',
-            'field5' => 'value5',
-        ];
-
-        $this->sessionManager->setFlashbagFormData($data);
-
-        foreach ($data as $key => $value) {
-
-            $val = $this->sessionManager->getFlashbagFormData($key);
-            $this->assertNotEmpty($val);
-            $this->assertSame($data[$key], $val);
-
-        }
-    }
-
-    public function testGetNonExistentFormDataKey()
-    {
-        $result = $this->sessionManager->getFlashbagFormData('nonExistent');
-        $this->assertEmpty($result);
-    }
-
-    public function testSetGetFlashbagErrors()
-    {
-        $data = [
-            'error1' => 'errorValue1',
-            'error2' => 'errorValue2',
-            'error3' => 'errorValue3',
-            'error4' => 'errorValue4',
-            'error5' => 'errorValue5',
-        ];
-
-        $this->sessionManager->setFlashbag('errors', $data);
-
-        foreach ($data as $key => $value) {
-
-            $this->assertTrue($this->sessionManager->hasFlashbagErrorsKey($key));
-            $this->assertSame($value, $this->sessionManager->getFlashbagError($key));
-            $this->assertEmpty($this->sessionManager->getFlashbagError($key));
-
-        }
+        $this->sessionManager->setFlashMessage('testKey', 'testValue');
+        $this->assertTrue($this->sessionManager->hasFlashMessage('testKey'));
+        $this->assertTrue(is_string($this->sessionManager->getFlashMessage('testKey')));
     }
 
     public function testDestroyAndCheckForSession()

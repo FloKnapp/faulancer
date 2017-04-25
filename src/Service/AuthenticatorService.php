@@ -6,7 +6,7 @@
  */
 namespace Faulancer\Service;
 
-use Faulancer\Controller\Controller;
+use Faulancer\Controller\AbstractController;
 use Faulancer\ORM\User\Entity as UserEntity;
 use Faulancer\ServiceLocator\ServiceInterface;
 
@@ -16,7 +16,7 @@ use Faulancer\ServiceLocator\ServiceInterface;
 class AuthenticatorService implements ServiceInterface
 {
 
-    /** @var Controller */
+    /** @var AbstractController */
     protected $controller;
 
     /** @var DbService */
@@ -30,10 +30,10 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * Authenticator constructor.
-     * @param Controller $controller
-     * @param Config     $config
+     * @param AbstractController $controller
+     * @param Config             $config
      */
-    public function __construct(Controller $controller, Config $config)
+    public function __construct(AbstractController $controller, Config $config)
     {
         $this->controller = $controller;
         $this->config     = $config;
@@ -58,8 +58,8 @@ class AuthenticatorService implements ServiceInterface
 
             $sessionManager = $this->controller->getSessionManager();
 
-            if ($sessionManager->hasFlashbagKey('redirectAfterAuth')) {
-                $this->redirectAfterAuth = $sessionManager->getFlashbag('redirectAfterAuth');
+            if ($sessionManager->hasFlashMessage('redirectAfterAuth')) {
+                $this->redirectAfterAuth = $sessionManager->getFlashMessage('redirectAfterAuth');
             }
 
             $this->saveUserInSession($userData);
@@ -69,7 +69,7 @@ class AuthenticatorService implements ServiceInterface
 
         /** @var SessionManagerService $sessionManager */
         $sessionManager = $this->controller->getServiceLocator()->get(SessionManagerService::class);
-        $sessionManager->setFlashbag('loginError', 'No valid username/password combination found.');
+        $sessionManager->setFlashMessage('loginError', 'No valid username/password combination found.');
         return $this->redirectToAuthentication();
     }
 
@@ -78,7 +78,7 @@ class AuthenticatorService implements ServiceInterface
      */
     public function redirectToAuthentication()
     {
-        $this->controller->getSessionManager()->setFlashbag(
+        $this->controller->getSessionManager()->setFlashMessage(
             'redirectAfterAuth',
             $this->controller->getRequest()->getUri()
         );

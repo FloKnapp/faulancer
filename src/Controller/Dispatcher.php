@@ -1,8 +1,7 @@
 <?php
 /**
- * Class Dispatcher
- *
- * @package Faulancer\Controller
+ * Class Dispatcher | Dispatcher.php
+ * @package Faulancer\AbstractController
  * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Controller;

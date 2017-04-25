@@ -1,26 +1,26 @@
 <?php
 /**
- * Class ControllerServiceFactory | ControllerServiceFactory.php
+ * Class AbstractControllerServiceFactory | AbstractControllerServiceFactory.phptory.php
  * @package Faulancer\Service\Factory
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Service\Factory;
 
 use Faulancer\Http\Request;
-use Faulancer\Service\ControllerService;
+use Faulancer\Service\AbstractControllerService;
 use Faulancer\ServiceLocator\FactoryInterface;
 use Faulancer\ServiceLocator\ServiceLocatorInterface;
 
 /**
- * Class ControllerServiceFactory
+ * Class AbstractControllerServiceFactory
  * @codeCoverageIgnore
  */
-class ControllerServiceFactory implements FactoryInterface
+class AbstractControllerServiceFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return ControllerService
+     * @return AbstractControllerService
      * @codeCoverageIgnore
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -34,7 +34,7 @@ class ControllerServiceFactory implements FactoryInterface
             $request->createFromHeaders();
         }
 
-        return new ControllerService($request);
+        return new AbstractControllerService($request);
     }
 
 }
