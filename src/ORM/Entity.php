@@ -7,9 +7,11 @@
  */
 namespace Faulancer\ORM;
 
-use ORM\Entity as ORMEntity;
-
 /**
  * Class Entity
  */
-abstract class Entity extends ORMEntity {}
+abstract class Entity extends \ORM\Entity {
+
+    public function fill(array $data) {}
+
+}

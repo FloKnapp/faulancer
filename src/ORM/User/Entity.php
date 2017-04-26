@@ -1,15 +1,15 @@
 <?php
 /**
- * Class Entity | Entity.php
- * @package Faulancer\ORM\UserEntity
+ * Class Entity | Entity
+ * @package Faulancer\ORM\Entity
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\ORM\User;
 
-use Faulancer\ORM\Entity as BaseEntity;
+use Faulancer\ORM\Entity as UserEntity;
 
 /**
- * Class UserEntity
+ * Class Entity
  *
  * @property int    $id
  * @property string $firstname
@@ -17,13 +17,13 @@ use Faulancer\ORM\Entity as BaseEntity;
  * @property string $email
  * @property string $login
  * @property string $password
- * @property RoleEntity[] $roles
+ * @property Role[] $roles
  */
-class Entity extends BaseEntity
+class Entity extends UserEntity
 {
 
     protected static $relations = [
-        'roles' => [RoleEntity::class, ['id' => 'user_id'], 'users', 'userrole']
+        'roles' => [Role::class, ['id' => 'user_id'], 'users', 'userrole']
     ];
 
     protected static $tableName = 'user';

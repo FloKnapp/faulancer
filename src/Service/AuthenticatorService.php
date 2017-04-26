@@ -7,7 +7,7 @@
 namespace Faulancer\Service;
 
 use Faulancer\Controller\AbstractController;
-use Faulancer\ORM\User\Entity as UserEntity;
+use Faulancer\ORM\User\Entity;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
@@ -40,13 +40,13 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
-     * @param UserEntity $user
+     * @param Entity $user
      * @return bool
      * @codeCoverageIgnore
      */
-    public function loginUser(UserEntity $user)
+    public function loginUser(Entity $user)
     {
-        /** @var UserEntity $userData */
+        /** @var Entity $userData */
         $userData = $this->controller
             ->getDb()
             ->fetch(get_class($user))
@@ -54,7 +54,7 @@ class AuthenticatorService implements ServiceInterface
             ->andWhere('password', '=', $user->password)
             ->one();
 
-        if ($userData instanceof UserEntity) {
+        if ($userData instanceof Entity) {
 
             $sessionManager = $this->controller->getSessionManager();
 
@@ -105,10 +105,10 @@ class AuthenticatorService implements ServiceInterface
      */
     public function isAuthenticated(array $roles)
     {
-        /** @var UserEntity $user */
+        /** @var Entity $user */
         $user = $this->getUserFromSession();
 
-        if (!$user instanceof UserEntity) {
+        if (!$user instanceof Entity) {
             return false;
         }
 
@@ -124,22 +124,22 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
-     * @param UserEntity $user
+     * @param Entity $user
      */
-    public function saveUserInSession(UserEntity $user)
+    public function saveUserInSession(Entity $user)
     {
         $this->controller->getSessionManager()->set('user', $user->id);
     }
 
     /**
-     * @return UserEntity
+     * @return Entity
      */
     public function getUserFromSession()
     {
         $id = $this->controller->getSessionManager()->get('user');
 
-        /** @var UserEntity $user */
-        $user = $this->controller->getDb()->fetch(UserEntity::class, $id);
+        /** @var Entity $user */
+        $user = $this->controller->getDb()->fetch(Entity::class, $id);
         return $user;
     }
 

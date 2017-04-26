@@ -10,7 +10,7 @@ use Faulancer\Fixture\Entity\RoleAnonymousEntity;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
-use Faulancer\ORM\User\RoleEntity;
+use Faulancer\ORM\User\Role;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
