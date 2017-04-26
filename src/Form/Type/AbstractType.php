@@ -7,6 +7,8 @@
 namespace Faulancer\Form\Type;
 
 use Faulancer\Form\Validator\AbstractValidator;
+use Faulancer\Service\RequestService;
+use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractType
@@ -69,7 +71,7 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getErrorMessage()
+    public function getErrorMessage() :string
     {
         return $this->errorMessage;
     }
@@ -85,7 +87,7 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getType()
+    public function getType() :string
     {
         return $this->type;
     }
@@ -101,7 +103,7 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel() :string
     {
         return $this->label;
     }
@@ -117,7 +119,7 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue() :string
     {
         return $this->value;
     }
@@ -133,7 +135,7 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getName() :string
     {
         return $this->name;
     }
@@ -149,7 +151,7 @@ abstract class AbstractType
     /**
      * @return self
      */
-    public function getField()
+    public function getField() :self
     {
         return $this;
     }
@@ -157,9 +159,17 @@ abstract class AbstractType
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString() :string
     {
         return $this->element;
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function isPost() :bool
+    {
+        return ServiceLocator::instance()->get(RequestService::class)->isPost();
     }
 
     /**

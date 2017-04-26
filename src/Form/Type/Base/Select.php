@@ -32,11 +32,30 @@ class Select extends AbstractType
 
         $output .= '>';
 
-        foreach ($this->definition['options'] as $val => $opt) {
+        $definition = $this->definition;
+        $isSelected = function($val) use (&$definition) {
 
-            $selected = ($val === $this->definition['selected']) ? '" selected="selected"' : '"';
+            if ($this->isPost() && empty($val)) {
+                unset($definition['selected']);
+            }
 
-            $output .= '<option value="' . $val . $selected . '>' . $opt . '</option>';
+            if (!empty($this->getValue()) && $val === $this->getValue()) {
+                return true;
+            } elseif (!empty($definition['selected']) && $val === $definition['selected']) {
+                return true;
+            }
+
+            return false;
+
+        };
+
+        foreach ($definition['options'] as $val => $text) {
+
+            $selected = $isSelected($val) === true ? ' selected="selected"' : '';
+            $option   = '<option value="' . $val .'"%s>' . $text . '</option>';
+
+            $output .= sprintf($option, $selected);
+
         }
 
         $output .= '</select>';

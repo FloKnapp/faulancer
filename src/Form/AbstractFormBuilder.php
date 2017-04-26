@@ -142,6 +142,14 @@ abstract class AbstractFormBuilder
         $typeClass->setName($name);
         $typeClass->setType($type);
 
+        /** @var Request $request */
+        $request  = ServiceLocator::instance()->get(RequestService::class);
+        $postData = $request->getPostData();
+
+        if (!empty($postData[$name])) {
+            $typeClass->setValue($postData[$name]);
+        }
+
         $validator = '\Faulancer\Form\Validator\Base\\' . ucfirst($type);
 
         if (class_exists($validator)) {

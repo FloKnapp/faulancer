@@ -14,12 +14,48 @@ use Faulancer\Form\Type\AbstractType;
 class Checkbox extends AbstractType
 {
 
+    /** @var string */
+    protected $inputType = 'input';
+
+    /** @var string */
+    protected $element = '';
+
     /**
-     * @internal
+     * @return string
      */
     public function create()
     {
+        $this->setLabel($this->definition['label']);
 
+        $output = '';
+
+        if (!empty($this->definition['default'])) {
+
+            $output .= '<' . $this->inputType;
+            $output .= ' type="hidden"';
+            $output .= ' name="' . $this->definition['attributes']['name'] . '"';
+            $output .= ' ' . 'value="' . $this->definition['default'] . '"';
+            $output .= '/>';
+
+        }
+
+        $output .= '<' . $this->inputType;
+
+        foreach ($this->definition['attributes'] as $attr => $value) {
+            $output .= ' ' . $attr . '="' . $value . '" ';
+        }
+
+        if (!empty($this->getValue()) && $this->definition['attributes']['value'] === $this->getValue()) {
+            $output .= ' checked="checked"';
+        } elseif (empty($this->getValue()) && $this->definition['checked'] === true) {
+            $output .= ' checked="checked"';
+        }
+
+        $output .= '/>';
+
+        $this->element = $output;
+
+        return $this;
     }
 
 }
