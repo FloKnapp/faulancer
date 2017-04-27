@@ -107,7 +107,7 @@ abstract class AbstractFormBuilder
         /** @var AbstractType $field */
         foreach ($this->fields as $field) {
 
-            $field->setValue($postData[$field->getName()]);
+            //$field->setValue($postData[$field->getName()]);
 
             if ($field->getValidator() !== null) {
                 $errors[] = $field->getValidator()->validate();
@@ -141,6 +141,10 @@ abstract class AbstractFormBuilder
 
         $typeClass->setName($name);
         $typeClass->setType($type);
+
+        if (!empty($definition['validator']) && class_exists($definition['validator'])) {
+            $typeClass->setValidator(new $definition['validator']($typeClass));
+        }
 
         /** @var Request $request */
         $request  = ServiceLocator::instance()->get(RequestService::class);

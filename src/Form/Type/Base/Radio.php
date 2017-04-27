@@ -24,25 +24,28 @@ class Radio extends AbstractType
 
         $result = [];
 
-        foreach ($this->definition['options'] as $optionName => $value) {
+        foreach ($this->definition['options'] as $optionName => $valueDef) {
 
             $output = '<' . $this->inputType;
 
-            $output .= ' value="' . $value . '"';
+            $output .= ' value="' . $valueDef['value'] . '"';
 
             foreach ($this->definition['attributes'] as $attr => $val) {
                 $output .= ' ' . $attr . '="' . $val . '" ';
             }
 
-            if (!empty($this->getValue()) && $value === $this->getValue()) {
+            if (!empty($this->getValue()) && $valueDef['value'] === $this->getValue()) {
                 $output .= ' checked="checked"';
-            } elseif (empty($this->getValue()) && $this->definition['selected'] === $optionName) {
+            } elseif (empty($this->getValue()) && $this->definition['default'] === $optionName) {
                 $output .= ' checked="checked"';
             }
 
             $output .= '/>';
 
-            $result[$optionName] = $output;
+            $result[$optionName] = [
+                'title' => $valueDef['title'],
+                'field' => $output
+            ];
 
         }
 
@@ -58,7 +61,16 @@ class Radio extends AbstractType
      */
     public function getOption(string $optionName)
     {
-        return $this->element[$optionName];
+        return $this->element[$optionName]['field'];
+    }
+
+    /**
+     * @param string $optionName
+     * @return string
+     */
+    public function getOptionTitle(string $optionName)
+    {
+        return $this->element[$optionName]['title'];
     }
 
 }
