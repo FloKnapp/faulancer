@@ -9,30 +9,36 @@ namespace Faulancer\Form\Validator\Base;
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
- * Class Confirm
+ * Class Text
  */
 class Confirm extends AbstractValidator
 {
 
-    /** @var string */
-    protected $errorMessage = 'values_not_matching';
-
-    /** @var null */
-    protected static $initial = null;
+    static private $initialInput = null;
 
     /**
-     * @param string $data
-     * @return bool
+     * The error message as key for translation
+     * @var string
+     */
+    protected $errorMessage = 'validator_not_same';
+
+    /**
+     * Validate type string
+     * @param $data
+     * @return boolean
      */
     public function process($data)
     {
-        if (self::$initial === null) {
-            self::$initial = $data;
-        } else {
-            return self::$initial === $data;
+        if (empty(self::$initialInput)) {
+            self::$initialInput = $data;
+            return true;
+        } elseif (!empty(self::$initialInput) && self::$initialInput === $data) {
+            return true;
         }
 
+        self::$initialInput = null;
         return false;
+
     }
 
 }

@@ -7,13 +7,16 @@
  */
 namespace Faulancer\Controller;
 
+use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
+use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -131,6 +134,58 @@ abstract class AbstractController
         /** @var HttpService $httpService */
         $httpService = $this->getServiceLocator()->get(HttpService::class);
         return $httpService->redirect($uri);
+    }
+
+    /**
+     * @param string $key
+     * @param string $message
+     */
+    public function setFlashMessage(string $key, string $message)
+    {
+        $sessionManager = $this->getSessionManager();
+        $sessionManager->setFlashMessage($key, $message);
+    }
+
+    /**
+     * @param $key
+     * @return string|null
+     */
+    public function getFlashMessage(string $key)
+    {
+        $sessionManager = $this->getSessionManager();
+        return $sessionManager->getFlashMessage($key);
+    }
+
+    /**
+     * @param string $name
+     * @param array  $parameters
+     * @return string
+     * @throws RouteInvalidException
+     */
+    public function route(string $name, array $parameters = [])
+    {
+        /** @var Config $config */
+        $config = $this->getServiceLocator()->get(Config::class);
+        $routes = $config->get('routes');
+
+        foreach ($routes as $routeName => $routeConfig) {
+
+            if ($routeName === $name) {
+                $path = preg_replace('|/\((.*)\)|', '', $routeConfig['path']);
+                break;
+            }
+
+        }
+
+        if (empty($path)) {
+            throw new RouteInvalidException('No route for name "' . $name . '" found');
+        }
+
+        if (!empty($parameters)) {
+            $path = $path . '/' . implode('/', $parameters);
+        }
+
+        return $path;
     }
 
     /**

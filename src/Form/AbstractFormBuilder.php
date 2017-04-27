@@ -6,11 +6,14 @@
  */
 namespace Faulancer\Form;
 
+use Faulancer\Exception\FormInvalidException;
 use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
+use Faulancer\ORM\Entity;
 use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Form\Validator\ValidatorChain;
 
 /**
  * Class AbstractFormBuilder
@@ -24,10 +27,37 @@ abstract class AbstractFormBuilder
     /** @var AbstractType[] */
     protected $fields = [];
 
+    /** @var Entity */
+    protected $entity = null;
+
+    /** @var string */
+    protected $formErrorContainerPrefix = '';
+
+    /** @var string */
+    protected $formErrorContainerSuffix = '';
+
+    /** @var string */
+    protected $formErrorItemContainerPrefix = '';
+
+    /** @var string */
+    protected $formErrorItemContainerSuffix = '';
+
+    /** @var  */
+    private $confirmValue = null;
+
     /**
-     * AbstractFormBuilder Abstract Constructor
+     * AbstractFormBuilder constructor
+     * @param Entity $entity
      */
-    abstract public function __construct();
+    public function __construct(Entity $entity = null)
+    {
+        if ($entity !== null) {
+            $this->create();
+            $this->setData($entity->getDataAsArray());
+        }
+
+        $this->create();
+    }
 
     /**
      * @param string $name
@@ -63,6 +93,26 @@ abstract class AbstractFormBuilder
     }
 
     /**
+     * @param string $prefix
+     * @param string $suffix
+     */
+    public function setFormErrorContainer(string $prefix, string $suffix)
+    {
+        $this->formErrorContainerPrefix = $prefix;
+        $this->formErrorContainerSuffix = $suffix;
+    }
+
+    /**
+     * @param string $prefix
+     * @param string $suffix
+     */
+    public function setFormErrorItemContainer(string $prefix, string $suffix)
+    {
+        $this->formErrorItemContainerPrefix = $prefix;
+        $this->formErrorItemContainerSuffix = $suffix;
+    }
+
+    /**
      * @return array
      */
     public function getData()
@@ -75,6 +125,13 @@ abstract class AbstractFormBuilder
             if ($value->getType() === 'submit') {
                 continue;
             }
+
+            // Check stored confirm value (i.e. for password repeat requests)
+            if ($value->getValue() === $this->confirmValue) {
+                continue;
+            }
+
+            $this->confirmValue = $value->getValue();
 
             $result[$key] = $value->getValue();
 
@@ -89,7 +146,13 @@ abstract class AbstractFormBuilder
     public function setData(array $data)
     {
         foreach ($data as $key => $value) {
+
+            if (empty($this->fields[$key])) {
+                continue;
+            }
+
             $this->fields[$key]->setValue($value);
+
         }
     }
 
@@ -98,19 +161,15 @@ abstract class AbstractFormBuilder
      */
     public function isValid()
     {
-        /** @var Request $request */
-        $request = ServiceLocator::instance()->get(RequestService::class);
-
-        $errors   = [];
-        $postData = $request->getPostData();
+        $errors = [];
 
         /** @var AbstractType $field */
         foreach ($this->fields as $field) {
 
-            //$field->setValue($postData[$field->getName()]);
+            $result = $field->isValid();
 
-            if ($field->getValidator() !== null) {
-                $errors[] = $field->getValidator()->validate();
+            if ($result !== null) {
+                $errors[] = $result;
             }
 
         }
@@ -131,9 +190,17 @@ abstract class AbstractFormBuilder
 
         if (class_exists($namespace)) {
 
+            $formErrorDecoration = [
+                'containerPrefix'     => $this->formErrorContainerPrefix,
+                'containerSuffix'     => $this->formErrorContainerSuffix,
+                'containerItemPrefix' => $this->formErrorItemContainerPrefix,
+                'containerItemSuffix' => $this->formErrorItemContainerSuffix
+            ];
+
             $typeClassNs = $namespace;
+
             /** @var AbstractType $typeClass */
-            $typeClass = new $typeClassNs($definition);
+            $typeClass = new $typeClassNs($definition, $formErrorDecoration);
 
         } else {
             throw new InvalidArgumentException('Requesting non existent form type ' . ucfirst($type));
@@ -142,8 +209,8 @@ abstract class AbstractFormBuilder
         $typeClass->setName($name);
         $typeClass->setType($type);
 
-        if (!empty($definition['validator']) && class_exists($definition['validator'])) {
-            $typeClass->setValidator(new $definition['validator']($typeClass));
+        if (!empty($this->fields[$name]) && !empty($this->fields[$name]->getValue())) {
+            $typeClass->setValue($this->fields[$name]->getValue());
         }
 
         /** @var Request $request */
@@ -154,13 +221,51 @@ abstract class AbstractFormBuilder
             $typeClass->setValue($postData[$name]);
         }
 
-        $validator = '\Faulancer\Form\Validator\Base\\' . ucfirst($type);
-
-        if (class_exists($validator)) {
-            $typeClass->setValidator(new $validator($typeClass));
-        }
+        $this->addValidators($typeClass, $definition);
 
         $this->fields[$name] = $typeClass->create();
     }
+
+    /**
+     * @param AbstractType $typeClass
+     * @param array        $definition
+     * @throws FormInvalidException
+     * @return boolean
+     */
+    private function addValidators(AbstractType &$typeClass, array $definition)
+    {
+        if (!empty($definition['validator'])) {
+
+            $validatorChain = new ValidatorChain($typeClass);
+
+            foreach ($definition['validator'] as $validator) {
+
+                if (class_exists($validator)) {
+                    $validatorChain->add(new $validator($typeClass));
+                } else {
+                    throw new FormInvalidException('Validator "' . $validator . '" doesn\'t exists');
+                }
+
+            }
+
+            $typeClass->setValidatorChain($validatorChain);
+
+        } else {
+
+            $validator = '\Faulancer\Form\Validator\Base\\' . ucfirst($typeClass->getType());
+
+            if (empty($definition['validator']) && class_exists($validator)) {
+                $typeClass->setDefaultValidator(new $validator($typeClass));
+            }
+
+        }
+
+        return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    abstract protected function create();
 
 }

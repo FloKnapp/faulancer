@@ -34,12 +34,20 @@ abstract class AbstractValidator
     {
         if (!$this->process($this->field->getValue())) {
 
-            $this->field->setErrorMessage($this->getMessage());
+            $this->field->setErrorMessages([$this->getMessage()]);
             return false;
 
         }
 
         return true;
+    }
+
+    /**
+     * @return AbstractType
+     */
+    public function getField()
+    {
+        return $this->field;
     }
 
     /**

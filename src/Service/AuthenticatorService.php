@@ -56,14 +56,8 @@ class AuthenticatorService implements ServiceInterface
 
         if ($userData instanceof Entity) {
 
-            $sessionManager = $this->controller->getSessionManager();
-
-            if ($sessionManager->hasFlashMessage('redirectAfterAuth')) {
-                $this->redirectAfterAuth = $sessionManager->getFlashMessage('redirectAfterAuth');
-            }
-
             $this->saveUserInSession($userData);
-            return $this->controller->redirect($this->redirectAfterAuth);
+            return $this->controller->redirect($this->controller->route('admin_home'));
 
         }
 

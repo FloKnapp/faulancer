@@ -9,6 +9,7 @@ namespace Faulancer\Form\Type;
 use Faulancer\Form\Validator\AbstractValidator;
 use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Form\Validator\ValidatorChain;
 
 /**
  * Class AbstractType
@@ -35,53 +36,94 @@ abstract class AbstractType
     protected $outputPattern = '';
 
     /** @var string */
-    protected $errorMessage = '';
-
-    /** @var string */
     protected $element = '';
 
+    /** @var array */
+    protected $errorMessages = [];
+
     /** @var AbstractValidator|null */
-    protected $validator = null;
+    protected $defaultValidator = null;
+
+    /** @var ValidatorChain */
+    protected $validatorChain = null;
 
     /**
      * AbstractType constructor.
      * @param array $definition
+     * @param array $formErrorDecoration
      */
-    public function __construct(array $definition)
+    public function __construct(array $definition, array $formErrorDecoration = [])
     {
-        $this->definition = $definition;
+        $this->definition          = $definition;
+        $this->formErrorDecoration = $formErrorDecoration;
     }
 
     /**
      * @return AbstractValidator|null
      */
-    public function getValidator()
+    public function getDefaultValidator()
     {
-        return $this->validator;
+        return $this->defaultValidator;
     }
 
     /**
      * @param AbstractValidator $validator
      */
-    public function setValidator(AbstractValidator $validator)
+    public function setDefaultValidator(AbstractValidator $validator)
     {
-        $this->validator = $validator;
+        $this->defaultValidator = $validator;
     }
 
     /**
-     * @return string
+     * @param ValidatorChain $validatorChain
      */
-    public function getErrorMessage() :string
+    public function setValidatorChain(ValidatorChain $validatorChain)
     {
-        return $this->errorMessage;
+        $this->validatorChain = $validatorChain;
     }
 
     /**
-     * @param string $message
+     * @return boolean|null
      */
-    public function setErrorMessage(string $message)
+    public function isValid()
     {
-        $this->errorMessage = $message;
+        if (!empty($this->validatorChain)) {
+            return $this->validatorChain->validate();
+        } elseif (!empty($this->getDefaultValidator())) {
+            return $this->getDefaultValidator()->validate();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getErrorMessages()
+    {
+        if (empty($this->formErrorDecoration)) {
+            return $this->errorMessages;
+        }
+
+        $def = $this->formErrorDecoration;
+
+        return $def['containerPrefix']
+            . $def['containerItemPrefix']
+            . implode(
+                $def['containerItemSuffix'] . $def['containerItemPrefix'],
+                $this->errorMessages
+            )
+            . $def['containerItemSuffix']
+            . $def['containerSuffix'];
+
+    }
+
+    /**
+     * @param array $messages
+     */
+    public function setErrorMessages(array $messages)
+    {
+        $this->errorMessages = $messages;
     }
 
     /**
@@ -146,14 +188,6 @@ abstract class AbstractType
     public function setName(string $name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return self
-     */
-    public function getField() :self
-    {
-        return $this;
     }
 
     /**
