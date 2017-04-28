@@ -7,12 +7,10 @@
  */
 namespace Faulancer\ORM;
 
-use Faulancer\Http\Request;
 use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\DbService;
-use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use ORM\EntityManager;
+use \ORM\EntityManager;
 
 /**
  * Class Entity

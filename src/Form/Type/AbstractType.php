@@ -97,6 +97,15 @@ abstract class AbstractType
     }
 
     /**
+     * @return void
+     */
+    public function removeValidators()
+    {
+        $this->setValidatorChain(null);
+        $this->setDefaultValidator(null);
+    }
+
+    /**
      * @return array|string
      */
     public function getErrorMessages()
