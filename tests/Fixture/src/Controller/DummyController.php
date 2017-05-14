@@ -8,7 +8,8 @@ use Faulancer\Http\Response;
 use Faulancer\Service\ResponseService;
 
 /**
- * File DummyController.phpauthor Florian Knapp <office@florianknapp.de>
+ * Class DummyController
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class DummyController extends AbstractController
 {

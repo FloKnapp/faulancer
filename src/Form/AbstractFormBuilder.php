@@ -8,6 +8,7 @@ namespace Faulancer\Form;
 
 use Faulancer\Exception\FormInvalidException;
 use Faulancer\Exception\InvalidArgumentException;
+use Faulancer\Exception\InvalidFormElementException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
@@ -62,9 +63,13 @@ abstract class AbstractFormBuilder
     /**
      * @param string $name
      * @return AbstractType
+     * @throws InvalidFormElementException
      */
     public function getField(string $name)
     {
+        if (empty($this->fields[$name])) {
+            throw new InvalidFormElementException('No field with name \'' . $name . '\' found');
+        }
         return $this->fields[$name];
     }
 

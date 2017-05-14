@@ -27,7 +27,13 @@ class Select extends AbstractType
         $output = '<' . $this->inputType;
 
         foreach ($this->definition['attributes'] as $attr => $value) {
-            $output .= ' ' . $attr . '="' . $value . '" ';
+
+            if ($attr === 'type') {
+                continue;
+            }
+
+            $output .= ' ' . $attr . '="' . $value . '"';
+
         }
 
         $output .= '>';

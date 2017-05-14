@@ -47,7 +47,7 @@ class Checkbox extends AbstractType
 
         if (!empty($this->getValue()) && $this->definition['attributes']['value'] === $this->getValue()) {
             $output .= ' checked="checked"';
-        } elseif (empty($this->getValue()) && $this->definition['checked'] === true) {
+        } elseif (empty($this->getValue()) && isset($this->definition['checked']) && $this->definition['checked'] === true) {
             $output .= ' checked="checked"';
         }
 

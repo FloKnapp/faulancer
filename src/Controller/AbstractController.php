@@ -182,7 +182,7 @@ abstract class AbstractController
         }
 
         if (!empty($parameters)) {
-            $path = $path . '/' . implode('/', $parameters);
+            $path = $path . implode('/', $parameters);
         }
 
         return $path;

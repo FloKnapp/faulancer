@@ -34,16 +34,6 @@ class Date extends AbstractType
 
         $output .= '/>';
 
-        if (!empty($this->definition['default'])) {
-
-            $output = '<' . $this->inputType;
-            $output .= ' type="hidden"';
-            $output .= ' name="' . $this->definition['name'] . '"';
-            $output .= ' ' . 'value="' . $this->definition['default'] . '"';
-            $output .= '/>';
-
-        }
-
         $this->element = $output;
 
         return $this;

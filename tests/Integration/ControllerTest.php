@@ -2,7 +2,10 @@
 
 namespace Faulancer\Test\Integration;
 
+use Faulancer\Controller\AbstractController;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Fixture\Controller\DummyController;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
 use Faulancer\Service\AuthenticatorService;
@@ -123,6 +126,29 @@ class ControllerTest extends TestCase
         $controller = $this->controller->getView();
 
         $this->assertSame($this->controller->getView(), $controller);
+    }
+
+    public function testSetGetFlashMessage()
+    {
+        $this->controller->setFlashMessage('test', 'test_value');
+        $this->assertSame('test_value', $this->controller->getFlashMessage('test'));
+    }
+
+    public function testRoute()
+    {
+        $this->assertSame('/', $this->controller->route('home'));
+    }
+
+    public function testRouteWithParams()
+    {
+        $this->assertSame('/test', $this->controller->route('home', ['test']));
+    }
+
+    public function testRouteInvalid()
+    {
+        $this->expectException(RouteInvalidException::class);
+
+        $this->controller->route('non-existent');
     }
 
 }

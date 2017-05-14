@@ -204,7 +204,7 @@ abstract class AbstractType
      */
     public function __toString() :string
     {
-        return $this->element;
+        return str_replace('  ', ' ', $this->element);
     }
 
     /**

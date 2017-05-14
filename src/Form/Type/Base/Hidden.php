@@ -28,7 +28,13 @@ class Hidden extends AbstractType
         $output = '<' . $this->inputType;
 
         foreach ($this->definition['attributes'] as $attr => $value) {
+
+            if (!empty($this->getValue()) && $attr === 'value') {
+                continue;
+            }
+
             $output .= ' ' . $attr . '="' . $value . '" ';
+
         }
 
         if (!empty($this->getValue())) {

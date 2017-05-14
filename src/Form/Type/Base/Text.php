@@ -27,10 +27,16 @@ class Text extends AbstractType
     {
         $this->setLabel($this->definition['label']);
 
-        $output = '<' . $this->inputType;
+        $output = '<' . $this->inputType . ' ';
 
         foreach ($this->definition['attributes'] as $attr => $value) {
-            $output .= ' ' . $attr . '="' . $value . '" ';
+
+            if (!empty($this->getValue()) && $attr === 'value') {
+                continue;
+            }
+
+            $output .= $attr . '="' . $value . '" ';
+
         }
 
         if (!empty($this->getValue())) {

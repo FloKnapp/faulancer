@@ -308,19 +308,21 @@ class ViewTest extends TestCase
 
         $this->sessionManager->set('user', 1);
 
-        $this->assertTrue($view->user()->isLoggedIn());
-
         $user = new UserEntity();
         $user->roles[] = new RoleAuthorEntity();
 
         /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
-        $authMock->method('getUserFromSession')->will($this->returnValue($user));
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession', 'isAuthenticated']);
+        $authMock->method('getUserFromSession')->willReturn($user);
+        $authMock->method('isAuthenticated')->with(['author'])->willReturn(true);
 
         ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
+        $this->assertTrue($view->user()->isAuthenticated(['author']));
 
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
         $userEntity = $view->user()->get();
 
+        $this->assertTrue($view->user()->isLoggedIn());
         $this->assertNotEmpty($userEntity);
         $this->assertInstanceOf(Entity::class, $userEntity);
     }
