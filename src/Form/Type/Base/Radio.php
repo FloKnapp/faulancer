@@ -43,7 +43,7 @@ class Radio extends AbstractType
             $output .= '/>';
 
             $result[$optionName] = [
-                'title' => $valueDef['title'],
+                'label' => $valueDef['label'],
                 'field' => $output
             ];
 
@@ -68,9 +68,9 @@ class Radio extends AbstractType
      * @param string $optionName
      * @return string
      */
-    public function getOptionTitle(string $optionName)
+    public function getOptionLabel(string $optionName)
     {
-        return $this->element[$optionName]['title'];
+        return $this->element[$optionName]['label'];
     }
 
 }

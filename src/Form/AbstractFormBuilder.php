@@ -157,9 +157,9 @@ abstract class AbstractFormBuilder
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isValid()
+    public function isValid() :bool
     {
         $errors = [];
 
@@ -217,11 +217,17 @@ abstract class AbstractFormBuilder
         $request  = ServiceLocator::instance()->get(RequestService::class);
         $postData = $request->getPostData();
 
-        if (!empty($postData[$name])) {
+        if ($request->isPost() && !empty($postData[$name])) {
             $typeClass->setValue($postData[$name]);
         }
 
-        $this->addValidators($typeClass, $definition);
+        // If radio or checkbox field isn't selected, the field wouldn't
+        // be send within post data so always add a validator if exists
+        $isRadioOrCheckbox = $type === 'radio' || $type === 'checkbox';
+
+        if ($isRadioOrCheckbox || ($request->isPost() && in_array($name, array_keys($postData)))) {
+            $this->addValidators($typeClass, $definition);
+        }
 
         $this->fields[$name] = $typeClass->create();
     }
@@ -240,11 +246,11 @@ abstract class AbstractFormBuilder
 
             foreach ($definition['validator'] as $validator) {
 
-                if (class_exists($validator)) {
-                    $validatorChain->add(new $validator($typeClass));
-                } else {
+                if (!class_exists($validator)) {
                     throw new FormInvalidException('Validator "' . $validator . '" doesn\'t exists');
                 }
+
+                $validatorChain->add(new $validator($typeClass));
 
             }
 
