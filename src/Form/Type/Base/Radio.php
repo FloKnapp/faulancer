@@ -18,6 +18,10 @@ class Radio extends AbstractType
 
     protected $inputType = 'input';
 
+    /**
+     * @return self
+     * @codeCoverageIgnore
+     */
     public function create()
     {
         $this->setLabel($this->definition['label']);
@@ -67,6 +71,7 @@ class Radio extends AbstractType
     /**
      * @param string $optionName
      * @return string
+     * @codeCoverageIgnore
      */
     public function getOptionLabel(string $optionName)
     {

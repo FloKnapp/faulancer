@@ -21,7 +21,7 @@ class Password extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
+     * @return self
      */
     public function create()
     {

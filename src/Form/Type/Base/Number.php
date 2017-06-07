@@ -22,7 +22,8 @@ class Number extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
+     * @return self
+     * @codeCoverageIgnore
      */
     public function create()
     {

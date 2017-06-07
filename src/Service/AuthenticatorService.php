@@ -119,6 +119,7 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * @param Entity $user
+     * @codeCoverageIgnore
      */
     public function saveUserInSession(Entity $user)
     {
@@ -127,6 +128,7 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * @return Entity
+     * @codeCoverageIgnore
      */
     public function getUserFromSession()
     {

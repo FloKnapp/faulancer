@@ -22,6 +22,7 @@ class Hidden extends AbstractType
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public function create()
     {

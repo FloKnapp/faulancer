@@ -60,6 +60,7 @@ abstract class AbstractType
 
     /**
      * @return AbstractValidator|null
+     * @codeCoverageIgnore
      */
     public function getDefaultValidator()
     {
@@ -68,6 +69,7 @@ abstract class AbstractType
 
     /**
      * @param AbstractValidator $validator
+     * @codeCoverageIgnore
      */
     public function setDefaultValidator(AbstractValidator $validator)
     {
@@ -76,6 +78,7 @@ abstract class AbstractType
 
     /**
      * @param ValidatorChain $validatorChain
+     * @codeCoverageIgnore
      */
     public function setValidatorChain(ValidatorChain $validatorChain)
     {
@@ -84,6 +87,7 @@ abstract class AbstractType
 
     /**
      * @return boolean|null
+     * @codeCoverageIgnore
      */
     public function isValid()
     {
@@ -98,6 +102,7 @@ abstract class AbstractType
 
     /**
      * @return void
+     * @codeCoverageIgnore
      */
     public function removeValidators()
     {
@@ -107,6 +112,7 @@ abstract class AbstractType
 
     /**
      * @return array|string
+     * @codeCoverageIgnore
      */
     public function getErrorMessages()
     {
@@ -129,6 +135,7 @@ abstract class AbstractType
 
     /**
      * @param array $messages
+     * @codeCoverageIgnore
      */
     public function setErrorMessages(array $messages)
     {
@@ -153,6 +160,7 @@ abstract class AbstractType
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public function getLabel() :string
     {
@@ -177,6 +185,7 @@ abstract class AbstractType
 
     /**
      * @param string $value
+     * @codeCoverageIgnore
      */
     public function setValue(string $value)
     {
@@ -185,6 +194,7 @@ abstract class AbstractType
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public function getName() :string
     {

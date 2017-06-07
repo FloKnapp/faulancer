@@ -29,6 +29,7 @@ abstract class AbstractValidator
 
     /**
      * @return boolean
+     * @codeCoverageIgnore
      */
     public function validate()
     {
@@ -44,6 +45,7 @@ abstract class AbstractValidator
 
     /**
      * @return AbstractType
+     * @codeCoverageIgnore
      */
     public function getField()
     {
@@ -53,6 +55,7 @@ abstract class AbstractValidator
     /**
      * Return the error message
      * @return string
+     * @codeCoverageIgnore
      */
     public function getMessage()
     {

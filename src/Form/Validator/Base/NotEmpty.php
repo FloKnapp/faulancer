@@ -20,6 +20,7 @@ class NotEmpty extends AbstractValidator
     /**
      * @param mixed $data
      * @return bool
+     * @codeCoverageIgnore
      */
     public function process($data)
     {

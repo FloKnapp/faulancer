@@ -16,13 +16,13 @@ class Select extends AbstractType
 
     protected $inputType = 'select';
 
+    /**
+     * @return self
+     * @codeCoverageIgnore
+     */
     public function create()
     {
         $this->setLabel($this->definition['label']);
-
-        if (!empty($this->definition['validator'])) {
-            $this->setValidator(new $this->definition['validator']($this));
-        }
 
         $output = '<' . $this->inputType;
 

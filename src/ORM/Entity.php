@@ -19,6 +19,7 @@ abstract class Entity extends \ORM\Entity {
 
     /**
      * @return array
+     * @codeCoverageIgnore
      */
     public function getDataAsArray()
     {
@@ -28,6 +29,7 @@ abstract class Entity extends \ORM\Entity {
     /**
      * @param EntityManager $dbManager
      * @return Entity|\ORM\Entity
+     * @codeCoverageIgnore
      */
     public function save(EntityManager $dbManager = null)
     {

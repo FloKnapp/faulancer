@@ -26,6 +26,7 @@ class Confirm extends AbstractValidator
      * Validate type string
      * @param $data
      * @return boolean
+     * @codeCoverageIgnore
      */
     public function process($data)
     {

@@ -22,6 +22,7 @@ class Email extends AbstractType
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public function create()
     {

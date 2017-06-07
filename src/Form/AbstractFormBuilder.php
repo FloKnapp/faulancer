@@ -49,6 +49,7 @@ abstract class AbstractFormBuilder
     /**
      * AbstractFormBuilder constructor
      * @param Entity $entity
+     * @codeCoverageIgnore
      */
     public function __construct(Entity $entity = null)
     {
@@ -64,6 +65,7 @@ abstract class AbstractFormBuilder
      * @param string $name
      * @return AbstractType
      * @throws InvalidFormElementException
+     * @codeCoverageIgnore
      */
     public function getField(string $name)
     {
@@ -100,6 +102,7 @@ abstract class AbstractFormBuilder
     /**
      * @param string $prefix
      * @param string $suffix
+     * @codeCoverageIgnore
      */
     public function setFormErrorContainer(string $prefix, string $suffix)
     {
@@ -110,6 +113,7 @@ abstract class AbstractFormBuilder
     /**
      * @param string $prefix
      * @param string $suffix
+     * @codeCoverageIgnore
      */
     public function setFormErrorItemContainer(string $prefix, string $suffix)
     {
@@ -119,6 +123,7 @@ abstract class AbstractFormBuilder
 
     /**
      * @return array
+     * @codeCoverageIgnore
      */
     public function getData()
     {
@@ -147,6 +152,7 @@ abstract class AbstractFormBuilder
 
     /**
      * @param array $data
+     * @codeCoverageIgnore
      */
     public function setData(array $data)
     {
@@ -163,6 +169,7 @@ abstract class AbstractFormBuilder
 
     /**
      * @return bool
+     * @codeCoverageIgnore
      */
     public function isValid() :bool
     {
@@ -185,6 +192,7 @@ abstract class AbstractFormBuilder
     /**
      * @param array $definition
      * @throws InvalidArgumentException
+     * @codeCoverageIgnore
      */
     protected function add(array $definition)
     {
@@ -238,6 +246,7 @@ abstract class AbstractFormBuilder
      * @param array        $definition
      * @throws FormInvalidException
      * @return boolean
+     * @codeCoverageIgnore
      */
     private function addValidators(AbstractType &$typeClass, array $definition)
     {

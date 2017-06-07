@@ -22,6 +22,11 @@ class ValidatorChain
     /** @var AbstractType|null */
     protected $field = null;
 
+    /**
+     * ValidatorChain constructor.
+     * @param AbstractType $field
+     * @codeCoverageIgnore
+     */
     public function __construct(AbstractType $field)
     {
         $this->field = $field;
@@ -29,6 +34,7 @@ class ValidatorChain
 
     /**
      * @param AbstractValidator $validator
+     * @codeCoverageIgnore
      */
     public function add(AbstractValidator $validator)
     {
@@ -37,6 +43,7 @@ class ValidatorChain
 
     /**
      * @return boolean
+     * @codeCoverageIgnore
      */
     public function validate() :bool
     {
