@@ -31,17 +31,12 @@ abstract class Entity extends \ORM\Entity {
      */
     public function save(EntityManager $dbManager = null)
     {
-        /** @var DbService $db */
-        $db = ServiceLocator::instance()->get(DbService::class);
-
         if ($dbManager !== null) {
-            $manager = $dbManager;
-        } else {
-            $manager = $db->getManager();
+            $this->setEntityManager($dbManager);
         }
 
         try {
-            return parent::save($manager);
+            parent::save();
         } catch (\PDOException $e) {
 
             if ($e->getCode() === "23000") {

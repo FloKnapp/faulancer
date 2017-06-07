@@ -125,20 +125,20 @@ abstract class AbstractFormBuilder
         $result = [];
 
         /** @var AbstractType $value */
-        foreach ($this->fields as $key => $value) {
+        foreach ($this->fields as $key => $field) {
 
-            if ($value->getType() === 'submit') {
+            if ($field->getType() === 'submit' || empty($field->getValue())) {
                 continue;
             }
 
-            // Check stored confirm value (i.e. for password repeat requests)
-            if ($value->getValue() === $this->confirmValue) {
+            // Check stored confirm value (i.e. for password repeat requests) and ignore the second field
+            if ($field->getValue() === $this->confirmValue) {
                 continue;
             }
 
-            $this->confirmValue = $value->getValue();
+            $this->confirmValue = $field->getValue();
 
-            $result[$key] = $value->getValue();
+            $result[$key] = $field->getValue();
 
         }
 
@@ -193,23 +193,19 @@ abstract class AbstractFormBuilder
 
         $namespace = '\Faulancer\Form\Type\Base\\' . ucfirst($type);
 
-        if (class_exists($namespace)) {
-
-            $formErrorDecoration = [
-                'containerPrefix'     => $this->formErrorContainerPrefix,
-                'containerSuffix'     => $this->formErrorContainerSuffix,
-                'containerItemPrefix' => $this->formErrorItemContainerPrefix,
-                'containerItemSuffix' => $this->formErrorItemContainerSuffix
-            ];
-
-            $typeClassNs = $namespace;
-
-            /** @var AbstractType $typeClass */
-            $typeClass = new $typeClassNs($definition, $formErrorDecoration);
-
-        } else {
+        if (!class_exists($namespace)) {
             throw new InvalidArgumentException('Requesting non existent form type ' . ucfirst($type));
         }
+
+        $formErrorDecoration = [
+            'containerPrefix'     => $this->formErrorContainerPrefix,
+            'containerSuffix'     => $this->formErrorContainerSuffix,
+            'containerItemPrefix' => $this->formErrorItemContainerPrefix,
+            'containerItemSuffix' => $this->formErrorItemContainerSuffix
+        ];
+
+        /** @var AbstractType $typeClass */
+        $typeClass = new $namespace($definition, $formErrorDecoration);
 
         $typeClass->setName($name);
         $typeClass->setType($type);
