@@ -14,7 +14,7 @@ use Faulancer\Form\Type\AbstractType;
 class Submit extends AbstractType
 {
     /** @var string */
-    protected $inputType = 'input';
+    protected $inputType = 'button';
 
     /** @var string */
     protected $element = '';
@@ -24,15 +24,15 @@ class Submit extends AbstractType
      */
     public function create()
     {
-        $output = '<' . $this->inputType;
-
         $this->setLabel($this->definition['label']);
+
+        $output = '<' . $this->inputType;
 
         foreach ($this->definition['attributes'] as $attr => $value) {
             $output .= ' ' . $attr . '="' . $value . '" ';
         }
 
-        $output .= '/>';
+        $output .= '>' . $this->definition['label'] . '</button>';
 
         $this->element = $output;
 
