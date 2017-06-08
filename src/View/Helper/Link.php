@@ -6,6 +6,7 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
@@ -21,13 +22,17 @@ class Link extends AbstractViewHelper
     /**
      * @param ViewController $view
      * @param string         $routeName
+     * @param array          $elementAttributes
      * @return string
+     * @throws RouteInvalidException
      * @codeCoverageIgnore
      */
-    public function __invoke(ViewController $view, $routeName)
+    public function __invoke(ViewController $view, $routeName, $elementAttributes = [])
     {
+        $id    = '';
+        $class = '';
+        $style = '';
 
-        $active         = '';
         $serviceLocator = $this->getServiceLocator();
 
         /** @var Config $config */
@@ -38,11 +43,27 @@ class Link extends AbstractViewHelper
 
         $route = $config->get('routes:' . $routeName);
 
-        if ($request->getUri() === $route['path']) {
-            $active = 'class="selected" ';
+        if (empty($route)) {
+            throw new RouteInvalidException('No valid route for "' . $routeName . '" found.');
         }
 
-        $linkPattern = '<a ' . $active . 'href="%s" onfocus="blur()">%s</a>';
+        if ($request->getUri() === $route['path']) {
+            $elementAttributes['class'][] = 'selected';
+        }
+
+        if (!empty($elementAttributes['id'])) {
+            $id = ' id="' . implode(' ', $elementAttributes['id']) . '" ';
+        }
+
+        if (!empty($elementAttributes['class'])){
+            $class = 'class="' . implode(' ', $elementAttributes['class']) . '" ';
+        }
+
+        if (!empty($elementAttributes['style'])) {
+            $style = 'style="' . implode(' ', $elementAttributes['style']) . '" ';
+        }
+
+        $linkPattern = '<a ' . $id . $class . $style . 'href="%s" onfocus="blur()">%s</a>';
 
         $link = sprintf($linkPattern, $route['path'], $route['title']);
 
