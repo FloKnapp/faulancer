@@ -32,6 +32,10 @@ class Route extends AbstractViewHelper
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $routes = $config->get('routes');
+        $apiRoutes = $config->get('routes:rest');
+
+        $routes = array_merge($routes, $apiRoutes);
+
         $path   = '';
 
         foreach ($routes as $routeName => $data) {

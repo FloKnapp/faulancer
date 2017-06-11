@@ -277,11 +277,14 @@ class Dispatcher
             case 'POST':
                 return 'create';
 
-            case 'UPDATE':
+            case 'PUT':
                 return 'update';
 
             case 'DELETE':
                 return 'delete';
+
+            case 'PATCH':
+                return 'update';
 
             default:
                 return 'get';
