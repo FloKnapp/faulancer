@@ -42,6 +42,10 @@ class AssetList extends AbstractViewHelper
         /** @var array $files */
         $files = $view->getVariable('assets'.ucfirst($type));
 
+        if (empty($files)) {
+            return '';
+        }
+
         foreach ($files AS $file) {
             $result .= sprintf($pattern, $file) . "\n";
         }

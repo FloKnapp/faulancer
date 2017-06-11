@@ -14,7 +14,10 @@ class Response extends AbstractHttp
 {
 
     const HTTP_STATUS_CODES = [
+        100 => 'Continue',
+        102 => 'Processing',
         200 => 'Ok',
+        206 => 'Partial Content',
         301 => 'Moved Permanently',
         304 => 'Not Modified',
         400 => 'Bad Request',

@@ -88,7 +88,11 @@ abstract class AbstractFormBuilder
      */
     public function getFormOpen()
     {
-        return '<form action="' . $this->formAttributes['action'] . '" method="' . $this->formAttributes['method'] . '">';
+        $action = $this->formAttributes['action'] ?? '';
+        $method = $this->formAttributes['method'] ?? '';
+        $enctype = $this->formAttributes['enctype'] ?? 'application/x-www-form-urlencoded';
+
+        return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '">';
     }
 
     /**

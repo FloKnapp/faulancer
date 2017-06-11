@@ -77,7 +77,7 @@ endforeach;
 
         <div class="row">
             <div class="cell width-30"><?= $pkey; ?></div>
-            <div class="cell"><?= $pvalue; ?></div>
+            <div class="cell"><?= var_export($pvalue, true); ?></div>
         </div>
 
     <?php
