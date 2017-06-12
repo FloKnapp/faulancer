@@ -32,7 +32,7 @@ class Submit extends AbstractType
             $output .= ' ' . $attr . '="' . $value . '" ';
         }
 
-        $output .= '>' . $this->definition['label'] . '</button>';
+        $output .= '>' . $this->getLabel() . '</button>';
 
         $this->element = $output;
 

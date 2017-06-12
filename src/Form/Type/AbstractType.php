@@ -152,10 +152,12 @@ abstract class AbstractType
 
     /**
      * @param string $type
+     * @return self
      */
     public function setType(string $type)
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
@@ -169,10 +171,12 @@ abstract class AbstractType
 
     /**
      * @param string $label
+     * @return self
      */
     public function setLabel(string $label)
     {
         $this->label = $label;
+        return $this;
     }
 
     /**
@@ -185,11 +189,13 @@ abstract class AbstractType
 
     /**
      * @param string $value
+     * @return self
      * @codeCoverageIgnore
      */
     public function setValue(string $value)
     {
         $this->value = $value;
+        return $this;
     }
 
     /**
@@ -203,10 +209,12 @@ abstract class AbstractType
 
     /**
      * @param string $name
+     * @return self
      */
     public function setName(string $name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
