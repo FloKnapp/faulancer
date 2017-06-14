@@ -38,7 +38,7 @@ class ErrorController extends AbstractController
     {
         ob_end_clean();
 
-        if (getenv('APPLICATION_ENV') === 'development') {
+        if (getenv('APPLICATION_ENV') || defined('APPLICATION_ENV') && APPLICATION_ENV === 'development') {
             return $this->renderDebugPage();
         }
 
