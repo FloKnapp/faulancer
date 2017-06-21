@@ -8,6 +8,7 @@ namespace Faulancer\Service;
 
 use Faulancer\Controller\AbstractController;
 use Faulancer\ORM\User\Entity;
+use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
@@ -51,13 +52,15 @@ class AuthenticatorService implements ServiceInterface
             ->getDb()
             ->fetch(get_class($user))
             ->where('login', '=', $user->login)
-            ->andWhere('password', '=', $user->password)
             ->one();
 
-        if ($userData instanceof Entity) {
+        $crypt  = new Crypt();
+        $passOk = $crypt->verifyPassword($user->password, $userData->password);
+
+        if ($passOk && $userData instanceof Entity) {
 
             $this->saveUserInSession($userData);
-            return $this->controller->redirect($this->controller->route('admin_home'));
+            return $this->controller->redirect($this->controller->route('admin'));
 
         }
 

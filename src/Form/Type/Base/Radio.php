@@ -38,6 +38,8 @@ class Radio extends AbstractType
                 $output .= ' ' . $attr . '="' . $val . '" ';
             }
 
+            $output .= ' id="' . $this->definition['attributes']['name'] . '_' . $valueDef['value'] . '"';
+
             if (!empty($this->getValue()) && $valueDef['value'] === $this->getValue()) {
                 $output .= ' checked="checked"';
             } elseif (empty($this->getValue()) && $this->definition['default'] === $optionName) {
@@ -75,7 +77,7 @@ class Radio extends AbstractType
      */
     public function getOptionLabel(string $optionName)
     {
-        return $this->element[$optionName]['label'];
+        return '<label for="' . $this->definition['attributes']['name'] . '_' . $this->definition['options'][$optionName]['value'] . '">' . $this->element[$optionName]['label'] . '</label>';
     }
 
 }
