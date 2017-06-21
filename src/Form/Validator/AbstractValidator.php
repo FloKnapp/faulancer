@@ -7,6 +7,8 @@
 namespace Faulancer\Form\Validator;
 
 use Faulancer\Form\Type\AbstractType;
+use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Translate\Translator;
 
 /**
  * Class AbstractValidator
@@ -59,7 +61,8 @@ abstract class AbstractValidator
      */
     public function getMessage()
     {
-        return $this->errorMessage;
+        $translate = new Translator();
+        return $translate->translate($this->errorMessage);
     }
 
     /**

@@ -15,7 +15,7 @@ class NotEmpty extends AbstractValidator
 {
 
     /** @var string  */
-    protected $errorMessage = 'Field must not be empty';
+    protected $errorMessage = 'validator_invalid_text';
 
     /**
      * @param mixed $data

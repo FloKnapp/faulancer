@@ -28,10 +28,10 @@ abstract class Entity extends \ORM\Entity {
 
     /**
      * @param EntityManager $dbManager
-     * @return Entity|\ORM\Entity
+     * @return Entity|\ORM\Entity|bool
      * @codeCoverageIgnore
      */
-    public function save(EntityManager $dbManager = null)
+    public function save(EntityManager $dbManager = null, $redirectOnDuplicateKey = false)
     {
         if ($dbManager !== null) {
             $this->setEntityManager($dbManager);
@@ -43,12 +43,18 @@ abstract class Entity extends \ORM\Entity {
 
             if ($e->getCode() === "23000") {
 
-                /** @var AbstractControllerService $controller */
-                $controller = ServiceLocator::instance()->get(AbstractControllerService::class);
-                $uri        = $controller->getRequest()->getUri();
+                if ($redirectOnDuplicateKey) {
 
-                $controller->getSessionManager()->setFlashMessage('db.duplicate.key', 'Eintrag bereits vorhanden!');
-                $controller->redirect($uri);
+                    /** @var AbstractControllerService $controller */
+                    $controller = ServiceLocator::instance()->get(AbstractControllerService::class);
+                    $uri        = $controller->getRequest()->getUri();
+
+                    $controller->getSessionManager()->setFlashMessage('db.duplicate.key', 'Eintrag bereits vorhanden!');
+                    $controller->redirect($uri);
+
+                }
+
+                return false;
 
             }
 

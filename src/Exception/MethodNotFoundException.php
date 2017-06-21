@@ -10,7 +10,8 @@ namespace Faulancer\Exception;
 /**
  * Class MethodNotFoundException
  */
-class MethodNotFoundException extends Exception
-{
+class MethodNotFoundException extends Exception {
+
+    protected $httpStatus = 405;
 
 }

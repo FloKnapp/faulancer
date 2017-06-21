@@ -122,6 +122,10 @@ abstract class AbstractType
 
         $def = $this->formErrorDecoration;
 
+        if (empty($this->errorMessages)) {
+            return false;
+        }
+
         return $def['containerPrefix']
             . $def['containerItemPrefix']
             . implode(

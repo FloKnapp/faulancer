@@ -88,6 +88,15 @@ class SessionManager
         return true;
     }
 
+    public function has(string $key)
+    {
+        if (empty($_SESSION[$key])) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Check if flash message key exists
      * @param string $key

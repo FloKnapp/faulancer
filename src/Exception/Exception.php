@@ -9,4 +9,8 @@ namespace Faulancer\Exception;
 /**
  * Class Exception
  */
-class Exception extends \Exception {}
+class Exception extends \Exception {
+
+    protected $httpStatus = 200;
+
+}

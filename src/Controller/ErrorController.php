@@ -58,7 +58,7 @@ class ErrorController extends AbstractController
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
         $raiser = [
-            'function'=> !empty($this->exception->getTrace()[0]['function']) ? $this->exception->getTrace()[0]['function'] : 'unkown',
+            'function'=> !empty($this->exception->getTrace()[0]['function']) ? $this->exception->getTrace()[0]['function'] : 'unknown',
             'message' => $this->exception->getMessage(),
             'type'    => $this->exception->getCode(),
             'file'    => $this->exception->getFile(),
