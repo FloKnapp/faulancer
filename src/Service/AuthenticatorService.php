@@ -55,6 +55,11 @@ class AuthenticatorService implements ServiceInterface
             ->orWhere('email', '=', $user->login)
             ->one();
 
+        if (empty($userData)) {
+            $this->controller->setFlashMessage('error.login', 'No valid username/password combination found.');
+            return $this->redirectToAuthentication();
+        }
+
         $crypt  = new Crypt();
         $passOk = $crypt->verifyPassword($user->password, $userData->password);
 
@@ -70,9 +75,7 @@ class AuthenticatorService implements ServiceInterface
 
         }
 
-        /** @var SessionManagerService $sessionManager */
-        $sessionManager = $this->controller->getServiceLocator()->get(SessionManagerService::class);
-        $sessionManager->setFlashMessage('loginError', 'No valid username/password combination found.');
+        $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
         return $this->redirectToAuthentication();
     }
 

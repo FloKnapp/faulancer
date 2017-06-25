@@ -7,6 +7,7 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\Service\SessionManagerService;
+use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
@@ -26,11 +27,14 @@ class FlashMessage extends AbstractViewHelper
     {
         $result = '';
 
+        /** @var Translator $translator */
+        $translator = $this->getServiceLocator()->get(Translator::class);
+
         /** @var SessionManagerService $sessionManager */
         $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
 
         if ($sessionManager->hasFlashMessage($key)) {
-            $result = '<span class="flashMessage ' . $type . '">' . $sessionManager->getFlashMessage($key) . '</span>';
+            $result = '<span class="flashMessage ' . $type . '">' . $translator->translate($sessionManager->getFlashMessage($key)) . '</span>';
         }
 
         return $result;
