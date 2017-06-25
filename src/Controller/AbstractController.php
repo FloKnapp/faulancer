@@ -159,10 +159,12 @@ abstract class AbstractController
     /**
      * @param string $name
      * @param array  $parameters
+     * @param bool   $absolute
+     *
      * @return string
      * @throws RouteInvalidException
      */
-    public function route(string $name, array $parameters = [])
+    public function route(string $name, array $parameters = [], $absolute = false)
     {
         /** @var Config $config */
         $config = $this->getServiceLocator()->get(Config::class);
@@ -182,7 +184,11 @@ abstract class AbstractController
         }
 
         if (!empty($parameters)) {
-            $path = $path . implode('/', $parameters);
+            $path = $path . '/' . implode('/', $parameters);
+        }
+
+        if ($absolute) {
+            $path = $this->getRequest()->getScheme() . $this->getRequest()->getHost() . $path;
         }
 
         return $path;

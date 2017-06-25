@@ -299,7 +299,7 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $this->sessionManager->setFlashMessage('test', 'test');
-        $this->assertSame('test', $view->flashMessage()->get('test'));
+        $this->assertSame('test', $view->flashMessage('test'));
     }
 
     public function testUserViewHelper()

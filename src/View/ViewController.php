@@ -220,7 +220,11 @@ class ViewController
      */
     private function cleanOutput($output) :string
     {
-        return str_replace(array("\t", "\r", "  "), "", trim($output));
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV === 'production') {
+            return preg_replace('/(\s{2,}|\t|\r|\n)/', ' ', trim($output));
+        } else {
+            return str_replace(["\t", "\r", "\n\n\n"], ' ', trim($output));
+        }
     }
 
     /**
@@ -274,13 +278,13 @@ class ViewController
         $config = ServiceLocator::instance()->get(Config::class);
         $namespace = '\\' . $config->get('namespacePrefix');
 
-        $customViewHelper = $namespace . '\\View\\' . ucfirst($name);
+        $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
 
         if (class_exists($customViewHelper)) {
             $class = new $customViewHelper;
             array_unshift($arguments, $this);
 
-            return $class($arguments);
+            return call_user_func_array($class, $arguments);
         }
 
 

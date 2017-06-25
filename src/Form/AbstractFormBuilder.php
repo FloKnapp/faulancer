@@ -162,7 +162,7 @@ abstract class AbstractFormBuilder
     {
         foreach ($data as $key => $value) {
 
-            if (empty($this->fields[$key])) {
+            if (empty($this->fields[$key]) || $this->fields[$key]->getType() === 'password') {
                 continue;
             }
 
@@ -255,6 +255,10 @@ abstract class AbstractFormBuilder
     private function addValidators(AbstractType &$typeClass, array $definition)
     {
         if (!empty($definition['validator'])) {
+
+            if ($definition['validator'] === 'none') {
+                return true;
+            }
 
             $validatorChain = new ValidatorChain($typeClass);
 

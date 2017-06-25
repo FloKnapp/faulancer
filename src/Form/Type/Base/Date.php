@@ -32,6 +32,10 @@ class Date extends AbstractType
             $output .= ' ' . $attr . '="' . $value . '" ';
         }
 
+        if (!empty($this->getValue())) {
+            $output .= ' value="' . $this->getValue() . '"';
+        }
+
         $output .= '/>';
 
         $this->element = $output;

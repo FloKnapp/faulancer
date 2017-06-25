@@ -19,11 +19,21 @@ class FlashMessage extends AbstractViewHelper
     /**
      * @param ViewController $view
      * @param string         $key
+     * @param string         $type
      * @return string
      */
-    public function __invoke(ViewController $view, string $key)
+    public function __invoke(ViewController $view, string $key, $type = 'default')
     {
-        return $this->getServiceLocator()->get(SessionManagerService::class)->getFlashMessage($key);
+        $result = '';
+
+        /** @var SessionManagerService $sessionManager */
+        $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+
+        if ($sessionManager->hasFlashMessage($key)) {
+            $result = '<span class="flashMessage ' . $type . '">' . $sessionManager->getFlashMessage($key) . '</span>';
+        }
+
+        return $result;
     }
 
 }

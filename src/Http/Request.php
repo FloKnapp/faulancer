@@ -16,6 +16,18 @@ class Request extends AbstractHttp
 {
 
     /**
+     * The current scheme
+     * @var string
+     */
+    protected $scheme = '';
+
+    /**
+     * The current host
+     * @var string
+     */
+    protected $host = '';
+
+    /**
      * The current path string
      * @var string
      */
@@ -59,10 +71,22 @@ class Request extends AbstractHttp
             $uri = $uri[0];
         }
 
+        $this->setScheme(!empty($_SERVER['HTTPS']) ? 'https://' : 'http://');
+        $this->setHost($_SERVER['HTTP_HOST']);
         $this->setUri($uri);
         $this->setMethod($_SERVER['REQUEST_METHOD']);
 
         return $this;
+    }
+
+    public function setScheme(string $scheme = '')
+    {
+        $this->scheme = $scheme;
+    }
+
+    public function getScheme()
+    {
+        return $this->scheme;
     }
 
     /**
@@ -79,6 +103,22 @@ class Request extends AbstractHttp
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * @param string $host
+     */
+    public function setHost(string $host = '')
+    {
+        $this->host = $host;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 
     /**

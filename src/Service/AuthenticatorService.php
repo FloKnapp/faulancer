@@ -52,6 +52,7 @@ class AuthenticatorService implements ServiceInterface
             ->getDb()
             ->fetch(get_class($user))
             ->where('login', '=', $user->login)
+            ->orWhere('email', '=', $user->login)
             ->one();
 
         $crypt  = new Crypt();
@@ -60,7 +61,12 @@ class AuthenticatorService implements ServiceInterface
         if ($passOk && $userData instanceof Entity) {
 
             $this->saveUserInSession($userData);
-            return $this->controller->redirect($this->controller->route('admin'));
+
+            if ($userData->roles[0]->roleName === 'registered') {
+                return $this->controller->redirect($this->controller->route('user'));
+            } else {
+                return $this->controller->redirect($this->controller->route('admin'));
+            }
 
         }
 

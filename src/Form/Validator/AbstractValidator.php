@@ -7,7 +7,6 @@
 namespace Faulancer\Form\Validator;
 
 use Faulancer\Form\Type\AbstractType;
-use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Translate\Translator;
 
 /**

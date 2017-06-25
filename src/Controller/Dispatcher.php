@@ -83,6 +83,10 @@ class Dispatcher
         $action  = $this->requestType === 'api' ? $this->getRestfulAction() : $target['action'];
         $payload = !empty($target['var']) ? $target['var'] : [];
 
+        $payload = array_map('stripslashes', $payload);
+        $payload = array_map('htmlentities', $payload);
+        $payload = array_map('strip_tags', $payload);
+
         /** @var Response $class */
         $class = new $class($this->request);
 

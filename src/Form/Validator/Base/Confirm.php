@@ -39,7 +39,6 @@ class Confirm extends AbstractValidator
 
         self::$initialInput = null;
         return false;
-
     }
 
 }

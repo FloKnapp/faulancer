@@ -1,6 +1,6 @@
 <?php
 
-namespace Faulancer\Fixture\View;
+namespace Faulancer\Fixture\View\Helper;
 
 use Faulancer\View\AbstractViewHelper;
 

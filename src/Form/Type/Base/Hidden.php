@@ -26,6 +26,8 @@ class Hidden extends AbstractType
      */
     public function create()
     {
+        parent::create();
+
         $output = '<' . $this->inputType;
 
         foreach ($this->definition['attributes'] as $attr => $value) {

@@ -180,23 +180,24 @@ abstract class AbstractType
     public function setLabel(string $label)
     {
         $this->label = $label;
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getValue() :string
+    public function getValue()
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @return self
      * @codeCoverageIgnore
      */
-    public function setValue(string $value)
+    public function setValue($value)
     {
         $this->value = $value;
         return $this;
@@ -226,6 +227,7 @@ abstract class AbstractType
      */
     public function __toString() :string
     {
+        $this->create();
         return str_replace('  ', ' ', $this->element);
     }
 
@@ -240,6 +242,13 @@ abstract class AbstractType
     /**
      * @return self
      */
-    abstract public function create();
+    public function create()
+    {
+        if (empty($this->getLabel()) && !empty($this->definition['label'])) {
+            $this->setLabel($this->definition['label']);
+        }
+
+        return $this;
+    }
 
 }

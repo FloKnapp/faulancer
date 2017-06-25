@@ -26,7 +26,7 @@ class Checkbox extends AbstractType
      */
     public function create()
     {
-        $this->setLabel($this->definition['label']);
+        parent::create();
 
         $output = '';
 

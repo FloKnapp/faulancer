@@ -12,6 +12,13 @@ namespace Faulancer\Http;
 class XmlResponse extends Response
 {
 
+    public function __construct ($content = [])
+    {
+        parent::__construct($content);
+
+        $this->setContent($content);
+    }
+
     /** @var array  */
     protected $content = [];
 
@@ -28,7 +35,7 @@ class XmlResponse extends Response
                 $key = 'item' . $key;
             }
 
-            if(is_array($value['value'])) {
+            if(!empty($value['value']) && is_array($value['value'])) {
 
                 $node = $this->generateNode($xml, $key, $value);
                 $this->convertArrayToXml($node, $value['value']);
@@ -43,7 +50,7 @@ class XmlResponse extends Response
     /**
      * @param \SimpleXMLElement $xml
      * @param string            $key
-     * @param null|array        $value
+     * @param null|array|string $value
      * @return null|\SimpleXMLElement
      * @codeCoverageIgnore
      */
@@ -51,21 +58,35 @@ class XmlResponse extends Response
     {
         $node = null;
 
-        if (is_array($value) && in_array('@attributes', array_keys($value))) {
+        if (in_array('@attributes', array_keys($value))) {
 
             $attributes = $value['@attributes'];
 
-            if (!is_array($value['value'])) {
-                $node = $xml->addChild($key, htmlspecialchars($value['value']));
+            if (!empty($value['value']) && !is_array($value['value'])) {
+
+                $node = $xml->addChild($key, htmlspecialchars($value));
+
+                foreach ($attributes as $attr => $val) {
+                    $node->addAttribute($attr, $val);
+                }
+
             } else {
-                $node = $xml->addChild($key);
+
+                $node = $this->convertArrayToXml($xml, $value);
+
             }
 
-            foreach ($attributes as $attr => $val) {
-                $node->addAttribute($attr, $val);
-            }
+        } else if (!empty($value['value']) && is_array($value['value'])) {
+
+            $node = $this->convertArrayToXml($xml, $value['value']);
+
+        } else {
+
+            $node = $xml->addChild($key, htmlspecialchars($value));
 
         }
+
+
 
         return $node;
     }
@@ -77,7 +98,7 @@ class XmlResponse extends Response
      */
     public function setContent($content = [])
     {
-        $this->setResponseHeader(['Content-Base' => 'text/xml']);
+        $this->setResponseHeader(['Content-Type' => 'text/xml']);
 
         $xml = new \SimpleXMLElement('<?xml version="1.0"?><root></root>');
         $this->convertArrayToXml($xml, $content);
