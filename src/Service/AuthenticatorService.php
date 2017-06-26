@@ -56,7 +56,7 @@ class AuthenticatorService implements ServiceInterface
             ->one();
 
         if (empty($userData)) {
-            $this->controller->setFlashMessage('error.login', 'No valid username/password combination found.');
+            $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
             return $this->redirectToAuthentication();
         }
 
