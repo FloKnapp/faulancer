@@ -31,10 +31,9 @@ class DateTime extends AbstractValidator
             $date = new \DateTime($data);
             return true;
         } catch (\Exception $e) {
-            // We just validate the correct format with \DateTime and want a boolean return value
+            return false;
         }
 
-        return false;
     }
 
 }

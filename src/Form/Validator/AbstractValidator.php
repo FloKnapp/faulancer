@@ -15,18 +15,22 @@ use Faulancer\Translate\Translator;
 abstract class AbstractValidator
 {
 
+    /** @var AbstractType */
     protected $field;
 
+    /**
+     * @var string
+     */
+    protected $errorMessage = '';
+
+    /**
+     * AbstractValidator constructor.
+     * @param AbstractType $field
+     */
     public function __construct(AbstractType $field)
     {
         $this->field = $field;
     }
-
-    /**
-     * Define the error message in case of validation fails
-     * @var string
-     */
-    protected $errorMessage = '';
 
     /**
      * @return boolean
@@ -36,6 +40,7 @@ abstract class AbstractValidator
     {
         if (!$this->process($this->field->getValue())) {
 
+            $this->field->addAttribute('class',  'error');
             $this->field->setErrorMessages([$this->getMessage()]);
             return false;
 

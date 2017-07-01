@@ -15,7 +15,7 @@ class NotEmpty extends AbstractValidator
 {
 
     /** @var string  */
-    protected $errorMessage = 'validator_invalid_text';
+    protected $errorMessage = 'validator_empty_text';
 
     /**
      * @param mixed $data

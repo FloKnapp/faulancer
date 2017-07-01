@@ -126,6 +126,13 @@ abstract class AbstractType
             return false;
         }
 
+        if (strpos($def['containerPrefix'], '{name}') !== false) {
+
+            $name = $this->definition['attributes']['name'];
+            $def['containerPrefix'] = str_replace('{name}', $name, $def['containerPrefix']);
+
+        }
+
         return $def['containerPrefix']
             . $def['containerItemPrefix']
             . implode(
@@ -223,12 +230,16 @@ abstract class AbstractType
     }
 
     /**
-     * @return string
+     * @param string $key
+     * @param string $value
      */
-    public function __toString() :string
+    public function addAttribute(string $key, string $value)
     {
-        $this->create();
-        return str_replace('  ', ' ', $this->element);
+        if (!empty($this->definition['attributes'][$key])) {
+            $this->definition['attributes'][$key] = $this->definition['attributes'][$key] . ' ' . $value;
+        } else {
+            $this->definition['attributes'][$key] = $value;
+        }
     }
 
     /**
@@ -249,6 +260,15 @@ abstract class AbstractType
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() :string
+    {
+        $this->create();
+        return str_replace('  ', ' ', $this->element);
     }
 
 }

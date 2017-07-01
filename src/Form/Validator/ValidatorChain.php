@@ -17,6 +17,7 @@ class ValidatorChain
     /** @var AbstractValidator[] */
     protected $validators = [];
 
+    /** @var array */
     protected $messages = [];
 
     /** @var AbstractType|null */
@@ -58,7 +59,9 @@ class ValidatorChain
         }
 
         if (!empty($this->messages)) {
+            // Access first one because every validator can return its field object
             $this->validators[0]->getField()->setErrorMessages($this->messages);
+            $this->validators[0]->getField()->addAttribute('class', 'error');
             return false;
         }
 

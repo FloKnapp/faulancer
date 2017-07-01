@@ -27,6 +27,10 @@ class Text extends AbstractValidator
      */
     public function process($data)
     {
+        if (empty($data)) {
+            $this->errorMessage = 'validator_empty_text';
+        }
+
         return !empty($data) && is_string($data) && !is_numeric($data);
     }
 
