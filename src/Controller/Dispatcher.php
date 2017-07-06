@@ -15,6 +15,9 @@ use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
 use Faulancer\Service\Config;
+use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
@@ -74,6 +77,12 @@ class Dispatcher
         /** @var Response $response */
         $response = null;
 
+        if ($this->detectLanguageSwitch()) {
+            $serviceLocator = ServiceLocator::instance();
+            $sessionManager = $serviceLocator->get(SessionManagerService::class);
+            $sessionManager->set('language', $this->request->getParam('lang'));
+        }
+
         if (strpos($this->request->getUri(), '/api') === 0) {
             $this->requestType = 'api';
         }
@@ -102,6 +111,11 @@ class Dispatcher
 
         return $response;
 
+    }
+
+    private function detectLanguageSwitch()
+    {
+        return $this->request->getParam('lang') !== null;
     }
 
     /**

@@ -7,6 +7,8 @@
  */
 namespace Faulancer\Controller;
 
+use Faulancer\Cache\Cache;
+use Faulancer\Cache\CacheableInterface;
 use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;

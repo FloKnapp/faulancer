@@ -10,6 +10,7 @@ use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
+use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
@@ -64,6 +65,11 @@ class Link extends AbstractViewHelper
         }
 
         $linkPattern = '<a ' . $id . $class . $style . 'href="%s" onfocus="blur()">%s</a>';
+
+        if (!empty($route['i18n_key'])) {
+            $translator = new Translator();
+            $route['title'] = $translator->translate($route['i18n_key']);
+        }
 
         $link = sprintf($linkPattern, $route['path'], $route['title']);
 
