@@ -18,7 +18,7 @@ class LanguageLink extends AbstractViewHelper
     protected $languageTextMapping = [
         'de' => 'Deutsch',
         'en' => 'English',
-        'hr' => 'Kroatisch'
+        'hr' => 'Hrvatski'
     ];
 
     public function __invoke()
