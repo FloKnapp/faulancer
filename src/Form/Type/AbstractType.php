@@ -6,10 +6,16 @@
  */
 namespace Faulancer\Form\Type;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Form\Validator\AbstractValidator;
+use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
+use Faulancer\ServiceLocator\ServiceLocatorAwareInterface;
+use Faulancer\ServiceLocator\ServiceLocatorInterface;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class AbstractType
@@ -46,6 +52,12 @@ abstract class AbstractType
 
     /** @var ValidatorChain */
     protected $validatorChain = null;
+
+    /** @var array */
+    protected $formErrorDecoration = [];
+
+    /** @var ServiceLocatorInterface */
+    protected $serviceLocator;
 
     /**
      * AbstractType constructor.
@@ -259,6 +271,8 @@ abstract class AbstractType
             $this->setLabel($this->definition['label']);
         }
 
+        $this->translateLabelsAndPlaceholders();
+
         return $this;
     }
 
@@ -269,6 +283,72 @@ abstract class AbstractType
     {
         $this->create();
         return str_replace('  ', ' ', $this->element);
+    }
+
+    /**
+     * @return bool
+     */
+    private function translateLabelsAndPlaceholders()
+    {
+        if (!empty($this->definition['attributes']['placeholder'])) {
+            $this->translateType('placeholder');
+        } else if (!empty($this->definition['label'])) {
+            $this->translateType('label');
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    private function translateType($type)
+    {
+        /** @var Config $config */
+        $config = $this->getServiceLocator()->get(Config::class);
+
+        /** @var SessionManager $sessionManager */
+        $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+        $lang           = $sessionManager->get('language');
+
+        try {
+
+            $trans = $config->get('translation:' . $lang);
+
+            if (!empty($trans['form_' . $this->getName()])) {
+
+                $transText = $trans['form_' . $this->getName()];
+
+                switch ($type) {
+
+                    case 'label':
+                        $this->setLabel($transText);
+                        break;
+
+                    case 'placeholder':
+                        $this->definition['attributes']['placeholder'] = $transText;
+                        break;
+
+                }
+
+            }
+
+        } catch (ConfigInvalidException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return ServiceLocatorInterface
+     */
+    private function getServiceLocator()
+    {
+        return ServiceLocator::instance();
     }
 
 }

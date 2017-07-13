@@ -42,10 +42,11 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * @param Entity $user
+     * @param bool   $shouldBeActive
      * @return bool
      * @codeCoverageIgnore
      */
-    public function loginUser(Entity $user)
+    public function loginUser(Entity $user, $shouldBeActive)
     {
         /** @var Entity $userData */
         $userData = $this->controller
@@ -57,6 +58,11 @@ class AuthenticatorService implements ServiceInterface
 
         if (empty($userData)) {
             $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
+            return $this->redirectToAuthentication();
+        }
+
+        if ($shouldBeActive && $userData->active !== 1) {
+            $this->controller->setFlashMessage('error.active', 'user_is_not_activated');
             return $this->redirectToAuthentication();
         }
 
