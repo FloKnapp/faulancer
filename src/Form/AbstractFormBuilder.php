@@ -12,9 +12,13 @@ use Faulancer\Exception\InvalidFormElementException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
+use Faulancer\Security\Csrf;
 use Faulancer\Service\RequestService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
+use Faulancer\Session\SessionManager;
+use Nette\Http\Session;
 
 /**
  * Class AbstractFormBuilder
@@ -183,6 +187,10 @@ abstract class AbstractFormBuilder
         foreach ($this->fields as $field) {
 
             $result = $field->isValid();
+
+            if ($field->getName() === 'csrf' && !Csrf::isValid()) {
+                $result = 'validator_invalid_token';
+            }
 
             if ($result !== null) {
                 $errors[] = $result;
