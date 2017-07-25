@@ -31,7 +31,10 @@ class Text extends AbstractValidator
             $this->errorMessage = 'validator_empty_text';
         }
 
-        $data = strip_tags($data);
+        if (!preg_match('/^[a-z0-9\s\-_]+$/i', $data)) {
+            $this->errorMessage = 'validator_invalid_text';
+            return false;
+        }
 
         return !empty($data) && is_string($data) && !is_numeric($data);
     }
