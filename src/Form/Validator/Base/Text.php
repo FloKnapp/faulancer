@@ -31,6 +31,8 @@ class Text extends AbstractValidator
             $this->errorMessage = 'validator_empty_text';
         }
 
+        $data = strip_tags($data);
+
         return !empty($data) && is_string($data) && !is_numeric($data);
     }
 
