@@ -9,6 +9,7 @@ namespace Faulancer\Controller;
 
 use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
+use Faulancer\Service\Config;
 
 /**
  * Class ErrorAbstractController
@@ -38,7 +39,7 @@ class ErrorController extends AbstractController
     {
         ob_end_clean();
 
-        if (getenv('APPLICATION_ENV') || defined('APPLICATION_ENV') && APPLICATION_ENV === 'development') {
+        if (getenv('APPLICATION_ENV') === 'development' || defined('APPLICATION_ENV') && APPLICATION_ENV === 'development') {
             return $this->renderDebugPage();
         }
 
@@ -82,7 +83,13 @@ class ErrorController extends AbstractController
      */
     private function renderNotFoundPage()
     {
+        $errorController = $this->getServiceLocator()->get(Config::class)->get('customErrorController');
 
+        if ($errorController) {
+            return (new $errorController($this->request))->notFoundAction();
+        }
+
+        die();
     }
 
 }
