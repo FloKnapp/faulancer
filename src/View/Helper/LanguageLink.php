@@ -17,7 +17,7 @@ class LanguageLink extends AbstractViewHelper
 
     protected $languageTextMapping = [
         'de' => 'Deutsch',
-        'gb' => 'English',
+        'en' => 'English',
         'hr' => 'Hrvatski'
     ];
 
@@ -28,10 +28,10 @@ class LanguageLink extends AbstractViewHelper
         $translations = $config->get('translation');
 
         $result  = [];
-        $pattern = '<a class="lang %s" href="?lang=%s">%s</a>';
+        $pattern = '<a rel="alternate" hreflang="%s" class="lang %s" href="?lang=%s">%s</a>';
 
         foreach ($translations as $key => $content) {
-            $result[] = sprintf($pattern, strtolower($key), $key, $this->languageTextMapping[$key]);
+            $result[] = sprintf($pattern, strtolower($key), strtolower($key), $key, $this->languageTextMapping[$key]);
         }
 
         return implode('', $result);
