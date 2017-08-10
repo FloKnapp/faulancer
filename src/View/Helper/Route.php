@@ -52,7 +52,15 @@ class Route extends AbstractViewHelper
         }
 
         if (!empty($parameters)) {
-            $path = $path . '/' . implode('/', $parameters);
+
+            if (in_array('query', array_keys($parameters), true)) {
+                $query = $parameters['query'];
+                $query = http_build_query($query);
+                $path  = $path . '?' . $query;
+            } else {
+                $path = $path . '/' . implode('/', $parameters);
+            }
+
         }
 
         return $path;

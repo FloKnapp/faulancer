@@ -95,8 +95,9 @@ abstract class AbstractFormBuilder
         $action = $this->formAttributes['action'] ?? '';
         $method = $this->formAttributes['method'] ?? '';
         $enctype = $this->formAttributes['enctype'] ?? 'application/x-www-form-urlencoded';
+        $autocomplete = $this->formAttributes['autocomplete'] ?? 'on';
 
-        return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '">';
+        return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '" autocomplete="' . $autocomplete . '">';
     }
 
     /**

@@ -33,7 +33,7 @@ class Password extends AbstractType
             $output .= ' ' . $attr . '="' . $value . '" ';
         }
 
-        $output .= '/>';
+        $output .= ' />';
 
         $this->element = $output;
 
