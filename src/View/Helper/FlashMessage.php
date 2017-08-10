@@ -34,7 +34,7 @@ class FlashMessage extends AbstractViewHelper
         $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
 
         if ($sessionManager->hasFlashMessage($key)) {
-            $result = '<span class="flashMessage ' . $type . '">' . $translator->translate($sessionManager->getFlashMessage($key)) . '</span>';
+            $result = '<span class="flash-message ' . $type . '">' . $translator->translate($sessionManager->getFlashMessage($key)) . '</span>';
         }
 
         return $result;
