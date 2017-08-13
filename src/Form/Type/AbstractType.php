@@ -244,6 +244,7 @@ abstract class AbstractType
     /**
      * @param string $key
      * @param string $value
+     * @return self
      */
     public function addAttribute(string $key, string $value)
     {
@@ -252,6 +253,8 @@ abstract class AbstractType
         } else {
             $this->definition['attributes'][$key] = $value;
         }
+
+        return $this;
     }
 
     /**
