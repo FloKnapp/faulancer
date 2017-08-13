@@ -23,72 +23,37 @@ class XmlResponse extends Response
     protected $content = [];
 
     /**
-     * @param array             $data
-     * @param \SimpleXMLElement $xml
-     * @codeCoverageIgnore
+     * @param $dom
+     * @param $data
+     * @return bool|\DOMElement
      */
-    private function convertArrayToXml(\SimpleXMLElement &$xml, $data)
+    protected function generateXmlElement( \DOMDocument $dom, $data )
     {
-        foreach ($data as $key=>$value) {
+        if ( empty( $data['name'] ) )
+            return false;
 
-            if(is_numeric($key)) {
-                $key = 'item' . $key;
+        // Create the element
+        $element_value = ( ! empty( $data['value'] ) ) ? $data['value'] : null;
+        $element = $dom->createElement( $data['name'], $element_value );
+
+        // Add any attributes
+        if ( ! empty( $data['attributes'] ) && is_array( $data['attributes'] ) ) {
+            foreach ( $data['attributes'] as $attribute_key => $attribute_value ) {
+                $element->setAttribute( $attribute_key, $attribute_value );
             }
-
-            if(!empty($value['value']) && is_array($value['value'])) {
-
-                $node = $this->generateNode($xml, $key, $value);
-                $this->convertArrayToXml($node, $value['value']);
-
-            } else {
-                $this->generateNode($xml, $key, $value);
-            }
-
-        }
-    }
-
-    /**
-     * @param \SimpleXMLElement $xml
-     * @param string            $key
-     * @param null|array|string $value
-     * @return null|\SimpleXMLElement
-     * @codeCoverageIgnore
-     */
-    private function generateNode(\SimpleXMLElement &$xml, $key, $value = null)
-    {
-        $node = null;
-
-        if (in_array('@attributes', array_keys($value))) {
-
-            $attributes = $value['@attributes'];
-
-            if (!empty($value['value']) && !is_array($value['value'])) {
-
-                $node = $xml->addChild($key, htmlspecialchars($value));
-
-                foreach ($attributes as $attr => $val) {
-                    $node->addAttribute($attr, $val);
-                }
-
-            } else {
-
-                $node = $this->convertArrayToXml($xml, $value);
-
-            }
-
-        } else if (!empty($value['value']) && is_array($value['value'])) {
-
-            $node = $this->convertArrayToXml($xml, $value['value']);
-
-        } else {
-
-            $node = $xml->addChild($key, htmlspecialchars($value));
-
         }
 
+        // Any other items in the data array should be child elements
+        foreach ( $data as $data_key => $child_data ) {
+            if ( ! is_numeric( $data_key ) )
+                continue;
 
+            $child = $this->generateXmlElement( $dom, $child_data );
+            if ( $child )
+                $element->appendChild( $child );
+        }
 
-        return $node;
+        return $element;
     }
 
     /**
@@ -100,9 +65,19 @@ class XmlResponse extends Response
     {
         $this->setResponseHeader(['Content-Type' => 'text/xml']);
 
-        $xml = new \SimpleXMLElement('<?xml version="1.0"?><root></root>');
-        $this->convertArrayToXml($xml, $content);
-        $result = $xml->asXml();
+        $doc = new \DOMDocument();
+        $doc->xmlVersion = '1.0';
+        $doc->encoding   = 'UTF-8';
+        $child = $this->generateXmlElement($doc, $content);
+
+        if ( $child ) {
+            $doc->appendChild($child);
+        }
+
+        $doc->formatOutput = true; // Add whitespace to make easier to read XML
+        $xml = $doc->saveXML();
+
+        $result = $xml;
 
         $this->content = $result;
         return $this;
