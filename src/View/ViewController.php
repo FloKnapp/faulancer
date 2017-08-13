@@ -262,14 +262,15 @@ class ViewController
     public function __call($name, $arguments)
     {
         // Search in core view helpers first
-
         $coreViewHelper = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
         if (class_exists($coreViewHelper)) {
+
             $class = new $coreViewHelper;
             array_unshift($arguments, $this);
 
             return call_user_func_array($class, $arguments);
+
         }
 
         // No core implementations found; search in custom view helpers
@@ -281,12 +282,13 @@ class ViewController
         $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
 
         if (class_exists($customViewHelper)) {
+
             $class = new $customViewHelper;
             array_unshift($arguments, $this);
 
             return call_user_func_array($class, $arguments);
-        }
 
+        }
 
         throw new ViewHelperException('No view helper for "' . $name . '" found.');
     }
