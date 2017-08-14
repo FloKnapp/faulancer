@@ -66,7 +66,7 @@ class Link extends AbstractViewHelper
 
         $linkPattern = '<a ' . $id . $class . $style . 'href="%s" onfocus="blur()">%s</a>';
 
-        if (!empty($route['i18n_key'])) {
+        if (!empty($route['i18n_key']) && !empty($route['title'])) {
             $translator = new Translator();
             $route['title'] = $translator->translate($route['i18n_key']);
         }
