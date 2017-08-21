@@ -40,6 +40,11 @@ abstract class AbstractController
     protected $request;
 
     /**
+     * @var array
+     */
+    protected $requiredPermissions = [];
+
+    /**
      * AbstractController constructor.
      * @param Request $request
      */
@@ -112,19 +117,27 @@ abstract class AbstractController
     /**
      * Set required authentication
      *
-     * @param array $role
+     * @param array $roles
      * @return bool
      */
-    public function requireAuth($role) :bool
+    public function requiredPermissions($roles = [])
     {
         /** @var AuthenticatorService $authenticator */
         $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
 
-        if ($authenticator->isAuthenticated($role) === false) {
+        if (!empty($roles) && $authenticator->isAuthenticated($roles) === false) {
             return $authenticator->redirectToAuthentication();
         }
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequiredPermissions()
+    {
+        return $this->requiredPermissions;
     }
 
     /**

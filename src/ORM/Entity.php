@@ -14,6 +14,7 @@ use \ORM\EntityManager;
 
 /**
  * Class Entity
+ * @property int $id
  */
 abstract class Entity extends \ORM\Entity {
 

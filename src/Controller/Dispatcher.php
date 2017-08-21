@@ -14,6 +14,7 @@ use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -96,17 +97,28 @@ class Dispatcher
         $payload = array_map('htmlentities', $payload);
         $payload = array_map('strip_tags', $payload);
 
-        /** @var Response $class */
+        /** @var Response|AbstractController $class */
         $class = new $class($this->request);
 
         if (!method_exists($class, $action)) {
             throw new MethodNotFoundException('Class "' . get_class($class) . '" doesn\'t have the method ' . $action);
         }
 
-        $response = call_user_func_array([$class, $action], $payload);
+        $authRequired = $this->detectPermissions($class, $action);
 
-        if (!$response instanceof Response) {
-            throw new IncompatibleResponseException('No valid response returned.');
+        if ($authRequired) {
+
+            $permDeniedTemplate = $this->config->get('auth:authFailTemplate');
+            $response           = $class->render($permDeniedTemplate);
+
+        } else {
+
+            $response = call_user_func_array([$class, $action], $payload);
+
+            if (!$response instanceof Response) {
+                throw new IncompatibleResponseException('No valid response returned.');
+            }
+
         }
 
         return $response;
@@ -116,6 +128,37 @@ class Dispatcher
     private function detectLanguageSwitch()
     {
         return $this->request->getParam('lang') !== null;
+    }
+
+    /**
+     * @param AbstractController $class
+     * @param string             $action
+     * @return bool|int
+     */
+    private function detectPermissions($class, $action)
+    {
+        if (method_exists($class, 'getRequiredPermissions') && empty($class->getRequiredPermissions())) {
+            return false;
+        }
+
+        $class->$action();
+
+        $permissions = $class->getRequiredPermissions();
+
+        if (empty($permissions)) {
+            return false;
+        }
+
+        /** @var AuthenticatorService $authenticator */
+        $authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
+
+        if (!empty($authenticator->getUserFromSession()) && !$authenticator->isAuthenticated($permissions)) {
+            return true;
+        } elseif (empty($authenticator->getUserFromSession())) {
+            return $authenticator->redirectToAuthentication();
+        }
+
+        return false;
     }
 
     /**

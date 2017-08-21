@@ -7,6 +7,7 @@
 namespace Faulancer\Service;
 
 use Faulancer\Controller\AbstractController;
+use Faulancer\Http\Response;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -82,6 +83,7 @@ class AuthenticatorService implements ServiceInterface
         }
 
         $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
+
         return $this->redirectToAuthentication();
     }
 
@@ -127,6 +129,7 @@ class AuthenticatorService implements ServiceInterface
         foreach ($user->roles as $userRole) {
 
             if (in_array($userRole->roleName, $roles, true)) {
+
                 return true;
             }
 
