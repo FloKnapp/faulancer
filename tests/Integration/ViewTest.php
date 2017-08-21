@@ -8,7 +8,7 @@ use Faulancer\Exception\ViewHelperException;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
-use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\AuthenticatorPlugin;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
@@ -311,15 +311,15 @@ class ViewTest extends TestCase
         $user = new UserEntity();
         $user->roles[] = new RoleAuthorEntity();
 
-        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession', 'isAuthenticated']);
+        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['getUserFromSession', 'isAuthenticated']);
         $authMock->method('getUserFromSession')->willReturn($user);
         $authMock->method('isAuthenticated')->with(['author'])->willReturn(true);
 
-        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
+        ServiceLocator::instance()->set(AuthenticatorPlugin::class, $authMock);
         $this->assertTrue($view->user()->isAuthenticated(['author']));
 
-        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
+        ServiceLocator::instance()->set(AuthenticatorPlugin::class, $authMock);
         $userEntity = $view->user()->get();
 
         $this->assertTrue($view->user()->isLoggedIn());

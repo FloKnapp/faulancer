@@ -19,7 +19,7 @@ class Crypt
      * @return bool|string
      * @throws \Exception
      */
-    public function hashPassword(string $password) :string
+    public static function hashPassword(string $password) :string
     {
         return password_hash($password, CRYPT_BLOWFISH);
     }
@@ -31,7 +31,7 @@ class Crypt
      * @param string $hash
      * @return bool
      */
-    public function verifyPassword(string $password, string $hash) :bool
+    public static function verifyPassword(string $password, string $hash) :bool
     {
         return password_verify($password, $hash);
     }

@@ -7,18 +7,18 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\Cache\Cache;
-use Faulancer\Cache\CacheableInterface;
+use Faulancer\Exception\PluginException;
 use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
+use Faulancer\Plugin\AbstractPlugin;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
-use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -38,11 +38,6 @@ abstract class AbstractController
      * @var Request
      */
     protected $request;
-
-    /**
-     * @var array
-     */
-    protected $requiredPermissions = [];
 
     /**
      * AbstractController constructor.
@@ -115,29 +110,20 @@ abstract class AbstractController
     }
 
     /**
-     * Set required authentication
-     *
      * @param array $roles
+     *
      * @return bool
      */
-    public function requiredPermissions($roles = [])
+    public function requireAuth($roles = [])
     {
-        /** @var AuthenticatorService $authenticator */
-        $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
+        /** @var AuthenticatorService $authService */
+        $authService = $this->getServiceLocator()->get(AuthenticatorService::class);
 
-        if (!empty($roles) && $authenticator->isAuthenticated($roles) === false) {
-            return $authenticator->redirectToAuthentication();
+        if (!$authService->isAuthenticated($roles)) {
+            return $authService->redirectToAuthentication();
         }
 
         return true;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequiredPermissions()
-    {
-        return $this->requiredPermissions;
     }
 
     /**
@@ -215,6 +201,48 @@ abstract class AbstractController
     public function getRequest() :Request
     {
         return $this->request;
+    }
+
+    /**
+     * Magic method for providing a view helper
+     *
+     * @param  string $name      The class name
+     * @param  array  $arguments Arguments if given
+     * @return AbstractPlugin
+     * @throws PluginException
+     */
+    public function __call($name, $arguments)
+    {
+        // Search in core view helpers first
+        $corePlugin = 'Faulancer\Plugin\\' . ucfirst($name);
+
+        if (class_exists($corePlugin)) {
+
+            $class = new $corePlugin;
+            array_unshift($arguments, $this);
+
+            return call_user_func_array($class, $arguments);
+
+        }
+
+        // No core implementations found; search in custom view helpers
+
+        /** @var Config $config */
+        $config = ServiceLocator::instance()->get(Config::class);
+        $namespace = '\\' . $config->get('namespacePrefix');
+
+        $customPlugin = $namespace . '\Plugin\\' . ucfirst($name);
+
+        if (class_exists($customPlugin)) {
+
+            $class = new $customPlugin;
+            array_unshift($arguments, $this);
+
+            return call_user_func_array($class, $arguments);
+
+        }
+
+        throw new PluginException('No plugin for "' . $name . '" found.');
     }
 
 }

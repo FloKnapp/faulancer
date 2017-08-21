@@ -8,7 +8,6 @@ namespace Faulancer\View\Helper;
 
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\SessionManagerService;
-use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
 /**

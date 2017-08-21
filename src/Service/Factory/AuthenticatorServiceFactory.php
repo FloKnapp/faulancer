@@ -21,6 +21,7 @@ class AuthenticatorServiceFactory implements FactoryInterface
 
     /**
      * @param ServiceLocatorInterface $serviceLocator
+     *
      * @return AuthenticatorService
      * @codeCoverageIgnore
      */

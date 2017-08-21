@@ -11,7 +11,7 @@ use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
 use Faulancer\ORM\User\Role;
-use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\AuthenticatorPlugin;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -27,7 +27,7 @@ use Symfony\Component\EventDispatcher\Tests\Service;
 class AuthenticatorServiceTest extends TestCase
 {
 
-    /** @var AuthenticatorService */
+    /** @var AuthenticatorPlugin */
     protected $authenticator;
 
     /** @var SessionManagerService */
@@ -41,8 +41,8 @@ class AuthenticatorServiceTest extends TestCase
 
         ServiceLocator::instance()->set('Faulancer\Service\HttpService', $httpMock);
 
-        /** @var AuthenticatorService $authenticator */
-        $this->authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
+        /** @var AuthenticatorPlugin $authenticator */
+        $this->authenticator = ServiceLocator::instance()->get(AuthenticatorPlugin::class);
 
         /** @var SessionManagerService sessionManager */
         $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
@@ -82,8 +82,8 @@ class AuthenticatorServiceTest extends TestCase
         $user = new UserEntity();
         $user->roles[] = new RoleAuthorEntity();
 
-        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
+        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
         $result = $authMock->isAuthenticated(['author']);
@@ -100,8 +100,8 @@ class AuthenticatorServiceTest extends TestCase
         $user = new UserEntity();
         $user->roles[] = new RoleAnonymousEntity();
 
-        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
+        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
         $result = $authMock->isAuthenticated(['author']);
@@ -117,8 +117,8 @@ class AuthenticatorServiceTest extends TestCase
 
         $user = new \stdClass();
 
-        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
+        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
         $result = $authMock->isAuthenticated(['author']);

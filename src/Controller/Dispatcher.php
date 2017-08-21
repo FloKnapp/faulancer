@@ -9,16 +9,15 @@ namespace Faulancer\Controller;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\IncompatibleResponseException;
-use Faulancer\Form\AbstractFormHandler;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
+use Faulancer\Service\AuthenticatorPlugin;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
@@ -75,13 +74,14 @@ class Dispatcher
             return $assets;
         }
 
-        /** @var Response $response */
-        $response = null;
+        if ($this->request->getParam('lang') !== null) {
 
-        if ($this->detectLanguageSwitch()) {
             $serviceLocator = ServiceLocator::instance();
+
+            /** @var SessionManagerService $sessionManager */
             $sessionManager = $serviceLocator->get(SessionManagerService::class);
             $sessionManager->set('language', $this->request->getParam('lang'));
+
         }
 
         if (strpos($this->request->getUri(), '/api') === 0) {
@@ -93,72 +93,19 @@ class Dispatcher
         $action  = $this->requestType === 'api' ? $this->getRestfulAction() : $target['action'];
         $payload = !empty($target['var']) ? $target['var'] : [];
 
-        $payload = array_map('stripslashes', $payload);
-        $payload = array_map('htmlentities', $payload);
-        $payload = array_map('strip_tags', $payload);
+        $initializer = new Initializer();
+        $initializer->setClass($class);
+        $initializer->setAction($action);
+        $initializer->setParams($payload);
 
-        /** @var Response|AbstractController $class */
-        $class = new $class($this->request);
+        $response = $initializer->execute();
 
-        if (!method_exists($class, $action)) {
-            throw new MethodNotFoundException('Class "' . get_class($class) . '" doesn\'t have the method ' . $action);
-        }
-
-        $authRequired = $this->detectPermissions($class, $action);
-
-        if ($authRequired) {
-
-            $permDeniedTemplate = $this->config->get('auth:authFailTemplate');
-            $response           = $class->render($permDeniedTemplate);
-
-        } else {
-
-            $response = call_user_func_array([$class, $action], $payload);
-
-            if (!$response instanceof Response) {
-                throw new IncompatibleResponseException('No valid response returned.');
-            }
-
+        if (!$response instanceof Response) {
+            throw new IncompatibleResponseException('No valid response returned.');
         }
 
         return $response;
 
-    }
-
-    private function detectLanguageSwitch()
-    {
-        return $this->request->getParam('lang') !== null;
-    }
-
-    /**
-     * @param AbstractController $class
-     * @param string             $action
-     * @return bool|int
-     */
-    private function detectPermissions($class, $action)
-    {
-        if (method_exists($class, 'getRequiredPermissions') && empty($class->getRequiredPermissions())) {
-            return false;
-        }
-
-        $class->$action();
-
-        $permissions = $class->getRequiredPermissions();
-
-        if (empty($permissions)) {
-            return false;
-        }
-
-        /** @var AuthenticatorService $authenticator */
-        $authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
-
-        if (!empty($authenticator->getUserFromSession()) && !$authenticator->isAuthenticated($permissions)) {
-            return true;
-        } elseif (empty($authenticator->getUserFromSession())) {
-            return $authenticator->redirectToAuthentication();
-        }
-
-        return false;
     }
 
     /**

@@ -12,10 +12,14 @@ namespace Faulancer\Http;
 class XmlResponse extends Response
 {
 
+    /**
+     * XmlResponse constructor.
+     *
+     * @param array $content
+     */
     public function __construct ($content = [])
     {
         parent::__construct($content);
-
         $this->setContent($content);
     }
 
@@ -27,7 +31,7 @@ class XmlResponse extends Response
      * @param $data
      * @return bool|\DOMElement
      */
-    protected function generateXmlElement( \DOMDocument $dom, $data )
+    protected function generateXmlElement(\DOMDocument $dom, $data )
     {
         if ( empty( $data['name'] ) )
             return false;

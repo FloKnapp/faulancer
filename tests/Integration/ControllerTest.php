@@ -8,7 +8,7 @@ use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Fixture\Controller\DummyController;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
-use Faulancer\Service\AuthenticatorService;
+use Faulancer\Service\AuthenticatorPlugin;
 use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\HttpService;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -96,12 +96,12 @@ class ControllerTest extends TestCase
      */
     public function testRequireAuthSuccess()
     {
-        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isAuthenticated', 'redirectToAuthentication']);
+        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['isAuthenticated', 'redirectToAuthentication']);
         $authMock->method('isAuthenticated')->will($this->returnValue(true));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorPlugin', $authMock);
 
         $this->assertTrue($this->controller->requireAuth(['test']));
     }
@@ -112,11 +112,11 @@ class ControllerTest extends TestCase
     public function testRequireAuthRedirectToLogin()
     {
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isAuthenticated', 'redirectToAuthentication']);
+        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['isAuthenticated', 'redirectToAuthentication']);
         $authMock->method('isAuthenticated')->will($this->returnValue(false));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(false));
 
-        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorPlugin', $authMock);
 
         $this->assertFalse($this->controller->requireAuth(['test']));
     }

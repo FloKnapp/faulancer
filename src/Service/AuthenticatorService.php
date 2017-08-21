@@ -1,13 +1,12 @@
 <?php
 /**
  * Class AuthenticatorService | AuthenticatorService.php
- * @package Faulancer\Auth
+ * @package Faulancer\Service
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Service;
 
 use Faulancer\Controller\AbstractController;
-use Faulancer\Http\Response;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -67,8 +66,7 @@ class AuthenticatorService implements ServiceInterface
             return $this->redirectToAuthentication();
         }
 
-        $crypt  = new Crypt();
-        $passOk = $crypt->verifyPassword($user->password, $userData->password);
+        $passOk = Crypt::verifyPassword($user->password, $userData->password);
 
         if ($passOk && $userData instanceof Entity) {
 
@@ -90,13 +88,8 @@ class AuthenticatorService implements ServiceInterface
     /**
      * @return bool
      */
-    public function redirectToAuthentication()
+    public function redirectToAccessDeniedPage()
     {
-        $this->controller->getSessionManager()->setFlashMessage(
-            'redirectAfterAuth',
-            $this->controller->getRequest()->getUri()
-        );
-
         /** @var Config $config */
         $config  = $this->controller->getServiceLocator()->get(Config::class);
         $authUrl = $config->get('auth:authUrl');
@@ -105,12 +98,15 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
-     * @param string $uri
-     * @codeCoverageIgnore
+     * @return bool
      */
-    public function redirectAfterAuthentication(string $uri)
+    public function redirectToAuthentication()
     {
-        $this->redirectAfterAuth = $uri;
+        /** @var Config $config */
+        $config  = $this->controller->getServiceLocator()->get(Config::class);
+        $authUrl = $config->get('auth:authUrl');
+
+        return $this->controller->redirect($authUrl);
     }
 
     /**
@@ -154,6 +150,10 @@ class AuthenticatorService implements ServiceInterface
     public function getUserFromSession()
     {
         $id = $this->controller->getSessionManager()->get('user');
+
+        if (empty($id)) {
+            return null;
+        }
 
         /** @var Entity $user */
         $user = $this->controller->getDb()->fetch(Entity::class, $id);
