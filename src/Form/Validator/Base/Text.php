@@ -31,7 +31,11 @@ class Text extends AbstractValidator
             $this->errorMessage = 'validator_empty_text';
         }
 
-        if (!preg_match('/^[a-z0-9\s\-_]+$/i', $data)) {
+        if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+
+        if (!preg_match('/^[a-z0-9\s\-_+]+$/i', $data)) {
             $this->errorMessage = 'validator_invalid_text';
             return false;
         }
