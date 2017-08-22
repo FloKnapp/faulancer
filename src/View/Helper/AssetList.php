@@ -6,6 +6,7 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Service\Config;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
@@ -40,7 +41,7 @@ class AssetList extends AbstractViewHelper
         }
 
         /** @var array $files */
-        $files = $view->getVariable('assets'.ucfirst($type));
+        $files = $view->getVariable('assets' . ucfirst($type));
 
         if (empty($files)) {
             return '';

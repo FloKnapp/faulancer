@@ -24,6 +24,11 @@ class ViewController
 {
 
     /**
+     * @var Config
+     */
+    private $config;
+
+    /**
      * Holds the view variables
      * @var array
      */
@@ -46,6 +51,11 @@ class ViewController
      */
     private $parentTemplate = null;
 
+    public function __construct()
+    {
+        $this->config = ServiceLocator::instance()->get(Config::class);
+    }
+
     /**
      * Set template for this view
      *
@@ -56,11 +66,8 @@ class ViewController
      */
     public function setTemplate(string $template = '') :self
     {
-        /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-
-        if (empty($this->templatePath) && strpos($template, $config->get('viewsRoot')) === false) {
-            $template = $config->get('viewsRoot') . $template;
+        if (empty($this->templatePath) && strpos($template, $this->config->get('viewsRoot')) === false) {
+            $template = $this->config->get('viewsRoot') . $template;
         } else {
             $template = $this->templatePath . $template;
         }
@@ -98,7 +105,7 @@ class ViewController
      * @param string $file
      * @return self
      */
-    public function addScript($file) :self
+    public function addScript(string $file) :self
     {
         $this->variable['assetsJs'][] = $file;
         return $this;
@@ -108,12 +115,55 @@ class ViewController
      * Add stylesheet from outside
      *
      * @param string $file
+     * @param bool   $minify
      * @return self
      */
-    public function addStylesheet($file) :self
+    public function addStylesheet(string $file, $minify = false) :self
     {
+        if ($minify && defined('APPLICATION_ENV') && APPLICATION_ENV === 'production') {
+            $file = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
+        } else if ($minify && defined('APPLICATION_ENV') && APPLICATION_ENV === 'development') {
+            $this->minifyAsset($file);
+        }
+
         $this->variable['assetsCss'][] = $file;
+
         return $this;
+    }
+
+    protected function minifyAsset($file)
+    {
+
+        $projectRoot = $this->config->get('projectRoot');
+        $filePath    = $projectRoot . '/public';
+        $fileName    = $filePath . $file;
+
+        $contents = str_replace(
+            ["\n", "\t", "  ", ": ", " {", "{ ", " }", ";}"],
+            ["", "", "", ":", "{", "{", "}", "}"],
+            file_get_contents($fileName)
+        );
+
+        $minifiedName      = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
+        $minifiedPathName  = $filePath . $minifiedName;
+
+        $isSameSize = file_exists($minifiedPathName) && strlen($contents) === filesize($minifiedPathName);
+
+        if (file_exists($minifiedName) && $isSameSize) {
+
+            $this->variable['assetsCss'][] = $minifiedName;
+            return $this;
+
+        } else {
+
+            $newFileName = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
+            file_put_contents($minifiedPathName, $contents);
+            $file = $newFileName;
+
+        }
+
+        return $file;
+
     }
 
     /**
