@@ -285,6 +285,7 @@ abstract class AbstractType
     public function __toString() :string
     {
         $this->create();
+
         return str_replace('  ', ' ', $this->element);
     }
 

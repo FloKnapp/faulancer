@@ -189,10 +189,6 @@ abstract class AbstractFormBuilder
 
             $result = $field->isValid();
 
-            if ($field->getName() === 'csrf' && !Csrf::isValid()) {
-                $result = 'validator_invalid_token';
-            }
-
             if ($result !== null) {
                 $errors[] = $result;
             }

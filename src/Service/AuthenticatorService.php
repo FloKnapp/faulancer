@@ -113,19 +113,18 @@ class AuthenticatorService implements ServiceInterface
      * @param array $roles
      * @return bool
      */
-    public function isAuthenticated(array $roles)
+    public function isPermitted(array $roles)
     {
         /** @var Entity $user */
         $user = $this->getUserFromSession();
 
         if (!$user instanceof Entity) {
-            return false;
+            return null;
         }
 
         foreach ($user->roles as $userRole) {
 
             if (in_array($userRole->roleName, $roles, true)) {
-
                 return true;
             }
 

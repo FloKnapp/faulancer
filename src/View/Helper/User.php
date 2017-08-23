@@ -33,12 +33,12 @@ class User extends AbstractViewHelper
         return $authenticator->getUserFromSession();
     }
 
-    public function isAuthenticated(array $roles)
+    public function isPermitted(array $roles)
     {
         /** @var AuthenticatorService $authenticator */
         $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
 
-        return $authenticator->isAuthenticated($roles);
+        return $authenticator->isPermitted($roles);
     }
 
 }

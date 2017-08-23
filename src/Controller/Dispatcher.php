@@ -93,12 +93,38 @@ class Dispatcher
         $action  = $this->requestType === 'api' ? $this->getRestfulAction() : $target['action'];
         $payload = !empty($target['var']) ? $target['var'] : [];
 
-        $initializer = new Initializer();
-        $initializer->setClass($class);
-        $initializer->setAction($action);
-        $initializer->setParams($payload);
+        /** @var AbstractController $class */
+        $class   = new $class($this->request);
 
-        $response = $initializer->execute();
+        $requiredPermissions = $target['permission'];
+
+        if (!empty($requiredPermissions)) {
+
+            /** @var AuthenticatorService $authenticator */
+            $authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
+            $isPermitted   = $authenticator->isPermitted($requiredPermissions);
+
+            if ($isPermitted === null) {
+
+                $class->redirect($this->config->get('auth:authUrl'));
+
+            } else if ($isPermitted === false) {
+
+                /** @var ErrorController $errorController */
+                $errorController = $this->config->get('customErrorController');
+                return (new $errorController($this->request))->notPermittedAction();
+
+            }
+
+        }
+
+        if (!method_exists($class, $action)) {
+            throw new MethodNotFoundException('Class "' . get_class($class) . '" doesn\'t have the method ' . $action);
+        }
+
+        $payload = array_map('strip_tags', $payload);
+
+        $response = call_user_func_array([$class, $action], $payload);
 
         if (!$response instanceof Response) {
             throw new IncompatibleResponseException('No valid response returned.');
@@ -205,15 +231,17 @@ class Dispatcher
             if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
-                    'class'  => $data['controller'],
-                    'action' => $data['action'] . 'Action'
+                    'class'      => $data['controller'],
+                    'action'     => $data['action'] . 'Action',
+                    'permission' => $data['permission'] ?? null
                 ];
 
             } else if ($this->requestType === 'api') {
 
                 return [
-                    'class'  => $data['controller'],
-                    'action' => $this->getRestfulAction()
+                    'class'      => $data['controller'],
+                    'action'     => $this->getRestfulAction(),
+                    'permission' => $data['permission'] ?? null
                 ];
 
             }
@@ -250,17 +278,19 @@ class Dispatcher
             if ($this->requestType === 'default'  && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
-                    'class'  => $data['controller'],
-                    'action' => $data['action'] . 'Action',
-                    'var'    => $var
+                    'class'      => $data['controller'],
+                    'action'     => $data['action'] . 'Action',
+                    'permission' => $data['permission'] ?? null,
+                    'var'        => $var
                 ];
 
             } else if ($this->requestType === 'api') {
 
                 return [
-                    'class'  => $data['controller'],
-                    'action' => $this->getRestfulAction(),
-                    'var'    => $var
+                    'class'      => $data['controller'],
+                    'action'     => $this->getRestfulAction(),
+                    'permission' => $data['permission'] ?? null,
+                    'var'       => $var
                 ];
 
             }

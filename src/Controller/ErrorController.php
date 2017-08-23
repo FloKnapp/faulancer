@@ -7,8 +7,8 @@
  */
 namespace Faulancer\Controller;
 
-use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use Faulancer\Service\Config;
 
 /**
@@ -32,7 +32,7 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * @return \Faulancer\Http\Response
+     * @return Response
      * @codeCoverageIgnore
      */
     public function displayError()
@@ -48,7 +48,7 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * @return \Faulancer\Http\Response
+     * @return Response
      * @codeCoverageIgnore
      */
     private function renderDebugPage()

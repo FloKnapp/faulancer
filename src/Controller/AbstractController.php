@@ -112,18 +112,13 @@ abstract class AbstractController
     /**
      * @param array $roles
      *
-     * @return bool
+     * @return bool|null
      */
-    public function requireAuth($roles = [])
+    public function isPermitted($roles = [])
     {
         /** @var AuthenticatorService $authService */
         $authService = $this->getServiceLocator()->get(AuthenticatorService::class);
-
-        if (!$authService->isAuthenticated($roles)) {
-            return $authService->redirectToAuthentication();
-        }
-
-        return true;
+        return $authService->isPermitted($roles);
     }
 
     /**

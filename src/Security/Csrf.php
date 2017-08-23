@@ -17,6 +17,8 @@ use Faulancer\ServiceLocator\ServiceLocator;
 class Csrf
 {
 
+    protected static $count = 0;
+
     /**
      * Generates a token and save it to session
      *
@@ -24,19 +26,23 @@ class Csrf
      */
     public static function getToken() :string
     {
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $token = bin2hex(openssl_random_pseudo_bytes(16));
         self::saveToSession($token);
         return $token;
+
     }
 
     /**
      * Check if token is valid
      *
+     * @param string $token
+     *
      * @return bool
      */
-    public static function isValid() :bool
+    public static function isValid(string $token) :bool
     {
-        return isset($_POST['csrf']) && $_POST['csrf'] === self::getSessionManager()->getFlashMessage('csrf');
+        $sessionToken = self::getSessionManager()->getFlashMessage('csrf');
+        return $token === $sessionToken;
     }
 
     /**
