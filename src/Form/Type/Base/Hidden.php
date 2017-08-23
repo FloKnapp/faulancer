@@ -32,7 +32,11 @@ class Hidden extends AbstractType
 
         foreach ($this->definition['attributes'] as $attr => $value) {
 
-            if ($this->getName() !== 'csrf' && !empty($this->getValue()) && $attr === 'value') {
+            if (!empty($this->getValue()) && $attr === 'value') {
+                continue;
+            }
+
+            if ($attr === 'name' && $value === 'csrf' && $this->getValue()) {
                 continue;
             }
 

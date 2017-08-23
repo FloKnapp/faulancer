@@ -16,43 +16,55 @@ use Faulancer\ServiceLocator\ServiceLocator;
  */
 class Csrf
 {
-
-    protected static $count = 0;
-
     /**
      * Generates a token and save it to session
      *
+     * @param string $identifier
+     *
      * @return string
      */
-    public static function getToken() :string
+    public static function getToken(string $identifier = '') :string
     {
-        $token = bin2hex(openssl_random_pseudo_bytes(16));
-        self::saveToSession($token);
-        return $token;
+        $token = self::getSessionManager()->get('csrf' . $identifier);
 
+        if (!self::getSessionManager()->has('csrf' . $identifier)) {
+            $token = bin2hex(openssl_random_pseudo_bytes(16));
+            self::saveToSession($token, $identifier);
+        }
+
+        return $token;
     }
 
     /**
      * Check if token is valid
      *
      * @param string $token
+     * @param string $identifier
      *
      * @return bool
      */
-    public static function isValid(string $token) :bool
+    public static function isValid(string $token, string $identifier = '') :bool
     {
-        $sessionToken = self::getSessionManager()->getFlashMessage('csrf');
-        return $token === $sessionToken;
+        $sessionToken = self::getSessionManager()->get('csrf' . $identifier);
+        $isValid      = $token === $sessionToken;
+
+        if ($isValid) {
+            self::getSessionManager()->delete('csrf' . $identifier);
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Saves token into session
      *
      * @param string $token
+     * @param string $identifier
      */
-    private static function saveToSession(string $token)
+    private static function saveToSession(string $token, string $identifier = '')
     {
-        self::getSessionManager()->setFlashMessage('csrf', $token);
+        self::getSessionManager()->set('csrf' . $identifier, $token);
     }
 
     /**

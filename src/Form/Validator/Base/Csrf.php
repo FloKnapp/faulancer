@@ -27,7 +27,7 @@ class Csrf extends AbstractValidator
      */
     public function process($data)
     {
-        return \Faulancer\Security\Csrf::isValid($data);
+        return \Faulancer\Security\Csrf::isValid($data, $this->getField()->getFormIdentifier());
     }
 
 }

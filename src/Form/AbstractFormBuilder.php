@@ -26,6 +26,9 @@ use Nette\Http\Session;
 abstract class AbstractFormBuilder
 {
 
+    /** @var string */
+    protected $identifier = '';
+
     /** @var array */
     protected $formAttributes = [];
 
@@ -77,6 +80,14 @@ abstract class AbstractFormBuilder
             throw new InvalidFormElementException('No field with name \'' . $name . '\' found');
         }
         return $this->fields[$name];
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**
@@ -222,7 +233,7 @@ abstract class AbstractFormBuilder
         ];
 
         /** @var AbstractType $typeClass */
-        $typeClass = new $namespace($definition, $formErrorDecoration);
+        $typeClass = new $namespace($definition, $formErrorDecoration, $this->identifier);
 
         $typeClass->setName($name);
         $typeClass->setType($type);

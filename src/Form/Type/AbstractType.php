@@ -47,6 +47,9 @@ abstract class AbstractType
     /** @var array */
     protected $errorMessages = [];
 
+    /** @var string */
+    protected $formIdentifier = '';
+
     /** @var AbstractValidator|null */
     protected $defaultValidator = null;
 
@@ -63,11 +66,13 @@ abstract class AbstractType
      * AbstractType constructor.
      * @param array $definition
      * @param array $formErrorDecoration
+     * @param string $formIdentifier
      */
-    public function __construct(array $definition, array $formErrorDecoration = [])
+    public function __construct(array $definition, array $formErrorDecoration = [], string $formIdentifier = '')
     {
         $this->definition          = $definition;
         $this->formErrorDecoration = $formErrorDecoration;
+        $this->formIdentifier      = $formIdentifier;
     }
 
     /**
@@ -345,6 +350,11 @@ abstract class AbstractType
         }
 
         return true;
+    }
+
+    public function getFormIdentifier()
+    {
+        return $this->formIdentifier;
     }
 
     /**
