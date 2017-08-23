@@ -180,7 +180,7 @@ abstract class AbstractController
         }
 
         if (!empty($parameters)) {
-            $path = $path . '/' . implode('/', $parameters);
+            $path = $path . implode('/', $parameters);
         }
 
         if ($absolute) {
@@ -205,6 +205,7 @@ abstract class AbstractController
      * @param  array  $arguments Arguments if given
      * @return AbstractPlugin
      * @throws PluginException
+     * @codeCoverageIgnore Not implemented yet
      */
     public function __call($name, $arguments)
     {

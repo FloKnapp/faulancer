@@ -24,6 +24,7 @@ class DbService implements ServiceInterface
      * ORM constructor.
      *
      * @param EntityManager $entityManager
+     * @codeCoverageIgnore
      */
     public function __construct(EntityManager $entityManager)
     {

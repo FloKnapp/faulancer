@@ -8,7 +8,7 @@ use Faulancer\Exception\ViewHelperException;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
-use Faulancer\Service\AuthenticatorPlugin;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
@@ -299,7 +299,7 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $this->sessionManager->setFlashMessage('test', 'test');
-        $this->assertSame('test', $view->flashMessage('test'));
+        $this->assertSame('<span class="flash-message default">test</span>', $view->flashMessage('test'));
     }
 
     public function testUserViewHelper()
@@ -311,15 +311,15 @@ class ViewTest extends TestCase
         $user = new UserEntity();
         $user->roles[] = new RoleAuthorEntity();
 
-        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['getUserFromSession', 'isAuthenticated']);
+        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession', 'isPermitted']);
         $authMock->method('getUserFromSession')->willReturn($user);
-        $authMock->method('isAuthenticated')->with(['author'])->willReturn(true);
+        $authMock->method('isPermitted')->with(['author'])->willReturn(true);
 
-        ServiceLocator::instance()->set(AuthenticatorPlugin::class, $authMock);
-        $this->assertTrue($view->user()->isAuthenticated(['author']));
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
+        $this->assertTrue($view->user()->isPermitted(['author']));
 
-        ServiceLocator::instance()->set(AuthenticatorPlugin::class, $authMock);
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authMock);
         $userEntity = $view->user()->get();
 
         $this->assertTrue($view->user()->isLoggedIn());

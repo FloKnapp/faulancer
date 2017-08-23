@@ -57,6 +57,16 @@ class Request extends AbstractHttp
     protected $body = '';
 
     /**
+     * @var array
+     */
+    protected $get = [];
+
+    /**
+     * @var array
+     */
+    protected $post = [];
+
+    /**
      * Set attributes automatically
      *
      * @return self
@@ -231,14 +241,21 @@ class Request extends AbstractHttp
      */
     public function getParam(string $key)
     {
-        $post = !empty($_POST) ? $_POST : [];
-        $get  = !empty($_GET) ? $_GET : [];
+        $this->post  = !empty($_POST) ? array_merge($_POST, $this->post) : [];
+        $this->get   = !empty($_GET) ? array_merge($_GET, $this->get) : [];
 
         if (!empty($this->getQuery())) {
-            parse_str($this->getQuery(), $get);
+
+            $query = [];
+            parse_str($this->getQuery(), $query);
+
+            if (!empty($query[$key])) {
+                return $query[$key];
+            }
+
         }
 
-        $combined = $post + $get;
+        $combined = array_merge($this->post, $this->get);
 
         if (!empty($combined[$key])) {
             return $combined[$key];

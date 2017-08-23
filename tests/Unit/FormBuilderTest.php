@@ -46,7 +46,7 @@ class FormBuilderTest extends TestCase
             ['<input name="number" type="number" />', 'number'],
             ['<input type="hidden" name="checkbox" value="yes"/><input name="checkbox" type="checkbox" value="no" checked="checked"/>', 'checkbox'],
             ['<select name="gender"><option value="w">Frau</option><option value="m">Herr</option></select>', 'gender'],
-            ['<input name="submit" type="submit" />', 'submit']
+            ['<button name="submit" type="submit" >TextSubmit</button>', 'submit']
         ];
     }
 
@@ -55,7 +55,7 @@ class FormBuilderTest extends TestCase
      */
     public function testDummyFormOpen()
     {
-        $this->assertSame('<form action="/test" method="GET">', $this->dummyForm->getFormOpen());
+        $this->assertSame('<form action="/test" method="GET" enctype="application/x-www-form-urlencoded" autocomplete="on">', $this->dummyForm->getFormOpen());
     }
 
     /**
@@ -86,8 +86,8 @@ class FormBuilderTest extends TestCase
 
     public function testRadioFormDefinition()
     {
-        $this->assertSame('<input value="FirstValue" name="radio"  type="radio"  checked="checked"/>', $this->dummyForm->getField('radio')->getOption('first'));
-        $this->assertSame('<input value="SecondValue" name="radio"  type="radio" />', $this->dummyForm->getField('radio')->getOption('second'));
+        $this->assertSame('<input value="FirstValue" name="radio"  type="radio"  id="radio_FirstValue" checked="checked"/>', $this->dummyForm->getField('radio')->getOption('first'));
+        $this->assertSame('<input value="SecondValue" name="radio"  type="radio"  id="radio_SecondValue"/>', $this->dummyForm->getField('radio')->getOption('second'));
     }
 
 }

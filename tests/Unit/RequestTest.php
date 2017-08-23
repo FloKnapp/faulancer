@@ -64,6 +64,7 @@ class RequestTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_SERVER['REQUEST_URI'] = '/stub';
+        $_SERVER['HTTP_HOST'] = 'velebeat.com';
 
         $request = new Request();
         $request->createFromHeaders();

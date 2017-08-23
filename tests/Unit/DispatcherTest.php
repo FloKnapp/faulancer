@@ -273,7 +273,7 @@ class DispatcherTest extends TestCase
         $response   = $dispatcher->dispatch();
 
         self::assertInstanceOf(JsonResponse::class, $response);
-        self::assertSame('"word"', $response->getContent());
+        self::assertSame('{"param":"word"}', $response->getContent());
     }
 
     public function testApiDeleteRequest()
@@ -295,7 +295,7 @@ class DispatcherTest extends TestCase
     {
         $request = new Request();
         $request->setUri('/api/v1/test?test=yolo');
-        $request->setMethod('');
+        $request->setMethod('GET');
 
         self::assertSame($request->getUri(), '/api/v1/test');
 

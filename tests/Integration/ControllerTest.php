@@ -2,13 +2,10 @@
 
 namespace Faulancer\Test\Integration;
 
-use Faulancer\Controller\AbstractController;
-use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\RouteInvalidException;
-use Faulancer\Fixture\Controller\DummyController;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
-use Faulancer\Service\AuthenticatorPlugin;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\HttpService;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -96,14 +93,14 @@ class ControllerTest extends TestCase
      */
     public function testRequireAuthSuccess()
     {
-        /** @var AuthenticatorPlugin|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['isAuthenticated', 'redirectToAuthentication']);
-        $authMock->method('isAuthenticated')->will($this->returnValue(true));
+        /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isPermitted', 'redirectToAuthentication']);
+        $authMock->method('isPermitted')->will($this->returnValue(true));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorPlugin', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
-        $this->assertTrue($this->controller->requireAuth(['test']));
+        $this->assertTrue($this->controller->isPermitted(['test']));
     }
 
     /**
@@ -112,13 +109,13 @@ class ControllerTest extends TestCase
     public function testRequireAuthRedirectToLogin()
     {
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorPlugin::class, ['isAuthenticated', 'redirectToAuthentication']);
-        $authMock->method('isAuthenticated')->will($this->returnValue(false));
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isPermitted', 'redirectToAuthentication']);
+        $authMock->method('isPermitted')->will($this->returnValue(false));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(false));
 
-        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorPlugin', $authMock);
+        ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
-        $this->assertFalse($this->controller->requireAuth(['test']));
+        $this->assertFalse($this->controller->isPermitted(['test']));
     }
 
     public function testGetSameView()
@@ -137,6 +134,11 @@ class ControllerTest extends TestCase
     public function testRoute()
     {
         $this->assertSame('/', $this->controller->route('home'));
+    }
+
+    public function testRouteAbsolute()
+    {
+        $this->assertSame('/', $this->controller->route('home', [], true));
     }
 
     public function testRouteWithParams()
