@@ -36,12 +36,20 @@ class Email extends AbstractType
                 continue;
             }
 
+            if ($attr === 'type' && !empty($this->getType())) {
+                continue;
+            }
+
             $output .= ' ' . $attr . '="' . $value . '" ';
 
         }
 
         if (!empty($this->getValue())) {
             $output .= ' value="' . $this->getValue() . '"';
+        }
+
+        if (!empty($this->getType())) {
+            $output .= ' type="' . $this->getType() . '"';
         }
 
         $output .= '/>';

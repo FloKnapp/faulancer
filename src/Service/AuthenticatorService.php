@@ -143,10 +143,11 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
+     * @param string $entity
      * @return Entity
      * @codeCoverageIgnore
      */
-    public function getUserFromSession()
+    public function getUserFromSession(string $entity = '')
     {
         $id = $this->controller->getSessionManager()->get('user');
 
@@ -155,7 +156,12 @@ class AuthenticatorService implements ServiceInterface
         }
 
         /** @var Entity $user */
-        $user = $this->controller->getDb()->fetch(Entity::class, $id);
+        if (!empty($entity)) {
+            $user = $this->controller->getDb()->fetch($entity, $id);
+        } else {
+            $user = $this->controller->getDb()->fetch(Entity::class, $id);
+        }
+
         return $user;
     }
 

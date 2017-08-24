@@ -204,7 +204,6 @@ abstract class AbstractType
     public function setLabel(string $label)
     {
         $this->label = $label;
-
         return $this;
     }
 
@@ -277,6 +276,14 @@ abstract class AbstractType
     {
         if (empty($this->getLabel()) && !empty($this->definition['label'])) {
             $this->setLabel($this->definition['label']);
+        }
+
+        if (!empty($this->getType())) {
+            $this->definition['type'] = $this->getType();
+        }
+
+        if (!empty($this->getValue())) {
+            $this->definition['value'] = $this->getValue();
         }
 
         $this->translateLabelsAndPlaceholders();

@@ -6,9 +6,11 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\ORM\User\Entity;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\View\AbstractViewHelper;
+use Faulancer\View\ViewController;
 
 /**
  * Class Entity
@@ -16,8 +18,12 @@ use Faulancer\View\AbstractViewHelper;
 class User extends AbstractViewHelper
 {
 
-    public function __invoke()
+    /** @var string */
+    protected $entity = '';
+
+    public function __invoke(ViewController $view, string $entity = '')
     {
+        $this->entity = $entity;
         return $this;
     }
 
@@ -30,7 +36,7 @@ class User extends AbstractViewHelper
     {
         /** @var AuthenticatorService $authenticator */
         $authenticator = $this->getServiceLocator()->get(AuthenticatorService::class);
-        return $authenticator->getUserFromSession();
+        return $authenticator->getUserFromSession($this->entity);
     }
 
     public function isPermitted(array $roles)
