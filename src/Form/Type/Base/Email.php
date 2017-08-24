@@ -52,7 +52,7 @@ class Email extends AbstractType
             $output .= ' type="' . $this->getType() . '"';
         }
 
-        $output .= '/>';
+        $output .= ' />';
 
         $this->element = $output;
 
