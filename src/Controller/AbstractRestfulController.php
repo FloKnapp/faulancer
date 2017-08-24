@@ -15,7 +15,7 @@ abstract class AbstractRestfulController extends AbstractController
     /**
      * GET
      */
-    public function get() {}
+    public function get() { }
 
     /**
      * POST

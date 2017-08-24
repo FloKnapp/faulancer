@@ -1,15 +1,9 @@
 <?php
-/**
- * Class AbstractController
- *
- * @package Faulancer\AbstractController
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Controller;
 
 use Faulancer\Exception\PluginException;
 use Faulancer\Exception\RouteInvalidException;
-use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Plugin\AbstractPlugin;
@@ -24,24 +18,34 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractController
+ *
+ * @category Controller
+ * @package  Faulancer\AbstractController
+ * @author   Florian Knapp <office@florianknapp.de>
+ * @license  MIT License
+ * @link     none
  */
 abstract class AbstractController
 {
 
     /**
      * Holds the views per controller request
+     *
      * @var array
      */
-    private $viewArray = [];
+    private $_viewArray = [];
 
     /**
+     * Holds the request
+     *
      * @var Request
      */
     protected $request;
 
     /**
      * AbstractController constructor.
-     * @param Request $request
+     *
+     * @param Request $request The request object
      */
     public function __construct(Request $request)
     {
@@ -77,14 +81,16 @@ abstract class AbstractController
     {
         $calledClass = get_called_class();
 
-        if (in_array($calledClass, array_keys($this->viewArray))) {
-            return $this->viewArray[$calledClass];
+        if (in_array($calledClass, array_keys($this->_viewArray), true)) {
+            return $this->_viewArray[$calledClass];
         }
 
         $viewController = new ViewController();
-        $this->viewArray[$calledClass] = $viewController;
+
+        $this->_viewArray[$calledClass] = $viewController;
 
         return $viewController;
+
     }
 
     /**
@@ -100,17 +106,25 @@ abstract class AbstractController
     /**
      * Render view with given template
      *
-     * @param  string $template
-     * @param  array $variables
+     * @param string $template  The template to be rendered
+     * @param array  $variables The variables for the template
+     *
      * @return Response
      */
     public function render(string $template = '', $variables = []) :Response
     {
-        return new Response($this->getView()->setTemplate($template)->setVariables($variables)->render());
+        return new Response(
+            $this->getView()
+                ->setTemplate($template)
+                ->setVariables($variables)
+                ->render()
+        );
     }
 
     /**
-     * @param array $roles
+     * Check if user is permitted based on his role(s)
+     *
+     * @param array $roles The corresponding user roles
      *
      * @return bool|null
      */
@@ -118,11 +132,15 @@ abstract class AbstractController
     {
         /** @var AuthenticatorService $authService */
         $authService = $this->getServiceLocator()->get(AuthenticatorService::class);
+
         return $authService->isPermitted($roles);
     }
 
     /**
-     * @param string $uri
+     * Redirect to specific uri
+     *
+     * @param string $uri The target uri
+     *
      * @return bool
      */
     public function redirect(string $uri) :bool
@@ -133,8 +151,12 @@ abstract class AbstractController
     }
 
     /**
-     * @param string $key
-     * @param string $message
+     * Set a universal text token which is valid for exactly one request/call
+     *
+     * @param string $key     Key for the flash message
+     * @param string $message Content for the flash message
+     *
+     * @return void
      */
     public function setFlashMessage(string $key, string $message)
     {
@@ -143,7 +165,10 @@ abstract class AbstractController
     }
 
     /**
-     * @param $key
+     * Retrieve a flash message
+     *
+     * @param string $key The flash message key
+     *
      * @return string|null
      */
     public function getFlashMessage(string $key)
@@ -153,9 +178,11 @@ abstract class AbstractController
     }
 
     /**
-     * @param string $name
-     * @param array  $parameters
-     * @param bool   $absolute
+     * Get the url for a specific route name
+     *
+     * @param string $name       Name of the route
+     * @param array  $parameters Apply parameters where necessary
+     * @param bool   $absolute   Return an absolute url with host as prefix
      *
      * @return string
      * @throws RouteInvalidException
@@ -176,7 +203,9 @@ abstract class AbstractController
         }
 
         if (empty($path)) {
-            throw new RouteInvalidException('No route for name "' . $name . '" found');
+            throw new RouteInvalidException(
+                'No route for name "' . $name . '" found'
+            );
         }
 
         if (!empty($parameters)) {
@@ -184,13 +213,19 @@ abstract class AbstractController
         }
 
         if ($absolute) {
-            $path = $this->getRequest()->getScheme() . $this->getRequest()->getHost() . $path;
+
+            $path = $this->getRequest()->getScheme()
+                . $this->getRequest()->getHost()
+                . $path;
+
         }
 
         return $path;
     }
 
     /**
+     * Return the current request object
+     *
      * @return Request
      */
     public function getRequest() :Request
@@ -201,10 +236,12 @@ abstract class AbstractController
     /**
      * Magic method for providing a view helper
      *
-     * @param  string $name      The class name
-     * @param  array  $arguments Arguments if given
+     * @param string $name      The class name
+     * @param array  $arguments Arguments if given
+     *
      * @return AbstractPlugin
      * @throws PluginException
+     *
      * @codeCoverageIgnore Not implemented yet
      */
     public function __call($name, $arguments)

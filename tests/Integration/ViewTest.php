@@ -145,14 +145,6 @@ class ViewTest extends TestCase
 
     }
 
-    public function testViewHelperCsrf()
-    {
-        $viewHelper = new ViewController();
-        $token = $viewHelper->generateCsrfToken();
-
-        $this->assertSame($this->sessionManager->getFlashMessage('csrf'), $token);
-    }
-
     /**
      * @throws FileNotFoundException
      */
