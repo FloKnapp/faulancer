@@ -185,7 +185,7 @@ class Mailer
         $eol      = "\r\n";
         $boundary = $this->getBoundary();
         $headers = 'MIME-Version: 1.0' . $eol;
-        $headers .= 'Content-Type: multipart/mixed; boundary=' . $boundary . $eol;
+        $headers .= 'Content-Type: multipart/mixed; charset=UTF-8; boundary=' . $boundary . $eol;
 
         if (!empty($this->from)) {
             $headers .= 'From: ' .$this->from . $eol;
