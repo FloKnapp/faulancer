@@ -7,7 +7,9 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Http\Request;
 use Faulancer\Service\Config;
+use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
@@ -24,10 +26,12 @@ class Route extends AbstractViewHelper
      * @param ViewController $view
      * @param string         $name
      * @param array          $parameters
+     * @param bool           $absolute
+     *
      * @return string
      * @throws RouteInvalidException
      */
-    public function __invoke(ViewController $view, string $name, array $parameters = [])
+    public function __invoke(ViewController $view, string $name, array $parameters = [], $absolute = false)
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
@@ -60,6 +64,17 @@ class Route extends AbstractViewHelper
             } else {
                 $path = $path . '/' . implode('/', $parameters);
             }
+
+        }
+
+        if ($absolute) {
+
+            /** @var Request $request */
+            $request = $this->getServiceLocator()->get(RequestService::class);
+
+            $path = $request->getScheme()
+                . $request->getHost()
+                . $path;
 
         }
 
