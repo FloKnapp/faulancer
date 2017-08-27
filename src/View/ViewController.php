@@ -120,50 +120,8 @@ class ViewController
      */
     public function addStylesheet(string $file, $minify = false) :self
     {
-        if ($minify && defined('APPLICATION_ENV') && APPLICATION_ENV === 'production') {
-            $file = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
-        } else if ($minify && defined('APPLICATION_ENV') && APPLICATION_ENV === 'development') {
-            $this->minifyAsset($file);
-        }
-
         $this->variable['assetsCss'][] = $file;
-
         return $this;
-    }
-
-    protected function minifyAsset($file)
-    {
-
-        $projectRoot = $this->config->get('projectRoot');
-        $filePath    = $projectRoot . '/public';
-        $fileName    = $filePath . $file;
-
-        $contents = str_replace(
-            ["\n", "\t", "  ", ": ", " {", "{ ", " }", ";}"],
-            ["", "", "", ":", "{", "{", "}", "}"],
-            file_get_contents($fileName)
-        );
-
-        $minifiedName      = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
-        $minifiedPathName  = $filePath . $minifiedName;
-
-        $isSameSize = file_exists($minifiedPathName) && strlen($contents) === filesize($minifiedPathName);
-
-        if (file_exists($minifiedName) && $isSameSize) {
-
-            $this->variable['assetsCss'][] = $minifiedName;
-            return $this;
-
-        } else {
-
-            $newFileName = str_replace(['/css', '.css'], ['/css/min', '.min.css'], $file);
-            file_put_contents($minifiedPathName, $contents);
-            $file = $newFileName;
-
-        }
-
-        return $file;
-
     }
 
     /**
