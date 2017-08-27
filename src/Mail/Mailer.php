@@ -160,7 +160,7 @@ class Mailer
      */
     protected function sendMail($headers, $message)
     {
-        if (mail(implode(',', $this->recipients), $this->subject, $message, $headers)) {
+        if (mail(implode(',', $this->recipients), mb_encode_mimeheader($this->subject, 'UTF-8'), $message, $headers)) {
             return true;
         }
         return false;
