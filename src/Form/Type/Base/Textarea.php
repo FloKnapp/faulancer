@@ -40,10 +40,6 @@ class Textarea extends AbstractType
 
         }
 
-        if (!empty($this->getValue())) {
-            $output .= ' value="' . $this->getValue() . '"';
-        }
-
         $output .= '>';
 
         if (!empty($this->getValue())) {
