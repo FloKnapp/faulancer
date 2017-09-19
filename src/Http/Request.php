@@ -31,7 +31,7 @@ class Request extends AbstractHttp
      * The current path string
      * @var string
      */
-    protected $uri = '';
+    protected $path = '';
 
     /**
      * The current method
@@ -73,17 +73,17 @@ class Request extends AbstractHttp
      */
     public function createFromHeaders()
     {
-        $uri = $_SERVER['REQUEST_URI'];
+        $path = $_SERVER['REQUEST_URI'];
 
         if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-            $uri = explode('?', $_SERVER['REQUEST_URI']);
-            $this->setQuery($uri[1]);
-            $uri = $uri[0];
+            $path = explode('?', $_SERVER['REQUEST_URI']);
+            $this->setQuery($path[1]);
+            $path = $path[0];
         }
 
         $this->setScheme(!empty($_SERVER['HTTPS']) ? 'https://' : 'http://');
         $this->setHost($_SERVER['HTTP_HOST']);
-        $this->setUri($uri);
+        $this->setPath($path);
         $this->setMethod($_SERVER['REQUEST_METHOD']);
 
         return $this;
@@ -134,17 +134,17 @@ class Request extends AbstractHttp
     /**
      * Set uri path
      *
-     * @param string $uri
+     * @param string $path
      */
-    public function setUri(string $uri)
+    public function setPath(string $path)
     {
-        if (strpos($uri, '?') !== false) {
-            $uri = explode('?', $uri);
-            $this->setQuery($uri[1]);
-            $uri = $uri[0];
+        if (strpos($path, '?') !== false) {
+            $path = explode('?', $path);
+            $this->setQuery($path[1]);
+            $path = $path[0];
         }
 
-        $this->uri = $uri;
+        $this->path = $path;
     }
 
     /**
@@ -152,9 +152,9 @@ class Request extends AbstractHttp
      *
      * @return string
      */
-    public function getUri() :string
+    public function getPath() :string
     {
-        return $this->uri;
+        return $this->path;
     }
 
     /**

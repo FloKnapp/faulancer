@@ -48,7 +48,7 @@ class Link extends AbstractViewHelper
             throw new RouteInvalidException('No valid route for "' . $routeName . '" found.');
         }
 
-        if ($request->getUri() === $route['path']) {
+        if ($request->getPath() === $route['path']) {
             $elementAttributes['class'][] = 'selected';
         }
 

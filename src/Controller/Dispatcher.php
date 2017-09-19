@@ -74,35 +74,22 @@ class Dispatcher
             return $assets;
         }
 
-        if ($this->request->getParam('lang') !== null) {
+        $this->_setLanguageFromUri();
 
-            $serviceLocator = ServiceLocator::instance();
-
-            /** @var SessionManagerService $sessionManager */
-            $sessionManager = $serviceLocator->get(SessionManagerService::class);
-            $sessionManager->set('language', $this->request->getParam('lang'));
-
-        }
-
-        if (strpos($this->request->getUri(), '/api') === 0) {
+        if (strpos($this->request->getPath(), '/api') === 0) {
             $this->requestType = 'api';
         }
 
-        $target  = $this->getRoute($this->request->getUri());
-        $class   = $target['class'];
-        $action  = $this->requestType === 'api' ? $this->getRestfulAction() : $target['action'];
-        $payload = !empty($target['var']) ? $target['var'] : [];
+        list($class, $action, $permission, $payload) = $this->getRoute($this->request->getPath());
 
         /** @var AbstractController $class */
         $class   = new $class($this->request);
 
-        $requiredPermissions = $target['permission'];
-
-        if (!empty($requiredPermissions)) {
+        if (!empty($permission)) {
 
             /** @var AuthenticatorService $authenticator */
             $authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
-            $isPermitted   = $authenticator->isPermitted($requiredPermissions);
+            $isPermitted   = $authenticator->isPermitted($permission);
 
             if ($isPermitted === null) {
 
@@ -110,7 +97,6 @@ class Dispatcher
 
             } else if ($isPermitted === false) {
 
-                /** @var ErrorController $errorController */
                 $errorController = $this->config->get('customErrorController');
                 return (new $errorController($this->request))->notPermittedAction();
 
@@ -123,6 +109,7 @@ class Dispatcher
         }
 
         $payload = array_map('strip_tags', $payload);
+        $payload = array_map('htmlspecialchars', $payload);
 
         $response = call_user_func_array([$class, $action], $payload);
 
@@ -135,15 +122,35 @@ class Dispatcher
     }
 
     /**
+     * @return bool
+     */
+    private function _setLanguageFromUri()
+    {
+        if ($this->request->getParam('lang') !== null) {
+
+            $serviceLocator = ServiceLocator::instance();
+
+            /** @var SessionManagerService $sessionManager */
+            $sessionManager = $serviceLocator->get(SessionManagerService::class);
+            $sessionManager->set('language', $this->request->getParam('lang'));
+
+            return true;
+
+        }
+
+        return false;
+    }
+
+    /**
      * @return bool|string
      */
     private function resolveAssetsPath()
     {
         $matches = [];
 
-        if (preg_match('/(?<style>css)|(?<script>js)/', $this->request->getUri(), $matches)) {
+        if (preg_match('/(?<style>css)|(?<script>js)/', $this->request->getPath(), $matches)) {
 
-            $file = $this->request->getUri();
+            $file = $this->request->getPath();
 
             if (strpos($file, 'core') !== false) {
 
@@ -196,7 +203,7 @@ class Dispatcher
      */
     private function getRoute($path)
     {
-        if (strpos($this->request->getUri(), '/api') === 0) {
+        if (strpos($this->request->getPath(), '/api') === 0) {
             $routes = $this->config->get('routes:rest');
         } else {
             $routes = $this->config->get('routes');
@@ -231,17 +238,19 @@ class Dispatcher
             if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
-                    'class'      => $data['controller'],
-                    'action'     => $data['action'] . 'Action',
-                    'permission' => $data['permission'] ?? null
+                    $data['controller'],
+                    $data['action'] . 'Action',
+                    $data['permission'] ?? null,
+                    []
                 ];
 
             } else if ($this->requestType === 'api') {
 
                 return [
-                    'class'      => $data['controller'],
-                    'action'     => $this->getRestfulAction(),
-                    'permission' => $data['permission'] ?? null
+                    $data['controller'],
+                    $this->getRestfulAction(),
+                    $data['permission'] ?? null,
+                    []
                 ];
 
             }
@@ -254,6 +263,54 @@ class Dispatcher
     }
 
     /**
+     * @param string $uri
+     * @param array  $data
+     * @return array
+     */
+    /*
+    private function getVariableMatch(string $uri, array $data)
+    {
+        if (empty($data['path']) || strpos($data['path'], '[') === false || $data['path'] === '/') {
+            return [];
+        }
+
+        $vars  = [];
+        $regex = '/(?<parts>(\[:?[\w\d]+\]))/';
+
+        $pathRegex = preg_replace($regex, '(.*)', $data['path']);
+        $pathRegex = str_replace('/', '\/', $pathRegex);
+
+        if (preg_match('/' . $pathRegex . '/', $uri, $vars)) {
+
+            array_splice($vars, 0, 1);
+
+            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
+
+                return [
+                    $data['controller'],
+                    $data['action'] . 'Action',
+                    $data['permission'] ?? null,
+                    $vars
+                ];
+
+            } else if ($this->requestType === 'api') {
+
+                return [
+                    $data['controller'],
+                    $this->getRestfulAction(),
+                    $data['permission'] ?? null,
+                    $vars
+                ];
+
+            }
+
+        }
+
+        return [];
+
+    }*/
+
+    /**
      * Determines if we have a variable route match
      *
      * @param string $uri
@@ -262,6 +319,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
+
     private function getVariableMatch($uri, array $data) :array
     {
         if (empty($data['path']) || $data['path'] === '/') {
@@ -278,19 +336,19 @@ class Dispatcher
             if ($this->requestType === 'default'  && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
-                    'class'      => $data['controller'],
-                    'action'     => $data['action'] . 'Action',
-                    'permission' => $data['permission'] ?? null,
-                    'var'        => $var
+                    $data['controller'],
+                    $data['action'] . 'Action',
+                    $data['permission'] ?? null,
+                    $var
                 ];
 
             } else if ($this->requestType === 'api') {
 
                 return [
-                    'class'      => $data['controller'],
-                    'action'     => $this->getRestfulAction(),
-                    'permission' => $data['permission'] ?? null,
-                    'var'       => $var
+                    $data['controller'],
+                    $this->getRestfulAction(),
+                    $data['permission'] ?? null,
+                    $var
                 ];
 
             }
@@ -299,6 +357,7 @@ class Dispatcher
 
         return [];
     }
+    
 
     /**
      * @return string

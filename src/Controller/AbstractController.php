@@ -190,14 +190,39 @@ abstract class AbstractController
     public function route(string $name, array $parameters = [], $absolute = false)
     {
         /** @var Config $config */
-        $config = $this->getServiceLocator()->get(Config::class);
-        $routes = $config->get('routes');
+        $config    = ServiceLocator::instance()->get(Config::class);
+        $routes    = $config->get('routes');
+        $apiRoutes = $config->get('routes:rest');
+        $routes    = array_merge($routes, $apiRoutes);
+        $path      = '';
 
         foreach ($routes as $routeName => $routeConfig) {
 
             if ($routeName === $name) {
-                $path = preg_replace('|/\((.*)\)|', '', $routeConfig['path']);
+
+                $path = $routeConfig['path'];
+
+                foreach ($parameters as $key => $value) {
+                    $path = str_replace(['[' . $key . ']', '[:' . $key . ']'], $value, $path);
+                }
+
                 break;
+            }
+
+        }
+
+        if (empty($path)) {
+            throw new RouteInvalidException('No route for name "' . $name . '" found');
+        }
+
+        if (!empty($parameters)) {
+
+            if (in_array('query', array_keys($parameters), true)) {
+                $query = $parameters['query'];
+                $query = http_build_query($query);
+                $path  = $path . '?' . $query;
+            } else {
+                $path = $path . '/' . implode('/', $parameters);
             }
 
         }
@@ -206,10 +231,6 @@ abstract class AbstractController
             throw new RouteInvalidException(
                 'No route for name "' . $name . '" found'
             );
-        }
-
-        if (!empty($parameters)) {
-            $path = $path . implode('/', $parameters);
         }
 
         if ($absolute) {
