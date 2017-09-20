@@ -11,6 +11,7 @@ use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
+use Faulancer\Service\RequestService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
@@ -196,23 +197,21 @@ abstract class AbstractController
         $routes    = array_merge($routes, $apiRoutes);
         $path      = '';
 
-        foreach ($routes as $routeName => $routeConfig) {
+        foreach ($routes as $routeName => $data) {
 
             if ($routeName === $name) {
-
-                $path = $routeConfig['path'];
-
-                foreach ($parameters as $key => $value) {
-                    $path = str_replace(['[' . $key . ']', '[:' . $key . ']'], $value, $path);
-                }
-
+                $path = preg_replace('|/\((.*)\)|', '', $data['path']);
                 break;
             }
 
         }
 
         if (empty($path)) {
-            throw new RouteInvalidException('No route for name "' . $name . '" found');
+
+            throw new RouteInvalidException(
+                'No route for name "' . $name . '" found'
+            );
+
         }
 
         if (!empty($parameters)) {
@@ -227,16 +226,10 @@ abstract class AbstractController
 
         }
 
-        if (empty($path)) {
-            throw new RouteInvalidException(
-                'No route for name "' . $name . '" found'
-            );
-        }
-
         if ($absolute) {
 
-            $path = $this->getRequest()->getScheme()
-                . $this->getRequest()->getHost()
+            $path = $this->request->getScheme()
+                . $this->request->getHost()
                 . $path;
 
         }

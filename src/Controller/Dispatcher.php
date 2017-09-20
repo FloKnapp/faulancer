@@ -105,7 +105,11 @@ class Dispatcher
         }
 
         if (!method_exists($class, $action)) {
-            throw new MethodNotFoundException('Class "' . get_class($class) . '" doesn\'t have the method ' . $action);
+
+            throw new MethodNotFoundException(
+                'Class "' . get_class($class) . '" doesn\'t have the method ' . $action
+            );
+
         }
 
         $payload = array_map('strip_tags', $payload);
