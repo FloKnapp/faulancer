@@ -1,10 +1,5 @@
 <?php
-/**
- * Class ViewController | ViewController.php
- *
- * @package Faulancer\View
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View;
 
 use Faulancer\Exception\ClassNotFoundException;
@@ -18,7 +13,10 @@ use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
- * Class ViewController
+ * Class ViewController | ViewController.php
+ *
+ * @package Faulancer\View
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class ViewController
 {
@@ -44,6 +42,11 @@ class ViewController
      * @var string
      */
     private $templatePath = '';
+
+    /**
+     * @var array
+     */
+    private $viewHelpers = [];
 
     /**
      * Holds the parent template
@@ -269,37 +272,52 @@ class ViewController
      */
     public function __call($name, $arguments)
     {
-        // Search in custom view helpers
+        $coreViewHelper   = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
+
+        if (!empty($this->viewHelpers[$coreViewHelper])) {
+            return $this->_callUserFuncArray($this->viewHelpers[$coreViewHelper], $arguments);
+        }
 
         /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-        $namespace = '\\' . $config->get('namespacePrefix');
-
+        $config           = ServiceLocator::instance()->get(Config::class);
+        $namespace        = '\\' . $config->get('namespacePrefix');
         $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
+
+        if (!empty($this->viewHelpers[$customViewHelper])) {
+            return $this->_callUserFuncArray($this->viewHelpers[$customViewHelper], $arguments);
+        }
+
+        // Search in custom view helpers
 
         if (class_exists($customViewHelper)) {
 
             $class = new $customViewHelper;
-            array_unshift($arguments, $this);
 
-            return call_user_func_array($class, $arguments);
+            $this->viewHelpers[$customViewHelper] = $class;
+
+            return $this->_callUserFuncArray($class, $arguments);
 
         }
 
         // No custom view helper found, search in core view helpers
 
-        $coreViewHelper = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
-
         if (class_exists($coreViewHelper)) {
 
             $class = new $coreViewHelper;
-            array_unshift($arguments, $this);
 
-            return call_user_func_array($class, $arguments);
+            $this->viewHelpers[$coreViewHelper] = $class;
+
+            return $this->_callUserFuncArray($class, $arguments);
 
         }
 
         throw new ViewHelperException('No view helper for "' . $name . '" found.');
+    }
+
+    private function _callUserFuncArray($class, $arguments)
+    {
+        array_unshift($arguments, $this);
+        return call_user_func_array($class, $arguments);
     }
 
     /**
