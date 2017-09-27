@@ -37,6 +37,13 @@ abstract class AbstractController
     private $_viewArray = [];
 
     /**
+     * Holds the plugin per controller request
+     *
+     * @var array
+     */
+    private $_pluginArray = [];
+
+    /**
      * Holds the request
      *
      * @var Request
