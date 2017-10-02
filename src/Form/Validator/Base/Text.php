@@ -23,7 +23,7 @@ class Text extends AbstractValidator
     /**
      * Validate type string
      * @param $data
-     * @return boolean
+     * @return bool
      */
     public function process($data)
     {
@@ -35,8 +35,7 @@ class Text extends AbstractValidator
             return true;
         }
 
-        if (!preg_match('/^[a-z0-9\s\-_+]+$/i', $data)) {
-            $this->errorMessage = 'validator_invalid_text';
+        if (!preg_match('/^[a-zA-Z0-9äüöÄÖÜŠĐČĆŽšđčćž\s\/\-_+.,:°;()²³]+$/ui', $data)) {
             return false;
         }
 
