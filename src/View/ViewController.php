@@ -274,18 +274,20 @@ class ViewController
     {
         $coreViewHelper   = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
+        /*
         if (!empty($this->viewHelpers[$coreViewHelper])) {
             return $this->_callUserFuncArray($this->viewHelpers[$coreViewHelper], $arguments);
-        }
+        } */
 
         /** @var Config $config */
         $config           = ServiceLocator::instance()->get(Config::class);
         $namespace        = '\\' . $config->get('namespacePrefix');
         $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
 
+        /*
         if (!empty($this->viewHelpers[$customViewHelper])) {
             return $this->_callUserFuncArray($this->viewHelpers[$customViewHelper], $arguments);
-        }
+        } */
 
         // Search in custom view helpers
 
