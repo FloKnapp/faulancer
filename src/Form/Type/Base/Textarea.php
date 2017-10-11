@@ -32,12 +32,20 @@ class Textarea extends AbstractType
 
         foreach ($this->definition['attributes'] as $attr => $value) {
 
-            if ($attr === 'value') { // Textarea doesn't have a value attribute
+            if ($attr === 'value') { // There is no value attribute for textarea fields
+                continue;
+            }
+
+            if ($attr === 'name' && !empty($this->getName())) {
                 continue;
             }
 
             $output .= $attr . '="' . $value . '" ';
 
+        }
+
+        if (!empty($this->getName())) {
+            $output .= ' name="' . $this->getName() . '"';
         }
 
         $output .= '>';

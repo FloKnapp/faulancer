@@ -286,6 +286,10 @@ abstract class AbstractType
             $this->definition['value'] = $this->getValue();
         }
 
+        if (!empty($this->getName())) {
+            $this->definition['name'] = $this->getName();
+        }
+
         $this->translateLabelsAndPlaceholders();
 
         return $this;
