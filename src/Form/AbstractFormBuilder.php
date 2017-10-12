@@ -82,6 +82,12 @@ abstract class AbstractFormBuilder
         return $this->fields[$name];
     }
 
+    public function setField(AbstractType $field)
+    {
+        $this->fields[$field->getName()] = $field;
+        return $this;
+    }
+
     /**
      * @return string
      */
