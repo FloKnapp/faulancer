@@ -220,7 +220,7 @@ abstract class AbstractFormBuilder
      * @throws InvalidArgumentException
      * @codeCoverageIgnore
      */
-    protected function add(array $definition)
+    public function add(array $definition)
     {
         $type = $definition['attributes']['type'];
         $name = $definition['attributes']['name'];
