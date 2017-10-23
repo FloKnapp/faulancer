@@ -43,10 +43,11 @@ class AuthenticatorService implements ServiceInterface
     /**
      * @param Entity $user
      * @param bool   $shouldBeActive
+     * @param string $redirectUrl
      * @return bool
      * @codeCoverageIgnore
      */
-    public function loginUser(Entity $user, $shouldBeActive)
+    public function loginUser(Entity $user, $shouldBeActive = true, $redirectUrl = '')
     {
         /** @var Entity $userData */
         $userData = $this->controller
@@ -71,6 +72,10 @@ class AuthenticatorService implements ServiceInterface
         if ($passOk && $userData instanceof Entity) {
 
             $this->saveUserInSession($userData);
+
+            if ($redirectUrl) {
+                return $this->controller->redirect($redirectUrl);
+            }
 
             if ($userData->roles[0]->roleName === 'registered') {
                 return $this->controller->redirect($this->controller->route('user'));
