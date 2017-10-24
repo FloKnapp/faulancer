@@ -45,17 +45,7 @@ class Route extends AbstractViewHelper
         foreach ($routes as $routeName => $data) {
 
             if ($routeName === $name) {
-
-                if (!empty($parameters) && !array_key_exists('query', $parameters)) {
-
-                    foreach ($parameters as $param) {
-                        $path = preg_replace('|\((.*)\)|', $param, $data['path']);
-                    }
-
-                } else {
-                    $path = preg_replace('|/\((.*)\)|', '', $data['path']);
-                }
-
+                $path = preg_replace('|/\((.*)\)|', '', $data['path']);
                 break;
             }
 
@@ -71,6 +61,8 @@ class Route extends AbstractViewHelper
                 $query = $parameters['query'];
                 $query = http_build_query($query);
                 $path  = $path . '?' . $query;
+            } else {
+                $path = $path . '/' . implode('/', $parameters);
             }
 
         }
