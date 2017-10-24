@@ -20,14 +20,18 @@ abstract class AbstractListener
      * AbstractListener constructor.
      * @param AbstractEventType $event
      */
-    public function __construct(AbstractEventType $event) {
+    public function __construct(AbstractEventType $event)
+    {
         $this->event = $event;
     }
 
     /**
-     * @return void
+     * @return self
      */
-    abstract public function create();
+    public function create()
+    {
+        return $this;
+    }
 
     /**
      * @param Callback $callback

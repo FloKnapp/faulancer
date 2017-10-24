@@ -11,7 +11,6 @@ use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
-use Faulancer\Service\RequestService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\ViewController;
@@ -35,13 +34,6 @@ abstract class AbstractController
      * @var array
      */
     private $_viewArray = [];
-
-    /**
-     * Holds the plugin per controller request
-     *
-     * @var array
-     */
-    private $_pluginArray = [];
 
     /**
      * Holds the request

@@ -6,6 +6,8 @@
  */
 namespace Faulancer\Controller;
 
+use Faulancer\Event\Observer;
+use Faulancer\Event\Type\OnDispatch;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\IncompatibleResponseException;
@@ -73,6 +75,8 @@ class Dispatcher
         if ($assets = $this->resolveAssetsPath()) {
             return $assets;
         }
+
+        Observer::instance()->trigger(new OnDispatch($this));
 
         $this->_setLanguageFromUri();
 

@@ -5,10 +5,14 @@ namespace Faulancer;
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
 use Faulancer\Event\Observer;
+use Faulancer\Event\Type\OnKernelError;
+use Faulancer\Event\Type\OnKernelErrorException;
+use Faulancer\Event\Type\OnKernelException;
 use Faulancer\Event\Type\OnKernelStart;
 use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
+use Faulancer\Controller\AbstractController;
 
 /**
  * Class Kernel
@@ -64,10 +68,13 @@ class Kernel
             return $content;
 
         } catch (Exception $e) {
+            Observer::instance()->trigger(new OnKernelException($this));
             return $this->showErrorPage($this->request, $e);
         } catch (\ErrorException $e) {
+            Observer::instance()->trigger(new OnKernelErrorException($this));
             return $this->showErrorPage($this->request, $e);
         } catch (\Error $e) {
+            Observer::instance()->trigger(new OnKernelError($this));
             return $this->showErrorPage($this->request, $e);
         }
 

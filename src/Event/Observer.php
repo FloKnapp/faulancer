@@ -25,6 +25,8 @@ class Observer
     private function __construct() {}
 
     /**
+     * Yeah... singleton... i know
+     *
      * @return self
      */
     public static function instance()
@@ -42,6 +44,8 @@ class Observer
     }
 
     /**
+     * Trigger listeners if registered for the type
+     *
      * @param AbstractEventType $eventType
      */
     public function trigger(AbstractEventType $eventType)

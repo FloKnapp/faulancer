@@ -2,14 +2,13 @@
 
 namespace Faulancer\View;
 
-use Faulancer\Exception\ClassNotFoundException;
+use Faulancer\Event\Observer;
+use Faulancer\Event\Type\OnPostRender;
+use Faulancer\Event\Type\OnRender;
 use Faulancer\Exception\ConstantMissingException;
-use Faulancer\Exception\Exception;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ViewHelperException;
-use Faulancer\Exception\ViewHelperIncompatibleException;
 use Faulancer\Service\Config;
-use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
@@ -245,6 +244,8 @@ class ViewController
      */
     public function render()
     {
+        Observer::instance()->trigger(new OnRender($this));
+
         extract($this->variable);
 
         ob_start();
@@ -254,6 +255,8 @@ class ViewController
         $content = ob_get_contents();
 
         ob_end_clean();
+
+        Observer::instance()->trigger(new OnPostRender($this));
 
         if ($this->getParentTemplate() instanceof ViewController) {
             return $this->cleanOutput($this->getParentTemplate()->setVariables($this->getVariables())->render());

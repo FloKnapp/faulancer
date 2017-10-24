@@ -12,17 +12,25 @@ abstract class AbstractEventType
 
     const EVENT_TYPE = '';
 
-    /** @var \Object */
-    protected $instance;
+    /** @var \stdClass */
+    protected $currentInstance;
 
-    public function __construct($instance)
+    /**
+     * AbstractEventType constructor.
+     *
+     * @param $currentInstance
+     */
+    public function __construct($currentInstance)
     {
-        $this->instance = $instance;
+        $this->currentInstance = $currentInstance;
     }
 
-    public function getInstance()
+    /**
+     * @return \stdClass
+     */
+    public function getCurrentInstance()
     {
-        return $this->instance;
+        return $this->currentInstance;
     }
 
 }
