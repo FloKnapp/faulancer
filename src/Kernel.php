@@ -1,18 +1,14 @@
 <?php
-/**
- * Class Kernel | File Kernel.php
- *
- * @package Faulancer
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer;
 
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Controller\ErrorController;
+use Faulancer\Event\Observer;
+use Faulancer\Event\Type\OnKernelStart;
 use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-
 
 /**
  * Class Kernel
@@ -53,6 +49,8 @@ class Kernel
      */
     public function run()
     {
+        Observer::instance()->trigger(new OnKernelStart($this));
+
         $dispatcher = new Dispatcher($this->request, $this->config);
 
         try {
