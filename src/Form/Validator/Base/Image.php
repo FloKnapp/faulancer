@@ -24,7 +24,7 @@ class Image extends AbstractValidator
      * Valid image mime-types
      * @var array
      */
-    private $validImageMimeTypes = [
+    private $_validImageMimeTypes = [
         'image/jpg',
         'image/jpeg',
         'image/png',
@@ -47,7 +47,7 @@ class Image extends AbstractValidator
         }
 
         $data = mime_content_type($data);
-        return in_array($data, $this->validImageMimeTypes);
+        return in_array($data, $this->_validImageMimeTypes);
     }
 
 }

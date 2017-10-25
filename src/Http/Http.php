@@ -1,16 +1,14 @@
 <?php
-/**
- * Class Uri
- *
- * @package Faulancer\Http
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Http;
 
 use Faulancer\Exception\InvalidArgumentException;
 
 /**
- * Class Uri
+ * Class Http
+ *
+ * @package Faulancer\Http
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Http extends AbstractHttp
 {

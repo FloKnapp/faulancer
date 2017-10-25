@@ -31,30 +31,38 @@ class XmlResponse extends Response
      * @param $data
      * @return bool|\DOMElement
      */
-    protected function generateXmlElement(\DOMDocument $dom, $data )
+    private function generateXmlElement(\DOMDocument $dom, $data )
     {
-        if ( empty( $data['name'] ) )
+        if (empty($data['name'])) {
             return false;
+        }
 
         // Create the element
-        $element_value = ( ! empty( $data['value'] ) ) ? $data['value'] : null;
-        $element = $dom->createElement( $data['name'], $element_value );
+        $elementValue = (!empty($data['value'])) ? $data['value'] : null;
+        $element = $dom->createElement($data['name'], $elementValue);
 
         // Add any attributes
-        if ( ! empty( $data['attributes'] ) && is_array( $data['attributes'] ) ) {
-            foreach ( $data['attributes'] as $attribute_key => $attribute_value ) {
-                $element->setAttribute( $attribute_key, $attribute_value );
+        if (!empty($data['attributes']) && is_array($data['attributes'])) {
+
+            foreach ($data['attributes'] as $attributeKey => $attributeValue) {
+                $element->setAttribute($attributeKey, $attributeValue);
             }
+
         }
 
         // Any other items in the data array should be child elements
-        foreach ( $data as $data_key => $child_data ) {
-            if ( ! is_numeric( $data_key ) )
-                continue;
+        foreach ($data as $data_key => $childData) {
 
-            $child = $this->generateXmlElement( $dom, $child_data );
-            if ( $child )
-                $element->appendChild( $child );
+            if (!is_numeric($data_key)) {
+                continue;
+            }
+
+            $child = $this->generateXmlElement($dom, $childData);
+
+            if ($child) {
+                $element->appendChild($child);
+            }
+
         }
 
         return $element;

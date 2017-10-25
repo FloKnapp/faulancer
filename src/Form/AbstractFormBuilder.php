@@ -1,9 +1,5 @@
 <?php
-/**
- * Class AbstractFormBuilder | AbstractFormBuilder.php
- * @package Faulancer\Form\Type
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form;
 
 use Faulancer\Exception\FormInvalidException;
@@ -12,16 +8,14 @@ use Faulancer\Exception\InvalidFormElementException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
-use Faulancer\Security\Csrf;
 use Faulancer\Service\RequestService;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
-use Faulancer\Session\SessionManager;
-use Nette\Http\Session;
 
 /**
  * Class AbstractFormBuilder
+ * @package Faulancer\Form\Type
+ * @author Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractFormBuilder
 {
@@ -261,7 +255,7 @@ abstract class AbstractFormBuilder
         $isRadioOrCheckbox = $type === 'radio' || $type === 'checkbox';
 
         if ($isRadioOrCheckbox || ($request->isPost() && in_array($name, array_keys($postData)))) {
-            $this->addValidators($typeClass, $definition);
+            $this->_addValidators($typeClass, $definition);
         }
 
         $this->fields[$name] = $typeClass->create();
@@ -274,7 +268,7 @@ abstract class AbstractFormBuilder
      * @return boolean
      * @codeCoverageIgnore
      */
-    private function addValidators(AbstractType &$typeClass, array $definition)
+    private function _addValidators(AbstractType &$typeClass, array $definition)
     {
         if (!empty($definition['validator'])) {
 

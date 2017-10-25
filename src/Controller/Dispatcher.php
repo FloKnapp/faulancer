@@ -72,7 +72,7 @@ class Dispatcher
     public function dispatch()
     {
         // Check for core assets path
-        if ($assets = $this->resolveAssetsPath()) {
+        if ($assets = $this->_resolveAssetsPath()) {
             return $assets;
         }
 
@@ -84,7 +84,7 @@ class Dispatcher
             $this->requestType = 'api';
         }
 
-        list($class, $action, $permission, $payload) = $this->getRoute($this->request->getPath());
+        list($class, $action, $permission, $payload) = $this->_getRoute($this->request->getPath());
 
         /** @var AbstractController $class */
         $class   = new $class($this->request);
@@ -152,7 +152,7 @@ class Dispatcher
     /**
      * @return bool|string
      */
-    private function resolveAssetsPath()
+    private function _resolveAssetsPath()
     {
         $matches = [];
 
@@ -209,7 +209,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getRoute($path)
+    private function _getRoute($path)
     {
         if (strpos($this->request->getPath(), '/api') === 0) {
             $routes = $this->config->get('routes:rest');
@@ -219,9 +219,9 @@ class Dispatcher
 
         foreach ($routes as $name => $data) {
 
-            if ($target = $this->getDirectMatch($path, $data)) {
+            if ($target = $this->_getDirectMatch($path, $data)) {
                 return $target;
-            } else if ($target = $this->getVariableMatch($path, $data)) {
+            } else if ($target = $this->_getVariableMatch($path, $data)) {
                 return $target;
             }
 
@@ -239,7 +239,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getDirectMatch($uri, array $data) :array
+    private function _getDirectMatch($uri, array $data) :array
     {
         if (!empty($data['path']) && $uri === $data['path']) {
 
@@ -256,7 +256,7 @@ class Dispatcher
 
                 return [
                     $data['controller'],
-                    $this->getRestfulAction(),
+                    $this->_getRestfulAction(),
                     $data['permission'] ?? null,
                     []
                 ];
@@ -271,54 +271,6 @@ class Dispatcher
     }
 
     /**
-     * @param string $uri
-     * @param array  $data
-     * @return array
-     */
-    /*
-    private function getVariableMatch(string $uri, array $data)
-    {
-        if (empty($data['path']) || strpos($data['path'], '[') === false || $data['path'] === '/') {
-            return [];
-        }
-
-        $vars  = [];
-        $regex = '/(?<parts>(\[:?[\w\d]+\]))/';
-
-        $pathRegex = preg_replace($regex, '(.*)', $data['path']);
-        $pathRegex = str_replace('/', '\/', $pathRegex);
-
-        if (preg_match('/' . $pathRegex . '/', $uri, $vars)) {
-
-            array_splice($vars, 0, 1);
-
-            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
-
-                return [
-                    $data['controller'],
-                    $data['action'] . 'Action',
-                    $data['permission'] ?? null,
-                    $vars
-                ];
-
-            } else if ($this->requestType === 'api') {
-
-                return [
-                    $data['controller'],
-                    $this->getRestfulAction(),
-                    $data['permission'] ?? null,
-                    $vars
-                ];
-
-            }
-
-        }
-
-        return [];
-
-    }*/
-
-    /**
      * Determines if we have a variable route match
      *
      * @param string $uri
@@ -327,8 +279,7 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-
-    private function getVariableMatch($uri, array $data) :array
+    private function _getVariableMatch($uri, array $data) :array
     {
         if (empty($data['path']) || $data['path'] === '/') {
             return [];
@@ -354,7 +305,7 @@ class Dispatcher
 
                 return [
                     $data['controller'],
-                    $this->getRestfulAction(),
+                    $this->_getRestfulAction(),
                     $data['permission'] ?? null,
                     $var
                 ];
@@ -370,7 +321,7 @@ class Dispatcher
     /**
      * @return string
      */
-    private function getRestfulAction()
+    private function _getRestfulAction()
     {
         $method = strtoupper($this->request->getMethod());
 

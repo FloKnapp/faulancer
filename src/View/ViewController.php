@@ -53,6 +53,9 @@ class ViewController
      */
     private $parentTemplate = null;
 
+    /**
+     * ViewController constructor.
+     */
     public function __construct()
     {
         $this->config = ServiceLocator::instance()->get(Config::class);
@@ -228,7 +231,7 @@ class ViewController
      * @param $output
      * @return string
      */
-    private function cleanOutput($output) :string
+    private function _cleanOutput($output) :string
     {
         if (defined('APPLICATION_ENV') && APPLICATION_ENV === 'production') {
             return preg_replace('/(\s{2,}|\t|\r|\n)/', ' ', trim($output));
@@ -259,9 +262,9 @@ class ViewController
         Observer::instance()->trigger(new OnPostRender($this));
 
         if ($this->getParentTemplate() instanceof ViewController) {
-            return $this->cleanOutput($this->getParentTemplate()->setVariables($this->getVariables())->render());
+            return $this->_cleanOutput($this->getParentTemplate()->setVariables($this->getVariables())->render());
         } else {
-            return $this->cleanOutput($content);
+            return $this->_cleanOutput($content);
         }
     }
 

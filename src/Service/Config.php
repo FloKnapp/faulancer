@@ -57,7 +57,7 @@ class Config
     public function get($key)
     {
         if (strpos($key, ':') !== false) {
-            return $this->recursive($key);
+            return $this->_recursive($key);
         }
 
         if (!isset($this->_config[$key])) {
@@ -86,7 +86,7 @@ class Config
      * @return array|mixed
      * @throws ConfigInvalidException
      */
-    private function recursive($key)
+    private function _recursive($key)
     {
         $parts  = explode(':', $key);
         $result = $this->_config;
