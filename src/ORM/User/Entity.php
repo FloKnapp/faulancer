@@ -6,7 +6,7 @@
  */
 namespace Faulancer\ORM\User;
 
-use Faulancer\ORM\Entity as UserEntity;
+use Faulancer\ORM\Entity as BaseEntity;
 
 /**
  * Class Entity
@@ -19,7 +19,7 @@ use Faulancer\ORM\Entity as UserEntity;
  * @property string $password
  * @property Role[] $roles
  */
-class Entity extends UserEntity
+class Entity extends BaseEntity
 {
 
     protected static $relations = [

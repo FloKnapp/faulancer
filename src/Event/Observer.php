@@ -50,16 +50,16 @@ class Observer
      */
     public function trigger(AbstractEvent $event)
     {
-        if (!self::$listener) {
-            return;
-        }
-
         foreach (self::$listener as $typeName => $listenerList) {
 
             /** @var AbstractListener[] $listenerList */
             foreach ($listenerList as $listener) {
 
                 if ($typeName === $event::NAME) {
+
+                    if (!class_exists($listener)) {
+                        continue;
+                    }
 
                     /** @var AbstractListener $listener */
                     $listener = new $listener();

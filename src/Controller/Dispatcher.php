@@ -11,6 +11,7 @@ use Faulancer\Event\Type\OnDispatch;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\IncompatibleResponseException;
+use Faulancer\Http\Http;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
@@ -97,7 +98,7 @@ class Dispatcher
 
             if ($isPermitted === null) {
 
-                $class->redirect($this->config->get('auth:authUrl'));
+                return ServiceLocator::instance()->get(Http::class)->redirect($this->config->get('auth:authUrl'));
 
             } else if ($isPermitted === false) {
 
@@ -131,6 +132,7 @@ class Dispatcher
 
     /**
      * @return bool
+     * @codeCoverageIgnore
      */
     private function _setLanguageFromUri()
     {
@@ -320,6 +322,7 @@ class Dispatcher
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     private function _getRestfulAction()
     {

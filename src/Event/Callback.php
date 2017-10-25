@@ -27,6 +27,7 @@ class Callback
      * @param AbstractEvent $event
      *
      * @return mixed
+     * @codeCoverageIgnore
      */
     public function execute(AbstractEvent $event)
     {

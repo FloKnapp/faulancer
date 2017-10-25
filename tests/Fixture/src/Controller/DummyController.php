@@ -59,4 +59,19 @@ class DummyController extends AbstractController
         return 3;
     }
 
+    public function stubAuthAction()
+    {
+        return $this->response->setContent('test');
+    }
+
+    public function stubAuthAdminAction()
+    {
+        return $this->response->setContent('admin');
+    }
+
+    public function notPermittedAction()
+    {
+        return false;
+    }
+
 }

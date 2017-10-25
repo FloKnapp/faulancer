@@ -249,6 +249,7 @@ abstract class AbstractType
      * @param string $key
      * @param string $value
      * @return self
+     * @codeCoverageIgnore
      */
     public function addAttribute(string $key, string $value)
     {
@@ -306,6 +307,7 @@ abstract class AbstractType
 
     /**
      * @return bool
+     * @codeCoverageIgnore
      */
     private function translateLabelsAndPlaceholders()
     {

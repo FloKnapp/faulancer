@@ -19,6 +19,9 @@ return [
         \Faulancer\Event\Type\OnKernelStart::NAME => [
             \Faulancer\Fixture\Event\TestListener::class
         ],
-        \Faulancer\Event\Type\OnRender::NAME => []
-    ]
+        \Faulancer\Event\Type\OnRender::NAME => [
+            ''
+        ]
+    ],
+    'customErrorController' => \Faulancer\Fixture\Controller\DummyController::class
 ];

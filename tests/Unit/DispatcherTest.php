@@ -5,9 +5,12 @@ namespace Faulancer\Test\Unit;
 use Faulancer\Controller\Dispatcher;
 use Faulancer\Exception\IncompatibleResponseException;
 use Faulancer\Exception\MethodNotFoundException;
+use Faulancer\Http\Http;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
+use Faulancer\ORM\User\Entity;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\JsonResponseService;
 use Faulancer\Service\ResponseService;
@@ -336,6 +339,78 @@ class DispatcherTest extends TestCase
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
+    }
+
+    public function testAuthFail()
+    {
+        $request = new Request();
+        $request->setPath('/stub-auth');
+        $request->setMethod('GET');
+
+        $mock = $this->getMockBuilder(Http::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['redirect'])
+            ->getMock();
+
+        $mock->method('redirect')->willReturn(true);
+
+        ServiceLocator::instance()->set(Http::class, $mock);
+
+        $authenticatorMock = $this->getMockBuilder(AuthenticatorService::class)
+            ->setMethods(['isPermitted'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $authenticatorMock->method('isPermitted')->willReturn(null);
+
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authenticatorMock);
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response = $dispatcher->dispatch();
+
+        self::assertSame(true, $response);
+    }
+
+    public function testAuthSuccess()
+    {
+        $request = new Request();
+        $request->setPath('/stub-auth');
+        $request->setMethod('GET');
+
+        $authenticatorMock = $this->getMockBuilder(AuthenticatorService::class)
+            ->setMethods(['isPermitted'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $authenticatorMock->method('isPermitted')->willReturn(true);
+
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authenticatorMock);
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response = $dispatcher->dispatch();
+
+        self::assertSame('test', $response->getContent());
+    }
+
+    public function testPermissionDenied()
+    {
+        $request = new Request();
+        $request->setPath('/stub-auth');
+        $request->setMethod('GET');
+
+        $authenticatorMock = $this->getMockBuilder(AuthenticatorService::class)
+            ->setMethods(['isPermitted'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $authenticatorMock->method('isPermitted')->willReturn(false);
+
+        ServiceLocator::instance()->set(AuthenticatorService::class, $authenticatorMock);
+
+        $dispatcher = new Dispatcher($request, $this->config);
+        $response = $dispatcher->dispatch();
+
+        self::assertFalse($response);
     }
 
 }

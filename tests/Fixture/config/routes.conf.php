@@ -31,6 +31,20 @@ return [
         'action' => 'stubNoMethod',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
     ],
+    'stubAuth' => [
+        'path' => '/stub-auth',
+        'method' => ['GET'],
+        'action' => 'stubAuth',
+        'permission' => ['registered', 'registered_additional'],
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubAuthAdmin' => [
+        'path' => '/stub-auth-admin',
+        'method' => ['GET'],
+        'action' => 'stubAuthAdmin',
+        'permission' => ['administrator'],
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
     'rest' => [
         'testRoute' => [
             'path' => '/api/v1/test',
