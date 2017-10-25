@@ -2,16 +2,16 @@
 
 namespace Faulancer\Event\Type;
 
-use Faulancer\Event\AbstractEventType;
+use Faulancer\Event\AbstractEvent;
 
 /**
  * Class OnKernelException
  * @package Faulancer\Event\Type
  * @author  Florian Knapp <office@florianknapp.de>
  */
-class OnKernelException extends AbstractEventType
+class OnKernelException extends AbstractEvent
 {
 
-    const EVENT_TYPE = 'on_kernel_exception';
+    const NAME = 'kernel.exception';
 
 }

@@ -67,6 +67,8 @@ class Route extends AbstractViewHelper
 
         }
 
+        $path = str_replace('//' , '/', $path);
+
         if ($absolute) {
 
             /** @var Request $request */

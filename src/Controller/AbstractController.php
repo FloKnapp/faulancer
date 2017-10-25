@@ -13,6 +13,7 @@ use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
+use Faulancer\View\Helper\Route;
 use Faulancer\View\ViewController;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -189,51 +190,7 @@ abstract class AbstractController
      */
     public function route(string $name, array $parameters = [], $absolute = false)
     {
-        /** @var Config $config */
-        $config    = ServiceLocator::instance()->get(Config::class);
-        $routes    = $config->get('routes');
-        $apiRoutes = $config->get('routes:rest');
-        $routes    = array_merge($routes, $apiRoutes);
-        $path      = '';
-
-        foreach ($routes as $routeName => $data) {
-
-            if ($routeName === $name) {
-                $path = preg_replace('|/\((.*)\)|', '', $data['path']);
-                break;
-            }
-
-        }
-
-        if (empty($path)) {
-
-            throw new RouteInvalidException(
-                'No route for name "' . $name . '" found'
-            );
-
-        }
-
-        if (!empty($parameters)) {
-
-            if (in_array('query', array_keys($parameters), true)) {
-                $query = $parameters['query'];
-                $query = http_build_query($query);
-                $path  = $path . '?' . $query;
-            } else {
-                $path = $path . '/' . implode('/', $parameters);
-            }
-
-        }
-
-        if ($absolute) {
-
-            $path = $this->request->getScheme()
-                . $this->request->getHost()
-                . $path;
-
-        }
-
-        return $path;
+        return (new Route())($this->getView(), $name, $parameters, $absolute);
     }
 
     /**

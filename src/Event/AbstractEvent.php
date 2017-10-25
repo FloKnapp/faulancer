@@ -3,14 +3,14 @@
 namespace Faulancer\Event;
 
 /**
- * Class AbstractEventType
+ * Class AbstractEvent
  * @package Faulancer\Event
  * @author  Florian Knapp <office@florianknapp.de>
  */
-abstract class AbstractEventType
+abstract class AbstractEvent
 {
 
-    const EVENT_TYPE = '';
+    const NAME = '';
 
     /** @var \stdClass */
     protected $currentInstance;

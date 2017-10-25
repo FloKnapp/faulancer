@@ -1,14 +1,12 @@
 <?php
+
+namespace Faulancer\Session;
+
 /**
  * Class SessionManager | SessionManager.php
  *
  * @package Faulancer\Session;
  * @author Florian Knapp <office@florianknapp.de>
- */
-namespace Faulancer\Session;
-
-/**
- * Class SessionManager
  */
 class SessionManager
 {

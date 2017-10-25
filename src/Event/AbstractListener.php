@@ -13,25 +13,10 @@ abstract class AbstractListener
     /** @var Callback */
     protected $callback;
 
-    /** @var AbstractEventType */
-    protected $event;
-
     /**
-     * AbstractListener constructor.
-     * @param AbstractEventType $event
+     * @return mixed
      */
-    public function __construct(AbstractEventType $event)
-    {
-        $this->event = $event;
-    }
-
-    /**
-     * @return self
-     */
-    public function create()
-    {
-        return $this;
-    }
+    abstract public function create();
 
     /**
      * @param Callback $callback
@@ -47,22 +32,6 @@ abstract class AbstractListener
     public function getCallback()
     {
         return $this->callback;
-    }
-
-    /**
-     * @param AbstractEventType $event
-     */
-    public function setEvent(AbstractEventType $event)
-    {
-        $this->event = $event;
-    }
-
-    /**
-     * @return AbstractEventType
-     */
-    public function getEvent()
-    {
-        return $this->event;
     }
 
 }

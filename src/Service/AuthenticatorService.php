@@ -93,18 +93,6 @@ class AuthenticatorService implements ServiceInterface
     /**
      * @return bool
      */
-    public function redirectToAccessDeniedPage()
-    {
-        /** @var Config $config */
-        $config  = $this->controller->getServiceLocator()->get(Config::class);
-        $authUrl = $config->get('auth:authUrl');
-
-        return $this->controller->redirect($authUrl);
-    }
-
-    /**
-     * @return bool
-     */
     public function redirectToAuthentication()
     {
         /** @var Config $config */

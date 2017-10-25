@@ -2,16 +2,16 @@
 
 namespace Faulancer\Event\Type;
 
-use Faulancer\Event\AbstractEventType;
+use Faulancer\Event\AbstractEvent;
 
 /**
  * Class OnPostRender
  * @package Faulancer\Event\Type
  * @author  Florian Knapp <office@florianknapp.de>
  */
-class OnPostRender extends AbstractEventType
+class OnPostRender extends AbstractEvent
 {
 
-    const EVENT_TYPE = 'on_post_render';
+    const NAME = 'post.render';
 
 }

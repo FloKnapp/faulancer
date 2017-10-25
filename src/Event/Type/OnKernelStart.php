@@ -2,16 +2,16 @@
 
 namespace Faulancer\Event\Type;
 
-use Faulancer\Event\AbstractEventType;
+use Faulancer\Event\AbstractEvent;
 
 /**
  * Class OnKernelStart
  * @package Faulancer\Event\Type
  * @author  Florian Knapp <office@florianknapp.de>
  */
-class OnKernelStart extends AbstractEventType
+class OnKernelStart extends AbstractEvent
 {
 
-    const EVENT_TYPE = 'on_kernel_start';
+    const NAME = 'kernel.start';
 
 }

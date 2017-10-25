@@ -34,6 +34,12 @@ class Request extends AbstractHttp
     protected $path = '';
 
     /**
+     * The current uri
+     * @var string
+     */
+    protected $uri = '';
+
+    /**
      * The current method
      * @var string
      */
@@ -155,6 +161,32 @@ class Request extends AbstractHttp
     public function getPath() :string
     {
         return $this->path;
+    }
+
+    /**
+     * Set uri path
+     *
+     * @param string $uri
+     */
+    public function setUri(string $uri)
+    {
+        if (strpos($uri, '?') !== false) {
+            $path = explode('?', $uri);
+            $this->setQuery($path[1]);
+            $uri = $path[0];
+        }
+
+        $this->uri = $uri;
+    }
+
+    /**
+     * Get uri path
+     *
+     * @return string
+     */
+    public function getUri() :string
+    {
+        return $this->uri;
     }
 
     /**

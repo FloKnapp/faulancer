@@ -29,7 +29,7 @@ class AbstractControllerServiceFactory implements FactoryInterface
 
         if (empty($_SERVER['REQUEST_URI']) && empty($_SERVER['REQUEST_METHOD'])) {
             $request->setMethod('GET');
-            $request->setUri('/');
+            $request->setPath('/');
         } else {
             $request->createFromHeaders();
         }

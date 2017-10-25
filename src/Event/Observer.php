@@ -46,26 +46,30 @@ class Observer
     /**
      * Trigger listeners if registered for the type
      *
-     * @param AbstractEventType $eventType
+     * @param AbstractEvent $event
      */
-    public function trigger(AbstractEventType $eventType)
+    public function trigger(AbstractEvent $event)
     {
+        if (!self::$listener) {
+            return;
+        }
+
         foreach (self::$listener as $typeName => $listenerList) {
 
             /** @var AbstractListener[] $listenerList */
             foreach ($listenerList as $listener) {
 
-                if ($typeName === $eventType::EVENT_TYPE) {
+                if ($typeName === $event::NAME) {
 
                     /** @var AbstractListener $listener */
-                    $listener = new $listener($eventType);
-                    $listener->create()->getCallback()->execute($eventType);
+                    $listener = new $listener();
+                    $listener->create();
+                    $callback = $listener->getCallback();
+                    $callback->execute($event);
 
                 }
 
             }
-
-
 
         }
 

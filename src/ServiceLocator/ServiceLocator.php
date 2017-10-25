@@ -1,17 +1,15 @@
 <?php
-/**
- * Class ServiceLocator | ServiceLocator.php
- *
- * @package Faulancer\ServiceLocator
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\ServiceLocator;
 
 use Faulancer\Exception\FactoryMayIncompatibleException;
 use Faulancer\Exception\ServiceNotFoundException;
 
 /**
- * Class ServiceLocator
+ * Class ServiceLocator | ServiceLocator.php
+ *
+ * @package Faulancer\ServiceLocator
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class ServiceLocator implements ServiceLocatorInterface {
 

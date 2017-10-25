@@ -1,17 +1,29 @@
 <?php
+
+namespace Faulancer\Http;
+
+use Faulancer\Http\Adapter\AbstractAdapter;
+
 /**
  * Class Client
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Http;
-
-/**
- * Class Client
- */
 class Client
 {
+
+    /** @var AbstractAdapter */
+    protected $adapter;
+
+    /**
+     * Client constructor.
+     * @param AbstractAdapter $adapter
+     */
+    public function __construct(AbstractAdapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * Get resource by uri
@@ -20,14 +32,16 @@ class Client
      * @param string[] $headers Custom headers
      * @return string
      */
-    public static function get(string $uri, array $headers = []) :string
+    public function get(string $uri, array $headers = []) :string
     {
         $request = new Request();
         $request->setMethod('GET');
         $request->setUri($uri);
         $request->setHeaders($headers);
 
-        return self::sendCurl($request);
+        $this->adapter->send($request);
+
+        return $this->adapter->getResponse();
     }
 
     /**
@@ -36,42 +50,17 @@ class Client
      * @param array  $data
      * @return string
      */
-    public static function post(string $uri, array $headers = [], array $data = []) :string
+    public function post(string $uri, array $headers = [], array $data = []) :string
     {
         $request = new Request();
-        $request->setMethod('GET');
+        $request->setMethod('POST');
         $request->setUri($uri);
         $request->setHeaders($headers);
         $request->setBody($data);
 
-        return self::sendCurl($request);
-    }
+        $this->adapter->send($request);
 
-    /**
-     * Send request within curl
-     *
-     * @param Request $request
-     * @return string
-     * @codeCoverageIgnore
-     */
-    protected static function sendCurl(Request $request) :string
-    {
-        $ch = curl_init($request->getUri());
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        if (!empty($request->getHeaders())) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $request->getHeaders());
-        }
-
-        if ($request->getMethod() === 'POST' && !empty($request->getBody())) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getBody());
-        }
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        return $response;
+        return $this->adapter->getResponse();
     }
 
 }

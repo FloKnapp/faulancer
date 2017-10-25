@@ -80,6 +80,17 @@ class SessionManagerTest extends TestCase
         $this->assertFalse($this->sessionManager->hasSession());
     }
 
+    public function testHasKeyValid()
+    {
+        $this->sessionManager->set('test', 'test2');
+        $this->assertTrue($this->sessionManager->has('test'));
+    }
+
+    public function testHasKeyInvalid()
+    {
+        $this->assertFalse($this->sessionManager->has('non_existent'));
+    }
+
     public function testDeleteNonExistentKey()
     {
         $this->assertFalse($this->sessionManager->delete('nonExistent'));

@@ -10,37 +10,31 @@ namespace Faulancer\Event;
 class Callback
 {
 
-    /** @var mixed */
+    /** @var callable */
     protected $callback;
 
     /**
      * Callback constructor.
      *
-     * @param mixed|null $callback
+     * @param callable|null $callback
      */
-    public function __construct($callback = null)
+    public function __construct(callable $callback = null)
     {
         $this->callback = $callback;
     }
 
     /**
-     * @param $callback
-     *
-     * @return void
-     */
-    public function set($callback)
-    {
-        $this->callback = $callback;
-    }
-
-    /**
-     * @param AbstractEventType $event
+     * @param AbstractEvent $event
      *
      * @return mixed
      */
-    public function execute(AbstractEventType $event)
+    public function execute(AbstractEvent $event)
     {
-        return call_user_func($this->callback, $event);
+        try {
+            return call_user_func($this->callback, $event);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
 }

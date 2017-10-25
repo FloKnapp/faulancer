@@ -51,10 +51,10 @@ class DispatcherTest extends TestCase
     public function testStaticRoute()
     {
         $request = new Request();
-        $request->setUri('/stub');
+        $request->setPath('/stub');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stub');
+        self::assertSame($request->getPath(), '/stub');
 
         $dispatcher = new Dispatcher($request, $this->config);
         self::assertInstanceOf(Response::class, $dispatcher->dispatch());
@@ -67,10 +67,10 @@ class DispatcherTest extends TestCase
     public function testDynamicRoute()
     {
         $request = new Request();
-        $request->setUri('/stub/dynamic');
+        $request->setPath('/stub/dynamic');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stub/dynamic');
+        self::assertSame($request->getPath(), '/stub/dynamic');
 
         $dispatcher = new Dispatcher($request, $this->config);
         self::assertSame(2, $dispatcher->dispatch()->getContent());
@@ -81,10 +81,10 @@ class DispatcherTest extends TestCase
         $this->expectException(MethodNotFoundException::class);
 
         $request = new Request();
-        $request->setUri('/stub/dynamic/all');
+        $request->setPath('/stub/dynamic/all');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stub/dynamic/all');
+        self::assertSame($request->getPath(), '/stub/dynamic/all');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $dispatcher->dispatch();
@@ -97,10 +97,10 @@ class DispatcherTest extends TestCase
     public function testReturnResponse()
     {
         $request = new Request();
-        $request->setUri('/stub/dynamic');
+        $request->setPath('/stub/dynamic');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stub/dynamic');
+        self::assertSame($request->getPath(), '/stub/dynamic');
 
         $dispatcher = new Dispatcher($request, $this->config);
         self::assertSame(2, $dispatcher->dispatch()->getContent());
@@ -114,10 +114,10 @@ class DispatcherTest extends TestCase
         $this->expectException(MethodNotFoundException::class);
 
         $request = new Request();
-        $request->setUri('/stubs');
+        $request->setPath('/stubs');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stubs');
+        self::assertSame($request->getPath(), '/stubs');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $dispatcher->dispatch();
@@ -128,7 +128,7 @@ class DispatcherTest extends TestCase
         $this->expectException(MethodNotFoundException::class);
 
         $request = new Request();
-        $request->setUri('/stub');
+        $request->setPath('/stub');
         $request->setMethod('POST');
 
         $dispatcher = new Dispatcher($request, $this->config);
@@ -140,7 +140,7 @@ class DispatcherTest extends TestCase
         $this->expectException(IncompatibleResponseException::class);
 
         $request = new Request();
-        $request->setUri('/stub-no-response');
+        $request->setPath('/stub-no-response');
         $request->setMethod('GET');
 
         $dispatcher = new Dispatcher($request, $this->config);
@@ -150,10 +150,10 @@ class DispatcherTest extends TestCase
     public function testCustomAssetsPath()
     {
         $request = new Request();
-        $request->setUri('/core/assets/css/main.css');
+        $request->setPath('/core/assets/css/main.css');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/core/assets/css/main.css');
+        self::assertSame($request->getPath(), '/core/assets/css/main.css');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -172,10 +172,10 @@ class DispatcherTest extends TestCase
     public function testCustomJsPath()
     {
         $request = new Request();
-        $request->setUri('/core/assets/js/engine.js');
+        $request->setPath('/core/assets/js/engine.js');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/core/assets/js/engine.js');
+        self::assertSame($request->getPath(), '/core/assets/js/engine.js');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -194,10 +194,10 @@ class DispatcherTest extends TestCase
     public function testApiRequest()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test');
+        $request->setPath('/api/v1/test');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/api/v1/test');
+        self::assertSame($request->getPath(), '/api/v1/test');
 
         /** @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(Dispatcher::class)
@@ -219,10 +219,10 @@ class DispatcherTest extends TestCase
     public function testDynamicApiRequest()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test/word');
+        $request->setPath('/api/v1/test/word');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getPath(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -236,10 +236,10 @@ class DispatcherTest extends TestCase
         $this->expectException(MethodNotFoundException::class);
 
         $request = new Request();
-        $request->setUri('/api/v1/test/word/not-covered');
+        $request->setPath('/api/v1/test/word/not-covered');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word/not-covered');
+        self::assertSame($request->getPath(), '/api/v1/test/word/not-covered');
 
         $dispatcher = new Dispatcher($request, $this->config);
 
@@ -249,10 +249,10 @@ class DispatcherTest extends TestCase
     public function testApiPostRequest()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test/word');
+        $request->setPath('/api/v1/test/word');
         $request->setMethod('POST');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getPath(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -264,10 +264,10 @@ class DispatcherTest extends TestCase
     public function testApiUpdateRequest()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test/word');
+        $request->setPath('/api/v1/test/word');
         $request->setMethod('UPDATE');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getPath(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -279,10 +279,10 @@ class DispatcherTest extends TestCase
     public function testApiDeleteRequest()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test/word');
+        $request->setPath('/api/v1/test/word');
         $request->setMethod('DELETE');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getPath(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -294,10 +294,10 @@ class DispatcherTest extends TestCase
     public function testApiWithQueryParam()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test?test=yolo');
+        $request->setPath('/api/v1/test?test=yolo');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/api/v1/test');
+        self::assertSame($request->getPath(), '/api/v1/test');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -312,10 +312,10 @@ class DispatcherTest extends TestCase
     public function testApiNoMethod()
     {
         $request = new Request();
-        $request->setUri('/api/v1/test/word');
+        $request->setPath('/api/v1/test/word');
         $request->setMethod('');
 
-        self::assertSame($request->getUri(), '/api/v1/test/word');
+        self::assertSame($request->getPath(), '/api/v1/test/word');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();
@@ -329,10 +329,10 @@ class DispatcherTest extends TestCase
         $this->expectException(MethodNotFoundException::class);
 
         $request = new Request();
-        $request->setUri('/stub-no-method');
+        $request->setPath('/stub-no-method');
         $request->setMethod('GET');
 
-        self::assertSame($request->getUri(), '/stub-no-method');
+        self::assertSame($request->getPath(), '/stub-no-method');
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response   = $dispatcher->dispatch();

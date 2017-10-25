@@ -2,16 +2,16 @@
 
 namespace Faulancer\Event\Type;
 
-use Faulancer\Event\AbstractEventType;
+use Faulancer\Event\AbstractEvent;
 
 /**
  * Class onDispatch
  * @package Faulancer\Event\Type
  * @author  Florian Knapp <office@florianknapp.de>
  */
-class OnDispatch extends AbstractEventType
+class OnDispatch extends AbstractEvent
 {
 
-    const EVENT_TYPE = 'on_dispatch';
+    const NAME = 'dispatch';
 
 }

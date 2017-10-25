@@ -12,6 +12,7 @@ use Faulancer\Http\JsonResponse;
  * @author   Florian Knapp <office@florianknapp.de>
  * @license  MIT License
  * @link     Currently no information
+ * @codeCoverageIgnore
  */
 abstract class AbstractRestfulController extends AbstractController
 {
