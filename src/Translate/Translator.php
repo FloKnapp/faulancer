@@ -38,7 +38,7 @@ class Translator
      * @param string $language
      * @throws FileNotFoundException
      */
-    public function __construct(string $language = 'ger_DE')
+    public function __construct(string $language = 'de')
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);

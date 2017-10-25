@@ -3,20 +3,56 @@
 return [
     'home' => [
         'path' => '/',
-        'method' => 'GET',
+        'method' => ['GET'],
         'action' => 'stubHome',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
     ],
     'stubStatic' => [
         'path' => '/stub',
-        'method' => 'GET',
+        'method' => ['GET'],
         'action' => 'stubStatic',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
     ],
     'stubDynamic' => [
         'path' => '/stub/(\w+)',
-        'method' => 'GET',
+        'method' => ['GET'],
         'action' => 'stubDynamic',
         'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubNoResponse' => [
+        'path' => '/stub-no-response',
+        'method' => ['GET'],
+        'action' => 'stubNoResponse',
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubNoMethod' => [
+        'path' => '/stub-no-method',
+        'method' => ['GET'],
+        'action' => 'stubNoMethod',
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubAuth' => [
+        'path' => '/stub-auth',
+        'method' => ['GET'],
+        'action' => 'stubAuth',
+        'permission' => ['registered', 'registered_additional'],
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'stubAuthAdmin' => [
+        'path' => '/stub-auth-admin',
+        'method' => ['GET'],
+        'action' => 'stubAuthAdmin',
+        'permission' => ['administrator'],
+        'controller' => Faulancer\Fixture\Controller\DummyController::class
+    ],
+    'rest' => [
+        'testRoute' => [
+            'path' => '/api/v1/test',
+            'controller' => \Faulancer\Fixture\Controller\ApiDummyController::class
+        ],
+        'testDynamicRoute' => [
+            'path' => '/api/v1/test/(\w+)',
+            'controller' => \Faulancer\Fixture\Controller\ApiDummyController::class
+        ]
     ]
 ];

@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class ConfigInvalidException
  */
-class ConfigInvalidException extends \Exception
+class ConfigInvalidException extends Exception
 {
 
 }

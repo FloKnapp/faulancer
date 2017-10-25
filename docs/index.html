@@ -24,18 +24,6 @@
 
 						<ul>
 				<li>
-					<a href="namespace-Faulancer.Console.html">
-						Console<span></span>
-					</a>
-
-						<ul>
-				<li>
-					<a href="namespace-Faulancer.Console.Handler.html">
-						Handler					</a>
-
-						</li>
-							</ul></li>
-				<li>
 					<a href="namespace-Faulancer.Controller.html">
 						Controller					</a>
 
@@ -81,10 +69,22 @@
 
 						</li>
 				<li>
-					<a href="namespace-Faulancer.ORM.html">
-						ORM					</a>
+					<a href="namespace-Faulancer.Mail.html">
+						Mail					</a>
 
 						</li>
+				<li>
+					<a href="namespace-Faulancer.ORM.html">
+						ORM<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Faulancer.ORM.User.html">
+						User					</a>
+
+						</li>
+							</ul></li>
 				<li>
 					<a href="namespace-Faulancer.Service.html">
 						Service<span></span>
@@ -100,6 +100,11 @@
 				<li>
 					<a href="namespace-Faulancer.ServiceLocator.html">
 						ServiceLocator					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Faulancer.Session.html">
+						Session					</a>
 
 						</li>
 				<li>
@@ -123,9 +128,8 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Faulancer.Console.Handler.Generate.html">Faulancer\Console\Handler\Generate</a></li>
-				<li><a href="class-Faulancer.Console.Output.html">Faulancer\Console\Output</a></li>
 				<li><a href="class-Faulancer.Controller.ErrorController.html">Faulancer\Controller\ErrorController</a></li>
+				<li><a href="class-Faulancer.Controller.RestfulController.html">Faulancer\Controller\RestfulController</a></li>
 				<li><a href="class-Faulancer.Form.Validator.AbstractValidator.html">Faulancer\Form\Validator\AbstractValidator</a></li>
 				<li><a href="class-Faulancer.Form.Validator.Type.DateTime.html">Faulancer\Form\Validator\Type\DateTime</a></li>
 				<li><a href="class-Faulancer.Form.Validator.Type.Email.html">Faulancer\Form\Validator\Type\Email</a></li>
@@ -135,31 +139,53 @@
 				<li><a href="class-Faulancer.Helper.DirectoryIterator.html">Faulancer\Helper\DirectoryIterator</a></li>
 				<li><a href="class-Faulancer.Helper.Reflection.AnnotationParser.html">Faulancer\Helper\Reflection\AnnotationParser</a></li>
 				<li><a href="class-Faulancer.Http.AbstractHttp.html">Faulancer\Http\AbstractHttp</a></li>
-				<li><a href="class-Faulancer.Http.Uri.html">Faulancer\Http\Uri</a></li>
+				<li><a href="class-Faulancer.Http.Http.html">Faulancer\Http\Http</a></li>
+				<li><a href="class-Faulancer.Http.JsonResponse.html">Faulancer\Http\JsonResponse</a></li>
+				<li><a href="class-Faulancer.Http.XmlResponse.html">Faulancer\Http\XmlResponse</a></li>
 				<li><a href="class-Faulancer.Kernel.html">Faulancer\Kernel</a></li>
+				<li><a href="class-Faulancer.Mail.Mailer.html">Faulancer\Mail\Mailer</a></li>
 				<li><a href="class-Faulancer.ORM.Entity.html">Faulancer\ORM\Entity</a></li>
+				<li><a href="class-Faulancer.ORM.User.Entity.html">Faulancer\ORM\User\Entity</a></li>
+				<li><a href="class-Faulancer.ORM.User.RoleEntity.html">Faulancer\ORM\User\RoleEntity</a></li>
+				<li><a href="class-Faulancer.Service.AuthenticatorService.html">Faulancer\Service\AuthenticatorService</a></li>
 				<li><a href="class-Faulancer.Service.Config.html">Faulancer\Service\Config</a></li>
+				<li><a href="class-Faulancer.Service.ControllerService.html">Faulancer\Service\ControllerService</a></li>
+				<li><a href="class-Faulancer.Service.DbService.html">Faulancer\Service\DbService</a></li>
+				<li><a href="class-Faulancer.Service.DispatcherService.html">Faulancer\Service\DispatcherService</a></li>
+				<li><a href="class-Faulancer.Service.Factory.AuthenticatorServiceFactory.html">Faulancer\Service\Factory\AuthenticatorServiceFactory</a></li>
 				<li><a href="class-Faulancer.Service.Factory.ConfigFactory.html">Faulancer\Service\Factory\ConfigFactory</a></li>
-				<li><a href="class-Faulancer.Service.Factory.ORMFactory.html">Faulancer\Service\Factory\ORMFactory</a></li>
-				<li><a href="class-Faulancer.Service.ORM.html">Faulancer\Service\ORM</a></li>
+				<li><a href="class-Faulancer.Service.Factory.ControllerServiceFactory.html">Faulancer\Service\Factory\ControllerServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.DbServiceFactory.html">Faulancer\Service\Factory\DbServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.DispatcherServiceFactory.html">Faulancer\Service\Factory\DispatcherServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.HttpServiceFactory.html">Faulancer\Service\Factory\HttpServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.Factory.SessionManagerServiceFactory.html">Faulancer\Service\Factory\SessionManagerServiceFactory</a></li>
+				<li><a href="class-Faulancer.Service.HttpService.html">Faulancer\Service\HttpService</a></li>
+				<li><a href="class-Faulancer.Service.JsonResponseService.html">Faulancer\Service\JsonResponseService</a></li>
+				<li><a href="class-Faulancer.Service.RequestService.html">Faulancer\Service\RequestService</a></li>
+				<li><a href="class-Faulancer.Service.ResponseService.html">Faulancer\Service\ResponseService</a></li>
+				<li><a href="class-Faulancer.Service.SessionManagerService.html">Faulancer\Service\SessionManagerService</a></li>
 				<li><a href="class-Faulancer.ServiceLocator.ServiceLocator.html">Faulancer\ServiceLocator\ServiceLocator</a></li>
+				<li><a href="class-Faulancer.Session.SessionManager.html">Faulancer\Session\SessionManager</a></li>
 				<li><a href="class-Faulancer.View.Helper.AssetList.html">Faulancer\View\Helper\AssetList</a></li>
 				<li><a href="class-Faulancer.View.Helper.Block.html">Faulancer\View\Helper\Block</a></li>
+				<li><a href="class-Faulancer.View.Helper.CodeBlock.html">Faulancer\View\Helper\CodeBlock</a></li>
 				<li><a href="class-Faulancer.View.Helper.EndBlock.html">Faulancer\View\Helper\EndBlock</a></li>
 				<li><a href="class-Faulancer.View.Helper.EscapeString.html">Faulancer\View\Helper\EscapeString</a></li>
+				<li><a href="class-Faulancer.View.Helper.FlashBag.html">Faulancer\View\Helper\FlashBag</a></li>
 				<li><a href="class-Faulancer.View.Helper.FormData.html">Faulancer\View\Helper\FormData</a></li>
 				<li><a href="class-Faulancer.View.Helper.FormError.html">Faulancer\View\Helper\FormError</a></li>
 				<li><a href="class-Faulancer.View.Helper.GenerateCsrfToken.html">Faulancer\View\Helper\GenerateCsrfToken</a></li>
+				<li><a href="class-Faulancer.View.Helper.Highlighter.html">Faulancer\View\Helper\Highlighter</a></li>
 				<li><a href="class-Faulancer.View.Helper.ParentTemplate.html">Faulancer\View\Helper\ParentTemplate</a></li>
 				<li><a href="class-Faulancer.View.Helper.RenderBlock.html">Faulancer\View\Helper\RenderBlock</a></li>
 				<li><a href="class-Faulancer.View.Helper.RenderView.html">Faulancer\View\Helper\RenderView</a></li>
 				<li><a href="class-Faulancer.View.Helper.Route.html">Faulancer\View\Helper\Route</a></li>
 				<li><a href="class-Faulancer.View.Helper.Translate.html">Faulancer\View\Helper\Translate</a></li>
+				<li><a href="class-Faulancer.View.Helper.User.html">Faulancer\View\Helper\User</a></li>
 			</ul>
 
 			<h3>Interfaces</h3>
 			<ul>
-				<li><a href="class-Faulancer.Console.ConsoleInterface.html">Faulancer\Console\ConsoleInterface</a></li>
 				<li><a href="class-Faulancer.ServiceLocator.FactoryInterface.html">Faulancer\ServiceLocator\FactoryInterface</a></li>
 				<li><a href="class-Faulancer.ServiceLocator.ServiceInterface.html">Faulancer\ServiceLocator\ServiceInterface</a></li>
 				<li><a href="class-Faulancer.ServiceLocator.ServiceLocatorInterface.html">Faulancer\ServiceLocator\ServiceLocatorInterface</a></li>
@@ -172,14 +198,18 @@
 				<li><a href="class-Faulancer.Exception.ConfigInvalidException.html">Faulancer\Exception\ConfigInvalidException</a></li>
 				<li><a href="class-Faulancer.Exception.ConstantMissingException.html">Faulancer\Exception\ConstantMissingException</a></li>
 				<li><a href="class-Faulancer.Exception.DispatchFailureException.html">Faulancer\Exception\DispatchFailureException</a></li>
+				<li><a href="class-Faulancer.Exception.Exception.html">Faulancer\Exception\Exception</a></li>
 				<li><a href="class-Faulancer.Exception.FactoryMayIncompatibleException.html">Faulancer\Exception\FactoryMayIncompatibleException</a></li>
 				<li><a href="class-Faulancer.Exception.FileIncludeException.html">Faulancer\Exception\FileIncludeException</a></li>
 				<li><a href="class-Faulancer.Exception.FileNotFoundException.html">Faulancer\Exception\FileNotFoundException</a></li>
+				<li><a href="class-Faulancer.Exception.IncompatibleResponseException.html">Faulancer\Exception\IncompatibleResponseException</a></li>
 				<li><a href="class-Faulancer.Exception.InvalidArgumentException.html">Faulancer\Exception\InvalidArgumentException</a></li>
 				<li><a href="class-Faulancer.Exception.KernelException.html">Faulancer\Exception\KernelException</a></li>
 				<li><a href="class-Faulancer.Exception.MethodNotFoundException.html">Faulancer\Exception\MethodNotFoundException</a></li>
+				<li><a href="class-Faulancer.Exception.RouteInvalidException.html">Faulancer\Exception\RouteInvalidException</a></li>
 				<li><a href="class-Faulancer.Exception.SecurityException.html">Faulancer\Exception\SecurityException</a></li>
 				<li><a href="class-Faulancer.Exception.ServiceNotFoundException.html">Faulancer\Exception\ServiceNotFoundException</a></li>
+				<li><a href="class-Faulancer.Exception.ViewHelperException.html">Faulancer\Exception\ViewHelperException</a></li>
 				<li><a href="class-Faulancer.Exception.ViewHelperIncompatibleException.html">Faulancer\Exception\ViewHelperIncompatibleException</a></li>
 			</ul>
 
@@ -223,12 +253,6 @@
 				<td class="name"><a href="namespace-Faulancer.html">Faulancer</a></td>
 			</tr>
 			<tr>
-				<td class="name"><a href="namespace-Faulancer.Console.html">Faulancer\Console</a></td>
-			</tr>
-			<tr>
-				<td class="name"><a href="namespace-Faulancer.Console.Handler.html">Faulancer\Console\Handler</a></td>
-			</tr>
-			<tr>
 				<td class="name"><a href="namespace-Faulancer.Controller.html">Faulancer\Controller</a></td>
 			</tr>
 			<tr>
@@ -253,7 +277,13 @@
 				<td class="name"><a href="namespace-Faulancer.Http.html">Faulancer\Http</a></td>
 			</tr>
 			<tr>
+				<td class="name"><a href="namespace-Faulancer.Mail.html">Faulancer\Mail</a></td>
+			</tr>
+			<tr>
 				<td class="name"><a href="namespace-Faulancer.ORM.html">Faulancer\ORM</a></td>
+			</tr>
+			<tr>
+				<td class="name"><a href="namespace-Faulancer.ORM.User.html">Faulancer\ORM\User</a></td>
 			</tr>
 			<tr>
 				<td class="name"><a href="namespace-Faulancer.Service.html">Faulancer\Service</a></td>
@@ -263,6 +293,9 @@
 			</tr>
 			<tr>
 				<td class="name"><a href="namespace-Faulancer.ServiceLocator.html">Faulancer\ServiceLocator</a></td>
+			</tr>
+			<tr>
+				<td class="name"><a href="namespace-Faulancer.Session.html">Faulancer\Session</a></td>
 			</tr>
 			<tr>
 				<td class="name"><a href="namespace-Faulancer.View.html">Faulancer\View</a></td>
@@ -281,6 +314,6 @@
 </div>
 </div>
 <script src="resources/combined.js?3dd218485acb7d951fd2e0762b77648c071015ef"></script>
-<script src="elementlist.js?82af3cdfaf8e2b79453cb5e1e79a90827db2b99b"></script>
+<script src="elementlist.js?b6115e77a8759c64e985c11683b45b2b455f78ec"></script>
 </body>
 </html>

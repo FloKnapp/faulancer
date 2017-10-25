@@ -21,12 +21,12 @@ class RequestTest extends TestCase
         $this->request = new Request();
     }
 
-    public function testSetGetUri()
+    public function testSetgetPath()
     {
-        $this->request->setUri('/stub/test');
+        $this->request->setPath('/stub/test');
 
-        $this->assertTrue(is_string($this->request->getUri()));
-        $this->assertSame('/stub/test', $this->request->getUri());
+        $this->assertTrue(is_string($this->request->getPath()));
+        $this->assertSame('/stub/test', $this->request->getPath());
     }
 
     public function testSetGetMethod()
@@ -64,11 +64,12 @@ class RequestTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_SERVER['REQUEST_URI'] = '/stub';
+        $_SERVER['HTTP_HOST'] = 'velebeat.com';
 
         $request = new Request();
         $request->createFromHeaders();
 
-        $this->assertSame('/stub', $request->getUri());
+        $this->assertSame('/stub', $request->getPath());
         $this->assertSame('POST', $request->getMethod());
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
@@ -77,7 +78,7 @@ class RequestTest extends TestCase
         $request = new Request();
         $request->createFromHeaders();
 
-        $this->assertEmpty($request->getUri());
+        $this->assertEmpty($request->getPath());
         $this->assertSame('GET', $request->getMethod());
         $this->assertTrue($request->isGet());
 
@@ -91,6 +92,32 @@ class RequestTest extends TestCase
         $request->createFromHeaders();
 
         $this->assertNotEmpty($request->getQuery());
+    }
+
+    public function testSetGetBody()
+    {
+        $request = new Request();
+
+        $request->setBody(['test' => true]);
+        self::assertSame(['test' => true], $request->getBody());
+    }
+
+    public function testSetPostData()
+    {
+        $request = new Request();
+
+        $request->setPostData(['test' => true]);
+        self::assertSame(['test' => true], $_POST);
+    }
+
+    public function testGetParam()
+    {
+        $request = new Request();
+        $request->setQuery('testQuery=testValue');
+        $request->setPostData(['testPost' => 'testValue']);
+
+        self::assertSame('testValue', $request->getParam('testQuery'));
+        self::assertSame('testValue', $request->getParam('testPost'));
     }
 
 

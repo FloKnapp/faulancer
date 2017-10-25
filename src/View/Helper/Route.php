@@ -6,7 +6,10 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Http\Request;
 use Faulancer\Service\Config;
+use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
@@ -23,14 +26,20 @@ class Route extends AbstractViewHelper
      * @param ViewController $view
      * @param string         $name
      * @param array          $parameters
+     * @param bool           $absolute
+     *
      * @return string
-     * @throws \Exception
+     * @throws RouteInvalidException
      */
-    public function __invoke(ViewController $view, string $name, array $parameters = [])
+    public function __invoke(ViewController $view, string $name, array $parameters = [], $absolute = false)
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $routes = $config->get('routes');
+        $apiRoutes = $config->get('routes:rest');
+
+        $routes = array_merge($routes, $apiRoutes);
+
         $path   = '';
 
         foreach ($routes as $routeName => $data) {
@@ -43,11 +52,32 @@ class Route extends AbstractViewHelper
         }
 
         if (empty($path)) {
-            throw new \Exception('No route for name "' . $name . '" found');
+            throw new RouteInvalidException('No route for name "' . $name . '" found');
         }
 
         if (!empty($parameters)) {
-            $path = $path . '/' . implode('/', $parameters);
+
+            if (in_array('query', array_keys($parameters), true)) {
+                $query = $parameters['query'];
+                $query = http_build_query($query);
+                $path  = $path . '?' . $query;
+            } else {
+                $path = $path . '/' . implode('/', $parameters);
+            }
+
+        }
+
+        $path = str_replace('//' , '/', $path);
+
+        if ($absolute) {
+
+            /** @var Request $request */
+            $request = $this->getServiceLocator()->get(RequestService::class);
+
+            $path = $request->getScheme()
+                . $request->getHost()
+                . $path;
+
         }
 
         return $path;

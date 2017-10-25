@@ -1,13 +1,14 @@
 <?php
 /**
  * Class AuthenticatorService | AuthenticatorService.php
- * @package Faulancer\Auth
+ * @package Faulancer\Service
  * @author  Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Service;
 
-use Faulancer\Controller\Controller;
-use Faulancer\ORM\User\Entity as UserEntity;
+use Faulancer\Controller\AbstractController;
+use Faulancer\ORM\User\Entity;
+use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
@@ -16,7 +17,7 @@ use Faulancer\ServiceLocator\ServiceInterface;
 class AuthenticatorService implements ServiceInterface
 {
 
-    /** @var Controller */
+    /** @var AbstractController */
     protected $controller;
 
     /** @var DbService */
@@ -30,38 +31,62 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * Authenticator constructor.
-     * @param Controller $controller
-     * @param Config     $config
+     * @param AbstractController $controller
+     * @param Config             $config
      */
-    public function __construct(Controller $controller, Config $config)
+    public function __construct(AbstractController $controller, Config $config)
     {
         $this->controller = $controller;
         $this->config     = $config;
     }
 
     /**
-     * @param UserEntity $user
+     * @param Entity $user
+     * @param bool   $shouldBeActive
+     * @param string $redirectUrl
      * @return bool
      * @codeCoverageIgnore
      */
-    public function loginUser(UserEntity $user)
+    public function loginUser(Entity $user, $shouldBeActive = true, $redirectUrl = '')
     {
-        /** @var UserEntity $userData */
+        /** @var Entity $userData */
         $userData = $this->controller
             ->getDb()
             ->fetch(get_class($user))
             ->where('login', '=', $user->login)
-            ->andWhere('password', '=', $user->password)
+            ->orWhere('email', '=', $user->login)
             ->one();
 
-        if ($userData instanceof UserEntity) {
-            $this->saveUserInSession($userData);
-            return $this->controller->redirect($this->redirectAfterAuth);
+        if (empty($userData)) {
+            $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
+            return $this->redirectToAuthentication();
         }
 
-        /** @var SessionManagerService $sessionManager */
-        $sessionManager = $this->controller->getServiceLocator()->get(SessionManagerService::class);
-        $sessionManager->setFlashbag('loginError', 'No valid username/password combination found.');
+        if ($shouldBeActive && $userData->active !== 1) {
+            $this->controller->setFlashMessage('error.active', 'user_is_not_activated');
+            return $this->redirectToAuthentication();
+        }
+
+        $passOk = Crypt::verifyPassword($user->password, $userData->password);
+
+        if ($passOk && $userData instanceof Entity) {
+
+            $this->saveUserInSession($userData);
+
+            if ($redirectUrl) {
+                return $this->controller->redirect($redirectUrl);
+            }
+
+            if ($userData->roles[0]->roleName === 'registered') {
+                return $this->controller->redirect($this->controller->route('user'));
+            } else {
+                return $this->controller->redirect($this->controller->route('admin'));
+            }
+
+        }
+
+        $this->controller->setFlashMessage('error.login', 'invalid_username_or_password');
+
         return $this->redirectToAuthentication();
     }
 
@@ -78,25 +103,16 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
-     * @param string $uri
-     * @codeCoverageIgnore
-     */
-    public function redirectAfterAuthentication(string $uri)
-    {
-        $this->redirectAfterAuth = $uri;
-    }
-
-    /**
      * @param array $roles
      * @return bool
      */
-    public function isAuthenticated(array $roles)
+    public function isPermitted(array $roles)
     {
-        /** @var UserEntity $user */
+        /** @var Entity $user */
         $user = $this->getUserFromSession();
 
-        if (!$user instanceof UserEntity) {
-            return false;
+        if (!$user instanceof Entity) {
+            return null;
         }
 
         foreach ($user->roles as $userRole) {
@@ -111,22 +127,34 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
-     * @param UserEntity $user
+     * @param Entity $user
+     * @codeCoverageIgnore
      */
-    public function saveUserInSession(UserEntity $user)
+    public function saveUserInSession(Entity $user)
     {
         $this->controller->getSessionManager()->set('user', $user->id);
     }
 
     /**
-     * @return UserEntity
+     * @param string $entity
+     * @return Entity
+     * @codeCoverageIgnore
      */
-    public function getUserFromSession()
+    public function getUserFromSession(string $entity = '')
     {
         $id = $this->controller->getSessionManager()->get('user');
 
-        /** @var UserEntity $user */
-        $user = $this->controller->getDb()->fetch(UserEntity::class, $id);
+        if (empty($id)) {
+            return null;
+        }
+
+        /** @var Entity $user */
+        if (!empty($entity)) {
+            $user = $this->controller->getDb()->fetch($entity, $id);
+        } else {
+            $user = $this->controller->getDb()->fetch(Entity::class, $id);
+        }
+
         return $user;
     }
 

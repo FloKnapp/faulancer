@@ -160,7 +160,7 @@ class Mailer
      */
     protected function sendMail($headers, $message)
     {
-        if (mail(implode(',', $this->recipients), $this->subject,$headers, $message)) {
+        if (mail(implode(',', $this->recipients), mb_encode_mimeheader($this->subject, 'UTF-8'), $message, $headers)) {
             return true;
         }
         return false;
@@ -182,28 +182,28 @@ class Mailer
      */
     protected function getHeaders()
     {
+        $eol      = "\r\n";
         $boundary = $this->getBoundary();
-        $headers  = 'MIME-Version: 1.0' . PHP_EOL;
+        $headers = 'MIME-Version: 1.0' . $eol;
+        $headers .= 'Content-Type: multipart/mixed; charset=UTF-8; boundary=' . $boundary . $eol;
 
         if (!empty($this->from)) {
-            $headers .= 'From: ' .$this->from . PHP_EOL;
+            $headers .= 'From: ' .$this->from . $eol;
         }
 
         if (!empty($this->replyTo)) {
-            $headers .= 'Reply-To: ' . $this->replyTo . PHP_EOL;
+            $headers .= 'Reply-To: ' . $this->replyTo . $eol;
         } else if (!empty($this->from)) {
-            $headers .= 'Reply-To: ' . $this->from . PHP_EOL;
+            $headers .= 'Reply-To: ' . $this->from . $eol;
         }
 
         if (!empty($this->carbonCopies)) {
-            $headers .= 'CC: ' . implode(',', $this->carbonCopies) . PHP_EOL;
+            $headers .= 'CC: ' . implode(',', $this->carbonCopies) . $eol;
         }
 
         if (!empty($this->blindCarbonCopies)) {
-            $headers .= 'BCC: ' . implode(',', $this->blindCarbonCopies) . PHP_EOL;
+            $headers .= 'BCC: ' . implode(',', $this->blindCarbonCopies) . $eol;
         }
-
-        $headers .= 'Content-Type: multipart/mixed; boundary = ' . $boundary . PHP_EOL;
 
         return $headers;
     }
@@ -213,17 +213,19 @@ class Mailer
      */
     protected function getMessage()
     {
+        $eol      = "\r\n";
         $boundary = $this->getBoundary();
-        $body = '--' . $boundary . PHP_EOL;
+
+        $body = '--' . $boundary . $eol;
 
         if ($this->isHtml) {
-            $body .= 'Content-Type: text/html; charset=utf-8' . PHP_EOL;
+            $body .= 'Content-Type: text/html; charset="utf-8"' . $eol;
         } else {
-            $body .= 'Content-Type: text/plain; charset=utf-8' . PHP_EOL;
+            $body .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
         }
 
-        $body .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-        $body .= chunk_split(base64_encode($this->content));
+        $body .= 'Content-Transfer-Encoding: 8bit' . $eol . $eol;
+        $body .= $this->content . $eol;
 
         if (!empty($this->attachment)) {
 
@@ -233,25 +235,25 @@ class Mailer
                 $fileType       = $attachment['mimetype'];
                 $fileName       = $attachment['name'];
 
-                $body .= '--' . $boundary . PHP_EOL;
-                $body .= 'Content-Type: ' . $fileType . '; name=' . $fileName . PHP_EOL;
+                $body .= '--' . $boundary . $eol;
+                $body .= 'Content-Type: ' . $fileType . '; name=' . $fileName . $eol;
 
                 if ($attachment['inline']) {
-                    $body .= 'Content-ID: <' . $fileName . '>' . PHP_EOL;
-                    $body .= 'Content-Disposition: inline; filename=' . $fileName . PHP_EOL;
+                    $body .= 'Content-ID: <' . $fileName . '>' . $eol;
+                    $body .= 'Content-Disposition: inline; filename=' . $fileName . $eol;
                 } else {
-                    $body .= 'Content-Disposition: attachment; filename=' . $fileName . PHP_EOL;
+                    $body .= 'Content-Disposition: attachment; filename=' . $fileName . $eol;
                 }
 
-                $body .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
-                $body .= 'X-Attachment-Id: ' . rand(1000,99999) . PHP_EOL . PHP_EOL;
-                $body .= $encodedContent;
+                $body .= 'Content-Transfer-Encoding: base64' . $eol;
+                $body .= 'X-Attachment-Id: ' . rand(1000,99999) . $eol . $eol;
+                $body .= $encodedContent . $eol;
 
             }
 
         }
 
-        $body .= '--' . $boundary . '--' . PHP_EOL;
+        $body .= '--' . $boundary . '--' . $eol;
 
         return $body;
     }

@@ -1,16 +1,14 @@
 <?php
-/**
- * Class AbstractHttp
- *
- * @package Faulancer\Http
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Http;
 
 use Faulancer\Session\SessionManager;
 
 /**
  * Class AbstractHttp
+ *
+ * @package Faulancer\Http
+ * @author Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractHttp
 {

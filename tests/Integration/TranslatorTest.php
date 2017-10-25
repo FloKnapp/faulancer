@@ -47,7 +47,7 @@ class TranslatorTest extends TestCase
 
     public function testTranslationOtherLanguage()
     {
-        $this->sessionManager->set('language', 'en_EN');
+        $this->sessionManager->set('language', 'en');
 
         $translator = new Translator();
 
@@ -61,7 +61,7 @@ class TranslatorTest extends TestCase
 
     public function testTranslationVariableContent()
     {
-        $this->sessionManager->set('language', 'ger_DE');
+        $this->sessionManager->set('language', 'de');
 
         $translator = new Translator();
 

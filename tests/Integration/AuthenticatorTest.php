@@ -10,16 +10,12 @@ use Faulancer\Fixture\Entity\RoleAnonymousEntity;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
-use Faulancer\ORM\User\RoleEntity;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\HttpService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
-use ORM\EntityFetcher;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\Tests\Service;
 
 /**
  * Class AuthenticatorTest
@@ -68,7 +64,7 @@ class AuthenticatorServiceTest extends TestCase
 
     public function testGetUserFromSession()
     {
-        $this->assertInstanceOf(EntityFetcher::class, $this->authenticator->getUserFromSession());
+        $this->assertNull($this->authenticator->getUserFromSession());
     }
 
     /**
@@ -83,7 +79,7 @@ class AuthenticatorServiceTest extends TestCase
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
-        $result = $authMock->isAuthenticated(['author']);
+        $result = $authMock->isPermitted(['author']);
 
         $this->assertTrue($result);
 
@@ -101,7 +97,7 @@ class AuthenticatorServiceTest extends TestCase
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
-        $result = $authMock->isAuthenticated(['author']);
+        $result = $authMock->isPermitted(['author']);
 
         $this->assertFalse($result);
     }
@@ -118,9 +114,9 @@ class AuthenticatorServiceTest extends TestCase
         $authMock = $this->createPartialMock(AuthenticatorService::class, ['getUserFromSession']);
         $authMock->method('getUserFromSession')->will($this->returnValue($user));
 
-        $result = $authMock->isAuthenticated(['author']);
+        $result = $authMock->isPermitted(['author']);
 
-        $this->assertFalse($result);
+        $this->assertNull($result);
     }
 
 }

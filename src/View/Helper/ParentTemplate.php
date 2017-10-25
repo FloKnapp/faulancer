@@ -24,6 +24,11 @@ class ParentTemplate extends AbstractViewHelper
     public function __invoke(ViewController $view, string $template = '')
     {
         $viewParent = new ViewController();
+
+        if (!empty($view->getTemplatePath())) {
+            $viewParent->setTemplatePath($view->getTemplatePath());
+        }
+
         $viewParent->setTemplate($template);
         $view->setParentTemplate($viewParent);
     }

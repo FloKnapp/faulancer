@@ -24,9 +24,9 @@ class KernelTest extends TestCase
         $config = ServiceLocator::instance()->get(Config::class);
 
         $request = new Request();
-        $request->setUri('/test');
+        $request->setPath('/test');
 
-        new Kernel($request, $config, false);
+        new Kernel($request, $config);
 
         $this->assertNotEmpty($config->get('applicationRoot'));
         $this->assertNotEmpty($config->get('projectRoot'));
@@ -39,11 +39,11 @@ class KernelTest extends TestCase
 
         $request = new Request();
         $request->setMethod('GET');
-        $request->setUri('/test');
+        $request->setPath('/test');
 
         $config = [];
 
-        $kernel = new Kernel($request, $config, false);
+        $kernel = new Kernel($request, $config);
         $response = $kernel->run();
 
         $this->assertNotEmpty($response);
@@ -51,6 +51,9 @@ class KernelTest extends TestCase
         $this->assertSame('Not found', $response);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSuccessDispatch()
     {
         /** @var Config $config */
@@ -64,13 +67,13 @@ class KernelTest extends TestCase
 
         $request = new Request();
         $request->setMethod('GET');
-        $request->setUri('/stub');
+        $request->setPath('/stub');
 
-        $kernel = new Kernel($request, $config, false);
+        $kernel = new Kernel($request, $config);
         $response = $kernel->run();
 
         $this->assertNotEmpty($response);
-        $this->assertSame(1, $response);
+        $this->assertSame('1', $response);
     }
 
 }

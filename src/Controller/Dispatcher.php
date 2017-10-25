@@ -1,22 +1,26 @@
 <?php
 /**
- * Class Dispatcher
- *
- * @package Faulancer\Controller
+ * Class Dispatcher | Dispatcher.php
+ * @package Faulancer\AbstractController
  * @author Florian Knapp <office@florianknapp.de>
  */
 namespace Faulancer\Controller;
 
+use Faulancer\Event\Observer;
+use Faulancer\Event\Type\OnDispatch;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
-use Faulancer\Form\AbstractFormHandler;
+use Faulancer\Exception\IncompatibleResponseException;
+use Faulancer\Http\Http;
+use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
+use Faulancer\Service\AuthenticatorPlugin;
+use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
-use Faulancer\Service\ResponseService;
+use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
 
 /**
  * Class Dispatcher
@@ -39,6 +43,13 @@ class Dispatcher
     protected $config;
 
     /**
+     * user, api
+     *
+     * @var string
+     */
+    protected $requestType = 'default';
+
+    /**
      * Dispatcher constructor.
      *
      * @param Request $request
@@ -53,41 +64,143 @@ class Dispatcher
     /**
      * Bootstrap for every route call
      *
-     * @return Response|mixed
+     * @return Response|JsonResponse|mixed
      * @throws MethodNotFoundException
      * @throws ClassNotFoundException
      * @throws DispatchFailureException
+     * @throws IncompatibleResponseException
      */
-    public function run()
+    public function dispatch()
     {
-        if ($formRequest = $this->handleFormRequest()) {
-            return $formRequest;
+        // Check for core assets path
+        if ($assets = $this->_resolveAssetsPath()) {
+            return $assets;
         }
 
-        /** @var ResponseService $response */
-        $response = ServiceLocator::instance()->get(ResponseService::class);
+        Observer::instance()->trigger(new OnDispatch($this));
 
-        try {
+        $this->_setLanguageFromUri();
 
-            $target = $this->getRoute($this->request->getUri());
-            $class  = $target['class'];
-            $action = $target['action'] . 'Action';
+        if (strpos($this->request->getPath(), '/api') === 0) {
+            $this->requestType = 'api';
+        }
 
-            $class = new $class($this->request);
+        list($class, $action, $permission, $payload) = $this->_getRoute($this->request->getPath());
 
-            if (isset($target['var'])) {
-                $response->setContent(call_user_func_array([$class, $action], $target['var']));
-            } else {
-                $response->setContent($class->$action());
+        /** @var AbstractController $class */
+        $class   = new $class($this->request);
+
+        if (!empty($permission)) {
+
+            /** @var AuthenticatorService $authenticator */
+            $authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
+            $isPermitted   = $authenticator->isPermitted($permission);
+
+            if ($isPermitted === null) {
+
+                return ServiceLocator::instance()->get(Http::class)->redirect($this->config->get('auth:authUrl'));
+
+            } else if ($isPermitted === false) {
+
+                $errorController = $this->config->get('customErrorController');
+                return (new $errorController($this->request))->notPermittedAction();
+
             }
 
-        } catch (MethodNotFoundException $e) {
+        }
 
-            throw new DispatchFailureException();
+        if (!method_exists($class, $action)) {
 
+            throw new MethodNotFoundException(
+                'Class "' . get_class($class) . '" doesn\'t have the method ' . $action
+            );
+
+        }
+
+        $payload = array_map('strip_tags', $payload);
+        $payload = array_map('htmlspecialchars', $payload);
+
+        $response = call_user_func_array([$class, $action], $payload);
+
+        if (!$response instanceof Response) {
+            throw new IncompatibleResponseException('No valid response returned.');
         }
 
         return $response;
+
+    }
+
+    /**
+     * @return bool
+     * @codeCoverageIgnore
+     */
+    private function _setLanguageFromUri()
+    {
+        if ($this->request->getParam('lang') !== null) {
+
+            $serviceLocator = ServiceLocator::instance();
+
+            /** @var SessionManagerService $sessionManager */
+            $sessionManager = $serviceLocator->get(SessionManagerService::class);
+            $sessionManager->set('language', $this->request->getParam('lang'));
+
+            return true;
+
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool|string
+     */
+    private function _resolveAssetsPath()
+    {
+        $matches = [];
+
+        if (preg_match('/(?<style>css)|(?<script>js)/', $this->request->getPath(), $matches)) {
+
+            $file = $this->request->getPath();
+
+            if (strpos($file, 'core') !== false) {
+
+                $path = str_replace('/core', '', $file);
+
+                if ($matches['style'] === 'css') {
+                    return $this->sendCssFileHeader($path);
+                } else if ($matches['script'] === 'js') {
+                    return $this->sendJsFileHeader($path);
+                }
+
+            }
+
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendCssFileHeader($file)
+    {
+        header('Content-Type: text/css');
+        echo file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        exit(0);
+    }
+
+    /**
+     * @param $file
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function sendJsFileHeader($file)
+    {
+        header('Content-Type: text/javascript');
+        echo file_get_contents(__DIR__ . '/../../public/assets' . $file);
+        exit(0);
     }
 
     /**
@@ -98,15 +211,19 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getRoute($path)
+    private function _getRoute($path)
     {
-        $routes = $this->config->get('routes');
+        if (strpos($this->request->getPath(), '/api') === 0) {
+            $routes = $this->config->get('routes:rest');
+        } else {
+            $routes = $this->config->get('routes');
+        }
 
         foreach ($routes as $name => $data) {
 
-            if ($target = $this->getDirectMatch($path, $data)) {
+            if ($target = $this->_getDirectMatch($path, $data)) {
                 return $target;
-            } else if ($target = $this->getVariableMatch($path, $data)) {
+            } else if ($target = $this->_getVariableMatch($path, $data)) {
                 return $target;
             }
 
@@ -124,15 +241,26 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getDirectMatch($uri, array $data) :array
+    private function _getDirectMatch($uri, array $data) :array
     {
-        if ($uri === $data['path']) {
+        if (!empty($data['path']) && $uri === $data['path']) {
 
-            if (strcasecmp($data['method'], $this->request->getMethod()) === 0) {
+            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
 
                 return [
-                    'class'  => $data['controller'],
-                    'action' => $data['action']
+                    $data['controller'],
+                    $data['action'] . 'Action',
+                    $data['permission'] ?? null,
+                    []
+                ];
+
+            } else if ($this->requestType === 'api') {
+
+                return [
+                    $data['controller'],
+                    $this->_getRestfulAction(),
+                    $data['permission'] ?? null,
+                    []
                 ];
 
             }
@@ -153,9 +281,9 @@ class Dispatcher
      * @return array
      * @throws MethodNotFoundException
      */
-    private function getVariableMatch($uri, array $data) :array
+    private function _getVariableMatch($uri, array $data) :array
     {
-        if ($data['path'] === '/') {
+        if (empty($data['path']) || $data['path'] === '/') {
             return [];
         }
 
@@ -166,40 +294,61 @@ class Dispatcher
 
             array_splice($var, 0, 1);
 
-            return [
-                'class'  => $data['controller'],
-                'action' => $data['action'],
-                'var'    => $var
-            ];
+            if ($this->requestType === 'default'  && in_array($this->request->getMethod(), $data['method'])) {
+
+                return [
+                    $data['controller'],
+                    $data['action'] . 'Action',
+                    $data['permission'] ?? null,
+                    $var
+                ];
+
+            } else if ($this->requestType === 'api') {
+
+                return [
+                    $data['controller'],
+                    $this->_getRestfulAction(),
+                    $data['permission'] ?? null,
+                    $var
+                ];
+
+            }
 
         }
 
         return [];
     }
+    
 
     /**
-     * Detect a form request
-     *
-     * @return boolean
+     * @return string
+     * @codeCoverageIgnore
      */
-    private function handleFormRequest()
+    private function _getRestfulAction()
     {
-        if (strpos($this->request->getUri(), '/formrequest/') !== 0 && $this->request->isPost()) {
-            return false;
+        $method = strtoupper($this->request->getMethod());
+
+        switch ($method) {
+
+            case 'GET':
+                return 'get';
+
+            case 'POST':
+                return 'create';
+
+            case 'PUT':
+                return 'update';
+
+            case 'DELETE':
+                return 'delete';
+
+            case 'PATCH':
+                return 'update';
+
+            default:
+                return 'get';
+
         }
-
-        $handlerName  = ucfirst(str_replace('/formrequest/', '', $this->request->getUri()));
-        $handlerClass = '\\' . $this->config->get('namespacePrefix') . '\\Form\\' . $handlerName . 'Handler';
-
-        if (class_exists($handlerClass)) {
-
-            /** @var AbstractFormHandler $handler */
-            $handler = new $handlerClass($this->request);
-            return $handler->run();
-
-        }
-
-        return false;
     }
 
 }

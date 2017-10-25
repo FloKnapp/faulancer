@@ -7,6 +7,8 @@
  */
 namespace Faulancer\Http;
 
+use Faulancer\Exception\InvalidArgumentException;
+
 /**
  * Class Request
  */
@@ -14,7 +16,25 @@ class Request extends AbstractHttp
 {
 
     /**
+     * The current scheme
+     * @var string
+     */
+    protected $scheme = '';
+
+    /**
+     * The current host
+     * @var string
+     */
+    protected $host = '';
+
+    /**
      * The current path string
+     * @var string
+     */
+    protected $path = '';
+
+    /**
+     * The current uri
      * @var string
      */
     protected $uri = '';
@@ -26,10 +46,31 @@ class Request extends AbstractHttp
     protected $method = '';
 
     /**
+     * Custom headers
+     * @var array
+     */
+    protected $headers = [];
+
+    /**
      * The current query string
      * @var string
      */
     protected $query = '';
+
+    /**
+     * @var string
+     */
+    protected $body = '';
+
+    /**
+     * @var array
+     */
+    protected $get = [];
+
+    /**
+     * @var array
+     */
+    protected $post = [];
 
     /**
      * Set attributes automatically
@@ -38,18 +79,88 @@ class Request extends AbstractHttp
      */
     public function createFromHeaders()
     {
-        $uri = $_SERVER['REQUEST_URI'];
+        $path = $_SERVER['REQUEST_URI'];
 
         if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-            $uri = explode('?', $_SERVER['REQUEST_URI']);
-            $this->setQuery($uri[1]);
-            $uri = $uri[0];
+            $path = explode('?', $_SERVER['REQUEST_URI']);
+            $this->setQuery($path[1]);
+            $path = $path[0];
         }
 
-        $this->setUri($uri);
+        $this->setScheme(!empty($_SERVER['HTTPS']) ? 'https://' : 'http://');
+        $this->setHost($_SERVER['HTTP_HOST']);
+        $this->setPath($path);
         $this->setMethod($_SERVER['REQUEST_METHOD']);
 
         return $this;
+    }
+
+    public function setScheme(string $scheme = '')
+    {
+        $this->scheme = $scheme;
+    }
+
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers = [])
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param string $host
+     */
+    public function setHost(string $host = '')
+    {
+        $this->host = $host;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Set uri path
+     *
+     * @param string $path
+     */
+    public function setPath(string $path)
+    {
+        if (strpos($path, '?') !== false) {
+            $path = explode('?', $path);
+            $this->setQuery($path[1]);
+            $path = $path[0];
+        }
+
+        $this->path = $path;
+    }
+
+    /**
+     * Get uri path
+     *
+     * @return string
+     */
+    public function getPath() :string
+    {
+        return $this->path;
     }
 
     /**
@@ -59,6 +170,12 @@ class Request extends AbstractHttp
      */
     public function setUri(string $uri)
     {
+        if (strpos($uri, '?') !== false) {
+            $path = explode('?', $uri);
+            $this->setQuery($path[1]);
+            $uri = $path[0];
+        }
+
         $this->uri = $uri;
     }
 
@@ -89,7 +206,8 @@ class Request extends AbstractHttp
      */
     public function getMethod() :string
     {
-        return empty($this->method) ? $_SERVER['REQUEST_METHOD'] : $this->method;
+        $serverRequestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
+        return empty($this->method) ? $serverRequestMethod : $this->method;
     }
 
     /**
@@ -113,6 +231,22 @@ class Request extends AbstractHttp
     }
 
     /**
+     * @param array $body
+     */
+    public function setBody($body)
+    {
+       $this->body = $body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
      * Determine if it's a post request
      *
      * @return boolean
@@ -133,6 +267,36 @@ class Request extends AbstractHttp
     }
 
     /**
+     * @param string $key
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
+    public function getParam(string $key)
+    {
+        $this->post  = !empty($_POST) ? array_merge($_POST, $this->post) : [];
+        $this->get   = !empty($_GET) ? array_merge($_GET, $this->get) : [];
+
+        if (!empty($this->getQuery())) {
+
+            $query = [];
+            parse_str($this->getQuery(), $query);
+
+            if (!empty($query[$key])) {
+                return $query[$key];
+            }
+
+        }
+
+        $combined = array_merge($this->post, $this->get);
+
+        if (!empty($combined[$key])) {
+            return $combined[$key];
+        }
+
+        return null;
+    }
+
+    /**
      * Return the post data
      *
      * @return array
@@ -140,6 +304,15 @@ class Request extends AbstractHttp
     public function getPostData() :array
     {
         return empty($_POST) ? [] : $_POST;
+    }
+
+    /**
+     * @param $data
+     * @return void
+     */
+    public function setPostData($data)
+    {
+        $_POST = $data;
     }
 
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Test</title>
+    <?= $this->assetList('css'); ?>
+</head>
+<body>
+
+    <div class="content">
+
+        <div class="stacktrace">
+            <?= $this->renderBlock('left_content'); ?>
+        </div>
+
+        <div class="debug">
+            <?= $this->renderBlock('content'); ?>
+        </div>
+
+    </div>
+
+    <?= $this->assetList('js'); ?>
+
+</body>
+</html>

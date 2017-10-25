@@ -1,17 +1,15 @@
 <?php
-/**
- * Class ServiceLocator | ServiceLocator.php
- *
- * @package Faulancer\ServiceLocator
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\ServiceLocator;
 
 use Faulancer\Exception\FactoryMayIncompatibleException;
 use Faulancer\Exception\ServiceNotFoundException;
 
 /**
- * Class ServiceLocator
+ * Class ServiceLocator | ServiceLocator.php
+ *
+ * @package Faulancer\ServiceLocator
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class ServiceLocator implements ServiceLocatorInterface {
 
@@ -73,9 +71,9 @@ class ServiceLocator implements ServiceLocatorInterface {
         }
 
         try {
-            $class = $this->getFactory($service)->createService($this);
+            $class = $this->_getFactory($service)->createService($this);
         } catch (FactoryMayIncompatibleException $e) {
-            $class = $this->getService($service);
+            $class = $this->_getService($service);
         }
 
         self::$services[$service] = $class;
@@ -90,7 +88,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return mixed
      * @throws ServiceNotFoundException
      */
-    private function getService(string $service)
+    private function _getService(string $service)
     {
         if (!class_exists($service)) {
             throw new ServiceNotFoundException($service . ' not found');
@@ -106,7 +104,7 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @return FactoryInterface|null
      * @throws FactoryMayIncompatibleException
      */
-    private function getFactory(string $service)
+    private function _getFactory(string $service)
     {
         $parts     = explode('\\', $service);
         $className = array_splice($parts, count($parts) - 1, 1);

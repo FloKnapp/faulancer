@@ -10,7 +10,7 @@ namespace Faulancer\Exception;
 /**
  * Class FileIncludeException
  */
-class FileIncludeException extends \Exception
+class FileIncludeException extends Exception
 {
 
 }

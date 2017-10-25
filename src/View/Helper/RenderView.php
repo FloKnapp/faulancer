@@ -25,10 +25,15 @@ class RenderView extends AbstractViewHelper
      */
     public function __invoke(ViewController $view, string $template = '', array $variables = [])
     {
-        $view = new ViewController();
-        $view->setTemplate( $template );
-        $view->setVariables( $variables );
-        return $view->render();
+        $subview = new ViewController();
+
+        if (!empty($view->getTemplatePath())) {
+            $subview->setTemplatePath($view->getTemplatePath());
+        }
+
+        $subview->setTemplate( $template );
+        $subview->setVariables( $variables );
+        return $subview->render();
     }
 
 }

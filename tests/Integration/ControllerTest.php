@@ -2,11 +2,11 @@
 
 namespace Faulancer\Test\Integration;
 
-use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\ControllerService;
+use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\HttpService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -22,13 +22,13 @@ use PHPUnit\Framework\TestCase;
 class ControllerTest extends TestCase
 {
 
-    /** @var ControllerService */
+    /** @var AbstractControllerService */
     protected $controller;
 
     public function setUp()
     {
         $serviceLocator   = ServiceLocator::instance();
-        $this->controller = $serviceLocator->get(ControllerService::class);
+        $this->controller = $serviceLocator->get(AbstractControllerService::class);
     }
 
     /**
@@ -65,15 +65,11 @@ class ControllerTest extends TestCase
 
     /**
      * Test render view
+     * @runInSeparateProcess
      */
     public function testRender()
     {
-        try {
-            $this->controller->render();
-        } catch (FileNotFoundException $e) {
-            $this->assertInstanceOf(FileNotFoundException::class, $e);
-        }
-        $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml'));
+        $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml')->getContent());
     }
 
     /**
@@ -98,13 +94,13 @@ class ControllerTest extends TestCase
     public function testRequireAuthSuccess()
     {
         /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isAuthenticated', 'redirectToAuthentication']);
-        $authMock->method('isAuthenticated')->will($this->returnValue(true));
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isPermitted', 'redirectToAuthentication']);
+        $authMock->method('isPermitted')->will($this->returnValue(true));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(true));
 
         ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
-        $this->assertTrue($this->controller->requireAuth(['test']));
+        $this->assertTrue($this->controller->isPermitted(['test']));
     }
 
     /**
@@ -113,13 +109,48 @@ class ControllerTest extends TestCase
     public function testRequireAuthRedirectToLogin()
     {
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $authMock */
-        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isAuthenticated', 'redirectToAuthentication']);
-        $authMock->method('isAuthenticated')->will($this->returnValue(false));
+        $authMock = $this->createPartialMock(AuthenticatorService::class, ['isPermitted', 'redirectToAuthentication']);
+        $authMock->method('isPermitted')->will($this->returnValue(false));
         $authMock->method('redirectToAuthentication')->will($this->returnValue(false));
 
         ServiceLocator::instance()->set('Faulancer\Service\AuthenticatorService', $authMock);
 
-        $this->assertFalse($this->controller->requireAuth(['test']));
+        $this->assertFalse($this->controller->isPermitted(['test']));
+    }
+
+    public function testGetSameView()
+    {
+        $controller = $this->controller->getView();
+
+        $this->assertSame($this->controller->getView(), $controller);
+    }
+
+    public function testSetGetFlashMessage()
+    {
+        $this->controller->setFlashMessage('test', 'test_value');
+        $this->assertSame('test_value', $this->controller->getFlashMessage('test'));
+    }
+
+    public function testRoute()
+    {
+        $this->assertSame('/', $this->controller->route('home'));
+    }
+
+    public function testRouteAbsolute()
+    {
+        $this->assertSame('/', $this->controller->route('home', [], true));
+    }
+
+    public function testRouteWithParams()
+    {
+        $this->assertSame('/test', $this->controller->route('home', ['test']));
+    }
+
+    public function testRouteInvalid()
+    {
+        $this->expectException(RouteInvalidException::class);
+
+        $this->controller->route('non-existent');
     }
 
 }

@@ -1,17 +1,29 @@
 <?php
+
+namespace Faulancer\Http;
+
+use Faulancer\Http\Adapter\AbstractAdapter;
+
 /**
  * Class Client
  *
  * @package Faulancer\Http
  * @author Florian Knapp <office@florianknapp.de>
  */
-namespace Faulancer\Http;
-
-/**
- * Class Client
- */
 class Client
 {
+
+    /** @var AbstractAdapter */
+    protected $adapter;
+
+    /**
+     * Client constructor.
+     * @param AbstractAdapter $adapter
+     */
+    public function __construct(AbstractAdapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * Get resource by uri
@@ -20,32 +32,35 @@ class Client
      * @param string[] $headers Custom headers
      * @return string
      */
-    public static function get(string $uri, array $headers = []) :string
+    public function get(string $uri, array $headers = []) :string
     {
-        return self::sendCurl($uri, $headers);
+        $request = new Request();
+        $request->setMethod('GET');
+        $request->setUri($uri);
+        $request->setHeaders($headers);
+
+        $this->adapter->send($request);
+
+        return $this->adapter->getResponse();
     }
 
     /**
-     * Send request within curl
-     *
-     * @param string   $uri
-     * @param string[] $headers
+     * @param string $uri
+     * @param array  $headers
+     * @param array  $data
      * @return string
      */
-    protected static function sendCurl(string $uri, $headers) :string
+    public function post(string $uri, array $headers = [], array $data = []) :string
     {
-        $ch = curl_init($uri);
+        $request = new Request();
+        $request->setMethod('POST');
+        $request->setUri($uri);
+        $request->setHeaders($headers);
+        $request->setBody($data);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $this->adapter->send($request);
 
-        if (!empty($headers)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        return $response;
+        return $this->adapter->getResponse();
     }
 
 }
