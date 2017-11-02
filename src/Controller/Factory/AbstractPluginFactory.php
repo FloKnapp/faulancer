@@ -1,10 +1,10 @@
 <?php
 
-namespace Faulancer\Plugin;
+namespace Faulancer\Controller\Factory;
 
 /**
  * Class AbstractPluginFactory
- * @package Plugin
+ * @package ControllerPlugin
  * @author  Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractPluginFactory

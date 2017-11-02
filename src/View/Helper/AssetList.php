@@ -54,7 +54,7 @@ class AssetList extends AbstractViewHelper
             return '';
         }
 
-        if ($inHead) {
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV === 'production' && $inHead) {
 
             $result  = '<style type="text/css">';
             $result .= $this->_collectAssetsContent($files);
