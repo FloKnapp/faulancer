@@ -12,6 +12,7 @@ class SessionManager
 {
     /**
      * Start session handler
+     *
      * @return void
      * @codeCoverageIgnore Covered by php
      */
@@ -24,6 +25,7 @@ class SessionManager
 
     /**
      * Destroy session at all
+     *
      * @return void
      */
     public function destroySession()
@@ -35,7 +37,8 @@ class SessionManager
 
     /**
      * Check if session exists
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasSession()
     {
@@ -48,8 +51,9 @@ class SessionManager
 
     /**
      * Set session key with value
+     *
      * @param string $key
-     * @param string|array $value
+     * @param mixed $value
      */
     public function set(string $key, $value)
     {
@@ -58,8 +62,9 @@ class SessionManager
 
     /**
      * Get session value by key
+     *
      * @param string $key
-     * @return null|string|array
+     * @return mixed
      */
     public function get(string $key)
     {
@@ -72,8 +77,9 @@ class SessionManager
 
     /**
      * Delete session value by key
+     *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function delete(string $key)
     {
@@ -87,6 +93,8 @@ class SessionManager
     }
 
     /**
+     * Check if session key exists
+     *
      * @param string $key
      * @return bool
      */
@@ -101,8 +109,9 @@ class SessionManager
 
     /**
      * Check if flash message key exists
+     *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function hasFlashMessage(string $key)
     {
@@ -110,10 +119,11 @@ class SessionManager
     }
 
     /**
-     * Set flashbag value by key
+     * Set flash message value by key
+     *
      * @param string|array      $key
      * @param null|string|array $value
-     * @return boolean
+     * @return bool
      */
     public function setFlashMessage($key, $value = null)
     {
@@ -136,7 +146,7 @@ class SessionManager
      * Get flash message value by key
      *
      * @param string $key
-     * @return null|string|array
+     * @return mixed
      */
     public function getFlashMessage(string $key)
     {

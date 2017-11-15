@@ -152,7 +152,7 @@ abstract class AbstractController
     }
 
     /**
-     * Set a universal text token which is valid for exactly one request/call
+     * Set a generic text token which is valid for exactly one call
      *
      * @param string $key     Key for the flash message
      * @param string $message Content for the flash message
