@@ -93,8 +93,8 @@ class Config
 
         foreach ($parts as $part) {
 
-            if (empty($result[$part])) {
-                return '';
+            if (!isset($result[$part])) {
+                throw new ConfigInvalidException('No value for key "' . $key . '" found.');
             }
 
             $result = $result[$part];

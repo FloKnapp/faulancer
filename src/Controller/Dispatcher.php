@@ -245,7 +245,7 @@ class Dispatcher
     {
         if (!empty($data['path']) && $uri === $data['path']) {
 
-            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'])) {
+            if ($this->requestType === 'default' && in_array($this->request->getMethod(), $data['method'] ?? ['GET'])) {
 
                 return [
                     $data['controller'],

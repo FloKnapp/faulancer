@@ -6,6 +6,7 @@
  */
 namespace Faulancer\Service\Factory;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Service\DbService;
 use ORM\DbConfig;
 use ORM\EntityManager;
@@ -35,7 +36,13 @@ class DbServiceFactory implements FactoryInterface
         $name = $config->get('db:name');
         $user = $config->get('db:username');
         $pass = $config->get('db:password');
-        $host = $config->get('db:host') ?: 'localhost';
+
+        try {
+            $host = $config->get('db:host');
+        } catch (ConfigInvalidException $e) {
+            $host = 'localhost';
+        }
+
         $port = '';
 
         $attributes = [];
@@ -47,7 +54,11 @@ class DbServiceFactory implements FactoryInterface
                 \PDO::ATTR_EMULATE_PREPARES   => false,
             ];
 
-            $port = $config->get('db:port') ?: 3306;
+            try {
+                $port = $config->get('db:port');
+            } catch (ConfigInvalidException $e) {
+                $port = 3306;
+            };
 
         }
 

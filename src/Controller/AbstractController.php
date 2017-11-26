@@ -6,7 +6,6 @@ use Faulancer\Exception\PluginException;
 use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\ControllerPlugin\AbstractPlugin;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\DbService;

@@ -2,6 +2,7 @@
 
 namespace Faulancer\Event;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -19,6 +20,9 @@ class Observer
     /** @var AbstractListener[] */
     protected static $listener = [];
 
+    /** @var bool */
+    protected static $missingConfig = false;
+
     /**
      * Observer constructor (private).
      */
@@ -33,10 +37,18 @@ class Observer
     {
         if (!self::$instance) {
 
-            /** @var Config $config */
-            $config = ServiceLocator::instance()->get(Config::class);
-            self::$listener = $config->get('eventListener');
-            self::$instance = new self();
+            try {
+                /** @var Config $config */
+                $config = ServiceLocator::instance()->get(Config::class);
+                self::$listener = $config->get('eventListener');
+                self::$instance = new self();
+
+            } catch (ConfigInvalidException $e) {
+
+                self::$instance = new self();
+                self::$missingConfig = true;
+
+            }
 
         }
 
@@ -47,9 +59,15 @@ class Observer
      * Trigger listeners if registered for the type
      *
      * @param AbstractEvent $event
+     *
+     * @return bool
      */
     public function trigger(AbstractEvent $event)
     {
+        if (self::$missingConfig) {
+            return false;
+        }
+
         foreach (self::$listener as $typeName => $listenerList) {
 
             /** @var AbstractListener[] $listenerList */
