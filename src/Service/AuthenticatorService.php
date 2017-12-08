@@ -10,6 +10,8 @@ use Faulancer\Controller\AbstractController;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
+use ORM\Exception\IncompletePrimaryKey;
+use ORM\Exception\NoEntity;
 
 /**
  * Class AuthenticatorService
@@ -41,10 +43,17 @@ class AuthenticatorService implements ServiceInterface
     }
 
     /**
+     * Login user with given entity
+     *
      * @param Entity $user
      * @param bool   $shouldBeActive
      * @param string $redirectUrl
+     *
      * @return bool
+     *
+     * @throws NoEntity
+     * @throws IncompletePrimaryKey
+     *
      * @codeCoverageIgnore
      */
     public function loginUser(Entity $user, $shouldBeActive = true, $redirectUrl = '')

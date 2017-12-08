@@ -6,7 +6,9 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
@@ -21,11 +23,17 @@ class Link extends AbstractViewHelper
 {
 
     /**
+     * Render a ready-to-use link within an 'a' tag
+     *
      * @param ViewController $view
      * @param string         $routeName
      * @param array          $elementAttributes
      * @return string
+     *
      * @throws RouteInvalidException
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
+     *
      * @codeCoverageIgnore
      */
     public function __invoke(ViewController $view, $routeName, $elementAttributes = [])

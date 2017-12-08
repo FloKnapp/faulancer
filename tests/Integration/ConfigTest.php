@@ -3,6 +3,7 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\Service\Factory\ConfigFactory;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -26,6 +27,7 @@ class ConfigTest extends TestCase
 
     /**
      * @throws ConfigInvalidException
+     * @throws ServiceNotFoundException
      */
     public function testSetGet()
     {
@@ -102,12 +104,6 @@ class ConfigTest extends TestCase
 
     }
 
-    public function testGetFactory()
-    {
-        $factory = ServiceLocator::instance()->get(ConfigFactory::class, false);
-        $this->assertInstanceOf(Config::class, $factory);
-    }
-
     public function testGetRecursive()
     {
         /** @var Config $config */
@@ -117,6 +113,8 @@ class ConfigTest extends TestCase
 
     public function testGetRecursiveNonExistent()
     {
+        $this->expectException(ConfigInvalidException::class);
+
         /** @var Config $config */
         $config = $this->serviceLocator->get(Config::class);
         $this->assertEmpty($config->get('recursiveTest:layer:layer2:layerNonExistent'));

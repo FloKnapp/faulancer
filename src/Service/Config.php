@@ -1,16 +1,14 @@
 <?php
-/**
- * Config.php
- *
- * @package Faulancer\Service
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Service;
 
 use Faulancer\Exception\ConfigInvalidException;
 
 /**
  * Represents a configuration array
+ *
+ * @package Faulancer\Service
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Config
 {
@@ -27,7 +25,9 @@ class Config
      * @param mixed   $key
      * @param mixed   $value
      * @param boolean $force
-     * @return boolean
+     *
+     * @return bool
+     *
      * @throws ConfigInvalidException
      */
     public function set($key, $value = null, $force = false)
@@ -68,7 +68,9 @@ class Config
     }
 
     /**
-     * @param $key
+     * Delete key from config (just for one request)
+     *
+     * @param string $key
      * @return bool
      */
     public function delete($key)
@@ -83,7 +85,7 @@ class Config
      * Iterate through configuration till given key is found
      *
      * @param $key
-     * @return array|mixed
+     * @return mixed
      * @throws ConfigInvalidException
      */
     private function _recursive($key)
@@ -98,6 +100,7 @@ class Config
             }
 
             $result = $result[$part];
+
         }
 
         return $result;

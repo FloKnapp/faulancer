@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Text | Text.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class Text
+ *
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Text extends AbstractValidator
 {
@@ -22,7 +21,9 @@ class Text extends AbstractValidator
 
     /**
      * Validate type string
+     *
      * @param $data
+     *
      * @return bool
      */
     public function process($data)

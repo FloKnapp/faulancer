@@ -8,7 +8,10 @@
  */
 namespace Faulancer\View;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\ConstantMissingException;
+use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -23,8 +26,12 @@ abstract class AbstractViewHelper
      *
      * @param  string $template
      * @param  array  $variables
+     *
      * @return string
-     * @throws ConstantMissingException
+     *
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
+     * @throws FileNotFoundException
      */
     protected function renderView($template = '', array $variables = []) :string
     {

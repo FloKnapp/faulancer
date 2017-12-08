@@ -1,15 +1,14 @@
 <?php
-/**
- * Class NotEmpty | NotEmpty.php
- * @package Form\Validator\Base
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class NotEmpty
+ *
+ * @package Form\Validator\Base
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class NotEmpty extends AbstractValidator
 {
@@ -19,8 +18,8 @@ class NotEmpty extends AbstractValidator
 
     /**
      * @param mixed $data
+     *
      * @return bool
-     * @codeCoverageIgnore
      */
     public function process($data)
     {

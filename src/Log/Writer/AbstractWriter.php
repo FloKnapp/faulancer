@@ -32,6 +32,8 @@ abstract class AbstractWriter
     }
 
     /**
+     * Write to resource
+     *
      * @param string $logfile
      * @param string $message
      * @param string $level

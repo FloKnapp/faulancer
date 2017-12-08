@@ -1,9 +1,5 @@
 <?php
-/**
- * Class Translate | Translate.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\Translate\Translator;
@@ -11,7 +7,9 @@ use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
 /**
- * Class Translate
+ * Class Translate | Translate.php
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Translate extends AbstractViewHelper
 {

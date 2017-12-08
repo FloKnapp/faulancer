@@ -1,12 +1,9 @@
 <?php
-/**
- * Class AbstractType
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type;
 
 use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Validator\AbstractValidator;
 use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
@@ -19,6 +16,9 @@ use Faulancer\Session\SessionManager;
 
 /**
  * Class AbstractType
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractType
 {
@@ -64,6 +64,7 @@ abstract class AbstractType
 
     /**
      * AbstractType constructor.
+     *
      * @param array $definition
      * @param array $formErrorDecoration
      * @param string $formIdentifier
@@ -76,8 +77,9 @@ abstract class AbstractType
     }
 
     /**
+     * Get default validator
+     *
      * @return AbstractValidator|null
-     * @codeCoverageIgnore
      */
     public function getDefaultValidator()
     {
@@ -85,8 +87,9 @@ abstract class AbstractType
     }
 
     /**
+     * Set default validator
+     *
      * @param AbstractValidator $validator
-     * @codeCoverageIgnore
      */
     public function setDefaultValidator(AbstractValidator $validator)
     {
@@ -94,8 +97,9 @@ abstract class AbstractType
     }
 
     /**
+     * Set validator chain
+     *
      * @param ValidatorChain $validatorChain
-     * @codeCoverageIgnore
      */
     public function setValidatorChain(ValidatorChain $validatorChain)
     {
@@ -103,8 +107,9 @@ abstract class AbstractType
     }
 
     /**
-     * @return boolean|null
-     * @codeCoverageIgnore
+     * Validate field by validator chain or default validator
+     *
+     * @return bool|null
      */
     public function isValid()
     {
@@ -118,8 +123,9 @@ abstract class AbstractType
     }
 
     /**
+     * Remove bound validators
+     *
      * @return void
-     * @codeCoverageIgnore
      */
     public function removeValidators()
     {
@@ -128,8 +134,9 @@ abstract class AbstractType
     }
 
     /**
+     * Get error messages
+     *
      * @return array|string
-     * @codeCoverageIgnore
      */
     public function getErrorMessages()
     {
@@ -162,8 +169,9 @@ abstract class AbstractType
     }
 
     /**
+     * Set error messages
+     *
      * @param array $messages
-     * @codeCoverageIgnore
      */
     public function setErrorMessages(array $messages)
     {
@@ -171,6 +179,8 @@ abstract class AbstractType
     }
 
     /**
+     * Get field type
+     *
      * @return string
      */
     public function getType() :string
@@ -180,6 +190,7 @@ abstract class AbstractType
 
     /**
      * @param string $type
+     *
      * @return self
      */
     public function setType(string $type)
@@ -190,7 +201,6 @@ abstract class AbstractType
 
     /**
      * @return string
-     * @codeCoverageIgnore
      */
     public function getLabel() :string
     {
@@ -199,6 +209,7 @@ abstract class AbstractType
 
     /**
      * @param string $label
+     *
      * @return self
      */
     public function setLabel(string $label)
@@ -217,10 +228,10 @@ abstract class AbstractType
 
     /**
      * @param mixed $value
+     *
      * @return self
-     * @codeCoverageIgnore
      */
-    public function setValue($value)
+    public function setValue($value) :self
     {
         $this->value = $value;
         return $this;
@@ -228,7 +239,6 @@ abstract class AbstractType
 
     /**
      * @return string
-     * @codeCoverageIgnore
      */
     public function getName() :string
     {
@@ -237,21 +247,24 @@ abstract class AbstractType
 
     /**
      * @param string $name
+     *
      * @return self
      */
-    public function setName(string $name)
+    public function setName(string $name) :self
     {
         $this->name = $name;
         return $this;
     }
 
     /**
+     * Add field attribute
+     *
      * @param string $key
      * @param string $value
+     *
      * @return self
-     * @codeCoverageIgnore
      */
-    public function addAttribute(string $key, string $value)
+    public function addAttribute(string $key, string $value) :self
     {
         if (!empty($this->definition['attributes'][$key])) {
             $this->definition['attributes'][$key] = $this->definition['attributes'][$key] . ' ' . $value;
@@ -263,7 +276,9 @@ abstract class AbstractType
     }
 
     /**
-     * @return boolean
+     * @return bool
+     *
+     * @throws ServiceNotFoundException
      */
     protected function isPost() :bool
     {
@@ -279,19 +294,19 @@ abstract class AbstractType
             $this->setLabel($this->definition['label']);
         }
 
-        if (!empty($this->getType())) {
-            $this->definition['type'] = $this->getType();
+        if (empty($this->getType()) && !empty($this->definition['type'])) {
+             $this->setType($this->definition['type']);
         }
 
-        if (!empty($this->getValue())) {
-            $this->definition['value'] = $this->getValue();
+        if (empty($this->getValue()) && !empty($this->definition['value'])) {
+            $this->setValue($this->definition['value']);
         }
 
-        if (!empty($this->getName())) {
-            $this->definition['name'] = $this->getName();
+        if (empty($this->getName()) && !empty($this->definition['name'])) {
+            $this->setName($this->definition['name']);
         }
 
-        $this->translateLabelsAndPlaceholders();
+        $this->_translateLabelsAndPlaceholders();
 
         return $this;
     }
@@ -302,19 +317,18 @@ abstract class AbstractType
     public function __toString() :string
     {
         $this->create();
-        return str_replace('  ', ' ', $this->element);
+        return str_replace(['  ', ' >'], [' ', '>'], $this->element);
     }
 
     /**
      * @return bool
-     * @codeCoverageIgnore
      */
-    private function translateLabelsAndPlaceholders()
+    private function _translateLabelsAndPlaceholders() :bool
     {
         if (!empty($this->definition['attributes']['placeholder'])) {
-            $this->translateType('placeholder');
+            $this->_translateType('placeholder');
         } else if (!empty($this->definition['label'])) {
-            $this->translateType('label');
+            $this->_translateType('label');
         } else {
             return false;
         }
@@ -323,16 +337,17 @@ abstract class AbstractType
     }
 
     /**
-     * @param $type
+     * @param string $type
+     *
      * @return bool
      */
-    private function translateType($type)
+    private function _translateType(string $type) :bool
     {
         /** @var Config $config */
-        $config = $this->getServiceLocator()->get(Config::class);
+        $config = $this->_getServiceLocator()->get(Config::class);
 
         /** @var SessionManager $sessionManager */
-        $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+        $sessionManager = $this->_getServiceLocator()->get(SessionManagerService::class);
         $lang           = $sessionManager->get('language');
 
         try {
@@ -372,7 +387,7 @@ abstract class AbstractType
     /**
      * @return ServiceLocatorInterface
      */
-    private function getServiceLocator()
+    private function _getServiceLocator()
     {
         return ServiceLocator::instance();
     }

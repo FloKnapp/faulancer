@@ -1,15 +1,13 @@
 <?php
-/**
- * Class Text | Text.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
- * Class Text
+ * Class File
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class File extends AbstractType
 {
@@ -22,7 +20,6 @@ class File extends AbstractType
 
     /**
      * @return self
-     * @codeCoverageIgnore
      */
     public function create()
     {

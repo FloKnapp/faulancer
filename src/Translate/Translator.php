@@ -1,21 +1,18 @@
 <?php
+
+namespace Faulancer\Translate;
+
+use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
+use Faulancer\Service\Config;
+use Faulancer\Service\SessionManagerService;
+use Faulancer\ServiceLocator\ServiceLocator;
+
 /**
  * Class Translator | Translator.php
  *
  * @package Faulancer\Translate
  * @author Florian Knapp <office@florianknapp.de>
- */
-namespace Faulancer\Translate;
-
-use Faulancer\Exception\FileNotFoundException;
-use Faulancer\Service\Config;
-use Faulancer\Service\SessionManagerService;
-use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\Session\SessionManager;
-use Symfony\Component\EventDispatcher\Tests\Service;
-
-/**
- * Class Translator
  */
 class Translator
 {
@@ -36,7 +33,9 @@ class Translator
      * Translator constructor.
      *
      * @param string $language
-     * @throws FileNotFoundException
+     *
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
      */
     public function __construct(string $language = 'de')
     {

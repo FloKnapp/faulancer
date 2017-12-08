@@ -2,7 +2,7 @@
 
 namespace Faulancer\Event;
 
-use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\Exception;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -38,12 +38,13 @@ class Observer
         if (!self::$instance) {
 
             try {
+
                 /** @var Config $config */
                 $config = ServiceLocator::instance()->get(Config::class);
                 self::$listener = $config->get('eventListener');
                 self::$instance = new self();
 
-            } catch (ConfigInvalidException $e) {
+            } catch (Exception $e) {
 
                 self::$instance = new self();
                 self::$missingConfig = true;

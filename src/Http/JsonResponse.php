@@ -1,21 +1,24 @@
 <?php
-/**
- * Class JsonResponse | JsonResponse.php
- * @package Faulancer\Http
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Http;
 
 /**
  * Class JsonResponse
+ *
+ * @package Faulancer\Http
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class JsonResponse extends Response
 {
 
+    /** @var array */
     protected $content = [];
 
     /**
+     * Set content
+     *
      * @param array $content
+     *
      * @return self
      */
     public function setContent($content = [])

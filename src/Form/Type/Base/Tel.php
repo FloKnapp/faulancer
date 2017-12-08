@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Tel | Tel.php
- * @package Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Tel
+ *
+ * @package Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Tel extends AbstractType
 {
@@ -21,7 +20,6 @@ class Tel extends AbstractType
 
     /**
      * @return self
-     * @codeCoverageIgnore
      */
     public function create()
     {

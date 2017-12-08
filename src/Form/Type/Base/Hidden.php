@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Hidden | Hidden.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Hidden
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Hidden extends AbstractType
 {
@@ -21,8 +20,7 @@ class Hidden extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
-     * @codeCoverageIgnore
+     * @return self
      */
     public function create()
     {

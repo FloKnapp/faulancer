@@ -5,6 +5,7 @@ namespace Faulancer\Form;
 use Faulancer\Exception\FormInvalidException;
 use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Exception\InvalidFormElementException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
@@ -14,6 +15,7 @@ use Faulancer\Form\Validator\ValidatorChain;
 
 /**
  * Class AbstractFormBuilder
+ *
  * @package Faulancer\Form\Type
  * @author Florian Knapp <office@florianknapp.de>
  */
@@ -29,7 +31,7 @@ abstract class AbstractFormBuilder
     /** @var AbstractType[] */
     protected $fields = [];
 
-    /** @var Entity */
+    /** @var Entity|null */
     protected $entity = null;
 
     /** @var string */
@@ -44,7 +46,7 @@ abstract class AbstractFormBuilder
     /** @var string */
     protected $formErrorItemContainerSuffix = '';
 
-    /** @var  */
+    /** @var string|null */
     private $confirmValue = null;
 
     /**
@@ -54,28 +56,35 @@ abstract class AbstractFormBuilder
      */
     public function __construct(Entity $entity = null)
     {
+        $this->create();
+
         if ($entity !== null) {
-            $this->create();
             $this->setData($entity->getDataAsArray());
         }
-
-        $this->create();
     }
 
     /**
+     * Get field object
+     *
      * @param string $name
+     *
      * @return AbstractType
      * @throws InvalidFormElementException
-     * @codeCoverageIgnore
      */
     public function getField(string $name)
     {
         if (empty($this->fields[$name])) {
             throw new InvalidFormElementException('No field with name \'' . $name . '\' found');
         }
+
         return $this->fields[$name];
     }
 
+    /**
+     * @param AbstractType $field
+     *
+     * @return $this
+     */
     public function setField(AbstractType $field)
     {
         $this->fields[$field->getName()] = $field;
@@ -103,9 +112,9 @@ abstract class AbstractFormBuilder
      */
     public function getFormOpen()
     {
-        $action = $this->formAttributes['action'] ?? '';
-        $method = $this->formAttributes['method'] ?? '';
-        $enctype = $this->formAttributes['enctype'] ?? 'application/x-www-form-urlencoded';
+        $action       = $this->formAttributes['action'] ?? '';
+        $method       = $this->formAttributes['method'] ?? '';
+        $enctype      = $this->formAttributes['enctype'] ?? 'application/x-www-form-urlencoded';
         $autocomplete = $this->formAttributes['autocomplete'] ?? 'on';
 
         return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '" autocomplete="' . $autocomplete . '">';
@@ -122,7 +131,6 @@ abstract class AbstractFormBuilder
     /**
      * @param string $prefix
      * @param string $suffix
-     * @codeCoverageIgnore
      */
     public function setFormErrorContainer(string $prefix, string $suffix)
     {
@@ -133,7 +141,6 @@ abstract class AbstractFormBuilder
     /**
      * @param string $prefix
      * @param string $suffix
-     * @codeCoverageIgnore
      */
     public function setFormErrorItemContainer(string $prefix, string $suffix)
     {
@@ -143,7 +150,6 @@ abstract class AbstractFormBuilder
 
     /**
      * @return array
-     * @codeCoverageIgnore
      */
     public function getData()
     {
@@ -172,7 +178,6 @@ abstract class AbstractFormBuilder
 
     /**
      * @param array $data
-     * @codeCoverageIgnore
      */
     public function setData(array $data)
     {
@@ -189,7 +194,6 @@ abstract class AbstractFormBuilder
 
     /**
      * @return bool
-     * @codeCoverageIgnore
      */
     public function isValid() :bool
     {
@@ -210,9 +214,13 @@ abstract class AbstractFormBuilder
     }
 
     /**
+     * Add a form field
+     *
      * @param array $definition
+     *
      * @throws InvalidArgumentException
-     * @codeCoverageIgnore
+     * @throws ServiceNotFoundException
+     * @throws FormInvalidException
      */
     public function add(array $definition)
     {
@@ -264,9 +272,10 @@ abstract class AbstractFormBuilder
     /**
      * @param AbstractType $typeClass
      * @param array        $definition
+     *
+     * @return bool
+     *
      * @throws FormInvalidException
-     * @return boolean
-     * @codeCoverageIgnore
      */
     private function _addValidators(AbstractType &$typeClass, array $definition)
     {

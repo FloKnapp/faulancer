@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Confirm | Confirm.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
- * Class Text
+ * Class Confirm
+ *
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Confirm extends AbstractValidator
 {
@@ -24,9 +23,10 @@ class Confirm extends AbstractValidator
 
     /**
      * Validate type string
+     *
      * @param $data
-     * @return boolean
-     * @codeCoverageIgnore
+     *
+     * @return bool
      */
     public function process($data)
     {

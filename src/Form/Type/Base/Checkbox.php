@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Checkbox | Checkbox.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Checkbox
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Checkbox extends AbstractType
 {
@@ -21,8 +20,7 @@ class Checkbox extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
-     * @codeCoverageIgnore
+     * @return self
      */
     public function create()
     {

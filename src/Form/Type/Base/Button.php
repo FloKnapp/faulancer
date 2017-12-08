@@ -5,15 +5,15 @@ namespace Faulancer\Form\Type\Base;
 use Faulancer\Form\Type\AbstractType;
 
 /**
- * Class Date
+ * Class Button
  *
  * @package Faulancer\Form\Type\Base
  * @author Florian Knapp <office@florianknapp.de>
  */
-class Date extends AbstractType
+class Button extends AbstractType
 {
     /** @var string */
-    protected $inputType = 'input';
+    protected $inputType = 'button';
 
     /** @var string */
     protected $element = '';
@@ -25,22 +25,17 @@ class Date extends AbstractType
     {
         parent::create();
 
-        $this->setLabel($this->definition['label']);
-
         $output = '<' . $this->inputType;
 
         foreach ($this->definition['attributes'] as $attr => $value) {
             $output .= ' ' . $attr . '="' . $value . '" ';
         }
 
-        if (!empty($this->getValue())) {
-            $output .= ' value="' . $this->getValue() . '"';
-        }
-
-        $output .= '/>';
+        $output .= '>' . $this->getLabel() . '</button>';
 
         $this->element = $output;
 
         return $this;
     }
+
 }

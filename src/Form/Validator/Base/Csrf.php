@@ -1,15 +1,15 @@
 <?php
-/**
- * Class Csrf | Csrf.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
- * Class Email
+ * Class Csrf
+ *
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Csrf extends AbstractValidator
 {
@@ -22,8 +22,11 @@ class Csrf extends AbstractValidator
 
     /**
      * Validate email with filter_var
-     * @param $data
-     * @return boolean
+     *
+     * @param string $data
+     * @return bool
+     *
+     * @throws ServiceNotFoundException
      */
     public function process($data)
     {

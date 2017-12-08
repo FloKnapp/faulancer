@@ -185,7 +185,6 @@ abstract class AbstractController
      * @param bool   $absolute   Return an absolute url with host as prefix
      *
      * @return string
-     * @throws RouteInvalidException
      */
     public function route(string $name, array $parameters = [], $absolute = false)
     {

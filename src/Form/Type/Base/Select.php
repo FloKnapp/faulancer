@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Select | Select.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Select
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Select extends AbstractType
 {
@@ -18,7 +17,6 @@ class Select extends AbstractType
 
     /**
      * @return self
-     * @codeCoverageIgnore
      */
     public function create()
     {

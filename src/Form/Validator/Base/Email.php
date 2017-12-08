@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Email | Email.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class Email
+ *
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Email extends AbstractValidator
 {
@@ -22,8 +21,10 @@ class Email extends AbstractValidator
 
     /**
      * Validate email with filter_var
+     *
      * @param $data
-     * @return boolean
+     *
+     * @return bool
      */
     public function process($data)
     {

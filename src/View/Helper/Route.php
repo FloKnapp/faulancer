@@ -1,13 +1,10 @@
 <?php
-/**
- * Class Route | Route.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
@@ -16,7 +13,9 @@ use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
 /**
- * Class Route
+ * Class Route | Route.php
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Route extends AbstractViewHelper
 {
@@ -30,7 +29,10 @@ class Route extends AbstractViewHelper
      * @param bool           $absolute
      *
      * @return string
+     *
      * @throws RouteInvalidException
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
      */
     public function __invoke(ViewController $view, string $name, array $parameters = [], $absolute = false)
     {

@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Password | Password.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
- * Class Text
+ * Class Password
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Password extends AbstractType
 {

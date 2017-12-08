@@ -1,18 +1,19 @@
 <?php
-/**
- * Class DbService | DbService.php
- * @package Faulancer\Service
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Service;
 
 use ORM\EntityFetcher;
 use ORM\EntityManager;
 use Faulancer\ORM\Entity;
 use Faulancer\ServiceLocator\ServiceInterface;
+use ORM\Exception\IncompletePrimaryKey;
+use ORM\Exception\NoEntity;
 
 /**
  * Class DbService
+ *
+ * @package Faulancer\Service
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class DbService implements ServiceInterface
 {
@@ -45,6 +46,10 @@ class DbService implements ServiceInterface
      * @param string       $entity
      * @param integer|null $primaryKey
      * @return Entity|EntityFetcher
+     *
+     * @throws IncompletePrimaryKey
+     * @throws NoEntity
+     *
      * @codeCoverageIgnore Is covered by tflori/orm
      */
     public function fetch(string $entity, $primaryKey = null)

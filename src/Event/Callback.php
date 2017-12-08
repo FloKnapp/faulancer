@@ -18,7 +18,7 @@ class Callback
      *
      * @param callable|null $callback
      */
-    public function __construct(callable $callback = null)
+    public function __construct($callback = null)
     {
         $this->callback = $callback;
     }
@@ -27,7 +27,6 @@ class Callback
      * @param AbstractEvent $event
      *
      * @return mixed
-     * @codeCoverageIgnore
      */
     public function execute(AbstractEvent $event)
     {

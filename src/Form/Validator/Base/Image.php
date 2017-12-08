@@ -1,15 +1,14 @@
 <?php
-/**
- * Class ImageEntity | ImageEntity.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
  * Class ImageEntity
+ *
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Image extends AbstractValidator
 {
@@ -37,8 +36,10 @@ class Image extends AbstractValidator
 
     /**
      * Validate image type within it's mime-type
+     *
      * @param string $data
-     * @return boolean
+     *
+     * @return bool
      */
     public function process($data)
     {

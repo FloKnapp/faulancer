@@ -1,17 +1,16 @@
 <?php
-/**
- * Class Textarea | Textarea.php
- * @package Faulancer\Form\Type\Base
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
- * Class Textarea
+ * Class TextArea
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author  Florian Knapp <office@florianknapp.de>
  */
-class Textarea extends AbstractType
+class TextArea extends AbstractType
 {
 
     /** @var string */
@@ -22,7 +21,6 @@ class Textarea extends AbstractType
 
     /**
      * @return self
-     * @codeCoverageIgnore
      */
     public function create()
     {

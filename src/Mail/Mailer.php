@@ -143,7 +143,9 @@ class Mailer
     }
 
     /**
-     * @param bool $html
+     * Send email
+     *
+     * @param bool $html Whether to send as html or plain text
      * @return bool
      */
     public function send($html = true)
@@ -153,10 +155,12 @@ class Mailer
     }
 
     /**
+     * Executes mail command
+     *
      * @param string $headers
      * @param string $message
+     *
      * @return bool
-     * @codeCoverageIgnore
      */
     protected function sendMail($headers, $message)
     {
@@ -167,6 +171,8 @@ class Mailer
     }
 
     /**
+     * Get boundary for email headers
+     *
      * @return string
      */
     protected function getBoundary()
@@ -178,6 +184,8 @@ class Mailer
     }
 
     /**
+     * Get headers
+     *
      * @return string
      */
     protected function getHeaders()
@@ -209,6 +217,8 @@ class Mailer
     }
 
     /**
+     * Get message body
+     *
      * @return string
      */
     protected function getMessage()

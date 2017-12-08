@@ -29,6 +29,7 @@ class AssetList extends AbstractViewHelper
      *                               within style tag in head
      *
      * @return string
+     * @codeCoverageIgnore
      */
     public function __invoke(ViewController $view, $type, $inHead = false)
     {

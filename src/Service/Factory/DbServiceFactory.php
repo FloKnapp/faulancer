@@ -32,10 +32,17 @@ class DbServiceFactory implements FactoryInterface
         /** @var Config $config */
         $config = $serviceLocator->get(Config::class);
 
-        $type = $config->get('db:type');
-        $name = $config->get('db:name');
-        $user = $config->get('db:username');
-        $pass = $config->get('db:password');
+        $type = '';
+        $name = '';
+        $user = '';
+        $pass = '';
+
+        try {
+            $type = $config->get('db:type');
+            $name = $config->get('db:name');
+            $user = $config->get('db:username');
+            $pass = $config->get('db:password');
+        } catch (ConfigInvalidException $e) {}
 
         try {
             $host = $config->get('db:host');

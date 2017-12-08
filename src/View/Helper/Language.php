@@ -6,6 +6,8 @@
  */
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\Session\SessionManager;
@@ -36,6 +38,8 @@ class Language extends AbstractViewHelper
     /**
      * @param bool $codeOnly
      * @return string
+     *
+     * @throws ServiceNotFoundException
      */
     public function getCurrent($codeOnly = true)
     {
@@ -52,6 +56,9 @@ class Language extends AbstractViewHelper
 
     /**
      * @return string
+     *
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
      */
     public function getLinks()
     {

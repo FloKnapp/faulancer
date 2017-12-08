@@ -5,8 +5,9 @@ namespace Faulancer\View;
 use Faulancer\Event\Observer;
 use Faulancer\Event\Type\OnPostRender;
 use Faulancer\Event\Type\OnRender;
-use Faulancer\Exception\ConstantMissingException;
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Exception\ViewHelperException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -55,6 +56,8 @@ class ViewController
 
     /**
      * ViewController constructor.
+     *
+     * @throws ServiceNotFoundException
      */
     public function __construct()
     {
@@ -66,8 +69,9 @@ class ViewController
      *
      * @param string $template
      * @return ViewController
-     * @throws ConstantMissingException
+     *
      * @throws FileNotFoundException
+     * @throws ConfigInvalidException
      */
     public function setTemplate(string $template = '') :self
     {
@@ -269,12 +273,16 @@ class ViewController
     }
 
     /**
-     * Magic method for providing a view helper
+     * Magic method for providing a view helpers
      *
      * @param  string $name      The class name
      * @param  array  $arguments Arguments if given
+     *
      * @return AbstractViewHelper
+     *
      * @throws ViewHelperException
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
      */
     public function __call($name, $arguments)
     {
@@ -320,6 +328,14 @@ class ViewController
         throw new ViewHelperException('No view helper for "' . $name . '" found.');
     }
 
+    /**
+     * Abstraction of call_user_func_array
+     *
+     * @param $class
+     * @param $arguments
+     *
+     * @return mixed
+     */
     private function _callUserFuncArray($class, $arguments)
     {
         array_unshift($arguments, $this);

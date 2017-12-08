@@ -14,7 +14,10 @@ class DefaultWriter extends AbstractWriter
     /**
      * Write default log format
      *
-     * @inheritdoc
+     * @param string $logfile
+     * @param string $message
+     * @param string $level
+     *
      * @return int|bool
      */
     public function write(string $logfile, string $message, string $level)

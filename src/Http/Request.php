@@ -95,11 +95,21 @@ class Request extends AbstractHttp
         return $this;
     }
 
+    /**
+     * Set the request scheme
+     *
+     * @param string $scheme
+     */
     public function setScheme(string $scheme = '')
     {
         $this->scheme = $scheme;
     }
 
+    /**
+     * Get the request scheme
+     *
+     * @return string
+     */
     public function getScheme()
     {
         return $this->scheme;

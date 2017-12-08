@@ -2,9 +2,18 @@
 
 namespace Faulancer\ORM;
 
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\AbstractControllerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use \ORM\EntityManager;
+use ORM\EntityManager;
+use ORM\Exception\IncompletePrimaryKey;
+use ORM\Exception\InvalidConfiguration;
+use ORM\Exception\InvalidName;
+use ORM\Exception\NoConnection;
+use ORM\Exception\NoEntity;
+use ORM\Exception\NoEntityManager;
+use ORM\Exception\NotScalar;
+use ORM\Exception\UnsupportedDriver;
 
 /**
  * Class Entity
@@ -40,7 +49,16 @@ abstract class Entity extends \ORM\Entity
      *
      * @return Entity|\ORM\Entity|bool
      *
-     * @codeCoverageIgnore
+     * @throws NoEntity
+     * @throws NoConnection
+     * @throws NotScalar
+     * @throws UnsupportedDriver
+     * @throws IncompletePrimaryKey
+     * @throws InvalidConfiguration
+     * @throws InvalidName
+     * @throws NoEntityManager
+     * @throws IncompletePrimaryKey
+     * @throws ServiceNotFoundException
      */
     public function save(EntityManager $dbManager = null, $redirectOnDup = false)
     {

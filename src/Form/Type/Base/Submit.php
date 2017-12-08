@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Submit | Submit.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Submit
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Submit extends AbstractType
 {
@@ -20,7 +19,7 @@ class Submit extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
+     * @return self
      */
     public function create()
     {

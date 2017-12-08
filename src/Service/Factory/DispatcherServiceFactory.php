@@ -1,9 +1,5 @@
 <?php
-/**
- * Class DispatcherServiceFactory | DispatcherServiceFactory.php
- * @package Faulancer\Service\Factory
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Service\Factory;
 
 use Faulancer\Http\Request;
@@ -15,6 +11,9 @@ use Faulancer\ServiceLocator\ServiceLocatorInterface;
 
 /**
  * Class DispatcherServiceFactory
+ *
+ * @package Faulancer\Service\Factory
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class DispatcherServiceFactory implements FactoryInterface
 {

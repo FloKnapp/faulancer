@@ -6,7 +6,7 @@ use Faulancer\Exception\FactoryMayIncompatibleException;
 use Faulancer\Exception\ServiceNotFoundException;
 
 /**
- * Class ServiceLocator | ServiceLocator.php
+ * Class ServiceLocator
  *
  * @package Faulancer\ServiceLocator
  * @author Florian Knapp <office@florianknapp.de>

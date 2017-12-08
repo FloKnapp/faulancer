@@ -18,6 +18,7 @@ class Client
 
     /**
      * Client constructor.
+     *
      * @param AbstractAdapter $adapter
      */
     public function __construct(AbstractAdapter $adapter)
@@ -26,7 +27,7 @@ class Client
     }
 
     /**
-     * Get resource by uri
+     * Send a get request
      *
      * @param string   $uri     The uri
      * @param string[] $headers Custom headers
@@ -45,9 +46,12 @@ class Client
     }
 
     /**
+     * Send a post request
+     *
      * @param string $uri
      * @param array  $headers
      * @param array  $data
+     *
      * @return string
      */
     public function post(string $uri, array $headers = [], array $data = []) :string

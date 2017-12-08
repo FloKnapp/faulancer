@@ -1,15 +1,13 @@
 <?php
-/**
- * Class DateTime | DateTime.php
- * @package Faulancer\Form\Validator\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Validator\Base;
 
 use Faulancer\Form\Validator\AbstractValidator;
 
 /**
- * Class DateTime
+ * Class DateTime | DateTime.php
+ * @package Faulancer\Form\Validator\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class DateTime extends AbstractValidator
 {
@@ -22,8 +20,10 @@ class DateTime extends AbstractValidator
 
     /**
      * Proof date validation with the \DateTime object
+     *
      * @param string $data
-     * @return boolean
+     *
+     * @return bool
      */
     public function process($data)
     {

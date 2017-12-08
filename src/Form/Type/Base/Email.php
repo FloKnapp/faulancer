@@ -1,15 +1,14 @@
 <?php
-/**
- * Class Email | Email.php
- * @package Faulancer\Form\Type\Base
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Form\Type\Base;
 
 use Faulancer\Form\Type\AbstractType;
 
 /**
  * Class Email
+ *
+ * @package Faulancer\Form\Type\Base
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Email extends AbstractType
 {
@@ -21,8 +20,7 @@ class Email extends AbstractType
     protected $element = '';
 
     /**
-     * @return string
-     * @codeCoverageIgnore
+     * @return self
      */
     public function create()
     {

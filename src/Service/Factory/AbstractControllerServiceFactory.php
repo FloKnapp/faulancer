@@ -1,9 +1,5 @@
 <?php
-/**
- * Class AbstractControllerServiceFactory | AbstractControllerServiceFactory.phptory.php
- * @package Faulancer\Service\Factory
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Service\Factory;
 
 use Faulancer\Http\Request;
@@ -13,15 +9,19 @@ use Faulancer\ServiceLocator\ServiceLocatorInterface;
 
 /**
  * Class AbstractControllerServiceFactory
- * @codeCoverageIgnore
+ *
+ * @package Faulancer\Service\Factory
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class AbstractControllerServiceFactory implements FactoryInterface
 {
 
     /**
+     * Create abstract controller service
+     *
      * @param ServiceLocatorInterface $serviceLocator
+     *
      * @return AbstractControllerService
-     * @codeCoverageIgnore
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

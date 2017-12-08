@@ -1,18 +1,17 @@
 <?php
-/**
- * Class Csrf
- *
- * @package Faulancer\Security
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Security;
 
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class Csrf
+ *
+ * @package Faulancer\Security
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Csrf
 {
@@ -22,12 +21,14 @@ class Csrf
      * @param string $identifier
      *
      * @return string
+     *
+     * @throws ServiceNotFoundException
      */
     public static function getToken(string $identifier = '') :string
     {
-        $token = self::getSessionManager()->get('csrf' . $identifier);
+        $token = self::_getSessionManager()->get('csrf' . $identifier);
 
-        if (!self::getSessionManager()->has('csrf' . $identifier)) {
+        if (!self::_getSessionManager()->has('csrf' . $identifier)) {
             $token = bin2hex(openssl_random_pseudo_bytes(16));
             self::saveToSession($token, $identifier);
         }
@@ -42,14 +43,16 @@ class Csrf
      * @param string $identifier
      *
      * @return bool
+     *
+     * @throws ServiceNotFoundException
      */
     public static function isValid(string $token, string $identifier = '') :bool
     {
-        $sessionToken = self::getSessionManager()->get('csrf' . $identifier);
+        $sessionToken = self::_getSessionManager()->get('csrf' . $identifier);
         $isValid      = $token === $sessionToken;
 
         if ($isValid) {
-            self::getSessionManager()->delete('csrf' . $identifier);
+            self::_getSessionManager()->delete('csrf' . $identifier);
             return true;
         }
 
@@ -61,16 +64,22 @@ class Csrf
      *
      * @param string $token
      * @param string $identifier
+     *
+     * @return void
+     *
+     * @throws ServiceNotFoundException
      */
     private static function saveToSession(string $token, string $identifier = '')
     {
-        self::getSessionManager()->set('csrf' . $identifier, $token);
+        self::_getSessionManager()->set('csrf' . $identifier, $token);
     }
 
     /**
      * @return SessionManagerService|ServiceInterface
+     *
+     * @throws ServiceNotFoundException
      */
-    private static function getSessionManager()
+    private static function _getSessionManager()
     {
         return ServiceLocator::instance()->get(SessionManagerService::class);
     }
