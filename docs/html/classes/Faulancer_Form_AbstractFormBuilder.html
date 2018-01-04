@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\Form\AbstractFormBuilder</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.html">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.html">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.html">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.html">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.html">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.html">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html#Faulancer_Form">Faulancer\Form</a>
+          </li>
+          <li class="separator">AbstractFormBuilder</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/Form/AbstractFormBuilder.php.html#line22">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\Form\</small>AbstractFormBuilder</h1>
+        <h4>Class AbstractFormBuilder</h4>
+        <p/>
+        <ul>
+          <li>Author: Florian Knapp &lt;office@florianknapp.de&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class AbstractFormBuilder
+            {<br/><ul class="none"><li>// members</li><li>protected string <a href="#members">$identifier</a> =
+                        '';
+                    </li><li>protected array <a href="#members">$formAttributes</a> =
+                        ;
+                    </li><li>protected array <a href="#members">$fields</a> =
+                        ;
+                    </li><li>protected <span title="Faulancer\Form\Entity|null">Entity|null</span> <a href="#members">$entity</a> =
+                        NULL;
+                    </li><li>protected string <a href="#members">$formErrorContainerPrefix</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$formErrorContainerSuffix</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$formErrorItemContainerPrefix</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$formErrorItemContainerSuffix</a> =
+                        '';
+                    </li><li>private <span title="Faulancer\Form\string|null">string|null</span> <a href="#members">$confirmValue</a> =
+                        NULL;
+                    </li></ul><ul class="none"><li>// methods</li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/__construct.html">__construct</a>()
+                    </li><li>public AbstractType <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getField.html">getField</a>()
+                    </li><li>public AbstractFormBuilder <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setField.html">setField</a>()
+                    </li><li>public string <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getIdentifier.html">getIdentifier</a>()
+                    </li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormAttributes.html">setFormAttributes</a>()
+                    </li><li>public string <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getFormOpen.html">getFormOpen</a>()
+                    </li><li>public string <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getFormClose.html">getFormClose</a>()
+                    </li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormErrorContainer.html">setFormErrorContainer</a>()
+                    </li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormErrorItemContainer.html">setFormErrorItemContainer</a>()
+                    </li><li>public array <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getData.html">getData</a>()
+                    </li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setData.html">setData</a>()
+                    </li><li>public bool <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/isValid.html">isValid</a>()
+                    </li><li>public void <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/add.html">add</a>()
+                    </li><li>private bool <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/_addValidators.html">_addValidators</a>()
+                    </li><li>protected abstract mixed <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/create.html">create</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="confirmValue"><strong>$confirmValue</strong>
+                —
+                <a title="Faulancer\Form\string|null" href="../classes/Faulancer_Form_string|null.html">Faulancer\Form\string|null</a></li>
+          </ul>
+          <h4>protected</h4>
+          <ul class="members">
+            <li id="entity"><strong>$entity</strong>
+                —
+                <a title="Faulancer\Form\Entity|null" href="../classes/Faulancer_Form_Entity|null.html">Faulancer\Form\Entity|null</a></li>
+            <li id="fields"><strong>$fields</strong>
+                —
+                array</li>
+            <li id="formAttributes"><strong>$formAttributes</strong>
+                —
+                array</li>
+            <li id="formErrorContainerPrefix"><strong>$formErrorContainerPrefix</strong>
+                —
+                string</li>
+            <li id="formErrorContainerSuffix"><strong>$formErrorContainerSuffix</strong>
+                —
+                string</li>
+            <li id="formErrorItemContainerPrefix"><strong>$formErrorItemContainerPrefix</strong>
+                —
+                string</li>
+            <li id="formErrorItemContainerSuffix"><strong>$formErrorItemContainerSuffix</strong>
+                —
+                string</li>
+            <li id="identifier"><strong>$identifier</strong>
+                —
+                string</li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="_addValidators">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/_addValidators.html">_addValidators()</a>
+            </li>
+          </ul>
+          <h4>protected</h4>
+          <ul>
+            <li id="create">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/create.html">create()</a>
+            </li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="__construct"><a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/__construct.html">__construct()</a>
+                — AbstractFormBuilder constructor</li>
+            <li id="add"><a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/add.html">add()</a>
+                — Add a form field</li>
+            <li id="getData">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getData.html">getData()</a>
+            </li>
+            <li id="getField"><a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getField.html">getField()</a>
+                — Get field object</li>
+            <li id="getFormClose">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getFormClose.html">getFormClose()</a>
+            </li>
+            <li id="getFormOpen">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getFormOpen.html">getFormOpen()</a>
+            </li>
+            <li id="getIdentifier">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/getIdentifier.html">getIdentifier()</a>
+            </li>
+            <li id="isValid">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/isValid.html">isValid()</a>
+            </li>
+            <li id="setData">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setData.html">setData()</a>
+            </li>
+            <li id="setField">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setField.html">setField()</a>
+            </li>
+            <li id="setFormAttributes">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormAttributes.html">setFormAttributes()</a>
+            </li>
+            <li id="setFormErrorContainer">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormErrorContainer.html">setFormErrorContainer()</a>
+            </li>
+            <li id="setFormErrorItemContainer">
+              <a title="Faulancer\Form\AbstractFormBuilder" href="../classes/Faulancer_Form_AbstractFormBuilder/setFormErrorItemContainer.html">setFormErrorItemContainer()</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

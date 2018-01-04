@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\View\ViewController</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.html">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.html">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.html">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.html">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.html">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.html">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html#Faulancer_View">Faulancer\View</a>
+          </li>
+          <li class="separator">ViewController</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/View/ViewController.php.html#line21">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\View\</small>ViewController</h1>
+        <h4>Class ViewController | ViewController.php</h4>
+        <p/>
+        <ul>
+          <li>Author: Florian Knapp &lt;office@florianknapp.de&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class ViewController
+            {<br/><ul class="none"><li>// members</li><li>private <span title="Faulancer\Service\Config">Config</span> <a href="#members">$config</a>;
+                    </li><li>private array <a href="#members">$variable</a> =
+                        ;
+                    </li><li>private string <a href="#members">$template</a> =
+                        '';
+                    </li><li>private string <a href="#members">$templatePath</a> =
+                        '';
+                    </li><li>private array <a href="#members">$viewHelpers</a> =
+                        ;
+                    </li><li>private <span title="Faulancer\View\ViewController">ViewController</span> <a href="#members">$parentTemplate</a> =
+                        NULL;
+                    </li></ul><ul class="none"><li>// methods</li><li>public void <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__construct.html">__construct</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setTemplate.html">setTemplate</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setTemplatePath.html">setTemplatePath</a>()
+                    </li><li>public string <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getTemplatePath.html">getTemplatePath</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/addScript.html">addScript</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/addStylesheet.html">addStylesheet</a>()
+                    </li><li>public string <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getTemplate.html">getTemplate</a>()
+                    </li><li>public void <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setVariable.html">setVariable</a>()
+                    </li><li>public string|array <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getVariable.html">getVariable</a>()
+                    </li><li>public bool <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/hasVariable.html">hasVariable</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setVariables.html">setVariables</a>()
+                    </li><li>public array <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getVariables.html">getVariables</a>()
+                    </li><li>public void <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setParentTemplate.html">setParentTemplate</a>()
+                    </li><li>public ViewController <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getParentTemplate.html">getParentTemplate</a>()
+                    </li><li>private string <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/_cleanOutput.html">_cleanOutput</a>()
+                    </li><li>public string <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/render.html">render</a>()
+                    </li><li>public AbstractViewHelper <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__call.html">__call</a>()
+                    </li><li>private mixed <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/_callUserFuncArray.html">_callUserFuncArray</a>()
+                    </li><li>public void <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__destruct.html">__destruct</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="config"><strong>$config</strong>
+                —
+                <a title="Faulancer\Service\Config" href="../classes/Faulancer_Service_Config.html">Faulancer\Service\Config</a></li>
+            <li id="parentTemplate"><strong>$parentTemplate</strong>
+                —
+                <a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController.html">Faulancer\View\ViewController</a><br/><span class="indent">Holds the parent template</span></li>
+            <li id="template"><strong>$template</strong>
+                —
+                string<br/><span class="indent">Holds the view template</span></li>
+            <li id="templatePath">
+              <strong>$templatePath</strong>
+            </li>
+            <li id="variable"><strong>$variable</strong>
+                —
+                array<br/><span class="indent">Holds the view variables</span></li>
+            <li id="viewHelpers"><strong>$viewHelpers</strong>
+                —
+                array<br/><span class="indent">Holds the registered view helpers</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="_callUserFuncArray"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/_callUserFuncArray.html">_callUserFuncArray()</a>
+                — Abstraction of call_user_func_array</li>
+            <li id="_cleanOutput"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/_cleanOutput.html">_cleanOutput()</a>
+                — Strip spaces and tabs from output</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="__construct"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__construct.html">__construct()</a>
+                — ViewController constructor.</li>
+            <li id="__destruct"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__destruct.html">__destruct()</a>
+                — Destructor</li>
+            <li id="__call"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/__call.html">__call()</a>
+                — Magic method for providing a view helpers</li>
+            <li id="addScript"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/addScript.html">addScript()</a>
+                — Add javascript from outside</li>
+            <li id="addStylesheet"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/addStylesheet.html">addStylesheet()</a>
+                — Add stylesheet from outside</li>
+            <li id="getParentTemplate"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getParentTemplate.html">getParentTemplate()</a>
+                — Get parent template</li>
+            <li id="getTemplate"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getTemplate.html">getTemplate()</a>
+                — Return current template</li>
+            <li id="getTemplatePath"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getTemplatePath.html">getTemplatePath()</a>
+                — Get the template path</li>
+            <li id="getVariable"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getVariable.html">getVariable()</a>
+                — Get a single variable</li>
+            <li id="getVariables"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/getVariables.html">getVariables()</a>
+                — Get all variables</li>
+            <li id="hasVariable"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/hasVariable.html">hasVariable()</a>
+                — Check if variable exists</li>
+            <li id="render"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/render.html">render()</a>
+                — Render the current view</li>
+            <li id="setParentTemplate"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setParentTemplate.html">setParentTemplate()</a>
+                — Define parent template</li>
+            <li id="setTemplate"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setTemplate.html">setTemplate()</a>
+                — Set template for this view</li>
+            <li id="setTemplatePath"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setTemplatePath.html">setTemplatePath()</a>
+                — Set the template path</li>
+            <li id="setVariable"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setVariable.html">setVariable()</a>
+                — Set a single variable</li>
+            <li id="setVariables"><a title="Faulancer\View\ViewController" href="../classes/Faulancer_View_ViewController/setVariables.html">setVariables()</a>
+                — Set many variables at once</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

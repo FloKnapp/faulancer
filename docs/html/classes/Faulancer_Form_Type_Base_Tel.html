@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\Form\Type\Base\Tel</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.html">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.html">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.html">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.html">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.html">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.html">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.html#Faulancer_Form_Type_Base">Faulancer\Form\Type\Base</a>
+          </li>
+          <li class="separator">Tel</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/Form/Type/Base/Tel.php.html#line13">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\Form\Type\Base\</small>Tel</h1>
+        <h4>Class Tel</h4>
+        <p/>
+        <ul>
+          <li>Author: Florian Knapp &lt;office@florianknapp.de&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Tel
+                extends <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType.html">AbstractType</a>
+            {<br/><ul class="none"><li>// members</li><li>protected string <a href="#members">$inputType</a> =
+                        'input';
+                    </li><li>protected string <a href="#members">$element</a> =
+                        '';
+                    </li></ul><ul class="none"><li>// Inherited members from <span title="Faulancer\Form\Type\AbstractType">AbstractType</span></li><li>protected array <a href="#members">$definition</a>;
+                        </li><li>protected string <a href="#members">$type</a>;
+                        </li><li>protected string <a href="#members">$label</a>;
+                        </li><li>protected string <a href="#members">$value</a>;
+                        </li><li>protected string <a href="#members">$name</a>;
+                        </li><li>protected string <a href="#members">$outputPattern</a>;
+                        </li><li>protected string <a href="#members">$element</a>;
+                        </li><li>protected array <a href="#members">$errorMessages</a>;
+                        </li><li>protected string <a href="#members">$formIdentifier</a>;
+                        </li><li>protected <span title="Faulancer\Form\Type\AbstractValidator|null">AbstractValidator|null</span> <a href="#members">$defaultValidator</a>;
+                        </li><li>protected <span title="Faulancer\Form\Validator\ValidatorChain">ValidatorChain</span> <a href="#members">$validatorChain</a>;
+                        </li><li>protected array <a href="#members">$formErrorDecoration</a>;
+                        </li><li>protected <span title="Faulancer\ServiceLocator\ServiceLocatorInterface">ServiceLocatorInterface</span> <a href="#members">$serviceLocator</a>;
+                        </li></ul><ul class="none"><li>// methods</li><li>public Tel <a title="Faulancer\Form\Type\Base\Tel" href="../classes/Faulancer_Form_Type_Base_Tel/create.html">create</a>()
+                    </li></ul><ul class="none"><li>// Inherited methods from <span title="Faulancer\Form\Type\AbstractType">AbstractType</span></li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/__construct.html">__construct</a>()
+                        </li><li>public AbstractValidator|null <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getDefaultValidator.html">getDefaultValidator</a>()
+                        </li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setDefaultValidator.html">setDefaultValidator</a>()
+                        </li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setValidatorChain.html">setValidatorChain</a>()
+                        </li><li>public bool|null <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/isValid.html">isValid</a>()
+                        </li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/removeValidators.html">removeValidators</a>()
+                        </li><li>public array|string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getErrorMessages.html">getErrorMessages</a>()
+                        </li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setErrorMessages.html">setErrorMessages</a>()
+                        </li><li>public string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getType.html">getType</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setType.html">setType</a>()
+                        </li><li>public string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getLabel.html">getLabel</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setLabel.html">setLabel</a>()
+                        </li><li>public string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getValue.html">getValue</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setValue.html">setValue</a>()
+                        </li><li>public string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getName.html">getName</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setName.html">setName</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/addAttribute.html">addAttribute</a>()
+                        </li><li>protected bool <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/isPost.html">isPost</a>()
+                        </li><li>public AbstractType <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/create.html">create</a>()
+                        </li><li>public string <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/__toString.html">__toString</a>()
+                        </li><li>public void <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getFormIdentifier.html">getFormIdentifier</a>()
+                        </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType.html">Faulancer\Form\Type\AbstractType</a>
+            </li>
+          </ul>
+        </div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>protected</h4>
+          <ul class="members">
+            <li id="defaultValidator"><strong>$defaultValidator</strong>
+                —
+                <a title="Faulancer\Form\Type\AbstractValidator|null" href="../classes/Faulancer_Form_Type_AbstractValidator|null.html">Faulancer\Form\Type\AbstractValidator|null</a></li>
+            <li id="definition"><strong>$definition</strong>
+                —
+                array</li>
+            <li id="element"><strong>$element</strong>
+                —
+                string</li>
+            <li id="element"><strong>$element</strong>
+                —
+                string</li>
+            <li id="errorMessages"><strong>$errorMessages</strong>
+                —
+                array</li>
+            <li id="formErrorDecoration"><strong>$formErrorDecoration</strong>
+                —
+                array</li>
+            <li id="formIdentifier"><strong>$formIdentifier</strong>
+                —
+                string</li>
+            <li id="inputType"><strong>$inputType</strong>
+                —
+                string</li>
+            <li id="label"><strong>$label</strong>
+                —
+                string</li>
+            <li id="name"><strong>$name</strong>
+                —
+                string</li>
+            <li id="outputPattern"><strong>$outputPattern</strong>
+                —
+                string</li>
+            <li id="serviceLocator"><strong>$serviceLocator</strong>
+                —
+                <a title="Faulancer\ServiceLocator\ServiceLocatorInterface" href="../classes/Faulancer_ServiceLocator_ServiceLocatorInterface.html">Faulancer\ServiceLocator\ServiceLocatorInterface</a></li>
+            <li id="type"><strong>$type</strong>
+                —
+                string</li>
+            <li id="validatorChain"><strong>$validatorChain</strong>
+                —
+                <a title="Faulancer\Form\Validator\ValidatorChain" href="../classes/Faulancer_Form_Validator_ValidatorChain.html">Faulancer\Form\Validator\ValidatorChain</a></li>
+            <li id="value"><strong>$value</strong>
+                —
+                string</li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>public</h4>
+          <ul>
+            <li id="create">
+              <a title="Faulancer\Form\Type\Base\Tel" href="../classes/Faulancer_Form_Type_Base_Tel/create.html">create()</a>
+            </li>
+          </ul>
+          <h3>Inherited from <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType.html">Faulancer\Form\Type\AbstractType</a></h3>
+          <h4>protected</h4>
+          <ul>
+            <li id="isPost">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/isPost.html">isPost()</a>
+            </li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="__toString">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/__toString.html">__toString()</a>
+            </li>
+            <li id="addAttribute"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/addAttribute.html">addAttribute()</a>
+                — Add field attribute</li>
+            <li id="create">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/create.html">create()</a>
+            </li>
+            <li id="getDefaultValidator"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getDefaultValidator.html">getDefaultValidator()</a>
+                — Get default validator</li>
+            <li id="getErrorMessages"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getErrorMessages.html">getErrorMessages()</a>
+                — Get error messages</li>
+            <li id="getFormIdentifier">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getFormIdentifier.html">getFormIdentifier()</a>
+            </li>
+            <li id="getLabel">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getLabel.html">getLabel()</a>
+            </li>
+            <li id="getName">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getName.html">getName()</a>
+            </li>
+            <li id="getType"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getType.html">getType()</a>
+                — Get field type</li>
+            <li id="getValue">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/getValue.html">getValue()</a>
+            </li>
+            <li id="isValid"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/isValid.html">isValid()</a>
+                — Validate field by validator chain or default validator</li>
+            <li id="removeValidators"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/removeValidators.html">removeValidators()</a>
+                — Remove bound validators</li>
+            <li id="setDefaultValidator"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setDefaultValidator.html">setDefaultValidator()</a>
+                — Set default validator</li>
+            <li id="setErrorMessages"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setErrorMessages.html">setErrorMessages()</a>
+                — Set error messages</li>
+            <li id="setLabel">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setLabel.html">setLabel()</a>
+            </li>
+            <li id="setName">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setName.html">setName()</a>
+            </li>
+            <li id="setType">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setType.html">setType()</a>
+            </li>
+            <li id="setValidatorChain"><a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setValidatorChain.html">setValidatorChain()</a>
+                — Set validator chain</li>
+            <li id="setValue">
+              <a title="Faulancer\Form\Type\AbstractType" href="../classes/Faulancer_Form_Type_AbstractType/setValue.html">setValue()</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>
