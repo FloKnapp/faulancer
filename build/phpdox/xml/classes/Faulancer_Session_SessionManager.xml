@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager" abstract="false" final="false" start="11" end="164">
+  <file path="/var/www/vhosts/faulancer/src/Session" file="SessionManager.php" realpath="/var/www/vhosts/faulancer/src/Session/SessionManager.php" size="2953" time="2017-11-15T21:43:54+00:00" unixtime="1510782234" sha1="32217652c501d5febaf1e04aee8344d9cf2815d1" relative="Session/SessionManager.php"/>
+  <docblock>
+    <description compact="Class SessionManager | SessionManager.php"/>
+    <package value="Faulancer\Session;"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <method name="startSession" start="19" end="24" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Start session handler"/>
+      <return type="object">
+        <type full="Faulancer\Session\void" namespace="Faulancer\Session" name="void"/>
+      </return>
+      <codecoverageignore value="Covered by php"/>
+    </docblock>
+  </method>
+  <method name="destroySession" start="31" end="36" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Destroy session at all"/>
+      <return type="object">
+        <type full="Faulancer\Session\void" namespace="Faulancer\Session" name="void"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="hasSession" start="43" end="50" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Check if session exists"/>
+      <return type="object">
+        <type full="Faulancer\Session\bool" namespace="Faulancer\Session" name="bool"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="set" start="58" end="61" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set session key with value"/>
+      <param type="string" variable="$key"/>
+      <param type="mixed" variable="$value"/>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+    <parameter name="value" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="get" start="69" end="76" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get session value by key"/>
+      <param type="string" variable="$key"/>
+      <return type="mixed"/>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <method name="delete" start="84" end="93" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Delete session value by key"/>
+      <param type="string" variable="$key"/>
+      <return type="object">
+        <type full="Faulancer\Session\bool" namespace="Faulancer\Session" name="bool"/>
+      </return>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <method name="has" start="101" end="108" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Check if session key exists"/>
+      <param type="string" variable="$key"/>
+      <return type="object">
+        <type full="Faulancer\Session\bool" namespace="Faulancer\Session" name="bool"/>
+      </return>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <method name="hasFlashMessage" start="116" end="119" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Check if flash message key exists"/>
+      <param type="string" variable="$key"/>
+      <return type="object">
+        <type full="Faulancer\Session\bool" namespace="Faulancer\Session" name="bool"/>
+      </return>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <method name="setFlashMessage" start="128" end="143" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set flash message value by key"/>
+      <param type="object" variable="$key">
+        <type full="Faulancer\Session\string|array" namespace="Faulancer\Session" name="string|array"/>
+      </param>
+      <param type="object" variable="$value">
+        <type full="Faulancer\Session\null|string|array" namespace="Faulancer\Session" name="null|string|array"/>
+      </param>
+      <return type="object">
+        <type full="Faulancer\Session\bool" namespace="Faulancer\Session" name="bool"/>
+      </return>
+    </docblock>
+    <parameter name="key" byreference="false" type="{unknown}"/>
+    <parameter name="value" byreference="false" type="{unknown}" default="NULL"/>
+  </method>
+  <method name="getFlashMessage" start="151" end="162" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get flash message value by key"/>
+      <param type="string" variable="$key"/>
+      <return type="mixed"/>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Service\SessionManagerService" namespace="Faulancer\Service" name="SessionManagerService"/>
+  </extenders>
+</class>

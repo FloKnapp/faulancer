@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Http\JsonResponse" namespace="Faulancer\Http" name="JsonResponse" abstract="false" final="false" start="11" end="32">
+  <file path="/var/www/vhosts/faulancer/src/Http" file="JsonResponse.php" realpath="/var/www/vhosts/faulancer/src/Http/JsonResponse.php" size="539" time="2017-12-08T19:50:57+00:00" unixtime="1512762657" sha1="348f33a07811d00a93fffe8a86a27bb79c1e6a95" relative="Http/JsonResponse.php"/>
+  <docblock>
+    <description compact="Class JsonResponse"/>
+    <package value="Faulancer\Http"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\Http\Response" namespace="Faulancer\Http" name="Response"/>
+  <member name="content" default="" type="array" visibility="protected" static="false" line="15">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <method name="setContent" start="24" end="30" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set content"/>
+      <param type="array" variable="$content"/>
+      <return resolution="self" type="object">
+        <type full="Faulancer\Http\JsonResponse" namespace="Faulancer\Http" name="JsonResponse"/>
+      </return>
+    </docblock>
+    <parameter name="content" byreference="false" type="array" default=""/>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Service\JsonResponseService" namespace="Faulancer\Service" name="JsonResponseService"/>
+  </extenders>
+  <parent full="Faulancer\Http\Response" namespace="Faulancer\Http" name="Response">
+    <extends full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp"/>
+    <constant type="{unknown}" name="HTTP_STATUS_CODES" value=""/>
+    <member name="code" default="200" type="integer" visibility="protected" static="false" line="45">
+      <docblock>
+        <description compact="The status code (default: 200)"/>
+        <var type="integer"/>
+      </docblock>
+    </member>
+    <member name="content" visibility="protected" static="false" line="51">
+      <docblock>
+        <description compact="The response body"/>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <constructor name="__construct" start="57" end="60" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Response constructor."/>
+        <param type="mixed" variable="$content"/>
+      </docblock>
+      <parameter name="content" byreference="false" type="{unknown}" default="NULL"/>
+    </constructor>
+    <method name="setCode" start="67" end="70" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set response code"/>
+        <param type="integer" variable="$code"/>
+      </docblock>
+      <parameter name="code" byreference="false" type="integer" default="200"/>
+    </method>
+    <method name="getCode" start="77" end="80" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get response code"/>
+        <return type="int"/>
+      </docblock>
+      <return type="int" nullable="false"/>
+    </method>
+    <method name="setContent" start="88" end="92" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set response body"/>
+        <param type="mixed" variable="$content"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Http\Response" namespace="Faulancer\Http" name="Response"/>
+        </return>
+      </docblock>
+      <parameter name="content" byreference="false" type="{unknown}"/>
+    </method>
+    <method name="getContent" start="99" end="103" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get response body and set headers"/>
+        <return type="mixed"/>
+      </docblock>
+    </method>
+    <method name="setResponseHeader" start="109" end="120" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="array" variable="$headers"/>
+        <codecoverageignore value="Is covered because usage of php built-in function"/>
+      </docblock>
+      <parameter name="headers" byreference="false" type="array" default=""/>
+    </method>
+    <method name="__toString" start="127" end="130" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="If object is getting outputted"/>
+        <return type="string"/>
+      </docblock>
+    </method>
+  </parent>
+  <parent full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp">
+    <member name="session" visibility="protected" static="false" line="21">
+      <docblock>
+        <description compact="The session manager"/>
+        <var type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </var>
+      </docblock>
+    </member>
+    <method name="setSession" start="28" end="31" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set session manager"/>
+        <param type="object" variable="$session">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </param>
+      </docblock>
+      <parameter name="session" byreference="false" type="object">
+        <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+      </parameter>
+    </method>
+    <method name="getSession" start="38" end="41" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get current session manager"/>
+        <return type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </return>
+      </docblock>
+    </method>
+  </parent>
+</class>

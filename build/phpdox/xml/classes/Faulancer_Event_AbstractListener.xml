@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Event\AbstractListener" namespace="Faulancer\Event" name="AbstractListener" abstract="true" final="false" start="10" end="37">
+  <file path="/var/www/vhosts/faulancer/src/Event" file="AbstractListener.php" realpath="/var/www/vhosts/faulancer/src/Event/AbstractListener.php" size="582" time="2017-12-08T19:24:51+00:00" unixtime="1512761091" sha1="5b0175bc6b1368e267a03ec67558176edcf6b422" relative="Event/AbstractListener.php"/>
+  <docblock>
+    <description compact="Class AbstractListener"/>
+    <package value="Faulancer\Event"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <member name="callback" visibility="protected" static="false" line="14">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Event\Callback" namespace="Faulancer\Event" name="Callback"/>
+      </var>
+    </docblock>
+  </member>
+  <method name="create" start="19" end="19" abstract="true" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="mixed"/>
+    </docblock>
+  </method>
+  <method name="setCallback" start="24" end="27" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$callback">
+        <type full="Faulancer\Event\Callback" namespace="Faulancer\Event" name="Callback"/>
+      </param>
+    </docblock>
+    <parameter name="callback" byreference="false" type="object">
+      <type full="Faulancer\Event\Callback" namespace="Faulancer\Event" name="Callback"/>
+    </parameter>
+  </method>
+  <method name="getCallback" start="32" end="35" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="Faulancer\Event\Callback" namespace="Faulancer\Event" name="Callback"/>
+      </return>
+    </docblock>
+  </method>
+</class>

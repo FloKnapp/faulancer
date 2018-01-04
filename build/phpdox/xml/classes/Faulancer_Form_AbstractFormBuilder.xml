@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Form\AbstractFormBuilder" namespace="Faulancer\Form" name="AbstractFormBuilder" abstract="true" final="false" start="22" end="321">
+  <file path="/var/www/vhosts/faulancer/src/Form" file="AbstractFormBuilder.php" realpath="/var/www/vhosts/faulancer/src/Form/AbstractFormBuilder.php" size="8217" time="2017-12-09T08:05:44+00:00" unixtime="1512806744" sha1="b56acc5ab0570b24496476a05dcbfbddf89f5378" relative="Form/AbstractFormBuilder.php"/>
+  <docblock>
+    <description compact="Class AbstractFormBuilder"/>
+    <package value="Faulancer\Form\Type"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <member name="identifier" default="''" type="string" visibility="protected" static="false" line="26">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="formAttributes" default="" type="array" visibility="protected" static="false" line="29">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="fields" default="" type="array" visibility="protected" static="false" line="32">
+    <docblock>
+      <var type="array" of="object">
+        <type full="Faulancer\Form\AbstractType" namespace="Faulancer\Form" name="AbstractType"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="entity" default="NULL" visibility="protected" static="false" line="35">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Form\Entity|null" namespace="Faulancer\Form" name="Entity|null"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="formErrorContainerPrefix" default="''" type="string" visibility="protected" static="false" line="38">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="formErrorContainerSuffix" default="''" type="string" visibility="protected" static="false" line="41">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="formErrorItemContainerPrefix" default="''" type="string" visibility="protected" static="false" line="44">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="formErrorItemContainerSuffix" default="''" type="string" visibility="protected" static="false" line="47">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="confirmValue" default="NULL" visibility="private" static="false" line="50">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Form\string|null" namespace="Faulancer\Form" name="string|null"/>
+      </var>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="57" end="64" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="AbstractFormBuilder constructor"/>
+      <param type="object" variable="$entity">
+        <type full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity"/>
+      </param>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="entity" byreference="false" type="object" default="NULL">
+      <type full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity"/>
+    </parameter>
+  </constructor>
+  <method name="getField" start="75" end="82" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get field object"/>
+      <param type="string" variable="$name"/>
+      <return type="object">
+        <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\InvalidFormElementException" namespace="Faulancer\Exception" name="InvalidFormElementException"/>
+      </throws>
+    </docblock>
+    <parameter name="name" byreference="false" type="string"/>
+  </method>
+  <method name="setField" start="89" end="93" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$field">
+        <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+      </param>
+      <return resolution="self" type="object">
+        <type full="Faulancer\Form\AbstractFormBuilder" namespace="Faulancer\Form" name="AbstractFormBuilder"/>
+      </return>
+    </docblock>
+    <parameter name="field" byreference="false" type="object">
+      <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+    </parameter>
+  </method>
+  <method name="getIdentifier" start="98" end="101" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="setFormAttributes" start="106" end="109" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="array" variable="$attributes"/>
+    </docblock>
+    <parameter name="attributes" byreference="false" type="array"/>
+  </method>
+  <method name="getFormOpen" start="114" end="122" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="getFormClose" start="127" end="130" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="setFormErrorContainer" start="136" end="140" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="string" variable="$prefix"/>
+      <param type="string" variable="$suffix"/>
+    </docblock>
+    <parameter name="prefix" byreference="false" type="string"/>
+    <parameter name="suffix" byreference="false" type="string"/>
+  </method>
+  <method name="setFormErrorItemContainer" start="146" end="150" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="string" variable="$prefix"/>
+      <param type="string" variable="$suffix"/>
+    </docblock>
+    <parameter name="prefix" byreference="false" type="string"/>
+    <parameter name="suffix" byreference="false" type="string"/>
+  </method>
+  <method name="getData" start="155" end="178" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="array"/>
+    </docblock>
+  </method>
+  <method name="setData" start="183" end="194" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="array" variable="$data"/>
+    </docblock>
+    <parameter name="data" byreference="false" type="array"/>
+  </method>
+  <method name="isValid" start="199" end="215" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="Faulancer\Form\bool" namespace="Faulancer\Form" name="bool"/>
+      </return>
+    </docblock>
+    <return type="bool" nullable="false"/>
+  </method>
+  <method name="add" start="226" end="271" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Add a form field"/>
+      <param type="array" variable="$definition"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\InvalidArgumentException" namespace="Faulancer\Exception" name="InvalidArgumentException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\FormInvalidException" namespace="Faulancer\Exception" name="FormInvalidException"/>
+      </throws>
+    </docblock>
+    <parameter name="definition" byreference="false" type="array"/>
+    <inline>
+      <comment value="If radio or checkbox field isn't selected, the field wouldn't" line="262"/>
+      <comment value="be send within post data so always add a validator if exists" line="263"/>
+    </inline>
+  </method>
+  <method name="_addValidators" start="281" end="314" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description/>
+      <param type="object" variable="$typeClass">
+        <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+      </param>
+      <param type="array" variable="$definition"/>
+      <return type="object">
+        <type full="Faulancer\Form\bool" namespace="Faulancer\Form" name="bool"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\FormInvalidException" namespace="Faulancer\Exception" name="FormInvalidException"/>
+      </throws>
+    </docblock>
+    <parameter name="typeClass" byreference="true" type="object">
+      <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+    </parameter>
+    <parameter name="definition" byreference="false" type="array"/>
+  </method>
+  <method name="create" start="319" end="319" abstract="true" final="false" static="false" visibility="protected">
+    <docblock>
+      <description/>
+      <return type="mixed"/>
+    </docblock>
+  </method>
+</class>

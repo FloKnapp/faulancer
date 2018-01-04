@@ -41,6 +41,7 @@ class Link extends AbstractViewHelper
         $id    = '';
         $class = '';
         $style = '';
+        $data  = '';
 
         $serviceLocator = $this->getServiceLocator();
 

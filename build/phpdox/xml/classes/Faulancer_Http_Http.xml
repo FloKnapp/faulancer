@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Http\Http" namespace="Faulancer\Http" name="Http" abstract="false" final="false" start="13" end="51">
+  <file path="/var/www/vhosts/faulancer/src/Http" file="Http.php" realpath="/var/www/vhosts/faulancer/src/Http/Http.php" size="1182" time="2017-12-08T19:51:09+00:00" unixtime="1512762669" sha1="9c0c16360ebe3ef9635fffe82aa293677d38f043" relative="Http/Http.php"/>
+  <docblock>
+    <description compact="Class Http"/>
+    <package value="Faulancer\Http"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp"/>
+  <method name="redirect" start="24" end="32" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Redirect to specific uri path"/>
+      <param description="The path as string" type="string" variable="$location"/>
+      <param description="The status code" type="integer" variable="$code"/>
+      <return type="mixed"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\InvalidArgumentException" namespace="Faulancer\Exception" name="InvalidArgumentException"/>
+      </throws>
+    </docblock>
+    <parameter name="location" byreference="false" type="string"/>
+    <parameter name="code" byreference="false" type="integer" default="301"/>
+  </method>
+  <method name="triggerRedirect" start="43" end="49" abstract="false" final="false" static="false" visibility="protected">
+    <docblock>
+      <description compact="Workaround to mock this method in phpunit"/>
+      <param type="string" variable="$location"/>
+      <param type="int" variable="$code"/>
+      <codecoverageignore/>
+      <return type="object">
+        <type full="Faulancer\Http\void" namespace="Faulancer\Http" name="void"/>
+      </return>
+    </docblock>
+    <parameter name="location" byreference="false" type="string" default="'/'"/>
+    <parameter name="code" byreference="false" type="integer" default="301"/>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Service\HttpService" namespace="Faulancer\Service" name="HttpService"/>
+  </extenders>
+  <parent full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp">
+    <member name="session" visibility="protected" static="false" line="21">
+      <docblock>
+        <description compact="The session manager"/>
+        <var type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </var>
+      </docblock>
+    </member>
+    <method name="setSession" start="28" end="31" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set session manager"/>
+        <param type="object" variable="$session">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </param>
+      </docblock>
+      <parameter name="session" byreference="false" type="object">
+        <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+      </parameter>
+    </method>
+    <method name="getSession" start="38" end="41" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get current session manager"/>
+        <return type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </return>
+      </docblock>
+    </method>
+  </parent>
+</class>

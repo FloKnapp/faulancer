@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request" abstract="false" final="false" start="15" end="328">
+  <file path="/var/www/vhosts/faulancer/src/Http" file="Request.php" realpath="/var/www/vhosts/faulancer/src/Http/Request.php" size="5767" time="2017-12-08T19:51:31+00:00" unixtime="1512762691" sha1="807ddde4486e0d41762532f9d02d4f4922c56862" relative="Http/Request.php"/>
+  <docblock>
+    <description compact="Class Request"/>
+  </docblock>
+  <extends full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp"/>
+  <member name="scheme" default="''" type="string" visibility="protected" static="false" line="22">
+    <docblock>
+      <description compact="The current scheme"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="host" default="''" type="string" visibility="protected" static="false" line="28">
+    <docblock>
+      <description compact="The current host"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="path" default="''" type="string" visibility="protected" static="false" line="34">
+    <docblock>
+      <description compact="The current path string"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="uri" default="''" type="string" visibility="protected" static="false" line="40">
+    <docblock>
+      <description compact="The current uri"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="method" default="''" type="string" visibility="protected" static="false" line="46">
+    <docblock>
+      <description compact="The current method"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="headers" default="" type="array" visibility="protected" static="false" line="52">
+    <docblock>
+      <description compact="Custom headers"/>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="query" default="''" type="string" visibility="protected" static="false" line="58">
+    <docblock>
+      <description compact="The current query string"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="body" default="''" type="string" visibility="protected" static="false" line="63">
+    <docblock>
+      <description/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="get" default="" type="array" visibility="protected" static="false" line="68">
+    <docblock>
+      <description/>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="post" default="" type="array" visibility="protected" static="false" line="73">
+    <docblock>
+      <description/>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <method name="createFromHeaders" start="80" end="96" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set attributes automatically"/>
+      <return resolution="self" type="object">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="setScheme" start="103" end="106" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set the request scheme"/>
+      <param type="string" variable="$scheme"/>
+    </docblock>
+    <parameter name="scheme" byreference="false" type="string" default="''"/>
+  </method>
+  <method name="getScheme" start="113" end="116" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get the request scheme"/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="setHeaders" start="121" end="124" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="array" variable="$headers"/>
+    </docblock>
+    <parameter name="headers" byreference="false" type="array" default=""/>
+  </method>
+  <method name="getHeaders" start="129" end="132" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="array"/>
+    </docblock>
+  </method>
+  <method name="setHost" start="137" end="140" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="string" variable="$host"/>
+    </docblock>
+    <parameter name="host" byreference="false" type="string" default="''"/>
+  </method>
+  <method name="getHost" start="145" end="148" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="setPath" start="155" end="164" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set uri path"/>
+      <param type="string" variable="$path"/>
+    </docblock>
+    <parameter name="path" byreference="false" type="string"/>
+  </method>
+  <method name="getPath" start="171" end="174" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get uri path"/>
+      <return type="string"/>
+    </docblock>
+    <return type="string" nullable="false"/>
+  </method>
+  <method name="setUri" start="181" end="190" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set uri path"/>
+      <param type="string" variable="$uri"/>
+    </docblock>
+    <parameter name="uri" byreference="false" type="string"/>
+  </method>
+  <method name="getUri" start="197" end="200" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get uri path"/>
+      <return type="string"/>
+    </docblock>
+    <return type="string" nullable="false"/>
+  </method>
+  <method name="setMethod" start="207" end="210" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set method"/>
+      <param type="string" variable="$method"/>
+    </docblock>
+    <parameter name="method" byreference="false" type="string"/>
+  </method>
+  <method name="getMethod" start="217" end="221" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get method"/>
+      <return type="string"/>
+    </docblock>
+    <return type="string" nullable="false"/>
+  </method>
+  <method name="setQuery" start="228" end="231" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Set query string"/>
+      <param type="string" variable="$query"/>
+    </docblock>
+    <parameter name="query" byreference="false" type="string"/>
+  </method>
+  <method name="getQuery" start="238" end="241" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get query string"/>
+      <return type="string"/>
+    </docblock>
+    <return type="string" nullable="false"/>
+  </method>
+  <method name="setBody" start="246" end="249" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="array" variable="$body"/>
+    </docblock>
+    <parameter name="body" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="getBody" start="254" end="257" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="string"/>
+    </docblock>
+  </method>
+  <method name="isPost" start="264" end="267" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Determine if it's a post request"/>
+      <return type="boolean"/>
+    </docblock>
+    <return type="bool" nullable="false"/>
+  </method>
+  <method name="isGet" start="274" end="277" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Determine if it's a get request"/>
+      <return type="boolean"/>
+    </docblock>
+    <return type="bool" nullable="false"/>
+  </method>
+  <method name="getParam" start="284" end="307" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="string" variable="$key"/>
+      <return type="mixed"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\InvalidArgumentException" namespace="Faulancer\Exception" name="InvalidArgumentException"/>
+      </throws>
+    </docblock>
+    <parameter name="key" byreference="false" type="string"/>
+  </method>
+  <method name="getPostData" start="314" end="317" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Return the post data"/>
+      <return type="array"/>
+    </docblock>
+    <return type="array" nullable="false"/>
+  </method>
+  <method name="setPostData" start="323" end="326" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param variable="$data"/>
+      <return type="object">
+        <type full="Faulancer\Http\void" namespace="Faulancer\Http" name="void"/>
+      </return>
+    </docblock>
+    <parameter name="data" byreference="false" type="{unknown}"/>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Service\RequestService" namespace="Faulancer\Service" name="RequestService"/>
+  </extenders>
+  <parent full="Faulancer\Http\AbstractHttp" namespace="Faulancer\Http" name="AbstractHttp">
+    <member name="session" visibility="protected" static="false" line="21">
+      <docblock>
+        <description compact="The session manager"/>
+        <var type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </var>
+      </docblock>
+    </member>
+    <method name="setSession" start="28" end="31" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set session manager"/>
+        <param type="object" variable="$session">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </param>
+      </docblock>
+      <parameter name="session" byreference="false" type="object">
+        <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+      </parameter>
+    </method>
+    <method name="getSession" start="38" end="41" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get current session manager"/>
+        <return type="object">
+          <type full="Faulancer\Session\SessionManager" namespace="Faulancer\Session" name="SessionManager"/>
+        </return>
+      </docblock>
+    </method>
+  </parent>
+</class>

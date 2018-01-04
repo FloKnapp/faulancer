@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://xml.phpdox.net/src" full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface" abstract="false" final="false" start="14" end="36">
+  <file path="/var/www/vhosts/faulancer/src/ServiceLocator" file="ServiceLocatorInterface.php" realpath="/var/www/vhosts/faulancer/src/ServiceLocator/ServiceLocatorInterface.php" size="803" time="2017-08-21T00:08:49+00:00" unixtime="1503274129" sha1="bfff415b5420eaa4f5a0a1d15f1b03d751a7f631" relative="ServiceLocator/ServiceLocatorInterface.php"/>
+  <docblock>
+    <description compact="Interface ServiceLocatorInterface"/>
+  </docblock>
+  <method name="get" start="34" end="34" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get a specific service">Call example -------------------------------------------------
+
+  $service = ServiceLocator::instance()-&gt;get(Service::class);
+
+or from controller
+
+  $service = $this-&gt;getServiceLocator()-&gt;get(Service::class);
+
+--------------------------------------------------------------</description>
+      <param type="string" variable="$service"/>
+      <return type="object">
+        <type full="Faulancer\ServiceLocator\ServiceInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface"/>
+      </return>
+    </docblock>
+    <parameter name="service" byreference="false" type="string" default="''"/>
+  </method>
+  <implementors>
+    <class full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+  </implementors>
+</interface>

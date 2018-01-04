@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Translate\Translator" namespace="Faulancer\Translate" name="Translator" abstract="false" final="false" start="17" end="80">
+  <file path="/var/www/vhosts/faulancer/src/Translate" file="Translator.php" realpath="/var/www/vhosts/faulancer/src/Translate/Translator.php" size="1875" time="2017-12-08T19:33:42+00:00" unixtime="1512761622" sha1="3499fe3c1760cd5d7b79cfc6a236219b6a83854c" relative="Translate/Translator.php"/>
+  <docblock>
+    <description compact="Class Translator | Translator.php"/>
+    <package value="Faulancer\Translate"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <member name="translation" visibility="protected" static="false" line="24">
+    <docblock>
+      <description compact="Holds the translation data"/>
+      <var type="mixed"/>
+    </docblock>
+  </member>
+  <member name="language" visibility="protected" static="false" line="30">
+    <docblock>
+      <description compact="Holds the current language key"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="40" end="54" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Translator constructor."/>
+      <param type="string" variable="$language"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+    </docblock>
+    <parameter name="language" byreference="false" type="string" default="'de'"/>
+  </constructor>
+  <method name="translate" start="63" end="78" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Translate given key"/>
+      <param type="string" variable="$key"/>
+      <param type="array" variable="$value"/>
+      <return type="string"/>
+    </docblock>
+    <return type="string" nullable="false"/>
+    <parameter name="key" byreference="false" type="string"/>
+    <parameter name="value" byreference="false" type="array" default=""/>
+  </method>
+</class>

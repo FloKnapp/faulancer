@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Event\AbstractEvent" namespace="Faulancer\Event" name="AbstractEvent" abstract="true" final="false" start="10" end="36">
+  <file path="/var/www/vhosts/faulancer/src/Event" file="AbstractEvent.php" realpath="/var/www/vhosts/faulancer/src/Event/AbstractEvent.php" size="599" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="ca268ba73a864053fd1d4597bfc094cc6a41cebd" relative="Event/AbstractEvent.php"/>
+  <docblock>
+    <description compact="Class AbstractEvent"/>
+    <package value="Faulancer\Event"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <constant type="{unknown}" name="NAME" value="''"/>
+  <member name="currentInstance" visibility="protected" static="false" line="16">
+    <docblock>
+      <var type="object">
+        <type full="\stdClass" namespace="" name="stdClass"/>
+      </var>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="23" end="26" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="AbstractEventType constructor."/>
+      <param variable="$currentInstance"/>
+    </docblock>
+    <parameter name="currentInstance" byreference="false" type="{unknown}"/>
+  </constructor>
+  <method name="getCurrentInstance" start="31" end="34" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="\stdClass" namespace="" name="stdClass"/>
+      </return>
+    </docblock>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Event\Type\OnRender" namespace="Faulancer\Event\Type" name="OnRender"/>
+    <extender full="Faulancer\Event\Type\OnKernelErrorException" namespace="Faulancer\Event\Type" name="OnKernelErrorException"/>
+    <extender full="Faulancer\Event\Type\OnKernelError" namespace="Faulancer\Event\Type" name="OnKernelError"/>
+    <extender full="Faulancer\Event\Type\OnKernelStart" namespace="Faulancer\Event\Type" name="OnKernelStart"/>
+    <extender full="Faulancer\Event\Type\OnKernelException" namespace="Faulancer\Event\Type" name="OnKernelException"/>
+    <extender full="Faulancer\Event\Type\OnPostRender" namespace="Faulancer\Event\Type" name="OnPostRender"/>
+    <extender full="Faulancer\Event\Type\OnDispatch" namespace="Faulancer\Event\Type" name="OnDispatch"/>
+  </extenders>
+</class>

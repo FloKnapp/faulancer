@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\Service\DispatcherService</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.xhtml">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Faulancer_Service">Faulancer\Service</a>
+          </li>
+          <li class="separator">DispatcherService</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/Service/DispatcherService.php.xhtml#line14">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\Service\</small>DispatcherService</h1>
+        <h4>Class DispatcherService</h4>
+        <p/>
+        <ul>
+          <li>Author: Florian Knapp &lt;office@florianknapp.de&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class DispatcherService
+                extends <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher.xhtml">Dispatcher</a>
+                implements
+                <a title="Faulancer\ServiceLocator\ServiceInterface" href="../interfaces/Faulancer_ServiceLocator_ServiceInterface.xhtml">ServiceInterface</a>
+            {<br/><ul class="none"><li>// Inherited members from <span title="Faulancer\Controller\Dispatcher">Dispatcher</span></li><li>protected <span title="Faulancer\Http\Request">Request</span> <a href="#members">$request</a>;
+                        </li><li>protected <span title="Faulancer\Service\Config">Config</span> <a href="#members">$config</a>;
+                        </li><li>protected string <a href="#members">$requestType</a>;
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="Faulancer\Controller\Dispatcher">Dispatcher</span></li><li>public void <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/__construct.xhtml">__construct</a>()
+                        </li><li>public Response|JsonResponse|mixed <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/dispatch.xhtml">dispatch</a>()
+                        </li><li>public string <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/sendCssFileHeader.xhtml">sendCssFileHeader</a>()
+                        </li><li>public string <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/sendJsFileHeader.xhtml">sendJsFileHeader</a>()
+                        </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>
+              <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher.xhtml">Faulancer\Controller\Dispatcher</a>
+            </li>
+          </ul>
+          <h4>Implements</h4>
+          <ul>
+            <li>
+              <a title="Faulancer\ServiceLocator\ServiceInterface" href="../interfaces/Faulancer_ServiceLocator_ServiceInterface.xhtml">Faulancer\ServiceLocator\ServiceInterface</a>
+            </li>
+          </ul>
+        </div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>protected</h4>
+          <ul class="members">
+            <li id="config"><strong>$config</strong>
+                —
+                <a title="Faulancer\Service\Config" href="../classes/Faulancer_Service_Config.xhtml">Faulancer\Service\Config</a><br/><span class="indent">The configuration object</span></li>
+            <li id="request"><strong>$request</strong>
+                —
+                <a title="Faulancer\Http\Request" href="../classes/Faulancer_Http_Request.xhtml">Faulancer\Http\Request</a><br/><span class="indent">The current request object</span></li>
+            <li id="requestType"><strong>$requestType</strong>
+                —
+                string<br/><span class="indent">user, api</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h3>Inherited from <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher.xhtml">Faulancer\Controller\Dispatcher</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="dispatch"><a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/dispatch.xhtml">dispatch()</a>
+                — Bootstrap for every route call</li>
+            <li id="sendCssFileHeader">
+              <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/sendCssFileHeader.xhtml">sendCssFileHeader()</a>
+            </li>
+            <li id="sendJsFileHeader">
+              <a title="Faulancer\Controller\Dispatcher" href="../classes/Faulancer_Controller_Dispatcher/sendJsFileHeader.xhtml">sendJsFileHeader()</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

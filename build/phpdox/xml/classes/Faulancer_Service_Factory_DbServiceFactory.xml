@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Service\Factory\DbServiceFactory" namespace="Faulancer\Service\Factory" name="DbServiceFactory" abstract="false" final="false" start="20" end="87">
+  <file path="/var/www/vhosts/faulancer/src/Service/Factory" file="DbServiceFactory.php" realpath="/var/www/vhosts/faulancer/src/Service/Factory/DbServiceFactory.php" size="2118" time="2017-12-08T19:19:05+00:00" unixtime="1512760745" sha1="334ce2879ec7ca4fb88d75ef39a3fe9469297d1a" relative="Service/Factory/DbServiceFactory.php"/>
+  <docblock>
+    <description compact="Class DbServiceFactory"/>
+  </docblock>
+  <implements full="Faulancer\ServiceLocator\FactoryInterface" namespace="Faulancer\ServiceLocator" name="FactoryInterface"/>
+  <method name="createService" start="30" end="85" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Create an entity manager"/>
+      <param type="object" variable="$serviceLocator">
+        <type full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+      </param>
+      <return type="object">
+        <type full="Faulancer\Service\DbService" namespace="Faulancer\Service" name="DbService"/>
+      </return>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="serviceLocator" byreference="false" type="object">
+      <type full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+    </parameter>
+  </method>
+  <interface full="Faulancer\ServiceLocator\FactoryInterface" namespace="Faulancer\ServiceLocator" name="FactoryInterface">
+    <method name="createService" start="22" end="22" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Create the factory for the requested service"/>
+        <param type="object" variable="$serviceLocator">
+          <type full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+        </param>
+        <return type="object"/>
+      </docblock>
+      <parameter name="serviceLocator" byreference="false" type="object">
+        <type full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+      </parameter>
+    </method>
+  </interface>
+</class>

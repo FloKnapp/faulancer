@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\Controller\ErrorController</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.xhtml">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Faulancer_Controller">Faulancer\Controller</a>
+          </li>
+          <li class="separator">ErrorController</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/Controller/ErrorController.php.xhtml#line18">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\Controller\</small>ErrorController</h1>
+        <h4>Class ErrorAbstractController</h4>
+        <p/>
+        <ul>
+          <li>Author: Florian Knapp &lt;office@florianknapp.de&gt;</li>
+          <li>License: MIT License</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class ErrorController
+                extends <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController.xhtml">AbstractController</a>
+            {<br/><ul class="none"><li>// members</li><li>private <span title="\Exception">Exception</span> <a href="#members">$_exception</a>;
+                    </li></ul><ul class="none"><li>// Inherited members from <span title="Faulancer\Controller\AbstractController">AbstractController</span></li><li>protected <span title="Faulancer\Http\Request">Request</span> <a href="#members">$request</a>;
+                        </li></ul><ul class="none"><li>// methods</li><li>public void <a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/__construct.xhtml">__construct</a>()
+                    </li><li>public Response <a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/displayError.xhtml">displayError</a>()
+                    </li><li>private Response <a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/_renderDebugPage.xhtml">_renderDebugPage</a>()
+                    </li><li>private Response <a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/_renderNotFoundPage.xhtml">_renderNotFoundPage</a>()
+                    </li></ul><ul class="none"><li>// Inherited methods from <span title="Faulancer\Controller\AbstractController">AbstractController</span></li><li>public void <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/__construct.xhtml">__construct</a>()
+                        </li><li>public ServiceLocator <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getServiceLocator.xhtml">getServiceLocator</a>()
+                        </li><li>public SessionManagerService|ServiceInterface <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getSessionManager.xhtml">getSessionManager</a>()
+                        </li><li>public ViewController <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getView.xhtml">getView</a>()
+                        </li><li>public DbService|ServiceInterface <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getDb.xhtml">getDb</a>()
+                        </li><li>public Response <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/render.xhtml">render</a>()
+                        </li><li>public bool|null <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/isPermitted.xhtml">isPermitted</a>()
+                        </li><li>public bool <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/redirect.xhtml">redirect</a>()
+                        </li><li>public void <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/setFlashMessage.xhtml">setFlashMessage</a>()
+                        </li><li>public string|null <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getFlashMessage.xhtml">getFlashMessage</a>()
+                        </li><li>public string <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/route.xhtml">route</a>()
+                        </li><li>public Request <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getRequest.xhtml">getRequest</a>()
+                        </li><li>public AbstractPlugin <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/__call.xhtml">__call</a>()
+                        </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>
+              <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController.xhtml">Faulancer\Controller\AbstractController</a>
+            </li>
+          </ul>
+        </div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="_exception"><strong>$_exception</strong>
+                —
+                <a title="\Exception" href="../classes/_Exception.xhtml">\Exception</a><br/><span class="indent">The exception object</span></li>
+          </ul>
+          <h4>protected</h4>
+          <ul class="members">
+            <li id="request"><strong>$request</strong>
+                —
+                <a title="Faulancer\Http\Request" href="../classes/Faulancer_Http_Request.xhtml">Faulancer\Http\Request</a><br/><span class="indent">Holds the request</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="_renderDebugPage"><a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/_renderDebugPage.xhtml">_renderDebugPage()</a>
+                — Render the debug output</li>
+            <li id="_renderNotFoundPage"><a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/_renderNotFoundPage.xhtml">_renderNotFoundPage()</a>
+                — Render a 404 page</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="__construct"><a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/__construct.xhtml">__construct()</a>
+                — ErrorController constructor.</li>
+            <li id="displayError"><a title="Faulancer\Controller\ErrorController" href="../classes/Faulancer_Controller_ErrorController/displayError.xhtml">displayError()</a>
+                — Decide if debug output or 404 page should be rendered</li>
+          </ul>
+          <h3>Inherited from <a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController.xhtml">Faulancer\Controller\AbstractController</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="__call"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/__call.xhtml">__call()</a>
+                — Magic method for providing a view helper</li>
+            <li id="getDb"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getDb.xhtml">getDb()</a>
+                — Returns the orm/entity manager</li>
+            <li id="getFlashMessage"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getFlashMessage.xhtml">getFlashMessage()</a>
+                — Retrieve a flash message</li>
+            <li id="getRequest"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getRequest.xhtml">getRequest()</a>
+                — Return the current request object</li>
+            <li id="getServiceLocator"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getServiceLocator.xhtml">getServiceLocator()</a>
+                — Returns the service locator</li>
+            <li id="getSessionManager"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getSessionManager.xhtml">getSessionManager()</a>
+                — Returns the session manager</li>
+            <li id="getView"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/getView.xhtml">getView()</a>
+                — Returns the view controller</li>
+            <li id="isPermitted"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/isPermitted.xhtml">isPermitted()</a>
+                — Check if user is permitted based on his role(s)</li>
+            <li id="redirect"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/redirect.xhtml">redirect()</a>
+                — Redirect to specific uri</li>
+            <li id="render"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/render.xhtml">render()</a>
+                — Render view with given template</li>
+            <li id="route"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/route.xhtml">route()</a>
+                — Get the url for a specific route name</li>
+            <li id="setFlashMessage"><a title="Faulancer\Controller\AbstractController" href="../classes/Faulancer_Controller_AbstractController/setFlashMessage.xhtml">setFlashMessage()</a>
+                — Set a generic text token which is valid for exactly one call</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

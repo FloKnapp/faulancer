@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\Helper\CodeBlock" namespace="Faulancer\View\Helper" name="CodeBlock" abstract="false" final="false" start="15" end="58">
+  <file path="/var/www/vhosts/faulancer/src/View/Helper" file="CodeBlock.php" realpath="/var/www/vhosts/faulancer/src/View/Helper/CodeBlock.php" size="1445" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="1c80f05bab87bb437763600c86ff9caaa2ebbc89" relative="View/Helper/CodeBlock.php"/>
+  <docblock>
+    <description compact="Class CodeBlock"/>
+  </docblock>
+  <extends full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper"/>
+  <method name="__invoke" start="25" end="56" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$view">
+        <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+      </param>
+      <param variable="$filename"/>
+      <param type="int" variable="$actualLine"/>
+      <return type="string"/>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="view" byreference="false" type="object">
+      <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+    </parameter>
+    <parameter name="filename" byreference="false" type="{unknown}"/>
+    <parameter name="actualLine" byreference="false" type="integer" default="0"/>
+  </method>
+  <parent full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper">
+    <method name="renderView" start="36" end="44" abstract="false" final="false" static="false" visibility="protected">
+      <docblock>
+        <description compact="Render a view with given template and variables"/>
+        <param type="string" variable="$template"/>
+        <param type="array" variable="$variables"/>
+        <return type="string"/>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\FileNotFoundException" namespace="Faulancer\Exception" name="FileNotFoundException"/>
+        </throws>
+      </docblock>
+      <return type="string" nullable="false"/>
+      <parameter name="template" byreference="false" type="string" default="''"/>
+      <parameter name="variables" byreference="false" type="array" default=""/>
+    </method>
+    <method name="getServiceLocator" start="51" end="54" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get instance of service locator"/>
+        <return type="object">
+          <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+        </return>
+      </docblock>
+      <return type="object" nullable="false">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </method>
+  </parent>
+</class>

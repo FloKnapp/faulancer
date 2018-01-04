@@ -69,6 +69,7 @@ abstract class AbstractFormBuilder
      * @param string $name
      *
      * @return AbstractType
+     *
      * @throws InvalidFormElementException
      */
     public function getField(string $name)
@@ -83,7 +84,7 @@ abstract class AbstractFormBuilder
     /**
      * @param AbstractType $field
      *
-     * @return $this
+     * @return self
      */
     public function setField(AbstractType $field)
     {

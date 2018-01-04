@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Controller\Dispatcher" namespace="Faulancer\Controller" name="Dispatcher" abstract="false" final="false" start="28" end="354">
+  <file path="/var/www/vhosts/faulancer/src/Controller" file="Dispatcher.php" realpath="/var/www/vhosts/faulancer/src/Controller/Dispatcher.php" size="8850" time="2017-11-26T09:29:58+00:00" unixtime="1511688598" sha1="11e8f662340c630d2f4ad3d7634263d060ff85f8" relative="Controller/Dispatcher.php"/>
+  <docblock>
+    <description compact="Class Dispatcher"/>
+  </docblock>
+  <member name="request" visibility="protected" static="false" line="36">
+    <docblock>
+      <description compact="The current request object"/>
+      <var type="object">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="config" visibility="protected" static="false" line="43">
+    <docblock>
+      <description compact="The configuration object"/>
+      <var type="object">
+        <type full="Faulancer\Service\Config" namespace="Faulancer\Service" name="Config"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="requestType" default="'default'" type="string" visibility="protected" static="false" line="50">
+    <docblock>
+      <description compact="user, api"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="58" end="62" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Dispatcher constructor."/>
+      <param type="object" variable="$request">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </param>
+      <param type="object" variable="$config">
+        <type full="Faulancer\Service\Config" namespace="Faulancer\Service" name="Config"/>
+      </param>
+    </docblock>
+    <parameter name="request" byreference="false" type="object">
+      <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+    </parameter>
+    <parameter name="config" byreference="false" type="object">
+      <type full="Faulancer\Service\Config" namespace="Faulancer\Service" name="Config"/>
+    </parameter>
+  </constructor>
+  <method name="dispatch" start="73" end="131" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Bootstrap for every route call"/>
+      <return type="object">
+        <type full="Faulancer\Controller\Response|JsonResponse|mixed" namespace="Faulancer\Controller" name="Response|JsonResponse|mixed"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\MethodNotFoundException" namespace="Faulancer\Exception" name="MethodNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ClassNotFoundException" namespace="Faulancer\Exception" name="ClassNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\DispatchFailureException" namespace="Faulancer\Exception" name="DispatchFailureException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\IncompatibleResponseException" namespace="Faulancer\Exception" name="IncompatibleResponseException"/>
+      </throws>
+    </docblock>
+    <inline>
+      <comment value="Check for core assets path" line="75"/>
+    </inline>
+  </method>
+  <method name="_setLanguageFromUri" start="137" end="152" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="Faulancer\Controller\bool" namespace="Faulancer\Controller" name="bool"/>
+      </return>
+      <codecoverageignore/>
+    </docblock>
+  </method>
+  <method name="_resolveAssetsPath" start="157" end="180" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="Faulancer\Controller\bool|string" namespace="Faulancer\Controller" name="bool|string"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="sendCssFileHeader" start="187" end="192" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param variable="$file"/>
+      <return type="string"/>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="file" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="sendJsFileHeader" start="199" end="204" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param variable="$file"/>
+      <return type="string"/>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="file" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="_getRoute" start="214" end="233" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Get data for specific route path"/>
+      <param type="string" variable="$path"/>
+      <return type="array"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\MethodNotFoundException" namespace="Faulancer\Exception" name="MethodNotFoundException"/>
+      </throws>
+    </docblock>
+    <parameter name="path" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="_getDirectMatch" start="244" end="273" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Determines if we have a direct/static route match"/>
+      <param description="The request uri" type="string" variable="$uri"/>
+      <param description="The result from ClassParser" type="array" variable="$data"/>
+      <return type="array"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\MethodNotFoundException" namespace="Faulancer\Exception" name="MethodNotFoundException"/>
+      </throws>
+    </docblock>
+    <return type="array" nullable="false"/>
+    <parameter name="uri" byreference="false" type="{unknown}"/>
+    <parameter name="data" byreference="false" type="array"/>
+  </method>
+  <method name="_getVariableMatch" start="284" end="320" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Determines if we have a variable route match"/>
+      <param type="string" variable="$uri"/>
+      <param type="array" variable="$data"/>
+      <return type="array"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\MethodNotFoundException" namespace="Faulancer\Exception" name="MethodNotFoundException"/>
+      </throws>
+    </docblock>
+    <return type="array" nullable="false"/>
+    <parameter name="uri" byreference="false" type="{unknown}"/>
+    <parameter name="data" byreference="false" type="array"/>
+  </method>
+  <method name="_getRestfulAction" start="327" end="352" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description/>
+      <return type="string"/>
+      <codecoverageignore/>
+    </docblock>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Service\DispatcherService" namespace="Faulancer\Service" name="DispatcherService"/>
+  </extenders>
+</class>

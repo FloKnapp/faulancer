@@ -231,7 +231,7 @@ abstract class AbstractType
      *
      * @return self
      */
-    public function setValue($value) :self
+    public function setValue($value)
     {
         $this->value = $value;
         return $this;
@@ -250,7 +250,7 @@ abstract class AbstractType
      *
      * @return self
      */
-    public function setName(string $name) :self
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;
@@ -264,7 +264,7 @@ abstract class AbstractType
      *
      * @return self
      */
-    public function addAttribute(string $key, string $value) :self
+    public function addAttribute(string $key, string $value)
     {
         if (!empty($this->definition['attributes'][$key])) {
             $this->definition['attributes'][$key] = $this->definition['attributes'][$key] . ' ' . $value;

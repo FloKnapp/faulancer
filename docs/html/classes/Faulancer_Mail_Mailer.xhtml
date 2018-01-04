@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - Faulancer\Mail\Mailer</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.xhtml">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#Faulancer_Mail">Faulancer\Mail</a>
+          </li>
+          <li class="separator">Mailer</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="../source/Mail/Mailer.php.xhtml#line26">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>Faulancer\Mail\</small>Mailer</h1>
+        <h4>Class Mailer</h4>
+        <p>+--Example usage:<br/>|<br/>| $mail = new Mailer();<br/>| $mail-&gt;addTo('test@test.com');<br/>| $mail-&gt;addCc('cc@test.com');<br/>| $mail-&gt;addBcc('bcc@test.com');<br/>| $mail-&gt;setFrom('Test User &lt;testuser@test.com&gt;');<br/>| $mail-&gt;setSubject('Testsubject');<br/>| $mail-&gt;addAttachment('shownFileName.png', '/absolute/path/to/file.png');<br/>| $mail-&gt;addAttachment('logo.png', '/absolute/path/to/logo.png', true); // We want to show it inline<br/>| $mail-&gt;setContent('&lt;img src="cid:logo.png"&gt;&lt;br /&gt;&lt;h3&gt;Welcome to our newsletter&lt;/h3&gt;... ... ...');<br/>| $mail-&gt;send(); // Html is on per default; give this method 'false' to send in plain text<br/>|</p>
+        <ul/>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Mailer
+            {<br/><ul class="none"><li>// members</li><li>protected array <a href="#members">$recipients</a> =
+                        ;
+                    </li><li>protected array <a href="#members">$carbonCopies</a> =
+                        ;
+                    </li><li>protected array <a href="#members">$blindCarbonCopies</a> =
+                        ;
+                    </li><li>protected string <a href="#members">$from</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$replyTo</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$subject</a> =
+                        '';
+                    </li><li>protected string <a href="#members">$content</a> =
+                        '';
+                    </li><li>protected <span title="Faulancer\Mail\bool">bool</span> <a href="#members">$isHtml</a> =
+                        false;
+                    </li><li>protected array <a href="#members">$attachment</a> =
+                        ;
+                    </li><li>protected string <a href="#members">$boundary</a> =
+                        '';
+                    </li></ul><ul class="none"><li>// methods</li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addTo.xhtml">addTo</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addCc.xhtml">addCc</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addBcc.xhtml">addBcc</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setFrom.xhtml">setFrom</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setReplyTo.xhtml">setReplyTo</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setSubject.xhtml">setSubject</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setContent.xhtml">setContent</a>()
+                    </li><li>public void <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addAttachment.xhtml">addAttachment</a>()
+                    </li><li>public bool <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/send.xhtml">send</a>()
+                    </li><li>protected bool <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/sendMail.xhtml">sendMail</a>()
+                    </li><li>protected string <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getBoundary.xhtml">getBoundary</a>()
+                    </li><li>protected string <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getHeaders.xhtml">getHeaders</a>()
+                    </li><li>protected string <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getMessage.xhtml">getMessage</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>protected</h4>
+          <ul class="members">
+            <li id="attachment"><strong>$attachment</strong>
+                —
+                array</li>
+            <li id="blindCarbonCopies"><strong>$blindCarbonCopies</strong>
+                —
+                array</li>
+            <li id="boundary"><strong>$boundary</strong>
+                —
+                string</li>
+            <li id="carbonCopies"><strong>$carbonCopies</strong>
+                —
+                array</li>
+            <li id="content"><strong>$content</strong>
+                —
+                string</li>
+            <li id="from"><strong>$from</strong>
+                —
+                string</li>
+            <li id="isHtml"><strong>$isHtml</strong>
+                —
+                <a title="Faulancer\Mail\bool" href="../classes/Faulancer_Mail_bool.xhtml">Faulancer\Mail\bool</a></li>
+            <li id="recipients"><strong>$recipients</strong>
+                —
+                array</li>
+            <li id="replyTo"><strong>$replyTo</strong>
+                —
+                string</li>
+            <li id="subject"><strong>$subject</strong>
+                —
+                string</li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>protected</h4>
+          <ul>
+            <li id="getBoundary"><a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getBoundary.xhtml">getBoundary()</a>
+                — Get boundary for email headers</li>
+            <li id="getHeaders"><a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getHeaders.xhtml">getHeaders()</a>
+                — Get headers</li>
+            <li id="getMessage"><a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/getMessage.xhtml">getMessage()</a>
+                — Get message body</li>
+            <li id="sendMail"><a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/sendMail.xhtml">sendMail()</a>
+                — Executes mail command</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="addAttachment">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addAttachment.xhtml">addAttachment()</a>
+            </li>
+            <li id="addBcc">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addBcc.xhtml">addBcc()</a>
+            </li>
+            <li id="addCc">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addCc.xhtml">addCc()</a>
+            </li>
+            <li id="addTo">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/addTo.xhtml">addTo()</a>
+            </li>
+            <li id="send"><a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/send.xhtml">send()</a>
+                — Send email</li>
+            <li id="setContent">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setContent.xhtml">setContent()</a>
+            </li>
+            <li id="setFrom">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setFrom.xhtml">setFrom()</a>
+            </li>
+            <li id="setReplyTo">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setReplyTo.xhtml">setReplyTo()</a>
+            </li>
+            <li id="setSubject">
+              <a title="Faulancer\Mail\Mailer" href="../classes/Faulancer_Mail_Mailer/setSubject.xhtml">setSubject()</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.11.0-dev - Copyright (C) 2010 - 2018 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

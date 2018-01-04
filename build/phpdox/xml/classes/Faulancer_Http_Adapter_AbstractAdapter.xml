@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Http\Adapter\AbstractAdapter" namespace="Faulancer\Http\Adapter" name="AbstractAdapter" abstract="true" final="false" start="12" end="30">
+  <file path="/var/www/vhosts/faulancer/src/Http/Adapter" file="AbstractAdapter.php" realpath="/var/www/vhosts/faulancer/src/Http/Adapter/AbstractAdapter.php" size="476" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="c9def647103ce4286ef0e191887d75d61ea95bca" relative="Http/Adapter/AbstractAdapter.php"/>
+  <docblock>
+    <description compact="Class Adapter"/>
+    <package value="Faulancer\Http"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <member name="response" default="NULL" visibility="protected" static="false" line="16">
+    <docblock>
+      <var type="null"/>
+    </docblock>
+  </member>
+  <method name="send" start="23" end="23" abstract="true" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$request">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </param>
+      <return resolution="static" type="object">
+        <type full="Faulancer\Http\Adapter\AbstractAdapter" namespace="Faulancer\Http\Adapter" name="AbstractAdapter"/>
+      </return>
+    </docblock>
+    <parameter name="request" byreference="false" type="object">
+      <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+    </parameter>
+  </method>
+  <method name="getResponse" start="28" end="28" abstract="true" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return resolution="static" type="object">
+        <type full="Faulancer\Http\Adapter\AbstractAdapter" namespace="Faulancer\Http\Adapter" name="AbstractAdapter"/>
+      </return>
+    </docblock>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Http\Adapter\Curl" namespace="Faulancer\Http\Adapter" name="Curl"/>
+  </extenders>
+</class>

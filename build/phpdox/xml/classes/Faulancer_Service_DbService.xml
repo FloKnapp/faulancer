@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Service\DbService" namespace="Faulancer\Service" name="DbService" abstract="false" final="false" start="18" end="71">
+  <file path="/var/www/vhosts/faulancer/src/Service" file="DbService.php" realpath="/var/www/vhosts/faulancer/src/Service/DbService.php" size="1469" time="2017-12-08T19:36:35+00:00" unixtime="1512761795" sha1="9bc520a7bcf57780d0a3651a3c9170b6ea7272d3" relative="Service/DbService.php"/>
+  <docblock>
+    <description compact="Class DbService"/>
+    <package value="Faulancer\Service"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <implements full="Faulancer\ServiceLocator\ServiceInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface"/>
+  <member name="entityManager" visibility="protected" static="false" line="22">
+    <docblock>
+      <var type="object">
+        <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+      </var>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="30" end="33" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="ORM constructor."/>
+      <param type="object" variable="$entityManager">
+        <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+      </param>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="entityManager" byreference="false" type="object">
+      <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+    </parameter>
+  </constructor>
+  <method name="getManager" start="38" end="41" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="object">
+        <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="fetch" start="55" end="58" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Return the EntityFetcher"/>
+      <param type="string" variable="$entity"/>
+      <param type="object" variable="$primaryKey">
+        <type full="Faulancer\Service\integer|null" namespace="Faulancer\Service" name="integer|null"/>
+      </param>
+      <return type="object">
+        <type full="Faulancer\Service\Entity|EntityFetcher" namespace="Faulancer\Service" name="Entity|EntityFetcher"/>
+      </return>
+      <throws type="object">
+        <type full="ORM\Exception\IncompletePrimaryKey" namespace="ORM\Exception" name="IncompletePrimaryKey"/>
+      </throws>
+      <throws type="object">
+        <type full="ORM\Exception\NoEntity" namespace="ORM\Exception" name="NoEntity"/>
+      </throws>
+      <codecoverageignore value="Is covered by tflori/orm"/>
+    </docblock>
+    <parameter name="entity" byreference="false" type="string"/>
+    <parameter name="primaryKey" byreference="false" type="{unknown}" default="NULL"/>
+  </method>
+  <method name="save" start="66" end="69" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Save an entity"/>
+      <param type="object" variable="$entity">
+        <type full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity"/>
+      </param>
+      <codecoverageignore value="Is covered by tflori/orm"/>
+    </docblock>
+    <parameter name="entity" byreference="false" type="object">
+      <type full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity"/>
+    </parameter>
+  </method>
+  <interface full="Faulancer\ServiceLocator\ServiceInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface"/>
+</class>

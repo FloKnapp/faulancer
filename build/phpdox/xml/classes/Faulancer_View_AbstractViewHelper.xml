@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper" abstract="true" final="false" start="21" end="56">
+  <file path="/var/www/vhosts/faulancer/src/View" file="AbstractViewHelper.php" realpath="/var/www/vhosts/faulancer/src/View/AbstractViewHelper.php" size="1391" time="2017-12-08T19:33:05+00:00" unixtime="1512761585" sha1="f6730869cde7a86abf61330d1ac01d840bd9b4db" relative="View/AbstractViewHelper.php"/>
+  <docblock>
+    <description compact="Class AbstractViewHelper"/>
+  </docblock>
+  <method name="renderView" start="36" end="44" abstract="false" final="false" static="false" visibility="protected">
+    <docblock>
+      <description compact="Render a view with given template and variables"/>
+      <param type="string" variable="$template"/>
+      <param type="array" variable="$variables"/>
+      <return type="string"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\FileNotFoundException" namespace="Faulancer\Exception" name="FileNotFoundException"/>
+      </throws>
+    </docblock>
+    <return type="string" nullable="false"/>
+    <parameter name="template" byreference="false" type="string" default="''"/>
+    <parameter name="variables" byreference="false" type="array" default=""/>
+  </method>
+  <method name="getServiceLocator" start="51" end="54" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get instance of service locator"/>
+      <return type="object">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </docblock>
+    <return type="object" nullable="false">
+      <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+    </return>
+  </method>
+  <extenders>
+    <extender full="Faulancer\View\Helper\ParentTemplate" namespace="Faulancer\View\Helper" name="ParentTemplate"/>
+    <extender full="Faulancer\View\Helper\EscapeString" namespace="Faulancer\View\Helper" name="EscapeString"/>
+    <extender full="Faulancer\View\Helper\Route" namespace="Faulancer\View\Helper" name="Route"/>
+    <extender full="Faulancer\View\Helper\Translate" namespace="Faulancer\View\Helper" name="Translate"/>
+    <extender full="Faulancer\View\Helper\User" namespace="Faulancer\View\Helper" name="User"/>
+    <extender full="Faulancer\View\Helper\Link" namespace="Faulancer\View\Helper" name="Link"/>
+    <extender full="Faulancer\View\Helper\Escape" namespace="Faulancer\View\Helper" name="Escape"/>
+    <extender full="Faulancer\View\Helper\RenderView" namespace="Faulancer\View\Helper" name="RenderView"/>
+    <extender full="Faulancer\View\Helper\Block" namespace="Faulancer\View\Helper" name="Block"/>
+    <extender full="Faulancer\View\Helper\Language" namespace="Faulancer\View\Helper" name="Language"/>
+    <extender full="Faulancer\View\Helper\AssetList" namespace="Faulancer\View\Helper" name="AssetList"/>
+    <extender full="Faulancer\View\Helper\Highlighter" namespace="Faulancer\View\Helper" name="Highlighter"/>
+    <extender full="Faulancer\View\Helper\CodeBlock" namespace="Faulancer\View\Helper" name="CodeBlock"/>
+    <extender full="Faulancer\View\Helper\FlashMessage" namespace="Faulancer\View\Helper" name="FlashMessage"/>
+    <extender full="Faulancer\View\Helper\RenderBlock" namespace="Faulancer\View\Helper" name="RenderBlock"/>
+  </extenders>
+</class>

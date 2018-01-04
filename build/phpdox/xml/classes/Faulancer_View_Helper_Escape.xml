@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\Helper\Escape" namespace="Faulancer\View\Helper" name="Escape" abstract="false" final="false" start="14" end="42">
+  <file path="/var/www/vhosts/faulancer/src/View/Helper" file="Escape.php" realpath="/var/www/vhosts/faulancer/src/View/Helper/Escape.php" size="835" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="1e868e0124948b0d43452d7102b09596c9bd24ad" relative="View/Helper/Escape.php"/>
+  <docblock>
+    <description compact="Class Escape | Escape.php"/>
+    <package value="Faulancer\View\Helper"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper"/>
+  <method name="__invoke" start="25" end="28" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Gets called within view"/>
+      <param description="The view controller" type="object" variable="$view">
+        <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+      </param>
+      <param description="The data which should be escaped" type="string" variable="$data"/>
+      <return type="mixed"/>
+    </docblock>
+    <parameter name="view" byreference="false" type="object">
+      <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+    </parameter>
+    <parameter name="data" byreference="false" type="string"/>
+  </method>
+  <method name="escape" start="37" end="40" abstract="false" final="false" static="false" visibility="protected">
+    <docblock>
+      <description compact="Escape string"/>
+      <param description="The data which should be escaped" type="string" variable="$data"/>
+      <return type="string"/>
+    </docblock>
+    <parameter name="data" byreference="false" type="string"/>
+  </method>
+  <parent full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper">
+    <method name="renderView" start="36" end="44" abstract="false" final="false" static="false" visibility="protected">
+      <docblock>
+        <description compact="Render a view with given template and variables"/>
+        <param type="string" variable="$template"/>
+        <param type="array" variable="$variables"/>
+        <return type="string"/>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\FileNotFoundException" namespace="Faulancer\Exception" name="FileNotFoundException"/>
+        </throws>
+      </docblock>
+      <return type="string" nullable="false"/>
+      <parameter name="template" byreference="false" type="string" default="''"/>
+      <parameter name="variables" byreference="false" type="array" default=""/>
+    </method>
+    <method name="getServiceLocator" start="51" end="54" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get instance of service locator"/>
+        <return type="object">
+          <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+        </return>
+      </docblock>
+      <return type="object" nullable="false">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </method>
+  </parent>
+</class>

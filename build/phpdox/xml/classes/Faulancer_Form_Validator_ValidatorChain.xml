@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Form\Validator\ValidatorChain" namespace="Faulancer\Form\Validator" name="ValidatorChain" abstract="false" final="false" start="14" end="71">
+  <file path="/var/www/vhosts/faulancer/src/Form/Validator" file="ValidatorChain.php" realpath="/var/www/vhosts/faulancer/src/Form/Validator/ValidatorChain.php" size="1555" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="eec10ad1bc440955847c5308dc1c72386510396f" relative="Form/Validator/ValidatorChain.php"/>
+  <docblock>
+    <description compact="Class ValidatorChain"/>
+  </docblock>
+  <member name="validators" default="" type="array" visibility="protected" static="false" line="18">
+    <docblock>
+      <var type="array" of="object">
+        <type full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="messages" default="" type="array" visibility="protected" static="false" line="21">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="field" default="NULL" visibility="protected" static="false" line="24">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Form\Validator\AbstractType|null" namespace="Faulancer\Form\Validator" name="AbstractType|null"/>
+      </var>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="31" end="34" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="ValidatorChain constructor."/>
+      <param type="object" variable="$field">
+        <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+      </param>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="field" byreference="false" type="object">
+      <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+    </parameter>
+  </constructor>
+  <method name="add" start="40" end="43" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$validator">
+        <type full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+      </param>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="validator" byreference="false" type="object">
+      <type full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+    </parameter>
+  </method>
+  <method name="validate" start="49" end="69" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="boolean"/>
+      <codecoverageignore/>
+    </docblock>
+    <return type="bool" nullable="false"/>
+  </method>
+</class>

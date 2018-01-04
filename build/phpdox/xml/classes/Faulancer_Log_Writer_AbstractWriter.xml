@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Log\Writer\AbstractWriter" namespace="Faulancer\Log\Writer" name="AbstractWriter" abstract="true" final="false" start="13" end="45">
+  <file path="/var/www/vhosts/faulancer/src/Log/Writer" file="AbstractWriter.php" realpath="/var/www/vhosts/faulancer/src/Log/Writer/AbstractWriter.php" size="874" time="2017-12-08T19:48:43+00:00" unixtime="1512762523" sha1="db91739dcea0403c13ad9abfd79eab9ea68e4c60" relative="Log/Writer/AbstractWriter.php"/>
+  <docblock>
+    <description compact="Class AbstractWriter | AbstractWriter.php"/>
+    <package value="Faulancer\Log"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <member name="config" default="NULL" visibility="protected" static="false" line="17">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Log\Writer\Config|null" namespace="Faulancer\Log\Writer" name="Config|null"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="backtrace" default="" type="array" visibility="protected" static="false" line="20">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="28" end="32" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="AbstractWriter constructor."/>
+      <param type="object" variable="$config">
+        <type full="Faulancer\Service\Config" namespace="Faulancer\Service" name="Config"/>
+      </param>
+      <param type="array" variable="$backtrace"/>
+    </docblock>
+    <parameter name="config" byreference="false" type="object">
+      <type full="Faulancer\Service\Config" namespace="Faulancer\Service" name="Config"/>
+    </parameter>
+    <parameter name="backtrace" byreference="false" type="array"/>
+  </constructor>
+  <method name="write" start="43" end="43" abstract="true" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Write to resource"/>
+      <param type="string" variable="$logfile"/>
+      <param type="string" variable="$message"/>
+      <param type="string" variable="$level"/>
+      <return type="mixed"/>
+    </docblock>
+    <parameter name="logfile" byreference="false" type="string"/>
+    <parameter name="message" byreference="false" type="string"/>
+    <parameter name="level" byreference="false" type="string"/>
+  </method>
+  <extenders>
+    <extender full="Faulancer\Log\Writer\DefaultWriter" namespace="Faulancer\Log\Writer" name="DefaultWriter"/>
+  </extenders>
+</class>

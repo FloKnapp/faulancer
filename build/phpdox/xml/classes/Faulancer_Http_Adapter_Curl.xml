@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Http\Adapter\Curl" namespace="Faulancer\Http\Adapter" name="Curl" abstract="false" final="false" start="13" end="52">
+  <file path="/var/www/vhosts/faulancer/src/Http/Adapter" file="Curl.php" realpath="/var/www/vhosts/faulancer/src/Http/Adapter/Curl.php" size="1253" time="2017-12-03T14:28:54+00:00" unixtime="1512311334" sha1="33ac1d7da6003aa6c1847e565bb13f9171833ac5" relative="Http/Adapter/Curl.php"/>
+  <docblock>
+    <description compact="Class Curl"/>
+    <package value="Faulancer\Http\Adapter"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\Http\Adapter\AbstractAdapter" namespace="Faulancer\Http\Adapter" name="AbstractAdapter"/>
+  <method name="send" start="19" end="37" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="object" variable="$request">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </param>
+      <return type="object">
+        <type full="Faulancer\Http\Adapter\void" namespace="Faulancer\Http\Adapter" name="void"/>
+      </return>
+    </docblock>
+    <parameter name="request" byreference="false" type="object">
+      <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+    </parameter>
+  </method>
+  <method name="getResponse" start="43" end="50" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return type="mixed"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ClientException" namespace="Faulancer\Exception" name="ClientException"/>
+      </throws>
+    </docblock>
+  </method>
+  <parent full="Faulancer\Http\Adapter\AbstractAdapter" namespace="Faulancer\Http\Adapter" name="AbstractAdapter">
+    <member name="response" default="NULL" visibility="protected" static="false" line="16">
+      <docblock>
+        <var type="null"/>
+      </docblock>
+    </member>
+    <method name="send" start="23" end="23" abstract="true" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="object" variable="$request">
+          <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+        </param>
+        <return resolution="static" type="object">
+          <type full="Faulancer\Http\Adapter\Curl" namespace="Faulancer\Http\Adapter" name="Curl"/>
+        </return>
+      </docblock>
+      <parameter name="request" byreference="false" type="object">
+        <type full="Faulancer\Http\Request" namespace="Faulancer\Http" name="Request"/>
+      </parameter>
+    </method>
+    <method name="getResponse" start="28" end="28" abstract="true" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return resolution="static" type="object">
+          <type full="Faulancer\Http\Adapter\Curl" namespace="Faulancer\Http\Adapter" name="Curl"/>
+        </return>
+      </docblock>
+    </method>
+  </parent>
+</class>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Log\LogManager" namespace="Faulancer\Log" name="LogManager" abstract="false" final="false" start="19" end="179">
+  <file path="/var/www/vhosts/faulancer/src/Log" file="LogManager.php" realpath="/var/www/vhosts/faulancer/src/Log/LogManager.php" size="5001" time="2017-12-08T19:50:02+00:00" unixtime="1512762602" sha1="a8c376d4ab0f481cc8758b0d008def6f4f881706" relative="Log/LogManager.php"/>
+  <docblock>
+    <description compact="Class Logger | Logger.php"/>
+    <package value="Faulancer\Log"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <constant type="string" name="LEVEL_INFO" value="'info'"/>
+  <constant type="string" name="LEVEL_DEBUG" value="'debug'"/>
+  <constant type="string" name="LEVEL_WARN" value="'warn'"/>
+  <constant type="string" name="LEVEL_ERROR" value="'error'"/>
+  <member name="instance" visibility="private" static="true" line="28">
+    <docblock>
+      <var resolution="static" type="object">
+        <type full="Faulancer\Log\LogManager" namespace="Faulancer\Log" name="LogManager"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="serviceLocator" visibility="private" static="true" line="31">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="levels" default="" type="array" visibility="protected" static="true" line="34">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="fileSystemChecked" default="false" type="boolean" visibility="protected" static="true" line="42">
+    <docblock>
+      <var type="object">
+        <type full="Faulancer\Log\bool" namespace="Faulancer\Log" name="bool"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="logFiles" default="" type="array" visibility="protected" static="true" line="45">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <method name="instance" start="50" end="58" abstract="false" final="false" static="true" visibility="public">
+    <docblock>
+      <description/>
+      <return resolution="static" type="object">
+        <type full="Faulancer\Log\LogManager" namespace="Faulancer\Log" name="LogManager"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="log" start="72" end="88" abstract="false" final="false" static="true" visibility="public">
+    <docblock>
+      <description compact="Write to resource"/>
+      <param type="string" variable="$message"/>
+      <param type="string" variable="$level"/>
+      <param type="string" variable="$writer"/>
+      <return type="object">
+        <type full="Faulancer\Log\bool" namespace="Faulancer\Log" name="bool"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\LogTypeNotSupportedException" namespace="Faulancer\Exception" name="LogTypeNotSupportedException"/>
+      </throws>
+    </docblock>
+    <parameter name="message" byreference="false" type="string" default="''"/>
+    <parameter name="level" byreference="false" type="{unknown}" default="" constant="self::LEVEL_INFO"/>
+    <parameter name="writer" byreference="false" type="string" default="''"/>
+  </method>
+  <method name="_checkConsistency" start="100" end="177" abstract="false" final="false" static="true" visibility="private">
+    <docblock>
+      <description compact="Check for filesystem consistency"/>
+      <return type="object">
+        <type full="Faulancer\Log\bool" namespace="Faulancer\Log" name="bool"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\LogTypeNotSupportedException" namespace="Faulancer\Exception" name="LogTypeNotSupportedException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\LogFileInvalidException" namespace="Faulancer\Exception" name="LogFileInvalidException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+    </docblock>
+  </method>
+</class>

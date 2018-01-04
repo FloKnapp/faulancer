@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Form\Validator\Base\Image" namespace="Faulancer\Form\Validator\Base" name="Image" abstract="false" final="false" start="13" end="54">
+  <file path="/var/www/vhosts/faulancer/src/Form/Validator/Base" file="Image.php" realpath="/var/www/vhosts/faulancer/src/Form/Validator/Base/Image.php" size="1045" time="2017-12-08T20:14:14+00:00" unixtime="1512764054" sha1="fc9ded20f2d99eae18d24d70c2ee8dfe1d8767f7" relative="Form/Validator/Base/Image.php"/>
+  <docblock>
+    <description compact="Class ImageEntity"/>
+    <package value="Faulancer\Form\Validator\Base"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+  <member name="errorMessage" default="'validator_invalid_image_type'" type="string" visibility="protected" static="false" line="20">
+    <docblock>
+      <description compact="The error message as key for translation"/>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="_validImageMimeTypes" default="" type="array" visibility="private" static="false" line="26">
+    <docblock>
+      <description compact="Valid image mime-types"/>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <method name="process" start="44" end="52" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Validate image type within it's mime-type"/>
+      <param type="string" variable="$data"/>
+      <return type="object">
+        <type full="Faulancer\Form\Validator\Base\bool" namespace="Faulancer\Form\Validator\Base" name="bool"/>
+      </return>
+    </docblock>
+    <parameter name="data" byreference="false" type="{unknown}"/>
+  </method>
+  <parent full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator">
+    <member name="field" visibility="protected" static="false" line="19">
+      <docblock>
+        <var type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </var>
+      </docblock>
+    </member>
+    <member name="errorMessage" default="''" type="string" visibility="protected" static="false" line="24">
+      <docblock>
+        <description/>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <constructor name="__construct" start="30" end="33" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="AbstractValidator constructor."/>
+        <param type="object" variable="$field">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </param>
+      </docblock>
+      <parameter name="field" byreference="false" type="object">
+        <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+      </parameter>
+    </constructor>
+    <method name="validate" start="39" end="50" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="boolean"/>
+        <codecoverageignore/>
+      </docblock>
+    </method>
+    <method name="getField" start="56" end="59" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+        <codecoverageignore/>
+      </docblock>
+    </method>
+    <method name="getMessage" start="66" end="70" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Return the error message"/>
+        <return type="string"/>
+        <codecoverageignore/>
+      </docblock>
+    </method>
+    <method name="process" start="77" end="77" abstract="true" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Init method which must be implemented by every validator"/>
+        <param type="mixed" variable="$data"/>
+        <return type="mixed"/>
+      </docblock>
+      <parameter name="data" byreference="false" type="{unknown}"/>
+    </method>
+  </parent>
+</class>

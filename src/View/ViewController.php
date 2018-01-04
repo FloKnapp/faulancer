@@ -38,12 +38,13 @@ class ViewController
      */
     private $template = '';
 
-    /**
+    /**The template path without filename
      * @var string
      */
     private $templatePath = '';
 
     /**
+     * Holds the registered view helpers
      * @var array
      */
     private $viewHelpers = [];
@@ -68,12 +69,12 @@ class ViewController
      * Set template for this view
      *
      * @param string $template
-     * @return ViewController
+     * @return self
      *
      * @throws FileNotFoundException
      * @throws ConfigInvalidException
      */
-    public function setTemplate(string $template = '') :self
+    public function setTemplate(string $template = '')
     {
         if (empty($this->templatePath) && strpos($template, $this->config->get('viewsRoot')) === false) {
             $template = $this->config->get('viewsRoot') . $template;
@@ -91,16 +92,20 @@ class ViewController
     }
 
     /**
+     * Set the template path
+     *
      * @param string $path
-     * @return ViewController
+     * @return self
      */
-    public function setTemplatePath(string $path = '') :self
+    public function setTemplatePath(string $path = '')
     {
         $this->templatePath = $path;
         return $this;
     }
 
     /**
+     * Get the template path
+     *
      * @return string
      */
     public function getTemplatePath()
@@ -114,7 +119,7 @@ class ViewController
      * @param string $file
      * @return self
      */
-    public function addScript(string $file) :self
+    public function addScript(string $file)
     {
         $this->variable['assetsJs'][] = $file;
         return $this;
@@ -124,10 +129,9 @@ class ViewController
      * Add stylesheet from outside
      *
      * @param string $file
-     * @param bool   $minify
      * @return self
      */
-    public function addStylesheet(string $file, $minify = false) :self
+    public function addStylesheet(string $file)
     {
         $this->variable['assetsCss'][] = $file;
         return $this;
@@ -190,7 +194,7 @@ class ViewController
      * @param array $variables
      * @return self
      */
-    public function setVariables(array $variables = []) :self
+    public function setVariables(array $variables = [])
     {
         foreach($variables AS $key=>$value) {
             $this->setVariable($key, $value);

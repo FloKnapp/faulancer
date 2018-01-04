@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\ORM\User\Role" namespace="Faulancer\ORM\User" name="Role" abstract="false" final="false" start="15" end="24">
+  <file path="/var/www/vhosts/faulancer/src/ORM/User" file="Role.php" realpath="/var/www/vhosts/faulancer/src/ORM/User/Role.php" size="438" time="2017-10-25T22:04:36+00:00" unixtime="1508969076" sha1="d3630adc06a705be5a99e393a8792ae69ec2fe18" relative="ORM/User/Role.php"/>
+  <docblock>
+    <description compact="Class Role"/>
+    <property value="string $roleName"/>
+  </docblock>
+  <extends full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity"/>
+  <member name="relations" default="" type="array" visibility="protected" static="true" line="18"/>
+  <member name="tableName" default="'role'" type="string" visibility="protected" static="true" line="22"/>
+  <parent full="Faulancer\ORM\Entity" namespace="Faulancer\ORM" name="Entity">
+    <extends full="ORM\Entity" namespace="ORM" name="Entity" unresolved="true"/>
+    <method name="getDataAsArray" start="38" end="41" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Return data as array"/>
+        <return type="array"/>
+        <codecoverageignore/>
+      </docblock>
+    </method>
+    <method name="save" start="63" end="101" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Save entity to database and add error handling for duplicate keys"/>
+        <param description="The custom entity manager" type="object" variable="$dbManager">
+          <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+        </param>
+        <param description="If redirect should be initiated" type="object" variable="$redirectOnDup">on duplicate key error<type full="Faulancer\ORM\bool" namespace="Faulancer\ORM" name="bool"/></param>
+        <return type="object">
+          <type full="Faulancer\ORM\Entity|\ORM\Entity|bool" namespace="Faulancer\ORM\Entity|\ORM" name="Entity|bool"/>
+        </return>
+        <throws type="object">
+          <type full="ORM\Exception\NoEntity" namespace="ORM\Exception" name="NoEntity"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\NoConnection" namespace="ORM\Exception" name="NoConnection"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\NotScalar" namespace="ORM\Exception" name="NotScalar"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\UnsupportedDriver" namespace="ORM\Exception" name="UnsupportedDriver"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\IncompletePrimaryKey" namespace="ORM\Exception" name="IncompletePrimaryKey"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\InvalidConfiguration" namespace="ORM\Exception" name="InvalidConfiguration"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\InvalidName" namespace="ORM\Exception" name="InvalidName"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\NoEntityManager" namespace="ORM\Exception" name="NoEntityManager"/>
+        </throws>
+        <throws type="object">
+          <type full="ORM\Exception\IncompletePrimaryKey" namespace="ORM\Exception" name="IncompletePrimaryKey"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+      </docblock>
+      <parameter name="dbManager" byreference="false" type="object" default="NULL">
+        <type full="ORM\EntityManager" namespace="ORM" name="EntityManager"/>
+      </parameter>
+      <parameter name="redirectOnDup" byreference="false" type="boolean" default="false"/>
+    </method>
+  </parent>
+</class>

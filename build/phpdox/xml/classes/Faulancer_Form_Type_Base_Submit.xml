@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Form\Type\Base\Submit" namespace="Faulancer\Form\Type\Base" name="Submit" abstract="false" final="false" start="13" end="41">
+  <file path="/var/www/vhosts/faulancer/src/Form/Type/Base" file="Submit.php" realpath="/var/www/vhosts/faulancer/src/Form/Type/Base/Submit.php" size="753" time="2017-12-08T20:52:53+00:00" unixtime="1512766373" sha1="25aa10ee2fb83e788e5a480635c4aea00dc61c90" relative="Form/Type/Base/Submit.php"/>
+  <docblock>
+    <description compact="Class Submit"/>
+    <package value="Faulancer\Form\Type\Base"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <extends full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+  <member name="inputType" default="'button'" type="string" visibility="protected" static="false" line="16">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <member name="element" default="''" type="string" visibility="protected" static="false" line="19">
+    <docblock>
+      <var type="string"/>
+    </docblock>
+  </member>
+  <method name="create" start="24" end="39" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <return resolution="self" type="object">
+        <type full="Faulancer\Form\Type\Base\Submit" namespace="Faulancer\Form\Type\Base" name="Submit"/>
+      </return>
+    </docblock>
+  </method>
+  <parent full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType">
+    <member name="definition" default="" type="array" visibility="protected" static="false" line="27">
+      <docblock>
+        <var type="array"/>
+      </docblock>
+    </member>
+    <member name="type" default="''" type="string" visibility="protected" static="false" line="30">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="label" default="''" type="string" visibility="protected" static="false" line="33">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="value" default="''" type="string" visibility="protected" static="false" line="36">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="name" default="''" type="string" visibility="protected" static="false" line="39">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="outputPattern" default="''" type="string" visibility="protected" static="false" line="42">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="element" default="''" type="string" visibility="protected" static="false" line="45">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="errorMessages" default="" type="array" visibility="protected" static="false" line="48">
+      <docblock>
+        <var type="array"/>
+      </docblock>
+    </member>
+    <member name="formIdentifier" default="''" type="string" visibility="protected" static="false" line="51">
+      <docblock>
+        <var type="string"/>
+      </docblock>
+    </member>
+    <member name="defaultValidator" default="NULL" visibility="protected" static="false" line="54">
+      <docblock>
+        <var type="object">
+          <type full="Faulancer\Form\Type\AbstractValidator|null" namespace="Faulancer\Form\Type" name="AbstractValidator|null"/>
+        </var>
+      </docblock>
+    </member>
+    <member name="validatorChain" default="NULL" visibility="protected" static="false" line="57">
+      <docblock>
+        <var type="object">
+          <type full="Faulancer\Form\Validator\ValidatorChain" namespace="Faulancer\Form\Validator" name="ValidatorChain"/>
+        </var>
+      </docblock>
+    </member>
+    <member name="formErrorDecoration" default="" type="array" visibility="protected" static="false" line="60">
+      <docblock>
+        <var type="array"/>
+      </docblock>
+    </member>
+    <member name="serviceLocator" visibility="protected" static="false" line="63">
+      <docblock>
+        <var type="object">
+          <type full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+        </var>
+      </docblock>
+    </member>
+    <constructor name="__construct" start="72" end="77" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="AbstractType constructor."/>
+        <param type="array" variable="$definition"/>
+        <param type="array" variable="$formErrorDecoration"/>
+        <param type="string" variable="$formIdentifier"/>
+      </docblock>
+      <parameter name="definition" byreference="false" type="array"/>
+      <parameter name="formErrorDecoration" byreference="false" type="array" default=""/>
+      <parameter name="formIdentifier" byreference="false" type="string" default="''"/>
+    </constructor>
+    <method name="getDefaultValidator" start="84" end="87" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get default validator"/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\AbstractValidator|null" namespace="Faulancer\Form\Type" name="AbstractValidator|null"/>
+        </return>
+      </docblock>
+    </method>
+    <method name="setDefaultValidator" start="94" end="97" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set default validator"/>
+        <param type="object" variable="$validator">
+          <type full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+        </param>
+      </docblock>
+      <parameter name="validator" byreference="false" type="object">
+        <type full="Faulancer\Form\Validator\AbstractValidator" namespace="Faulancer\Form\Validator" name="AbstractValidator"/>
+      </parameter>
+    </method>
+    <method name="setValidatorChain" start="104" end="107" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set validator chain"/>
+        <param type="object" variable="$validatorChain">
+          <type full="Faulancer\Form\Validator\ValidatorChain" namespace="Faulancer\Form\Validator" name="ValidatorChain"/>
+        </param>
+      </docblock>
+      <parameter name="validatorChain" byreference="false" type="object">
+        <type full="Faulancer\Form\Validator\ValidatorChain" namespace="Faulancer\Form\Validator" name="ValidatorChain"/>
+      </parameter>
+    </method>
+    <method name="isValid" start="114" end="123" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Validate field by validator chain or default validator"/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\bool|null" namespace="Faulancer\Form\Type" name="bool|null"/>
+        </return>
+      </docblock>
+    </method>
+    <method name="removeValidators" start="130" end="134" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Remove bound validators"/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\void" namespace="Faulancer\Form\Type" name="void"/>
+        </return>
+      </docblock>
+    </method>
+    <method name="getErrorMessages" start="141" end="169" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get error messages"/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\array|string" namespace="Faulancer\Form\Type" name="array|string"/>
+        </return>
+      </docblock>
+    </method>
+    <method name="setErrorMessages" start="176" end="179" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Set error messages"/>
+        <param type="array" variable="$messages"/>
+      </docblock>
+      <parameter name="messages" byreference="false" type="array"/>
+    </method>
+    <method name="getType" start="186" end="189" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get field type"/>
+        <return type="string"/>
+      </docblock>
+      <return type="string" nullable="false"/>
+    </method>
+    <method name="setType" start="196" end="200" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="string" variable="$type"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+      <parameter name="type" byreference="false" type="string"/>
+    </method>
+    <method name="getLabel" start="205" end="208" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="string"/>
+      </docblock>
+      <return type="string" nullable="false"/>
+    </method>
+    <method name="setLabel" start="215" end="219" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="string" variable="$label"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+      <parameter name="label" byreference="false" type="string"/>
+    </method>
+    <method name="getValue" start="224" end="227" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="string"/>
+      </docblock>
+    </method>
+    <method name="setValue" start="234" end="238" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="mixed" variable="$value"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+      <parameter name="value" byreference="false" type="{unknown}"/>
+    </method>
+    <method name="getName" start="243" end="246" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="string"/>
+      </docblock>
+      <return type="string" nullable="false"/>
+    </method>
+    <method name="setName" start="253" end="257" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <param type="string" variable="$name"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+      <parameter name="name" byreference="false" type="string"/>
+    </method>
+    <method name="addAttribute" start="267" end="276" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Add field attribute"/>
+        <param type="string" variable="$key"/>
+        <param type="string" variable="$value"/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+      <parameter name="key" byreference="false" type="string"/>
+      <parameter name="value" byreference="false" type="string"/>
+    </method>
+    <method name="isPost" start="283" end="286" abstract="false" final="false" static="false" visibility="protected">
+      <docblock>
+        <description/>
+        <return type="object">
+          <type full="Faulancer\Form\Type\bool" namespace="Faulancer\Form\Type" name="bool"/>
+        </return>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+      </docblock>
+      <return type="bool" nullable="false"/>
+    </method>
+    <method name="create" start="291" end="312" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return resolution="self" type="object">
+          <type full="Faulancer\Form\Type\AbstractType" namespace="Faulancer\Form\Type" name="AbstractType"/>
+        </return>
+      </docblock>
+    </method>
+    <method name="__toString" start="317" end="321" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description/>
+        <return type="string"/>
+      </docblock>
+      <return type="string" nullable="false"/>
+    </method>
+    <method name="getFormIdentifier" start="382" end="385" abstract="false" final="false" static="false" visibility="public"/>
+  </parent>
+</class>

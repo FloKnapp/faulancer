@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\Helper\EndBlock" namespace="Faulancer\View\Helper" name="EndBlock" abstract="false" final="false" start="14" end="34">
+  <file path="/var/www/vhosts/faulancer/src/View/Helper" file="EndBlock.php" realpath="/var/www/vhosts/faulancer/src/View/Helper/EndBlock.php" size="651" time="2017-08-21T00:08:49+00:00" unixtime="1503274129" sha1="c085bb5b47f208a998a555c9c431ebc9b97854b8" relative="View/Helper/EndBlock.php"/>
+  <docblock>
+    <description compact="Class EndBlock"/>
+  </docblock>
+  <method name="__invoke" start="23" end="32" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Block closing handler"/>
+      <param type="object" variable="$view">
+        <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+      </param>
+      <param type="string" variable="$name"/>
+    </docblock>
+    <parameter name="view" byreference="false" type="object">
+      <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+    </parameter>
+    <parameter name="name" byreference="false" type="string" default="''"/>
+  </method>
+</class>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\Helper\Link" namespace="Faulancer\View\Helper" name="Link" abstract="false" final="false" start="22" end="89">
+  <file path="/var/www/vhosts/faulancer/src/View/Helper" file="Link.php" realpath="/var/www/vhosts/faulancer/src/View/Helper/Link.php" size="2506" time="2017-12-09T11:46:58+00:00" unixtime="1512820018" sha1="5a3bab8695767e0b761b97b68d60794fcf17f980" relative="View/Helper/Link.php"/>
+  <docblock>
+    <description compact="Class Link"/>
+  </docblock>
+  <extends full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper"/>
+  <method name="__invoke" start="39" end="87" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Render a ready-to-use link within an 'a' tag"/>
+      <param type="object" variable="$view">
+        <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+      </param>
+      <param type="string" variable="$routeName"/>
+      <param type="array" variable="$elementAttributes"/>
+      <return type="string"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\RouteInvalidException" namespace="Faulancer\Exception" name="RouteInvalidException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+      <codecoverageignore/>
+    </docblock>
+    <parameter name="view" byreference="false" type="object">
+      <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+    </parameter>
+    <parameter name="routeName" byreference="false" type="{unknown}"/>
+    <parameter name="elementAttributes" byreference="false" type="array" default=""/>
+  </method>
+  <parent full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper">
+    <method name="renderView" start="36" end="44" abstract="false" final="false" static="false" visibility="protected">
+      <docblock>
+        <description compact="Render a view with given template and variables"/>
+        <param type="string" variable="$template"/>
+        <param type="array" variable="$variables"/>
+        <return type="string"/>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\FileNotFoundException" namespace="Faulancer\Exception" name="FileNotFoundException"/>
+        </throws>
+      </docblock>
+      <return type="string" nullable="false"/>
+      <parameter name="template" byreference="false" type="string" default="''"/>
+      <parameter name="variables" byreference="false" type="array" default=""/>
+    </method>
+    <method name="getServiceLocator" start="51" end="54" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get instance of service locator"/>
+        <return type="object">
+          <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+        </return>
+      </docblock>
+      <return type="object" nullable="false">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </method>
+  </parent>
+</class>

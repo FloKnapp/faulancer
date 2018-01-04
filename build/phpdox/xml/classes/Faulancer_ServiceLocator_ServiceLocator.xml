@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator" abstract="false" final="false" start="14" end="152">
+  <file path="/var/www/vhosts/faulancer/src/ServiceLocator" file="ServiceLocator.php" realpath="/var/www/vhosts/faulancer/src/ServiceLocator/ServiceLocator.php" size="3797" time="2017-12-08T19:34:44+00:00" unixtime="1512761684" sha1="920fc4d6dab68752388de61e52613a01cbd2bada" relative="ServiceLocator/ServiceLocator.php"/>
+  <docblock>
+    <description compact="Class ServiceLocator"/>
+    <package value="Faulancer\ServiceLocator"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+  </docblock>
+  <implements full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface"/>
+  <member name="instance" default="NULL" visibility="private" static="true" line="20">
+    <docblock>
+      <description compact="Holds the service locator instance"/>
+      <var type="object">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </var>
+    </docblock>
+  </member>
+  <member name="services" default="" type="array" visibility="private" static="true" line="26">
+    <docblock>
+      <description compact="Holds the requested services"/>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <member name="backup" default="" type="array" visibility="private" static="true" line="29">
+    <docblock>
+      <var type="array"/>
+    </docblock>
+  </member>
+  <constructor name="__construct" start="34" end="34" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="ServiceLocator private constructor."/>
+    </docblock>
+  </constructor>
+  <method name="instance" start="40" end="47" abstract="false" final="false" static="true" visibility="public">
+    <docblock>
+      <description compact="Return the instance of the service locator"/>
+      <return type="object">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </docblock>
+  </method>
+  <method name="get" start="58" end="82" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Try to get the service.">Returns per default always a new instance of the service/factory.</description>
+      <param type="string" variable="$service"/>
+      <param type="boolean" variable="$shared"/>
+      <return type="object">
+        <type full="Faulancer\ServiceLocator\ServiceInterface|FactoryInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface|FactoryInterface"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+    </docblock>
+    <parameter name="service" byreference="false" type="string" default="''"/>
+    <parameter name="shared" byreference="false" type="boolean" default="true"/>
+  </method>
+  <method name="_getService" start="91" end="98" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Get specific service by class name"/>
+      <param type="string" variable="$service"/>
+      <return type="mixed"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+    </docblock>
+    <parameter name="service" byreference="false" type="string"/>
+  </method>
+  <method name="_getFactory" start="107" end="126" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Check if we have a factory for this service"/>
+      <param type="string" variable="$service"/>
+      <return type="object">
+        <type full="Faulancer\ServiceLocator\FactoryInterface|null" namespace="Faulancer\ServiceLocator" name="FactoryInterface|null"/>
+      </return>
+      <throws type="object">
+        <type full="Faulancer\Exception\FactoryMayIncompatibleException" namespace="Faulancer\Exception" name="FactoryMayIncompatibleException"/>
+      </throws>
+    </docblock>
+    <parameter name="service" byreference="false" type="string"/>
+    <inline>
+      <comment value="This is a direct factory access" line="120"/>
+    </inline>
+  </method>
+  <method name="set" start="133" end="140" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description/>
+      <param type="string" variable="$name"/>
+      <param type="object" variable="$service">
+        <type full="Faulancer\ServiceLocator\ServiceInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface"/>
+      </param>
+      <internal/>
+    </docblock>
+    <parameter name="name" byreference="false" type="{unknown}"/>
+    <parameter name="service" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="destroy" start="147" end="150" abstract="false" final="false" static="true" visibility="public">
+    <docblock>
+      <description compact="Reset the service locators instance"/>
+      <internal/>
+    </docblock>
+  </method>
+  <interface full="Faulancer\ServiceLocator\ServiceLocatorInterface" namespace="Faulancer\ServiceLocator" name="ServiceLocatorInterface">
+    <method name="get" start="34" end="34" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get a specific service">Call example -------------------------------------------------
+
+  $service = ServiceLocator::instance()-&gt;get(Service::class);
+
+or from controller
+
+  $service = $this-&gt;getServiceLocator()-&gt;get(Service::class);
+
+--------------------------------------------------------------</description>
+        <param type="string" variable="$service"/>
+        <return type="object">
+          <type full="Faulancer\ServiceLocator\ServiceInterface" namespace="Faulancer\ServiceLocator" name="ServiceInterface"/>
+        </return>
+      </docblock>
+      <parameter name="service" byreference="false" type="string" default="''"/>
+    </method>
+  </interface>
+</class>

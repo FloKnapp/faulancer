@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Faulancer\View\Helper\AssetList" namespace="Faulancer\View\Helper" name="AssetList" abstract="false" final="false" start="22" end="128">
+  <file path="/var/www/vhosts/faulancer/src/View/Helper" file="AssetList.php" realpath="/var/www/vhosts/faulancer/src/View/Helper/AssetList.php" size="3214" time="2018-01-01T11:25:48+00:00" unixtime="1514805948" sha1="14a4f6171274f5fc8ac69b6cb3c50d63f7bed67e" relative="View/Helper/AssetList.php"/>
+  <docblock>
+    <description compact="Class AssetList"/>
+    <category value="ViewHelper"/>
+    <package value="Faulancer\View\Helper"/>
+    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
+    <license name="MIT License"/>
+    <link value="No link provided"/>
+  </docblock>
+  <extends full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper"/>
+  <method name="__invoke" start="38" end="85" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Render a asset list by type"/>
+      <param description="The current view" type="object" variable="$view">
+        <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+      </param>
+      <param description="The asset type" type="string" variable="$type"/>
+      <param description="If all assets should be concatenated" type="object" variable="$optimize">within style tag in head<type full="Faulancer\View\Helper\bool" namespace="Faulancer\View\Helper" name="bool"/></param>
+      <return type="string"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+    </docblock>
+    <parameter name="view" byreference="false" type="object">
+      <type full="Faulancer\View\ViewController" namespace="Faulancer\View" name="ViewController"/>
+    </parameter>
+    <parameter name="type" byreference="false" type="{unknown}"/>
+    <parameter name="optimize" byreference="false" type="boolean" default="false"/>
+  </method>
+  <method name="_collectAssetsContent" start="98" end="126" abstract="false" final="false" static="false" visibility="private">
+    <docblock>
+      <description compact="Collect all assets content for concatenation"/>
+      <param description="The asset files" type="array" variable="$files"/>
+      <param description="The assets type" type="string" variable="$type"/>
+      <return type="string"/>
+      <throws type="object">
+        <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+      </throws>
+      <throws type="object">
+        <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+      </throws>
+    </docblock>
+    <parameter name="files" byreference="false" type="array"/>
+    <parameter name="type" byreference="false" type="string"/>
+  </method>
+  <parent full="Faulancer\View\AbstractViewHelper" namespace="Faulancer\View" name="AbstractViewHelper">
+    <method name="renderView" start="36" end="44" abstract="false" final="false" static="false" visibility="protected">
+      <docblock>
+        <description compact="Render a view with given template and variables"/>
+        <param type="string" variable="$template"/>
+        <param type="array" variable="$variables"/>
+        <return type="string"/>
+        <throws type="object">
+          <type full="Faulancer\Exception\ServiceNotFoundException" namespace="Faulancer\Exception" name="ServiceNotFoundException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\ConfigInvalidException" namespace="Faulancer\Exception" name="ConfigInvalidException"/>
+        </throws>
+        <throws type="object">
+          <type full="Faulancer\Exception\FileNotFoundException" namespace="Faulancer\Exception" name="FileNotFoundException"/>
+        </throws>
+      </docblock>
+      <return type="string" nullable="false"/>
+      <parameter name="template" byreference="false" type="string" default="''"/>
+      <parameter name="variables" byreference="false" type="array" default=""/>
+    </method>
+    <method name="getServiceLocator" start="51" end="54" abstract="false" final="false" static="false" visibility="public">
+      <docblock>
+        <description compact="Get instance of service locator"/>
+        <return type="object">
+          <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+        </return>
+      </docblock>
+      <return type="object" nullable="false">
+        <type full="Faulancer\ServiceLocator\ServiceLocator" namespace="Faulancer\ServiceLocator" name="ServiceLocator"/>
+      </return>
+    </method>
+  </parent>
+</class>
