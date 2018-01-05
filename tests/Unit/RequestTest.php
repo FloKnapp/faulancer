@@ -2,6 +2,7 @@
 
 namespace Faulancer\Test\Unit;
 
+use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Http\Request;
 use PHPUnit\Framework\TestCase;
 
@@ -16,27 +17,39 @@ class RequestTest extends TestCase
     /** @var Request */
     protected $request;
 
+    /**
+     * Setup for request object
+     */
     public function setUp()
     {
         $this->request = new Request();
     }
 
-    public function testSetgetPath()
+    /**
+     * Test setting and getting path
+     */
+    public function testSetGetPath()
     {
         $this->request->setPath('/stub/test');
 
-        $this->assertTrue(is_string($this->request->getPath()));
-        $this->assertSame('/stub/test', $this->request->getPath());
+        self::assertTrue(is_string($this->request->getPath()));
+        self::assertSame('/stub/test', $this->request->getPath());
     }
 
+    /**
+     * Test setting and getting of method
+     */
     public function testSetGetMethod()
     {
         $this->request->setMethod('POST');
 
-        $this->assertTrue(is_string($this->request->getMethod()));
-        $this->assertSame('POST', $this->request->getMethod());
+        self::assertTrue(is_string($this->request->getMethod()));
+        self::assertSame('POST', $this->request->getMethod());
     }
 
+    /**
+     * Test setting and getting post data
+     */
     public function testGetPostData()
     {
         $_POST['key1'] = 'value1';
@@ -48,18 +61,21 @@ class RequestTest extends TestCase
         $request = new Request();
 
         $request->setMethod('POST');
-        $this->assertTrue($request->isPost());
+        self::assertTrue($request->isPost());
 
         foreach ($request->getPostData() as $key => $value) {
-            $this->assertTrue(is_string($value));
-            $this->assertSame($value, $_POST[$key]);
+            self::assertTrue(is_string($value));
+            self::assertSame($value, $_POST[$key]);
         }
 
         unset($_POST);
 
-        $this->assertEmpty($request->getPostData());
+        self::assertEmpty($request->getPostData());
     }
 
+    /**
+     * Test creating request automatically from given headers
+     */
     public function testCreateFromHeaders()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -69,8 +85,8 @@ class RequestTest extends TestCase
         $request = new Request();
         $request->createFromHeaders();
 
-        $this->assertSame('/stub', $request->getPath());
-        $this->assertSame('POST', $request->getMethod());
+        self::assertSame('/stub', $request->getPath());
+        self::assertSame('POST', $request->getMethod());
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['REQUEST_URI'] = '';
@@ -78,12 +94,15 @@ class RequestTest extends TestCase
         $request = new Request();
         $request->createFromHeaders();
 
-        $this->assertEmpty($request->getPath());
-        $this->assertSame('GET', $request->getMethod());
-        $this->assertTrue($request->isGet());
+        self::assertEmpty($request->getPath());
+        self::assertSame('GET', $request->getMethod());
+        self::assertTrue($request->isGet());
 
     }
 
+    /**
+     * Test query
+     */
     public function testWithQuery()
     {
         $request = new Request();
@@ -91,9 +110,12 @@ class RequestTest extends TestCase
         $_SERVER['REQUEST_URI'] = '/stub?test=tester';
         $request->createFromHeaders();
 
-        $this->assertNotEmpty($request->getQuery());
+        self::assertNotEmpty($request->getQuery());
     }
 
+    /**
+     * Test setting of body content
+     */
     public function testSetGetBody()
     {
         $request = new Request();
@@ -102,6 +124,9 @@ class RequestTest extends TestCase
         self::assertSame(['test' => true], $request->getBody());
     }
 
+    /**
+     * Test setting of post data
+     */
     public function testSetPostData()
     {
         $request = new Request();
@@ -110,6 +135,9 @@ class RequestTest extends TestCase
         self::assertSame(['test' => true], $_POST);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function testGetParam()
     {
         $request = new Request();
@@ -120,5 +148,14 @@ class RequestTest extends TestCase
         self::assertSame('testValue', $request->getParam('testPost'));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function testRetrieveQueryParam()
+    {
+        $request = new Request();
+        $request->setUri('/test?query=true');
 
+        self::assertSame('true', $request->getParam('query'));
+    }
 }

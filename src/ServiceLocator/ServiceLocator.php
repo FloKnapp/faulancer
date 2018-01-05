@@ -48,7 +48,7 @@ class ServiceLocator implements ServiceLocatorInterface {
 
     /**
      * Try to get the service.
-     * Returns per default always a new instance of the service/factory.
+     * Returns per default always the same instance of the service/factory.
      *
      * @param string  $service
      * @param boolean $shared

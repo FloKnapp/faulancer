@@ -1,9 +1,7 @@
 <?php
 
-chdir(__DIR__);
-
 return [
-    'viewsRoot'       => __DIR__ . '/../views',
+    'templateRoot'    => __DIR__ . '/../views',
     'projectRoot'     => __DIR__ . '/..',
     'applicationRoot' => __DIR__ . '/../src',
     'namespacePrefix' => 'Faulancer\Fixture',

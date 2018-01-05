@@ -2,12 +2,16 @@
 
 namespace Faulancer\Test\Integration;
 
+use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\AbstractControllerService;
+use Faulancer\Service\Config;
 use Faulancer\Service\HttpService;
+use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
@@ -70,6 +74,50 @@ class ControllerTest extends TestCase
     public function testRender()
     {
         $this->assertStringStartsWith('Test', $this->controller->render('/stubView.phtml')->getContent());
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     */
+    public function testRenderNonExistentTemplate()
+    {
+        /** @var ResponseService|\PHPUnit_Framework_MockObject_MockObject $response */
+        $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $response->method('setResponseHeader')->will($this->returnValue(true));
+
+        ServiceLocator::instance()->set(ResponseService::class, $response);
+
+        self::assertContains(
+            '/nonexistent.phtml" not found',
+            $this->controller->render('/nonexistent.phtml')->getContent()
+        );
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     * @throws ConfigInvalidException
+     */
+    public function testRenderInvalidConfiguration()
+    {
+        /** @var ResponseService|\PHPUnit_Framework_MockObject_MockObject $response */
+        $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $response->method('setResponseHeader')->will($this->returnValue(true));
+
+        $serviceLocator = ServiceLocator::instance();
+
+        $confFile = require __DIR__ . '/../Fixture/config/app_invalid.conf.php';
+
+        /** @var Config $config */
+        $config = $serviceLocator->get(Config::class);
+        $config->set($confFile, null, true);
+
+        $serviceLocator->set(ResponseService::class, $response);
+        $serviceLocator->set(Config::class, $config);
+
+        /*self::assertContains(
+            '/stubView.phtml" not found',
+            $this->controller->render('/stubView.phtml')->getContent()
+        ); */
     }
 
     /**

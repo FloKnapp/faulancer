@@ -17,6 +17,9 @@ class ResponseTest extends TestCase
     /** @var Response */
     protected $response;
 
+    /**
+     * Set up response object to easily reuse in every test
+     */
     public function setUp()
     {
         $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
@@ -28,11 +31,13 @@ class ResponseTest extends TestCase
     {
         $this->response->setCode(200);
 
-        $this->assertTrue(is_int($this->response->getCode()));
+        self::assertTrue(is_int($this->response->getCode()));
+        self::assertSame(200, $this->response->getCode());
+        self::assertSame('Ok', $this->response->getMessage());
     }
 
     /**
-     *
+     * Test response content
      */
     public function testResponseContent()
     {
@@ -40,13 +45,19 @@ class ResponseTest extends TestCase
         $this->assertSame('TestData', $this->response->getContent());
     }
 
-    public function testResponseHeader()
+    /**
+     * Test response header for status code 404
+     */
+    public function test404ResponseHeader()
     {
         $this->response->setCode(404);
+
+        self::assertSame(404, $this->response->getCode());
+        self::assertSame('Not Found', $this->response->getMessage());
     }
 
     /**
-     *
+     * Test converting from object to string
      */
     public function testToString()
     {
@@ -54,6 +65,18 @@ class ResponseTest extends TestCase
         echo $this->response;
 
         $this->expectOutputString('Test');
+    }
+
+    /**
+     * Test custom status code and message
+     */
+    public function testCustomStatusCodeAndMessage()
+    {
+        $this->response->setCode(42);
+        $this->response->setMessage('Answer Of Everything');
+
+        self::assertSame(42, $this->response->getCode());
+        self::assertSame('Answer Of Everything', $this->response->getMessage());
     }
 
 }

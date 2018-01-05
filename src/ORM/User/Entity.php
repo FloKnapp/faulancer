@@ -1,9 +1,5 @@
 <?php
-/**
- * Class Entity | Entity
- * @package Faulancer\ORM\Entity
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\ORM\User;
 
 use Faulancer\ORM\Entity as BaseEntity;
@@ -18,6 +14,9 @@ use Faulancer\ORM\Entity as BaseEntity;
  * @property string $login
  * @property string $password
  * @property Role[] $roles
+ *
+ * @package Faulancer\ORM\Entity
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Entity extends BaseEntity
 {

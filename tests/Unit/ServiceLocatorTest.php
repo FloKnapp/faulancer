@@ -21,81 +21,128 @@ class ServiceLocatorTest extends TestCase
     /** @var ServiceLocator */
     protected $serviceLocator;
 
+    /**
+     * Setup service locator for reusing
+     */
     public function setUp()
     {
         $this->serviceLocator = ServiceLocator::instance();
     }
 
+    /**
+     * Test if service locator is an instance of service locator
+     */
     public function testInstance()
     {
-        $this->assertInstanceOf(ServiceLocator::class, $this->serviceLocator);
+        self::assertInstanceOf(ServiceLocator::class, $this->serviceLocator);
     }
 
+    /**
+     * Test singleton functionality
+     */
     public function testSameInstance()
     {
-        $this->assertSame(ServiceLocator::instance(), $this->serviceLocator);
+        self::assertSame(ServiceLocator::instance(), $this->serviceLocator);
     }
 
+    /**
+     * Test general retrieving of a service
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testGetService()
     {
         $stubService = $this->serviceLocator->get(StubService::class);
-        $this->assertInstanceOf(StubService::class, $stubService);
-        $this->assertNotEmpty($stubService->getDependency());
-        $this->assertSame('here', $stubService->getDependency());
+        self::assertInstanceOf(StubService::class, $stubService);
+        self::assertNotEmpty($stubService->getDependency());
+        self::assertSame('here', $stubService->getDependency());
     }
-    
+
+    /**
+     * Test getting a factory directly
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testGetServiceFactory()
     {
         $stubFactory = $this->serviceLocator->get(StubServiceFactory::class);
-        $this->assertInstanceOf(StubService::class, $stubFactory);
+        self::assertInstanceOf(StubService::class, $stubFactory);
     }
 
+    /**
+     * Test services for same instance
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testGetSameService()
     {
         $service1 = $this->serviceLocator->get(StubService::class);
         $service2 = $this->serviceLocator->get(StubService::class);
 
-        $this->assertSame($service1, $service2);
+        self::assertSame($service1, $service2);
     }
 
+    /**
+     * Test retrieving a new instance of a service
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testGetNewService()
     {
         $service1 = $this->serviceLocator->get(StubService::class);
         $service2 = $this->serviceLocator->get(StubService::class, false);
 
-        $this->assertNotSame($service1, $service2);
+        self::assertNotSame($service1, $service2);
     }
 
+    /**
+     * Test creating of nonexistent service
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testMissingService()
     {
         $this->expectException(ServiceNotFoundException::class);
         $result = ServiceLocator::instance()->get('NonExistentService');
-        $this->assertNull($result);
+        self::assertNull($result);
     }
 
+    /**
+     * Test creating of service without a factory
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testServiceWithoutFactory()
     {
         $result = ServiceLocator::instance()->get(StubServiceWithoutFactory::class);
-        $this->assertInstanceOf(StubServiceWithoutFactory::class, $result);
+        self::assertInstanceOf(StubServiceWithoutFactory::class, $result);
     }
 
+    /**
+     * Test creating and destroying the service locator
+     */
     public function testCreationAndDestroying()
     {
         $serviceLocator= ServiceLocator::instance();
         ServiceLocator::destroy();
 
-        $this->assertNotSame(ServiceLocator::instance(), $serviceLocator);
+        self::assertNotSame(ServiceLocator::instance(), $serviceLocator);
 
         $serviceLocatorNew = ServiceLocator::instance();
-        $this->assertSame(ServiceLocator::instance(), $serviceLocatorNew);
+        self::assertSame(ServiceLocator::instance(), $serviceLocatorNew);
     }
-    
+
+    /**
+     * Test override of services (for testing purposes)
+     *
+     * @throws ServiceNotFoundException
+     */
     public function testOverrideService()
     {
         /** @var StubService $originalService */
         $originalService = $this->serviceLocator->get(StubService::class);
 
-        $this->assertSame('here', $originalService->getDependency());
+        self::assertSame('here', $originalService->getDependency());
 
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $mock */
         $mock = $this->createPartialMock(StubService::class, ['getDependency']);
@@ -106,11 +153,11 @@ class ServiceLocatorTest extends TestCase
         /** @var StubService $mockedResult */
         $mockedResult = $this->serviceLocator->get(StubService::class);
 
-        $this->assertTrue($mockedResult->getDependency());
+        self::assertTrue($mockedResult->getDependency());
 
         $originalService = $this->serviceLocator->get(StubService::class);
 
-        $this->assertSame('here', $originalService->getDependency());
+        self::assertSame('here', $originalService->getDependency());
     }
 
 }

@@ -2,14 +2,18 @@
 
 namespace Faulancer\Controller;
 
+use Faulancer\Exception\ConfigInvalidException;
+use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Exception\PluginException;
-use Faulancer\Exception\RouteInvalidException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
 use Faulancer\Service\HttpService;
+use Faulancer\Service\ResponseService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\Helper\Route;
@@ -22,8 +26,6 @@ use Faulancer\ServiceLocator\ServiceLocator;
  * @category Controller
  * @package  Faulancer\AbstractController
  * @author   Florian Knapp <office@florianknapp.de>
- * @license  MIT License
- * @link     none
  */
 abstract class AbstractController
 {
@@ -66,6 +68,8 @@ abstract class AbstractController
      * Returns the session manager
      *
      * @return SessionManagerService|ServiceInterface
+     *
+     * @throws ServiceNotFoundException
      */
     public function getSessionManager() :SessionManagerService
     {
@@ -97,6 +101,8 @@ abstract class AbstractController
      * Returns the orm/entity manager
      *
      * @return DbService|ServiceInterface
+     *
+     * @throws ServiceNotFoundException
      */
     public function getDb() :DbService
     {
@@ -110,15 +116,30 @@ abstract class AbstractController
      * @param array  $variables The variables for the template
      *
      * @return Response
+     *
+     * @throws ServiceNotFoundException
      */
     public function render(string $template = '', $variables = []) :Response
     {
-        return new Response(
-            $this->getView()
+        $this->addAssets();
+
+        /** @var Response $response */
+        $response = $this->getServiceLocator()->get(ResponseService::class);
+
+        try {
+
+            $viewResult = $this->getView()
                 ->setTemplate($template)
                 ->setVariables($variables)
-                ->render()
-        );
+                ->render();
+
+        } catch (FileNotFoundException $e) {
+            $viewResult = $e->getMessage();
+        } catch (ConfigInvalidException $e) {
+            $viewResult = $e->getMessage();
+        }
+
+        return $response->setContent($viewResult);
     }
 
     /**
@@ -127,6 +148,8 @@ abstract class AbstractController
      * @param array $roles The corresponding user roles
      *
      * @return bool|null
+     *
+     * @throws ServiceNotFoundException
      */
     public function isPermitted($roles = [])
     {
@@ -142,6 +165,9 @@ abstract class AbstractController
      * @param string $uri The target uri
      *
      * @return bool
+     *
+     * @throws ServiceNotFoundException
+     * @throws InvalidArgumentException
      */
     public function redirect(string $uri) :bool
     {
@@ -157,6 +183,8 @@ abstract class AbstractController
      * @param string $message Content for the flash message
      *
      * @return void
+     *
+     * @throws ServiceNotFoundException
      */
     public function setFlashMessage(string $key, string $message)
     {
@@ -170,6 +198,8 @@ abstract class AbstractController
      * @param string $key The flash message key
      *
      * @return string|null
+     *
+     * @throws ServiceNotFoundException
      */
     public function getFlashMessage(string $key)
     {
@@ -202,48 +232,10 @@ abstract class AbstractController
     }
 
     /**
-     * Magic method for providing a view helper
-     *
-     * @param string $name      The class name
-     * @param array  $arguments Arguments if given
-     *
-     * @return AbstractPlugin
-     * @throws PluginException
-     *
-     * @codeCoverageIgnore Not implemented yet
+     * Add default assets for every action
      */
-    public function __call($name, $arguments)
-    {
-        // Search in core view helpers first
-        $corePlugin = 'Faulancer\Plugin\\' . ucfirst($name);
-
-        if (class_exists($corePlugin)) {
-
-            $class = new $corePlugin;
-            array_unshift($arguments, $this);
-
-            return call_user_func_array($class, $arguments);
-
-        }
-
-        // No core implementations found; search in custom view helpers
-
-        /** @var Config $config */
-        $config = ServiceLocator::instance()->get(Config::class);
-        $namespace = '\\' . $config->get('namespacePrefix');
-
-        $customPlugin = $namespace . '\Plugin\\' . ucfirst($name);
-
-        if (class_exists($customPlugin)) {
-
-            $class = new $customPlugin;
-            array_unshift($arguments, $this);
-
-            return call_user_func_array($class, $arguments);
-
-        }
-
-        throw new PluginException('No plugin for "' . $name . '" found.');
+    protected function addAssets() {
+        // Should be inherited by child classes
     }
 
 }

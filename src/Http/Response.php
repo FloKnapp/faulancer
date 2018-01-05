@@ -45,6 +45,13 @@ class Response extends AbstractHttp
     protected $code = 200;
 
     /**
+     * The status message (default: Ok)
+     *
+     * @var string
+     */
+    protected $message = 'Ok';
+
+    /**
      * The response body
      * @var string
      */
@@ -77,6 +84,32 @@ class Response extends AbstractHttp
     public function getCode() :int
     {
         return $this->code;
+    }
+
+    /**
+     * Get response message
+     *
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        $definedMessage = self::HTTP_STATUS_CODES[$this->getCode()] ?? null;
+
+        if ($definedMessage !== null) {
+            return $definedMessage;
+        }
+
+        return $this->message;
+    }
+
+    /**
+     * Set response message
+     *
+     * @param string $message
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
     }
 
     /**

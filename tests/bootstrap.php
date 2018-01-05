@@ -1,5 +1,7 @@
 <?php
 
+chdir(__DIR__);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $dbManager = \Faulancer\ServiceLocator\ServiceLocator::instance()->get(\Faulancer\Service\DbService::class);

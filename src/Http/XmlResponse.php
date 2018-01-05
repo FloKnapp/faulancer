@@ -71,7 +71,6 @@ class XmlResponse extends Response
     /**
      * @param array $content
      * @return self
-     * @codeCoverageIgnore
      */
     public function setContent($content = [])
     {
@@ -86,12 +85,10 @@ class XmlResponse extends Response
             $doc->appendChild($child);
         }
 
-        $doc->formatOutput = true; // Add whitespace to make easier to read XML
+        $doc->formatOutput = true; // Add line breaks to make it easier to read
         $xml = $doc->saveXML();
 
-        $result = $xml;
-
-        $this->content = $result;
+        $this->content = trim($xml);
         return $this;
     }
 

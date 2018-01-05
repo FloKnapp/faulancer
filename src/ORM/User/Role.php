@@ -1,8 +1,5 @@
 <?php
-/**
- * Class Role | Role* @package Faulancer\Entity
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\ORM\User;
 
 use Faulancer\ORM\Entity as BaseEntity;
@@ -11,6 +8,8 @@ use Faulancer\ORM\Entity as BaseEntity;
  * Class Role
  *
  * @property string $roleName
+ *
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Role extends BaseEntity
 {

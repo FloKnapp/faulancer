@@ -34,7 +34,7 @@ class Config
     {
         if (is_array($key) && $value === null) {
             foreach ($key as $k => $v) {
-                $this->set($k, $v);
+                $this->set($k, $v, $force);
             }
             return true;
         }
