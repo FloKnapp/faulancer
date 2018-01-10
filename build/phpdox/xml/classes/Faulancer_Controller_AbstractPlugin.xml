@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://xml.phpdox.net/src" full="Faulancer\Controller\AbstractPlugin" namespace="Faulancer\Controller" name="AbstractPlugin" abstract="true" final="false" start="11" end="14">
-  <file path="/var/www/vhosts/faulancer/src/Controller" file="AbstractPlugin.php" realpath="/var/www/vhosts/faulancer/src/Controller/AbstractPlugin.php" size="220" time="2017-10-30T22:20:38+00:00" unixtime="1509402038" sha1="f2b00c5f57a86e055cb1d0894a2ca9ffefc8ba38" relative="Controller/AbstractPlugin.php"/>
-  <docblock>
-    <description compact="Class AbstractPlugin | AbstractPlugin.php"/>
-    <package value="Faulancer\ControllerPlugin"/>
-    <author value="Florian Knapp &lt;office@florianknapp.de&gt;"/>
-  </docblock>
-</class>

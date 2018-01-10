@@ -116,17 +116,15 @@ abstract class AbstractController
      * @param array  $variables The variables for the template
      *
      * @return Response
-     *
-     * @throws ServiceNotFoundException
      */
     public function render(string $template = '', $variables = []) :Response
     {
         $this->addAssets();
 
-        /** @var Response $response */
-        $response = $this->getServiceLocator()->get(ResponseService::class);
-
         try {
+
+            /** @var Response $response */
+            $response = $this->getServiceLocator()->get(ResponseService::class);
 
             $viewResult = $this->getView()
                 ->setTemplate($template)
@@ -136,6 +134,9 @@ abstract class AbstractController
         } catch (FileNotFoundException $e) {
             $viewResult = $e->getMessage();
         } catch (ConfigInvalidException $e) {
+            $viewResult = $e->getMessage();
+        } catch (ServiceNotFoundException $e) {
+            $response   = new Response();
             $viewResult = $e->getMessage();
         }
 

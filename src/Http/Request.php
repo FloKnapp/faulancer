@@ -278,8 +278,8 @@ class Request extends AbstractHttp
 
     /**
      * @param string $key
+     *
      * @return mixed
-     * @throws InvalidArgumentException
      */
     public function getParam(string $key)
     {
