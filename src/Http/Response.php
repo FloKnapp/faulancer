@@ -107,7 +107,7 @@ class Response extends AbstractHttp
      *
      * @param string $message
      */
-    public function setMessage(string $message): void
+    public function setMessage(string $message)
     {
         $this->message = $message;
     }
