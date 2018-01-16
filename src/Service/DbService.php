@@ -2,7 +2,7 @@
 
 namespace Faulancer\Service;
 
-use Faulancer\Exception\Exception;
+use Faulancer\Exception\DbException;
 use ORM\EntityFetcher;
 use ORM\EntityManager;
 use Faulancer\ORM\Entity;
@@ -50,7 +50,7 @@ class DbService implements ServiceInterface
      *
      * @return Entity|EntityFetcher
      *
-     * @throws Exception
+     * @throws DbException
      *
      * @codeCoverageIgnore Is covered by tflori/orm
      */
@@ -59,7 +59,7 @@ class DbService implements ServiceInterface
         try {
             return $this->entityManager->fetch($entity, $primaryKey);
         } catch (\Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getFile());
+            throw new DbException($e->getMessage(), $e->getCode(), $e->getFile());
         }
     }
 
