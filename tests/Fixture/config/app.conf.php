@@ -1,7 +1,5 @@
 <?php
 
-chdir(__DIR__);
-
 return [
     'viewsRoot'       => __DIR__ . '/../views',
     'projectRoot'     => __DIR__ . '/..',
