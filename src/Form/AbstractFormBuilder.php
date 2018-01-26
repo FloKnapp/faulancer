@@ -113,12 +113,29 @@ abstract class AbstractFormBuilder
      */
     public function getFormOpen()
     {
+        $unknownAttributes = '';
+        $knownAttributes   = ['action', 'method', 'enctype', 'autocomplete'];
+
         $action       = $this->formAttributes['action'] ?? '';
         $method       = $this->formAttributes['method'] ?? '';
         $enctype      = $this->formAttributes['enctype'] ?? 'application/x-www-form-urlencoded';
         $autocomplete = $this->formAttributes['autocomplete'] ?? 'on';
 
-        return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '" autocomplete="' . $autocomplete . '">';
+        foreach ($this->formAttributes as $attr => $value) {
+
+            if (in_array($attr, $knownAttributes)) {
+                continue;
+            }
+
+            $unknownAttributes .= ' ' . $attr . '="' . $value . '" ';
+
+        }
+
+        if ($unknownAttributes) {
+            $unknownAttributes = substr($unknownAttributes, 0, strlen($unknownAttributes) - 1);
+        }
+
+        return '<form action="' . $action . '" method="' . $method . '" enctype="' . $enctype . '" autocomplete="' . $autocomplete . '"' . $unknownAttributes . '>';
     }
 
     /**
