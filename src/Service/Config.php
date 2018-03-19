@@ -27,8 +27,6 @@ class Config
      * @param boolean $force
      *
      * @return bool
-     *
-     * @throws ConfigInvalidException
      */
     public function set($key, $value = null, $force = false)
     {
@@ -44,7 +42,7 @@ class Config
             return true;
         }
 
-        throw new ConfigInvalidException();
+        return false;
     }
 
     /**
@@ -52,7 +50,6 @@ class Config
      *
      * @param string $key
      * @return mixed
-     * @throws ConfigInvalidException
      */
     public function get($key)
     {
@@ -61,7 +58,7 @@ class Config
         }
 
         if (!isset($this->_config[$key])) {
-            throw new ConfigInvalidException('No value for key "' . $key . '" found.');
+            return null;
         }
 
         return $this->_config[$key];
@@ -96,7 +93,7 @@ class Config
         foreach ($parts as $part) {
 
             if (!isset($result[$part])) {
-                throw new ConfigInvalidException('No value for key "' . $key . '" found.');
+                return null;
             }
 
             $result = $result[$part];

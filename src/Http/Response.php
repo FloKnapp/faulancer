@@ -7,6 +7,9 @@
  */
 namespace Faulancer\Http;
 
+use Faulancer\Service\Config;
+use Faulancer\ServiceLocator\ServiceLocator;
+
 /**
  * Class Response
  */
@@ -137,13 +140,20 @@ class Response extends AbstractHttp
 
     /**
      * @param array $headers
-     * @codeCoverageIgnore Is covered because usage of php built-in function
      */
     public function setResponseHeader(array $headers = [])
     {
+        $serviceLocator = ServiceLocator::instance();
+
+        /** @var Config $config */
+        $config = $serviceLocator->get(Config::class);
+
         $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/2.0';
         header($protocol . ' ' . $this->getCode() . ' ' . self::HTTP_STATUS_CODES[$this->getCode()] . PHP_EOL);
-        header('Strict-Transport-Security: max-age=31536000');
+
+        if ($config->get('HSTSSupport')) {
+            header('Strict-Transport-Security: max-age=31536000');
+        }
 
         if ($headers) {
             foreach ($headers as $name => $value) {

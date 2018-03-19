@@ -61,23 +61,19 @@ class ConfigTest extends TestCase
 
     public function testGetKeyInvalid()
     {
-        $this->expectException(ConfigInvalidException::class);
-
         /** @var Config $config */
         $config = $this->serviceLocator->get(Config::class);
 
-        $config->get('nonExistent');
+        self::assertNull($config->get('nonExistent'));
     }
 
     public function testSetKeyInvalid()
     {
-        $this->expectException(ConfigInvalidException::class);
-
         /** @var Config $config */
         $config = $this->serviceLocator->get(Config::class);
 
-        $config->set('testKey', 'testValue');
-        $config->set('testKey', 'otherValue');
+        self::assertTrue($config->set('testKey', 'testValue'));
+        self::assertFalse($config->set('testKey', 'otherValue'));
     }
 
     public function testSetKeyArray()
@@ -113,11 +109,9 @@ class ConfigTest extends TestCase
 
     public function testGetRecursiveNonExistent()
     {
-        $this->expectException(ConfigInvalidException::class);
-
         /** @var Config $config */
         $config = $this->serviceLocator->get(Config::class);
-        $this->assertEmpty($config->get('recursiveTest:layer:layer2:layerNonExistent'));
+        $this->assertNull($config->get('recursiveTest:layer:layer2:layerNonExistent'));
     }
 
 }

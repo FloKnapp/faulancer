@@ -78,8 +78,6 @@ class TranslatorTest extends TestCase
 
     public function testTranslationDontExists()
     {
-        $this->expectException(ConfigInvalidException::class);
-
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $config->delete('translation');
