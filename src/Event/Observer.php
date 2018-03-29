@@ -3,6 +3,7 @@
 namespace Faulancer\Event;
 
 use Faulancer\Exception\Exception;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -32,23 +33,20 @@ class Observer
      * Yeah... singleton... i know
      *
      * @return self
+     *
+     * @throws ServiceNotFoundException
      */
     public static function instance()
     {
         if (!self::$instance) {
 
-            try {
+            /** @var Config $config */
+            $config = ServiceLocator::instance()->get(Config::class);
+            self::$listener = $config->get('eventListener');
+            self::$instance = new self();
 
-                /** @var Config $config */
-                $config = ServiceLocator::instance()->get(Config::class);
-                self::$listener = $config->get('eventListener');
-                self::$instance = new self();
-
-            } catch (Exception $e) {
-
-                self::$instance = new self();
+            if (!self::$listener) {
                 self::$missingConfig = true;
-
             }
 
         }
