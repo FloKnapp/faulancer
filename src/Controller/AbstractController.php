@@ -219,7 +219,7 @@ abstract class AbstractController
      */
     public function route(string $name, array $parameters = [], $absolute = false)
     {
-        return (new Route())($this->getView(), $name, $parameters, $absolute);
+        return (new Route())($name, $parameters, $absolute);
     }
 
     /**
