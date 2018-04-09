@@ -11,6 +11,7 @@ use Faulancer\Event\Type\OnDispatch;
 use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\IncompatibleResponseException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
@@ -66,9 +67,8 @@ class Dispatcher
      *
      * @return Response|JsonResponse|mixed
      * @throws MethodNotFoundException
-     * @throws ClassNotFoundException
-     * @throws DispatchFailureException
      * @throws IncompatibleResponseException
+     * @throws ServiceNotFoundException
      */
     public function dispatch()
     {
@@ -132,7 +132,8 @@ class Dispatcher
 
     /**
      * @return bool
-     * @codeCoverageIgnore
+     *
+     * @throws ServiceNotFoundException
      */
     private function _setLanguageFromUri()
     {

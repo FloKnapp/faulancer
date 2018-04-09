@@ -1,29 +1,55 @@
 <?php
-/**
- * Class Block | Block.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class Block
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Block extends AbstractViewHelper
 {
 
+    /** @var bool */
+    protected static $tagOpened = false;
+    protected static $content   = '';
+
     /**
      * Block opening handler
      *
-     * @param ViewController $view
-     * @param string         $name
+     * @param string $name
      */
-    public function __invoke(ViewController $view, string $name = '')
+    public function __invoke(string $name = '')
     {
-        ob_start();
+        if (!self::$tagOpened) {
+
+            ob_start(function($buffer) {
+                self::$content = $buffer;
+            });
+
+        } else {
+
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            $this->view->getParentTemplate()->setVariable($name, $content);
+
+            //unset($this->blockName);
+            //unset($this->blockContent);
+
+            self::$tagOpened = false;
+
+        }
+
+        self::$tagOpened = true;
+    }
+
+    public function __destruct()
+    {
+        self::$tagOpened = false;
     }
 
 }

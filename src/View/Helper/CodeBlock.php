@@ -16,13 +16,12 @@ class CodeBlock extends AbstractViewHelper
 {
 
     /**
-     * @param ViewController $view
      * @param                $filename
      * @param int            $actualLine
      * @return string
      * @codeCoverageIgnore
      */
-    public function __invoke(ViewController $view, $filename, $actualLine = 0)
+    public function __invoke($filename, $actualLine = 0)
     {
 
         $lineNr = 0;
@@ -38,13 +37,15 @@ class CodeBlock extends AbstractViewHelper
 
             if ($lineNr >= $actualLine - 6 && $lineNr <= $actualLine + 3) {
 
-                $l = str_replace("\t", $tabChar, $line);
-                $l = str_replace(" ", $regularChar, $l);
+                //$l = str_replace("\t", $tabChar, $line);
+                //$l = str_replace(" ", $regularChar, $l);
+
+                $data = '<span>' . highlight_string($line, true) . '</span>';
 
                 if ($lineNr === $actualLine) {
-                    $lines .= '<span class="line highlight"><span class="line-nr">' . $lineNr . '</span>' . $view->highlighter($l, 'php') . '</span>';
+                    $lines .= '<span class="line highlight"><span class="line-nr">' . $lineNr . '</span>' . $data . '</span>';
                 } else {
-                    $lines .= '<span class="line"><span class="line-nr">' . $lineNr . '</span>' . $view->highlighter($l, 'php') . '</span>';
+                    $lines .= '<span class="line"><span class="line-nr">' . $lineNr . '</span>' . $data . '</span>';
                 }
 
             }

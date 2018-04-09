@@ -2,7 +2,6 @@
 
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
@@ -10,7 +9,6 @@ use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class Route | Route.php
@@ -23,7 +21,6 @@ class Route extends AbstractViewHelper
     /**
      * Get route path by name
      *
-     * @param ViewController $view
      * @param string         $name
      * @param array          $parameters
      * @param bool           $absolute
@@ -32,19 +29,14 @@ class Route extends AbstractViewHelper
      *
      * @throws RouteInvalidException
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
-    public function __invoke(ViewController $view, string $name, array $parameters = [], $absolute = false)
+    public function __invoke(string $name, array $parameters = [], $absolute = false)
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
         $routes = $config->get('routes');
 
-        try {
-            $apiRoutes = $config->get('routes:rest');
-        } catch (ConfigInvalidException $e) {
-            $apiRoutes = [];
-        }
+        $apiRoutes = $config->get('routes:rest') ?? [];
 
         $routes = array_merge($routes, $apiRoutes);
         $path   = '';

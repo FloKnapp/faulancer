@@ -1,9 +1,5 @@
 <?php
-/**
- * Class Link | Link.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\ConfigInvalidException;
@@ -14,10 +10,12 @@ use Faulancer\Service\Config;
 use Faulancer\Service\RequestService;
 use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class Link
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Link extends AbstractViewHelper
 {
@@ -25,23 +23,19 @@ class Link extends AbstractViewHelper
     /**
      * Render a ready-to-use link within an 'a' tag
      *
-     * @param ViewController $view
-     * @param string         $routeName
-     * @param array          $elementAttributes
+     * @param string $routeName
+     * @param array  $elementAttributes
+     * @param array  $parameter
      * @return string
      *
      * @throws RouteInvalidException
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
-     *
-     * @codeCoverageIgnore
      */
-    public function __invoke(ViewController $view, $routeName, $elementAttributes = [])
+    public function __invoke($routeName, $elementAttributes = [], $parameter = [])
     {
         $id    = '';
         $class = '';
         $style = '';
-        $data  = '';
 
         $serviceLocator = $this->getServiceLocator();
 
@@ -80,10 +74,13 @@ class Link extends AbstractViewHelper
             $route['title'] = $translator->translate($route['i18n_key']);
         }
 
-        $link = sprintf($linkPattern, $route['path'], $route['title']);
+        $path = $route['path'];
 
-        return $link;
+        if (strpos($path, '(') !== false) {
+            $path = $this->view->route($routeName, $parameter);
+        }
 
+        return sprintf($linkPattern, $path, $route['title']);
     }
 
 }

@@ -20,7 +20,7 @@ $this->parentTemplate('/layout_debug.phtml'); ?>
     }
     ?>
 
-<?php $this->endBlock('left_content'); ?>
+<?php $this->block('left_content'); ?>
 
 <?php $this->block('content'); ?>
 <div class="inline">
@@ -28,4 +28,4 @@ $this->parentTemplate('/layout_debug.phtml'); ?>
     echo $this->renderView('/raiser.phtml', ['trace' => $trace]);
 ?>
 </div>
-<?php $this->endBlock('content'); ?>
+<?php $this->block('content'); ?>

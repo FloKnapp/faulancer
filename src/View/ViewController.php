@@ -46,7 +46,7 @@ class ViewController
      * Holds the registered view helpers
      * @var array
      */
-    private $viewHelpers = [];
+    //private $viewHelpers = [];
 
     /**
      * Holds the parent template
@@ -264,7 +264,9 @@ class ViewController
 
         $content = ob_get_contents();
 
-        ob_end_clean();
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
 
         Observer::instance()->trigger(new OnPostRender($this));
 
@@ -307,9 +309,11 @@ class ViewController
 
         if (class_exists($customViewHelper)) {
 
+            /** @var AbstractViewHelper $class */
             $class = new $customViewHelper;
+            $class->setView($this);
 
-            $this->viewHelpers[$customViewHelper] = $class;
+            //$this->viewHelpers[$customViewHelper] = $class;
 
             return $this->_callUserFuncArray($class, $arguments);
 
@@ -319,9 +323,11 @@ class ViewController
 
         if (class_exists($coreViewHelper)) {
 
+            /** @var AbstractViewHelper $class */
             $class = new $coreViewHelper;
+            $class->setView($this);
 
-            $this->viewHelpers[$coreViewHelper] = $class;
+            //$this->viewHelpers[$coreViewHelper] = $class;
 
             return $this->_callUserFuncArray($class, $arguments);
 
@@ -340,7 +346,6 @@ class ViewController
      */
     private function _callUserFuncArray($class, $arguments)
     {
-        array_unshift($arguments, $this);
         return call_user_func_array($class, $arguments);
     }
 

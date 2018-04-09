@@ -48,13 +48,12 @@ class Highlighter extends AbstractViewHelper
     ];
 
     /**
-     * @param ViewController $view
-     * @param string         $data
-     * @param string         $language
+     * @param string $data
+     * @param string $language
      * @return mixed|string
      * @codeCoverageIgnore
      */
-    public function __invoke(ViewController $view, $data = '', $language = 'php')
+    public function __invoke($data = '', $language = 'php')
     {
         $data = htmlentities($data, ENT_IGNORE, null, false);
         $data = preg_replace('/(' . implode('\b|\b', self::$keys) . ')/', '<span class="base_keys">$1</span>', $data);

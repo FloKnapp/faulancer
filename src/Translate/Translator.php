@@ -35,7 +35,6 @@ class Translator
      * @param string $language
      *
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
     public function __construct(string $language = 'de')
     {

@@ -1,9 +1,5 @@
 <?php
-/**
- * Class LanguageLink | LanguageLink.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\ConfigInvalidException;
@@ -15,6 +11,9 @@ use Faulancer\View\AbstractViewHelper;
 
 /**
  * Class LanguageLink
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Language extends AbstractViewHelper
 {
@@ -58,7 +57,6 @@ class Language extends AbstractViewHelper
      * @return string
      *
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
     public function getLinks()
     {

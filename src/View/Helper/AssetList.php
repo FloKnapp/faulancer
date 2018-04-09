@@ -25,7 +25,6 @@ class AssetList extends AbstractViewHelper
     /**
      * Render a asset list by type
      *
-     * @param ViewController $view     The current view
      * @param string         $type     The asset type
      * @param bool           $optimize If all assets should be concatenated
      *                                 within style tag in head
@@ -35,7 +34,7 @@ class AssetList extends AbstractViewHelper
      * @throws ServiceNotFoundException
      * @throws ConfigInvalidException
      */
-    public function __invoke(ViewController $view, $type, $optimize = false)
+    public function __invoke($type, $optimize = false)
     {
         $result  = '';
         $pattern = '';
@@ -53,7 +52,7 @@ class AssetList extends AbstractViewHelper
         }
 
         /** @var array $files */
-        $files = $view->getVariable('assets' . ucfirst($type));
+        $files = $this->view->getVariable('assets' . ucfirst($type));
 
         if (empty($files)) {
             return '';
@@ -92,7 +91,6 @@ class AssetList extends AbstractViewHelper
      *
      * @return string
      *
-     * @throws ConfigInvalidException
      * @throws ServiceNotFoundException
      */
     private function _collectAssetsContent(array $files, string $type)

@@ -1,29 +1,30 @@
 <?php
-/**
- * Class FlashMessage | FlashMessagesage.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class FlashMessage
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class FlashMessage extends AbstractViewHelper
 {
 
     /**
-     * @param ViewController $view
-     * @param string         $key
-     * @param string         $type
+     * @param string $key
+     * @param string $type
+     *
      * @return string
+     *
+     * @throws ServiceNotFoundException
      */
-    public function __invoke(ViewController $view, string $key, $type = 'default')
+    public function __invoke(string $key, $type = 'default')
     {
         $result = '';
 

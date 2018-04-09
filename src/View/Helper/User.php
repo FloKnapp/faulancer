@@ -7,10 +7,10 @@ use Faulancer\ORM\Entity;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\SessionManagerService;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
- * Class Entity | UserEntityEntity.php
+ * Class Entity
+ *
  * @package Faulancer\View\Helper
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -23,12 +23,11 @@ class User extends AbstractViewHelper
     /**
      * Initialize
      *
-     * @param ViewController $view
-     * @param string         $entity
+     * @param string $entity
      *
      * @return $this
      */
-    public function __invoke(ViewController $view, string $entity = '')
+    public function __invoke(string $entity = '')
     {
         $this->entity = $entity;
         return $this;

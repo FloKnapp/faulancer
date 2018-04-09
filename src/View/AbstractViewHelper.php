@@ -1,15 +1,7 @@
 <?php
-/**
- * Class AbstractViewHelper
- *
- * @method  __invoke()
- * @package Faulancer\View
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View;
 
-use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\ConstantMissingException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
@@ -17,6 +9,9 @@ use Faulancer\ServiceLocator\ServiceLocator;
 
 /**
  * Class AbstractViewHelper
+ *
+ * @package Faulancer\View
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 abstract class AbstractViewHelper
 {
@@ -33,7 +28,6 @@ abstract class AbstractViewHelper
      * @return string
      *
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      * @throws FileNotFoundException
      */
     protected function renderView($template = '', array $variables = []) :string

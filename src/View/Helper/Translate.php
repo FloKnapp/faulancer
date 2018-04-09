@@ -2,12 +2,13 @@
 
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
- * Class Translate | Translate.php
+ * Class Translate
+ *
  * @package Faulancer\View\Helper
  * @author  Florian Knapp <office@florianknapp.de>
  */
@@ -17,12 +18,13 @@ class Translate extends AbstractViewHelper
     /**
      * Translate a string
      *
-     * @param ViewController $view
-     * @param string         $string
-     * @param array          $value
+     * @param string $string
+     * @param array  $value
      * @return string
+     *
+     * @throws ServiceNotFoundException
      */
-    public function __invoke(ViewController $view, string $string, array $value = [])
+    public function __invoke(string $string, array $value = [])
     {
         $translator = new Translator();
         return $translator->translate($string, $value);

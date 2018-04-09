@@ -1,16 +1,17 @@
 <?php
-/**
- * Class ParentTemplate | ParentTemplate.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
+use Faulancer\Exception\FileNotFoundException;
+use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
 /**
  * Class ParentTemplate
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class ParentTemplate extends AbstractViewHelper
 {
@@ -18,19 +19,21 @@ class ParentTemplate extends AbstractViewHelper
     /**
      * Define the parent template
      *
-     * @param ViewController $view
-     * @param string         $template
+     * @param string $template
+     *
+     * @throws FileNotFoundException
+     * @throws ServiceNotFoundException
      */
-    public function __invoke(ViewController $view, string $template = '')
+    public function __invoke(string $template = '')
     {
         $viewParent = new ViewController();
 
-        if (!empty($view->getTemplatePath())) {
-            $viewParent->setTemplatePath($view->getTemplatePath());
+        if (!empty($this->getView()->getTemplatePath())) {
+            $viewParent->setTemplatePath($this->view->getTemplatePath());
         }
 
         $viewParent->setTemplate($template);
-        $view->setParentTemplate($viewParent);
+        $this->view->setParentTemplate($viewParent);
     }
 
 }

@@ -83,7 +83,6 @@ class Config
      *
      * @param $key
      * @return mixed
-     * @throws ConfigInvalidException
      */
     private function _recursive($key)
     {

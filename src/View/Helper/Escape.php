@@ -3,7 +3,6 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class Escape | Escape.php
@@ -17,12 +16,11 @@ class Escape extends AbstractViewHelper
     /**
      * Gets called within view
      *
-     * @param ViewController $view The view controller
-     * @param string         $data The data which should be escaped
+     * @param string $data The data which should be escaped
      *
      * @return mixed
      */
-    public function __invoke(ViewController $view, string $data)
+    public function __invoke(string $data)
     {
         return $this->escape($data);
     }
