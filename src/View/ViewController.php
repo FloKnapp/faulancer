@@ -5,7 +5,6 @@ namespace Faulancer\View;
 use Faulancer\Event\Observer;
 use Faulancer\Event\Type\OnPostRender;
 use Faulancer\Event\Type\OnRender;
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Exception\ViewHelperException;
@@ -72,7 +71,6 @@ class ViewController
      * @return self
      *
      * @throws FileNotFoundException
-     * @throws ConfigInvalidException
      */
     public function setTemplate(string $template = '')
     {
@@ -252,6 +250,7 @@ class ViewController
      * Render the current view
      *
      * @return string
+     * @throws ServiceNotFoundException
      */
     public function render()
     {
@@ -286,24 +285,23 @@ class ViewController
      *
      * @throws ViewHelperException
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
     public function __call($name, $arguments)
     {
         $coreViewHelper   = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
-        if (!empty($this->viewHelpers[$coreViewHelper])) {
-            return $this->_callUserFuncArray($this->viewHelpers[$coreViewHelper], $arguments);
-        }
+//        if (!empty($this->viewHelpers[$coreViewHelper])) {
+//            return $this->_callUserFuncArray($this->viewHelpers[$coreViewHelper], $arguments);
+//        }
 
         /** @var Config $config */
         $config           = ServiceLocator::instance()->get(Config::class);
         $namespace        = '\\' . $config->get('namespacePrefix');
         $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
 
-        if (!empty($this->viewHelpers[$customViewHelper])) {
-            return $this->_callUserFuncArray($this->viewHelpers[$customViewHelper], $arguments);
-        }
+//        if (!empty($this->viewHelpers[$customViewHelper])) {
+//            return $this->_callUserFuncArray($this->viewHelpers[$customViewHelper], $arguments);
+//        }
 
         // Search in custom view helpers
 

@@ -266,7 +266,12 @@ abstract class AbstractType
      */
     public function addAttribute(string $key, string $value)
     {
-        $this->definition['attributes'][$key] = $value;
+        if (!empty($this->definition['attributes'][$key])) {
+            $this->definition['attributes'][$key] = $this->definition['attributes'][$key] . ' ' . $value;
+        } else {
+            $this->definition['attributes'][$key] = $value;
+        }
+
         return $this;
     }
 
