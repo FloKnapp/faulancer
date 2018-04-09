@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var array $trace
+ * @var array $raiser
+ */
+$this->parentTemplate('/layout_debug.phtml'); ?>
+
+<?php $this->block('left_content'); ?>
+
+    <h2>Stacktrace</h2>
+    <?php
+
+    foreach ($trace as $item) {
+
+        if (empty($item['line']) || empty($item['file']) || empty($item['function'])) {
+            continue;
+        }
+
+        echo $this->renderView('/stacktrace.phtml', ['item' => $item]);
+    }
+    ?>
+
+<?php $this->endBlock('left_content'); ?>
+
+<?php $this->block('content'); ?>
+<div class="inline">
+<?php
+    echo $this->renderView('/raiser.phtml', ['trace' => $trace]);
+?>
+</div>
+<?php $this->endBlock('content'); ?>

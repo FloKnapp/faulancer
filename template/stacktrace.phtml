@@ -1,0 +1,35 @@
+<?php
+/**
+ * @var array $item
+ */
+?>
+
+<?php
+
+if (empty($item['file'])) {
+    $item['file'] = 1;
+}
+if (empty($item['line'])) {
+    $item['line'] = 1;
+}
+?>
+
+<div class="previousStack selected" data-stack-identifier="<?= md5($item['file'].$item['line']); ?>">
+
+    <h3><?= $item['function']; ?></h3>
+
+    <?php
+
+    $text = $item['file'] . '<b>:' . $item['line'] . '</b>';
+
+    if (strlen($text) > 65) {
+        $text = '...' . substr($text, strlen($text) - 65, 65);
+    }
+
+    echo $text;
+
+    ?>
+
+</div>
+
+<hr class="low-margin" />

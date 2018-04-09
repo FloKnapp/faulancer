@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         verbose="true"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+>
+
+    <testsuites>
+
+        <testsuite name="Framework Core Tests">
+            <directory>./tests/</directory>
+        </testsuite>
+
+    </testsuites>
+
+    <filter>
+
+        <blacklist>
+            <directory>./vendor/</directory>
+            <directory>./tests/Fixture</directory>
+        </blacklist>
+
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+    </logging>
+
+</phpunit>

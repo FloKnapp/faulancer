@@ -1,0 +1,184 @@
+@font-face {
+    font-family: "Inconsolata", monospace;
+    src: url("https://fonts.googleapis.com/css?family=Inconsolata");
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #202020;
+    font-family: "Inconsolata", monospace;
+    font-size: 1em;
+    color: #808080;
+}
+
+.content {
+    height: 100%;
+    font-family: "Inconsolata", monospace;
+    font-size: 0.8em;
+    line-height: 1.8em;
+}
+
+.stacktrace {
+    float: left;
+    width: calc(25% - 1px);
+    height: 100%;
+    overflow: auto;
+    border-right: 1px solid #FFF;
+    font-size: 0.9em;
+}
+
+.stacktrace h2 {
+    padding-left: 10px;
+}
+
+.debug {
+    float: right;
+    width: 75%;
+    height: 100%;
+    overflow-y: scroll;
+
+}
+
+.content .inline {
+    padding: 20px;
+}
+
+.arg {
+    color: #AAAAAA;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #AAAAAA;
+    line-height: 1.4em;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #EEE;
+}
+
+h3 {
+    font-size: 1.1em;
+    color: #AAAAAA;
+}
+
+hr {
+    border-top: 1px solid #101010;
+    border-bottom: 1px solid #303030;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    margin: 20px 0;
+    padding: 0;
+}
+
+hr.low-margin {
+    margin: 0;
+}
+
+.sourceField {
+    padding: 10px;
+    background: #181818;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2em;
+    border-bottom: 1px solid #303030;
+}
+
+.codeBlock {
+    padding: 0 10px 10px 10px;
+    background: #151515;
+    margin-top: 0;
+    line-height: 1.4em;
+    border-radius: 0 0 5px 5px;
+}
+
+.serverData {
+    display: table;
+    width: 100%;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+code {
+    font-family: "Courier New", sans-serif;
+    font-size: 1.1em;
+    white-space: pre-line;
+    margin: 0;
+    padding: 0;
+}
+
+code .line-nr {
+    -moz-user-select: none;
+    min-width: 40px;
+    display: inline-block;
+    color: #505050;
+}
+
+code .line {
+    padding: 3px 2px;
+    margin-left: 5px;
+    display: block;
+}
+
+code .line.highlight {
+    background: #303030;
+}
+
+code .line.highlight .line-nr {
+    color: #AAAAAA;
+}
+
+code .base_keys {
+    color: darkorange;
+    font-weight: bold;
+}
+
+code .variable {
+    color: #9A76AA;
+}
+
+code .string_text {
+    color: darkolivegreen;
+}
+
+code .annotation {
+    color: darkolivegreen;
+}
+
+code .methods {
+    color: #FFC66D;
+}
+
+code .constant {
+    color: #9876AA;
+}
+
+.previousStack {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.previousStack h3 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.previousStack.selected,
+.previousStack:hover {
+    background: #191919;
+    transition: background 0.3s;
+}
