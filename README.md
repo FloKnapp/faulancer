@@ -25,11 +25,7 @@ In my opinion there are many positive aspects:
 
 ---
 
-<<<<<<< HEAD
-#Get started
-=======
 # Get started
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
 Navigate to your preferred directory where the application should be 
 installed and enter the following command into console:
 ```bash
@@ -43,24 +39,16 @@ user@machine> composer create-project floknapp/faulancer-kickstart .
 
 ---
 
-<<<<<<< HEAD
-#Overview
-
-###Controllers
-=======
 # Overview
 
 ### Controllers
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
+
 You can define controllers wherever you want. But i strongly suggest to 
 stick with the current directory structure, which provides a simple yet 
 clear overall view about the responsibilities.
 
-<<<<<<< HEAD
-###Services
-=======
 ### Services
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
+
 Everything is a service. For better separation all services are located in 
 the 'Service'-Folder. The services file- and classname should be suffixed 
 with the term 'Service'.
@@ -70,11 +58,7 @@ live within a controller.
 
 Naming example: `RegistrationService`
 
-<<<<<<< HEAD
-###Factories
-=======
 ### Factories
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
 
 The managing ServiceLocator automatically searches for a 'Factory'-Folder 
 within the 'Service'-Folder which is the home for Factories. These 
@@ -85,11 +69,8 @@ with the term 'Factory'.
 
 Naming example: `RegistrationServiceFactory`
 
-<<<<<<< HEAD
-###Views
-=======
 ### Views
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
+
 Views are highly flexible due to template inheritance. You can easily swap 
 the parent layout within the content view. Just take a look at the files 
 '/templates/layout.phtml' and '/templates/pages/index.phtml'. 
@@ -102,11 +83,8 @@ prevents confusion if you got a few more templates there.
 
 Call example (within a controller): `$this->render('/path/to/template.phtml)`
 
-<<<<<<< HEAD
-###Routes
-=======
 ### Routes
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
+
 The route structure is pretty straightforward. You define an array with 
 the name of the route as the key. The value holds (next to the basic options 
 like 'path' and 'action') multiple route specific options like i18n-Keys 
@@ -114,11 +92,8 @@ for automatic language specific link generation or role names to permit
 only logged in users access to that site. Just take a look at the file 
 'routes.conf.php'.
 
-<<<<<<< HEAD
-###ORM and Entities
-=======
 ### ORM and Entities
->>>>>>> 7cbd6fcc91feb05d2cbf5ee1367ba25931541a5b
+
 The Faulancer Framework is based on a third party library from Thomas Flori 
 for simple and fast yet powerful database operations. For further informations 
 and documentation please navigate to [tflori/orm](https://github.com/tflori/orm).
