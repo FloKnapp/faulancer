@@ -349,31 +349,24 @@ abstract class AbstractType
         /** @var SessionManager $sessionManager */
         $sessionManager = $this->_getServiceLocator()->get(SessionManagerService::class);
         $lang           = $sessionManager->get('language');
+        $trans          = $config->get('translation:' . $lang);
 
-        try {
+        if (!empty($trans['form_' . $this->getName()])) {
 
-            $trans = $config->get('translation:' . $lang);
+            $transText = $trans['form_' . $this->getName()];
 
-            if (!empty($trans['form_' . $this->getName()])) {
+            switch ($type) {
 
-                $transText = $trans['form_' . $this->getName()];
+                case 'label':
+                    $this->setLabel($transText);
+                    break;
 
-                switch ($type) {
-
-                    case 'label':
-                        $this->setLabel($transText);
-                        break;
-
-                    case 'placeholder':
-                        $this->definition['attributes']['placeholder'] = $transText;
-                        break;
-
-                }
+                case 'placeholder':
+                    $this->definition['attributes']['placeholder'] = $transText;
+                    break;
 
             }
 
-        } catch (ConfigInvalidException $e) {
-            return false;
         }
 
         return true;

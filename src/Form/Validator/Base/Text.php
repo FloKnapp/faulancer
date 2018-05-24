@@ -36,11 +36,11 @@ class Text extends AbstractValidator
             return true;
         }
 
-        if (!preg_match('/^[a-zA-Z0-9äüöÄÖÜŠĐČĆŽšđčćž\s\/\-_+.,:°;()²³]+$/ui', $data)) {
+        if (!preg_match('/^([a-zA-Z0-9äüöÄÖÜŠĐČĆŽšđčćž\s\/\-_+.,:°;()²³]+)$/ui', $data)) {
             return false;
         }
 
-        return !empty($data) && is_string($data) && !is_numeric($data);
+        return !empty($data) && is_string($data);
     }
 
 }
