@@ -243,8 +243,6 @@ class ViewTest extends TestCase
         $this->assertSame('&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;', $result);
     }
 
-
-
     public function testCustomViewHelper()
     {
         $view = new ViewController();
