@@ -53,7 +53,6 @@ class ServiceLocator implements ServiceLocatorInterface {
      * @param string  $service
      * @param boolean $shared
      * @return ServiceInterface|FactoryInterface
-     * @throws ServiceNotFoundException
      */
     public function get(string $service = '', $shared = true)
     {

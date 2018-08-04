@@ -145,6 +145,49 @@ class ViewTest extends TestCase
 
     }
 
+    public function testEmptyAssets()
+    {
+        $view = new ViewController();
+        $resultCss = $view->assetList('css');
+
+        $this->assertSame('', $resultCss);
+    }
+
+    public function testAssetOutput()
+    {
+        $view = new ViewController();
+
+        $css = [
+            'stylesheet1.css',
+            'stylesheet2.css',
+            'stylesheet3.css',
+            'stylesheet4.css',
+            'stylesheet5.css'
+        ];
+
+        $js = [
+            'script1.js',
+            'script2.js',
+            'script3.js',
+            'script4.js',
+            'script5.js'
+        ];
+
+        foreach ($css as $stylesheet) {
+            $view->addStylesheet($stylesheet);
+        }
+
+        foreach ($js as $javascript) {
+            $view->addScript($javascript);
+        }
+
+        $resultCss = $view->assetList('css', true);
+        $resultJs = $view->assetList('js', true);
+
+        self::assertNotEmpty($resultCss);
+        self::assertNotEmpty($resultJs);
+    }
+
     /**
      * @throws FileNotFoundException
      */
@@ -182,6 +225,24 @@ class ViewTest extends TestCase
         $this->assertInstanceOf(ViewController::class, $view);
         $this->assertSame('LayoutdefaultValue', $content);
     }
+
+    public function testUsingBlockTwice()
+    {
+        $view = new ViewController();
+        $view->setTemplate('/stubBodySameBlock.phtml');
+
+        $this->assertSame('LayoutTestContent', $view->render());
+    }
+
+    public function testEncodeHelper()
+    {
+        $view = new ViewController();
+        $script = '<script>alert("Test");</script>';
+        $result = $view->escape($script);
+
+        $this->assertSame('&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;', $result);
+    }
+
 
 
     public function testCustomViewHelper()
@@ -253,15 +314,6 @@ class ViewTest extends TestCase
 
     }
 
-    public function testAbstractViewHelper()
-    {
-        /** @var AbstractViewHelper $mock */
-        $mock = $this->getMockForAbstractClass(AbstractViewHelper::class);
-        $this->assertSame(ServiceLocator::instance(), $mock->getServiceLocator());
-
-        $this->expectOutputString($mock);
-    }
-
     public function testTranslateHelper()
     {
         $view = new ViewController();
@@ -285,6 +337,12 @@ class ViewTest extends TestCase
     {
         $view = new ViewController();
         $this->assertSame('/stub/test', $view->route('stubStatic', ['test']));
+    }
+
+    public function testGetRouteNameWithQueryParameters()
+    {
+        $view = new ViewController();
+        $this->assertSame('/stub?test=test', $view->route('stubStatic', ['query' => ['test' => 'test']]));
     }
 
     public function testFlashBagViewHelper()

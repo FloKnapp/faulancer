@@ -69,8 +69,6 @@ class ViewController
      *
      * @param string $template
      * @return self
-     *
-     * @throws FileNotFoundException
      */
     public function setTemplate(string $template = '')
     {

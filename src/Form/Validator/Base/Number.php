@@ -28,7 +28,7 @@ class Number extends AbstractValidator
      */
     public function process($data)
     {
-        return preg_match('/(0-9\/-_)/g', $data);
+        return !!preg_match('/([0-9\/-_.]+)/', $data);
     }
 
 }

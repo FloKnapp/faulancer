@@ -114,10 +114,10 @@ class ControllerTest extends TestCase
         $serviceLocator->set(ResponseService::class, $response);
         $serviceLocator->set(Config::class, $config);
 
-        /*self::assertContains(
-            '/stubView.phtml" not found',
-            $this->controller->render('/stubView.phtml')->getContent()
-        ); */
+        self::assertContains(
+            '/stubViewer.phtml" not found',
+            $this->controller->render('/stubViewer.phtml')->getContent()
+        );
     }
 
     /**

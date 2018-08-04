@@ -22,34 +22,34 @@ class FormValidatorTest extends TestCase
 
     public function testText()
     {
-        $this->assertTrue($this->getValidator(Text::class, 'Test'));
-        $this->assertTrue($this->getValidator(Text::class, 'Test12345'));
-        $this->assertFalse($this->getValidator(Text::class, '12345'));
-        $this->assertFalse($this->getValidator(Text::class, ''));
+        self::assertTrue($this->getValidator(Text::class, 'Test'));
+        self::assertTrue($this->getValidator(Text::class, 'Test12345'));
+        self::assertTrue($this->getValidator(Text::class, '12345'));
+        self::assertFalse($this->getValidator(Text::class, ''));
     }
 
     public function testNumber()
     {
-        $this->assertTrue($this->getValidator(Number::class, 12345));
-        $this->assertTrue($this->getValidator(Number::class, 1.5));
-        $this->assertFalse($this->getValidator(Number::class, '12345'));
+        self::assertTrue($this->getValidator(Number::class, 12345));
+        self::assertTrue($this->getValidator(Number::class, 1.5));
+        self::assertTrue($this->getValidator(Number::class, '12345'));
     }
 
     public function testEmail()
     {
-        $this->assertTrue($this->getValidator(Email::class, 'test@test.de'));
-        $this->assertFalse($this->getValidator(Email::class, 'test@test'));
-        $this->assertFalse($this->getValidator(Email::class, ''));
+        self::assertTrue($this->getValidator(Email::class, 'test@test.de'));
+        self::assertFalse($this->getValidator(Email::class, 'test@test'));
+        self::assertFalse($this->getValidator(Email::class, ''));
     }
 
     public function testDateTime()
     {
-        $this->assertTrue($this->getValidator(DateTime::class, '2016-06-22'));
-        $this->assertTrue($this->getValidator(DateTime::class, '22.06.2016'));
-        $this->assertTrue($this->getValidator(DateTime::class, '22.06.2016 00:01'));
-        $this->assertFalse($this->getValidator(DateTime::class, '2016-22-06'));
-        $this->assertFalse($this->getValidator(DateTime::class, '2'));
-        $this->assertFalse($this->getValidator(DateTime::class, '22:299'));
+        self::assertTrue($this->getValidator(DateTime::class, '2016-06-22'));
+        self::assertTrue($this->getValidator(DateTime::class, '22.06.2016'));
+        self::assertTrue($this->getValidator(DateTime::class, '22.06.2016 00:01'));
+        self::assertFalse($this->getValidator(DateTime::class, '2016-22-06'));
+        self::assertFalse($this->getValidator(DateTime::class, '2'));
+        self::assertFalse($this->getValidator(DateTime::class, '22:299'));
     }
 
     public function testImage()
@@ -58,8 +58,8 @@ class FormValidatorTest extends TestCase
         $config = ServiceLocator::instance()->get(Config::class);
         $publicPath = $config->get('projectRoot') . '/public';
 
-        $this->assertTrue($this->getValidator(Image::class, $publicPath . '/images/img.jpg'));
-        $this->assertFalse($this->getValidator(Image::class, $publicPath . '/images/imgNotExistent.jpg'));
+        self::assertTrue($this->getValidator(Image::class, $publicPath . '/images/img.jpg'));
+        self::assertFalse($this->getValidator(Image::class, $publicPath . '/images/imgNotExistent.jpg'));
     }
 
     /**

@@ -37,9 +37,6 @@ class Block extends AbstractViewHelper
 
             $this->view->getParentTemplate()->setVariable($name, $content);
 
-            //unset($this->blockName);
-            //unset($this->blockContent);
-
             self::$tagOpened = false;
 
         }
