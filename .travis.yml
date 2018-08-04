@@ -13,7 +13,7 @@ matrix:
 
 before_script:
   - composer install --no-interaction
-  - composer require satooshi/php-coveralls:~0.6@stable
+  - composer require satooshi/php-coveralls:~2.0@stable
   - mkdir -p build/logs
 
 script:
