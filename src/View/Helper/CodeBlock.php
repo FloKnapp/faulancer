@@ -1,16 +1,14 @@
 <?php
-/**
- * Class CodeBlock | CodeBlock.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
- * Class CodeBlock
+ * Class CodeBlock | CodeBlock.php
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class CodeBlock extends AbstractViewHelper
 {
@@ -37,8 +35,8 @@ class CodeBlock extends AbstractViewHelper
 
             if ($lineNr >= $actualLine - 6 && $lineNr <= $actualLine + 3) {
 
-                //$l = str_replace("\t", $tabChar, $line);
-                //$l = str_replace(" ", $regularChar, $l);
+                $l = str_replace("\t", $tabChar, $line);
+                $l = str_replace(" ", $regularChar, $l);
 
                 $data = '<span>' . highlight_string($line, true) . '</span>';
 

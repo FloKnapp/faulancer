@@ -2,16 +2,15 @@
 
 namespace Faulancer\Fixture\Controller;
 
-use Faulancer\Controller\AbstractController;
+use Faulancer\Controller\Controller;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\Service\ResponseService;
 
 /**
  * Class DummyController
  * @author Florian Knapp <office@florianknapp.de>
  */
-class DummyController extends AbstractController
+class DummyController extends Controller
 {
 
     /** @var Response  */
@@ -24,7 +23,7 @@ class DummyController extends AbstractController
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->response = $this->getServiceLocator()->get(ResponseService::class);
+        $this->response = $this->getServiceLocator()->get(Response::class);
     }
 
     /**

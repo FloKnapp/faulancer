@@ -3,7 +3,6 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Security\Csrf;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +23,7 @@ class CsrfTokenTest extends TestCase
      */
     public function setUp()
     {
-        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManager::class);
     }
 
     /**

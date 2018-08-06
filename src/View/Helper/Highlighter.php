@@ -1,16 +1,14 @@
 <?php
-/**
- * Class Highlighter | Highlighter.php
- * @package Faulancer\View\Helper
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\View\Helper;
 
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
- * Class Highlighter
+ * Class Highlighter | Highlighter.php
+ *
+ * @package Faulancer\View\Helper
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class Highlighter extends AbstractViewHelper
 {

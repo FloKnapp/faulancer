@@ -2,10 +2,9 @@
 
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\ORM\Entity;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\SessionManagerService;
+use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
 /**
@@ -37,18 +36,16 @@ class User extends AbstractViewHelper
      * Check if user is logged in
      *
      * @return bool
-     * @throws ServiceNotFoundException
      */
     public function isLoggedIn()
     {
-        return $this->getServiceLocator()->get(SessionManagerService::class)->get('user') > 0;
+        return $this->getServiceLocator()->get(SessionManager::class)->get('user') > 0;
     }
 
     /**
      * Get user entity
      *
      * @return Entity
-     * @throws ServiceNotFoundException
      */
     public function get()
     {
@@ -63,7 +60,6 @@ class User extends AbstractViewHelper
      * @param array $roles
      *
      * @return bool
-     * @throws ServiceNotFoundException
      */
     public function isPermitted(array $roles)
     {

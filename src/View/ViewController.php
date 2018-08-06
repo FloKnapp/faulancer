@@ -56,8 +56,6 @@ class ViewController
 
     /**
      * ViewController constructor.
-     *
-     * @throws ServiceNotFoundException
      */
     public function __construct()
     {
@@ -69,6 +67,8 @@ class ViewController
      *
      * @param string $template
      * @return self
+     *
+     * @throws FileNotFoundException
      */
     public function setTemplate(string $template = '')
     {
@@ -284,24 +284,15 @@ class ViewController
      * @return AbstractViewHelper
      *
      * @throws ViewHelperException
-     * @throws ServiceNotFoundException
      */
     public function __call($name, $arguments)
     {
         $coreViewHelper   = __NAMESPACE__ . '\Helper\\' . ucfirst($name);
 
-//        if (!empty($this->viewHelpers[$coreViewHelper])) {
-//            return $this->_callUserFuncArray($this->viewHelpers[$coreViewHelper], $arguments);
-//        }
-
         /** @var Config $config */
         $config           = ServiceLocator::instance()->get(Config::class);
         $namespace        = '\\' . $config->get('namespacePrefix');
         $customViewHelper = $namespace . '\\View\\Helper\\' . ucfirst($name);
-
-//        if (!empty($this->viewHelpers[$customViewHelper])) {
-//            return $this->_callUserFuncArray($this->viewHelpers[$customViewHelper], $arguments);
-//        }
 
         // Search in custom view helpers
 
@@ -310,8 +301,6 @@ class ViewController
             /** @var AbstractViewHelper $class */
             $class = new $customViewHelper;
             $class->setView($this);
-
-            //$this->viewHelpers[$customViewHelper] = $class;
 
             return $this->_callUserFuncArray($class, $arguments);
 
@@ -324,8 +313,6 @@ class ViewController
             /** @var AbstractViewHelper $class */
             $class = new $coreViewHelper;
             $class->setView($this);
-
-            //$this->viewHelpers[$coreViewHelper] = $class;
 
             return $this->_callUserFuncArray($class, $arguments);
 

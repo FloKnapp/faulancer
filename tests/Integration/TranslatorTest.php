@@ -2,10 +2,9 @@
 
 namespace Faulancer\Test\Integration;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Service\Config;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 use Faulancer\Translate\Translator;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class TranslatorTest extends TestCase
 {
 
-    /** @var SessionManagerService */
+    /** @var SessionManager */
     protected $sessionManager;
 
     /** @var array */
@@ -24,7 +23,7 @@ class TranslatorTest extends TestCase
 
     public function setUp()
     {
-        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManager::class);
         $this->backupTrans    = ServiceLocator::instance()->get(Config::class)->get('translation');
     }
 

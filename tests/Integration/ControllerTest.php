@@ -2,16 +2,15 @@
 
 namespace Faulancer\Test\Integration;
 
+use Faulancer\Controller\Controller;
 use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\AbstractControllerService;
 use Faulancer\Service\Config;
-use Faulancer\Service\HttpService;
-use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
@@ -26,13 +25,13 @@ use PHPUnit\Framework\TestCase;
 class ControllerTest extends TestCase
 {
 
-    /** @var AbstractControllerService */
+    /** @var Controller */
     protected $controller;
 
     public function setUp()
     {
         $serviceLocator   = ServiceLocator::instance();
-        $this->controller = $serviceLocator->get(AbstractControllerService::class);
+        $this->controller = $serviceLocator->get(Controller::class);
     }
 
     /**
@@ -81,11 +80,11 @@ class ControllerTest extends TestCase
      */
     public function testRenderNonExistentTemplate()
     {
-        /** @var ResponseService|\PHPUnit_Framework_MockObject_MockObject $response */
-        $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        /** @var Response|\PHPUnit_Framework_MockObject_MockObject $response */
+        $response = $this->createPartialMock(Response::class, ['setResponseHeader']);
         $response->method('setResponseHeader')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set(ResponseService::class, $response);
+        ServiceLocator::instance()->set(Response::class, $response);
 
         self::assertContains(
             '/nonexistent.phtml" not found',
@@ -99,8 +98,8 @@ class ControllerTest extends TestCase
      */
     public function testRenderInvalidConfiguration()
     {
-        /** @var ResponseService|\PHPUnit_Framework_MockObject_MockObject $response */
-        $response = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        /** @var Response|\PHPUnit_Framework_MockObject_MockObject $response */
+        $response = $this->createPartialMock(Response::class, ['setResponseHeader']);
         $response->method('setResponseHeader')->will($this->returnValue(true));
 
         $serviceLocator = ServiceLocator::instance();
@@ -111,7 +110,7 @@ class ControllerTest extends TestCase
         $config = $serviceLocator->get(Config::class);
         $config->set($confFile, null, true);
 
-        $serviceLocator->set(ResponseService::class, $response);
+        $serviceLocator->set(Response::class, $response);
         $serviceLocator->set(Config::class, $config);
 
         self::assertContains(
@@ -125,11 +124,11 @@ class ControllerTest extends TestCase
      */
     public function testRedirect()
     {
-        /** @var HttpService|\PHPUnit_Framework_MockObject_MockObject $uriMock */
+        /** @var Http|\PHPUnit_Framework_MockObject_MockObject $uriMock */
         $uriMock = $this->createPartialMock(Http::class, ['terminate']);
         $uriMock->method('terminate')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('HttpService', $uriMock);
+        ServiceLocator::instance()->set('\Faulancer\Http\Http', $uriMock);
 
         $result = $this->controller->redirect('/test');
 

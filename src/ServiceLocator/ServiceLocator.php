@@ -51,10 +51,10 @@ class ServiceLocator implements ServiceLocatorInterface {
      * Returns per default always the same instance of the service/factory.
      *
      * @param string  $service
-     * @param boolean $shared
+     * @param bool    $shared
      * @return ServiceInterface|FactoryInterface
      */
-    public function get(string $service = '', $shared = true)
+    public function get(string $service = '', bool $shared = true)
     {
         if (in_array($service, array_keys(self::$backup))) {
 

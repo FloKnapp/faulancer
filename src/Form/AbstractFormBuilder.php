@@ -9,7 +9,6 @@ use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
-use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
 
@@ -269,7 +268,7 @@ abstract class AbstractFormBuilder
         }
 
         /** @var Request $request */
-        $request  = ServiceLocator::instance()->get(RequestService::class);
+        $request  = ServiceLocator::instance()->get(Request::class);
         $postData = $request->getPostData();
 
         if ($request->isPost() && !empty($postData[$name])) {

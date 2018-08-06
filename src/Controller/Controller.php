@@ -2,19 +2,15 @@
 
 namespace Faulancer\Controller;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\InvalidArgumentException;
-use Faulancer\Exception\PluginException;
 use Faulancer\Exception\ServiceNotFoundException;
+use Faulancer\Http\Http;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\Config;
 use Faulancer\Service\DbService;
-use Faulancer\Service\HttpService;
-use Faulancer\Service\ResponseService;
-use Faulancer\Service\SessionManagerService;
+use Faulancer\Session\SessionManager;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\View\Helper\Route;
 use Faulancer\View\ViewController;
@@ -27,7 +23,7 @@ use Faulancer\ServiceLocator\ServiceLocator;
  * @package  Faulancer\AbstractController
  * @author   Florian Knapp <office@florianknapp.de>
  */
-abstract class AbstractController
+class Controller
 {
 
     /**
@@ -67,13 +63,11 @@ abstract class AbstractController
     /**
      * Returns the session manager
      *
-     * @return SessionManagerService|ServiceInterface
-     *
-     * @throws ServiceNotFoundException
+     * @return SessionManager|ServiceInterface
      */
-    public function getSessionManager() :SessionManagerService
+    public function getSessionManager() :SessionManager
     {
-        return $this->getServiceLocator()->get(SessionManagerService::class);
+        return $this->getServiceLocator()->get(SessionManager::class);
     }
 
     /**
@@ -101,8 +95,6 @@ abstract class AbstractController
      * Returns the orm/entity manager
      *
      * @return DbService|ServiceInterface
-     *
-     * @throws ServiceNotFoundException
      */
     public function getDb() :DbService
     {
@@ -124,7 +116,7 @@ abstract class AbstractController
         try {
 
             /** @var Response $response */
-            $response = $this->getServiceLocator()->get(ResponseService::class);
+            $response = $this->getServiceLocator()->get(Response::class);
 
             $viewResult = $this->getView()
                 ->setTemplate($template)
@@ -132,8 +124,6 @@ abstract class AbstractController
                 ->render();
 
         } catch (FileNotFoundException $e) {
-            $viewResult = $e->getMessage();
-        } catch (ConfigInvalidException $e) {
             $viewResult = $e->getMessage();
         } catch (ServiceNotFoundException $e) {
             $response   = new Response();
@@ -149,8 +139,6 @@ abstract class AbstractController
      * @param array $roles The corresponding user roles
      *
      * @return bool|null
-     *
-     * @throws ServiceNotFoundException
      */
     public function isPermitted($roles = [])
     {
@@ -167,13 +155,12 @@ abstract class AbstractController
      *
      * @return bool
      *
-     * @throws ServiceNotFoundException
      * @throws InvalidArgumentException
      */
     public function redirect(string $uri) :bool
     {
-        /** @var HttpService $httpService */
-        $httpService = $this->getServiceLocator()->get(HttpService::class);
+        /** @var Http $httpService */
+        $httpService = $this->getServiceLocator()->get(Http::class);
         return $httpService->redirect($uri);
     }
 
@@ -184,8 +171,6 @@ abstract class AbstractController
      * @param string $message Content for the flash message
      *
      * @return void
-     *
-     * @throws ServiceNotFoundException
      */
     public function setFlashMessage(string $key, string $message)
     {
@@ -199,8 +184,6 @@ abstract class AbstractController
      * @param string $key The flash message key
      *
      * @return string|null
-     *
-     * @throws ServiceNotFoundException
      */
     public function getFlashMessage(string $key)
     {

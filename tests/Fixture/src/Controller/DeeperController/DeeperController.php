@@ -2,14 +2,14 @@
 
 namespace Faulancer\Fixture\Controller\DeeperController;
 
-use Faulancer\Controller\AbstractController;
+use Faulancer\Controller\Controller;
 
 /**
  * File DeeperController.php
  *
  * @author Florian Knapp <office@florianknapp.de>
  */
-class DeeperController extends AbstractController
+class DeeperController extends Controller
 {
 
 }

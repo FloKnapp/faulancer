@@ -2,8 +2,6 @@
 
 namespace Faulancer\Service;
 
-use Faulancer\Exception\ConfigInvalidException;
-
 /**
  * Represents a configuration array
  *

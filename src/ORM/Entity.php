@@ -2,8 +2,7 @@
 
 namespace Faulancer\ORM;
 
-use Faulancer\Exception\ServiceNotFoundException;
-use Faulancer\Service\AbstractControllerService;
+use Faulancer\Controller\Controller;
 use Faulancer\ServiceLocator\ServiceLocator;
 use ORM\EntityManager;
 use ORM\Exception\IncompletePrimaryKey;
@@ -58,7 +57,6 @@ abstract class Entity extends \ORM\Entity
      * @throws InvalidName
      * @throws NoEntityManager
      * @throws IncompletePrimaryKey
-     * @throws ServiceNotFoundException
      */
     public function save(EntityManager $dbManager = null, $redirectOnDup = false)
     {
@@ -76,9 +74,9 @@ abstract class Entity extends \ORM\Entity
 
                 if ($redirectOnDup) {
 
-                    /** @var AbstractControllerService $controller */
+                    /** @var Controller $controller */
                     $controller = ServiceLocator::instance()->get(
-                        AbstractControllerService::class
+                        Controller::class
                     );
 
                     $uri = $controller->getRequest()->getPath();

@@ -2,11 +2,9 @@
 
 namespace Faulancer\Translate;
 
-use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Translator | Translator.php
@@ -33,16 +31,14 @@ class Translator
      * Translator constructor.
      *
      * @param string $language
-     *
-     * @throws ServiceNotFoundException
      */
     public function __construct(string $language = 'de')
     {
         /** @var Config $config */
         $config = ServiceLocator::instance()->get(Config::class);
 
-        /** @var SessionManagerService $sessionManager */
-        $sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        /** @var SessionManager $sessionManager */
+        $sessionManager = ServiceLocator::instance()->get(SessionManager::class);
 
         $this->language    = $language;
         $this->translation = $config->get('translation');

@@ -2,10 +2,8 @@
 
 namespace Faulancer\Log;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\LogFileInvalidException;
 use Faulancer\Exception\LogTypeNotSupportedException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\Log\Writer\DefaultWriter;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -66,8 +64,9 @@ class LogManager
      *
      * @return bool
      *
-     * @throws ServiceNotFoundException
      * @throws LogTypeNotSupportedException
+     * @throws LogTypeNotSupportedException
+     * @throws LogFileInvalidException
      */
     public static function log(string $message = '', string $level = self::LEVEL_INFO, string $writer = '')
     {
@@ -94,8 +93,6 @@ class LogManager
      *
      * @throws LogTypeNotSupportedException
      * @throws LogFileInvalidException
-     * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
     private static function _checkConsistency()
     {

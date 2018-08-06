@@ -9,12 +9,12 @@ namespace Integration;
 use Faulancer\Fixture\Entity\RoleAnonymousEntity;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
+use Faulancer\Http\Http;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\HttpService;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,22 +26,22 @@ class AuthenticatorServiceTest extends TestCase
     /** @var AuthenticatorService */
     protected $authenticator;
 
-    /** @var SessionManagerService */
+    /** @var SessionManager */
     protected $sessionManager;
 
     public function setUp()
     {
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $httpMock */
-        $httpMock = $this->createPartialMock(HttpService::class, ['triggerRedirect']);
+        $httpMock = $this->createPartialMock(Http::class, ['triggerRedirect']);
         $httpMock->method('triggerRedirect')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('Faulancer\Service\HttpService', $httpMock);
+        ServiceLocator::instance()->set('Faulancer\Http\Http', $httpMock);
 
         /** @var AuthenticatorService $authenticator */
         $this->authenticator = ServiceLocator::instance()->get(AuthenticatorService::class);
 
-        /** @var SessionManagerService sessionManager */
-        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        /** @var SessionManager sessionManager */
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManager::class);
     }
 
     public function testRedirectToAuthentication()

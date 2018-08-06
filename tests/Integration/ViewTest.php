@@ -2,16 +2,14 @@
 
 namespace Faulancer\Test\Integration;
 
-use Faulancer\Exception\ClassNotFoundException;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ViewHelperException;
 use Faulancer\Fixture\Entity\RoleAuthorEntity;
 use Faulancer\Fixture\Entity\UserEntity;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Service\AuthenticatorService;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
-use Faulancer\View\AbstractViewHelper;
+use Faulancer\Session\SessionManager;
 use Faulancer\View\ViewController;
 use PHPUnit\Framework\TestCase;
 
@@ -23,12 +21,12 @@ use PHPUnit\Framework\TestCase;
 class ViewTest extends TestCase
 {
 
-    /** @var SessionManagerService */
+    /** @var SessionManager */
     protected $sessionManager;
 
     public function setUp()
     {
-        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManager::class);
     }
 
     public function testViewSetTemplate()

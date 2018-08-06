@@ -2,8 +2,6 @@
 
 namespace Faulancer\Event;
 
-use Faulancer\Exception\Exception;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 
@@ -33,8 +31,6 @@ class Observer
      * Yeah... singleton... i know
      *
      * @return self
-     *
-     * @throws ServiceNotFoundException
      */
     public static function instance()
     {

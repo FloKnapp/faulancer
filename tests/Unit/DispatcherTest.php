@@ -9,11 +9,8 @@ use Faulancer\Http\Http;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
-use Faulancer\ORM\User\Entity;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
-use Faulancer\Service\JsonResponseService;
-use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
@@ -34,15 +31,15 @@ class DispatcherTest extends TestCase
         unset($_POST);
 
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $responseMock */
-        $responseMock = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $responseMock = $this->createPartialMock(Response::class, ['setResponseHeader']);
         $responseMock->method('setResponseHeader')->will($this->returnValue(true));
 
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $jsonResponseMock */
-        $jsonResponseMock = $this->createPartialMock(JsonResponseService::class, ['setResponseHeader']);
+        $jsonResponseMock = $this->createPartialMock(JsonResponse::class, ['setResponseHeader']);
         $jsonResponseMock->method('setResponseHeader')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('Faulancer\Service\ResponseService', $responseMock);
-        ServiceLocator::instance()->set('Faulancer\Service\JsonResponseService', $jsonResponseMock);
+        ServiceLocator::instance()->set('Faulancer\Http\Response', $responseMock);
+        ServiceLocator::instance()->set('Faulancer\Http\JsonResponse', $jsonResponseMock);
 
         /** @var Config $config */
         $this->config = ServiceLocator::instance()->get(Config::class);

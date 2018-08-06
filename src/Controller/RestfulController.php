@@ -14,7 +14,7 @@ use Faulancer\Http\JsonResponse;
  * @link     Currently no information
  * @codeCoverageIgnore
  */
-abstract class AbstractRestfulController extends AbstractController
+class RestfulController extends Controller
 {
 
     /**

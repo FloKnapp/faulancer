@@ -1,15 +1,12 @@
 <?php
-/**
- * Interface ServiceLocatorAwareInterface | ServiceLocatorAwareInterface.php
- * @package Faulancer\ServiceLocator
- * @author  Florian Knapp <office@florianknapp.de>
- */
 
 namespace Faulancer\ServiceLocator;
 
 /**
- * Interface ServiceLocatorAwareInterface
+ * Interface ServiceLocatorAwareInterface | ServiceLocatorAwareInterface.php
+ *
  * @package Faulancer\ServiceLocator
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 interface ServiceLocatorAwareInterface
 {

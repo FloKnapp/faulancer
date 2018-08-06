@@ -3,10 +3,8 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\RouteInvalidException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\Service\RequestService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\View\AbstractViewHelper;
 
@@ -28,7 +26,6 @@ class Route extends AbstractViewHelper
      * @return string
      *
      * @throws RouteInvalidException
-     * @throws ServiceNotFoundException
      */
     public function __invoke(string $name, array $parameters = [], $absolute = false)
     {
@@ -71,7 +68,7 @@ class Route extends AbstractViewHelper
         if ($absolute) {
 
             /** @var Request $request */
-            $request = $this->getServiceLocator()->get(RequestService::class);
+            $request = $this->getServiceLocator()->get(Request::class);
 
             $path = $request->getScheme()
                 . $request->getHost()

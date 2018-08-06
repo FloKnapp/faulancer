@@ -1,13 +1,11 @@
 <?php
+
+namespace Faulancer\Mail;
+
 /**
  * Class Mailer | Mailer.php
  * @package Faulancer\Mail
  * @author  Florian Knapp <office@florianknapp.de>
- */
-namespace Faulancer\Mail;
-
-/**
- * Class Mailer
  *
  * +--Example usage:
  * |
@@ -131,7 +129,7 @@ class Mailer
      * @param string $path
      * @param bool   $inline
      */
-    public function addAttachment(string $name = '', string $path, bool $inline = false)
+    public function addAttachment(string $name, string $path, bool $inline = false)
     {
         $this->attachment[] = [
             'name'     => $name,

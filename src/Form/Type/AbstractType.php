@@ -2,15 +2,11 @@
 
 namespace Faulancer\Form\Type;
 
-use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Validator\AbstractValidator;
+use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\Service\RequestService;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
-use Faulancer\ServiceLocator\ServiceLocatorAwareInterface;
 use Faulancer\ServiceLocator\ServiceLocatorInterface;
 use Faulancer\Session\SessionManager;
 
@@ -277,12 +273,10 @@ abstract class AbstractType
 
     /**
      * @return bool
-     *
-     * @throws ServiceNotFoundException
      */
     protected function isPost() :bool
     {
-        return ServiceLocator::instance()->get(RequestService::class)->isPost();
+        return ServiceLocator::instance()->get(Request::class)->isPost();
     }
 
     /**
@@ -347,7 +341,7 @@ abstract class AbstractType
         $config = $this->_getServiceLocator()->get(Config::class);
 
         /** @var SessionManager $sessionManager */
-        $sessionManager = $this->_getServiceLocator()->get(SessionManagerService::class);
+        $sessionManager = $this->_getServiceLocator()->get(SessionManager::class);
         $lang           = $sessionManager->get('language');
         $trans          = $config->get('translation:' . $lang);
 

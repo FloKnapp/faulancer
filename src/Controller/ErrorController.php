@@ -15,7 +15,7 @@ use Faulancer\Service\Config;
  * @license  MIT License
  * @link     not provided
  */
-class ErrorController extends AbstractController
+class ErrorController extends Controller
 {
 
     /**

@@ -3,9 +3,9 @@
 namespace Faulancer\Test\Integration;
 
 use Faulancer\Http\Request;
+use Faulancer\Http\Response;
 use Faulancer\Kernel;
 use Faulancer\Service\Config;
-use Faulancer\Service\ResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
 use PHPUnit\Framework\TestCase;
@@ -60,10 +60,10 @@ class KernelTest extends TestCase
         $config = ServiceLocator::instance()->get(Config::class);
 
         /** @var ServiceInterface|\PHPUnit_Framework_MockObject_MockObject $responseMock */
-        $responseMock = $this->createPartialMock(ResponseService::class, ['setResponseHeader']);
+        $responseMock = $this->createPartialMock(Response::class, ['setResponseHeader']);
         $responseMock->method('setResponseHeader')->will($this->returnValue(true));
 
-        ServiceLocator::instance()->set('Faulancer\Service\ResponseService', $responseMock);
+        ServiceLocator::instance()->set('Faulancer\Http\Response', $responseMock);
 
         $request = new Request();
         $request->setMethod('GET');

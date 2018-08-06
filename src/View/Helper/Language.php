@@ -2,10 +2,7 @@
 
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ConfigInvalidException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Service\Config;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\Session\SessionManager;
 use Faulancer\View\AbstractViewHelper;
 
@@ -37,13 +34,11 @@ class Language extends AbstractViewHelper
     /**
      * @param bool $codeOnly
      * @return string
-     *
-     * @throws ServiceNotFoundException
      */
     public function getCurrent($codeOnly = true)
     {
         /** @var SessionManager $sessionManager */
-        $sessionManager = $this->getServiceLocator()->get(SessionManagerService::class);
+        $sessionManager = $this->getServiceLocator()->get(SessionManager::class);
         $code           = $sessionManager->get('language') ?? 'de';
 
         if ($codeOnly) {
@@ -55,8 +50,6 @@ class Language extends AbstractViewHelper
 
     /**
      * @return string
-     *
-     * @throws ServiceNotFoundException
      */
     public function getLinks()
     {

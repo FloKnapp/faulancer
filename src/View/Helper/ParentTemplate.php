@@ -3,7 +3,6 @@
 namespace Faulancer\View\Helper;
 
 use Faulancer\Exception\FileNotFoundException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\View\AbstractViewHelper;
 use Faulancer\View\ViewController;
 
@@ -22,7 +21,6 @@ class ParentTemplate extends AbstractViewHelper
      * @param string $template
      *
      * @throws FileNotFoundException
-     * @throws ServiceNotFoundException
      */
     public function __invoke(string $template = '')
     {

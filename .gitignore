@@ -3,5 +3,5 @@ composer.phar
 
 build/logs/*
 tests/Fixture/cache/*
-vendor/*
+vendor/
 .idea/

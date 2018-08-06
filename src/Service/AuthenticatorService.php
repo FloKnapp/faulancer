@@ -1,25 +1,23 @@
 <?php
-/**
- * Class AuthenticatorService | AuthenticatorService.php
- * @package Faulancer\Service
- * @author  Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Service;
 
-use Faulancer\Controller\AbstractController;
+use Faulancer\Controller\Controller;
+use Faulancer\Exception\DbException;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
-use ORM\Exception\IncompletePrimaryKey;
-use ORM\Exception\NoEntity;
 
 /**
- * Class AuthenticatorService
+ * Class AuthenticatorService | AuthenticatorService.php
+ *
+ * @package Faulancer\Service
+ * @author  Florian Knapp <office@florianknapp.de>
  */
 class AuthenticatorService implements ServiceInterface
 {
 
-    /** @var AbstractController */
+    /** @var Controller */
     protected $controller;
 
     /** @var DbService */
@@ -33,10 +31,11 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * Authenticator constructor.
-     * @param AbstractController $controller
-     * @param Config             $config
+     *
+     * @param Controller $controller
+     * @param Config     $config
      */
-    public function __construct(AbstractController $controller, Config $config)
+    public function __construct(Controller $controller, Config $config)
     {
         $this->controller = $controller;
         $this->config     = $config;
@@ -51,10 +50,7 @@ class AuthenticatorService implements ServiceInterface
      *
      * @return bool
      *
-     * @throws NoEntity
-     * @throws IncompletePrimaryKey
-     *
-     * @codeCoverageIgnore
+     * @throws DbException
      */
     public function loginUser(Entity $user, $shouldBeActive = true, $redirectUrl = '')
     {

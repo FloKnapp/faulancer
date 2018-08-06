@@ -2,10 +2,9 @@
 
 namespace Faulancer\Security;
 
-use Faulancer\Exception\ServiceNotFoundException;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceInterface;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 
 /**
  * Class Csrf
@@ -21,8 +20,6 @@ class Csrf
      * @param string $identifier
      *
      * @return string
-     *
-     * @throws ServiceNotFoundException
      */
     public static function getToken(string $identifier = '') :string
     {
@@ -43,8 +40,6 @@ class Csrf
      * @param string $identifier
      *
      * @return bool
-     *
-     * @throws ServiceNotFoundException
      */
     public static function isValid(string $token, string $identifier = '') :bool
     {
@@ -66,8 +61,6 @@ class Csrf
      * @param string $identifier
      *
      * @return void
-     *
-     * @throws ServiceNotFoundException
      */
     private static function saveToSession(string $token, string $identifier = '')
     {
@@ -75,13 +68,11 @@ class Csrf
     }
 
     /**
-     * @return SessionManagerService|ServiceInterface
-     *
-     * @throws ServiceNotFoundException
+     * @return SessionManager|ServiceInterface
      */
     private static function _getSessionManager()
     {
-        return ServiceLocator::instance()->get(SessionManagerService::class);
+        return ServiceLocator::instance()->get(SessionManager::class);
     }
 
 }

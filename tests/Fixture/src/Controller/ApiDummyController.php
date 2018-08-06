@@ -6,16 +6,14 @@
  */
 namespace Faulancer\Fixture\Controller;
 
-use Faulancer\Controller\AbstractRestfulController;
-use Faulancer\Exception\InvalidArgumentException;
+use Faulancer\Controller\RestfulController;
 use Faulancer\Http\JsonResponse;
-use Faulancer\Service\JsonResponseService;
 use Faulancer\ServiceLocator\ServiceInterface;
 
 /**
  * Class ApiDummyController
  */
-class ApiDummyController extends AbstractRestfulController
+class ApiDummyController extends RestfulController
 {
 
     /** @var ServiceInterface|JsonResponse */
@@ -28,14 +26,12 @@ class ApiDummyController extends AbstractRestfulController
     public function __construct($request)
     {
         parent::__construct($request);
-        $this->jsonResponse = $this->getServiceLocator()->get(JsonResponseService::class);
+        $this->jsonResponse = $this->getServiceLocator()->get(JsonResponse::class);
     }
 
     /**
      * @param mixed $id
      * @return JsonResponse
-     *
-     * @throws InvalidArgumentException
      */
     public function get($id = null)
     {

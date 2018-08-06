@@ -1,15 +1,9 @@
 <?php
-/**
- * Class Dispatcher | Dispatcher.php
- * @package Faulancer\AbstractController
- * @author Florian Knapp <office@florianknapp.de>
- */
+
 namespace Faulancer\Controller;
 
 use Faulancer\Event\Observer;
 use Faulancer\Event\Type\OnDispatch;
-use Faulancer\Exception\ClassNotFoundException;
-use Faulancer\Exception\DispatchFailureException;
 use Faulancer\Exception\IncompatibleResponseException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Http;
@@ -17,14 +11,16 @@ use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
 use Faulancer\Http\Response;
 use Faulancer\Exception\MethodNotFoundException;
-use Faulancer\Service\AuthenticatorPlugin;
 use Faulancer\Service\AuthenticatorService;
 use Faulancer\Service\Config;
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
+use Faulancer\Session\SessionManager;
 
 /**
- * Class Dispatcher
+ * Class Dispatcher | Dispatcher.php
+ *
+ * @package Faulancer\AbstractController
+ * @author Florian Knapp <office@florianknapp.de>
  */
 class Dispatcher
 {
@@ -87,7 +83,7 @@ class Dispatcher
 
         list($class, $action, $permission, $payload) = $this->_getRoute($this->request->getPath());
 
-        /** @var AbstractController $class */
+        /** @var Controller $class */
         $class   = new $class($this->request);
 
         if (!empty($permission)) {
@@ -132,8 +128,6 @@ class Dispatcher
 
     /**
      * @return bool
-     *
-     * @throws ServiceNotFoundException
      */
     private function _setLanguageFromUri()
     {
@@ -141,8 +135,8 @@ class Dispatcher
 
             $serviceLocator = ServiceLocator::instance();
 
-            /** @var SessionManagerService $sessionManager */
-            $sessionManager = $serviceLocator->get(SessionManagerService::class);
+            /** @var SessionManager $sessionManager */
+            $sessionManager = $serviceLocator->get(SessionManager::class);
             $sessionManager->set('language', $this->request->getParam('lang'));
 
             return true;

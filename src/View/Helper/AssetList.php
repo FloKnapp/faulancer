@@ -2,13 +2,9 @@
 
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\ServiceNotFoundException;
-use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\Service\RequestService;
 use Faulancer\View\AbstractViewHelper;
-use Faulancer\View\ViewController;
 
 /**
  * Class AssetList
@@ -32,7 +28,6 @@ class AssetList extends AbstractViewHelper
      * @return string
      *
      * @throws ServiceNotFoundException
-     * @throws ConfigInvalidException
      */
     public function __invoke($type, $optimize = false)
     {
@@ -90,8 +85,6 @@ class AssetList extends AbstractViewHelper
      * @param string $type  The assets type
      *
      * @return string
-     *
-     * @throws ServiceNotFoundException
      */
     private function _collectAssetsContent(array $files, string $type)
     {

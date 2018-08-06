@@ -2,7 +2,6 @@
 
 namespace Faulancer\Test\Unit;
 
-use Faulancer\Service\SessionManagerService;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Session\SessionManager;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +22,7 @@ class SessionManagerTest extends TestCase
      */
     public function setUp()
     {
-        $this->sessionManager = ServiceLocator::instance()->get(SessionManagerService::class);
+        $this->sessionManager = ServiceLocator::instance()->get(SessionManager::class);
     }
 
     public function tearDown()

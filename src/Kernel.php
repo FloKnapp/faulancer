@@ -12,7 +12,6 @@ use Faulancer\Event\Type\OnKernelStart;
 use Faulancer\Exception\Exception;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\Controller\AbstractController;
 
 /**
  * Class Kernel

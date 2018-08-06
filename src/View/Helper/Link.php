@@ -2,12 +2,9 @@
 
 namespace Faulancer\View\Helper;
 
-use Faulancer\Exception\ConfigInvalidException;
 use Faulancer\Exception\RouteInvalidException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Request;
 use Faulancer\Service\Config;
-use Faulancer\Service\RequestService;
 use Faulancer\Translate\Translator;
 use Faulancer\View\AbstractViewHelper;
 
@@ -29,7 +26,6 @@ class Link extends AbstractViewHelper
      * @return string
      *
      * @throws RouteInvalidException
-     * @throws ServiceNotFoundException
      */
     public function __invoke($routeName, $elementAttributes = [], $parameter = [])
     {
@@ -43,7 +39,7 @@ class Link extends AbstractViewHelper
         $config = $serviceLocator->get(Config::class);
 
         /** @var Request $request */
-        $request = $serviceLocator->get(RequestService::class);
+        $request = $serviceLocator->get(Request::class);
 
         $route = $config->get('routes:' . $routeName);
 
