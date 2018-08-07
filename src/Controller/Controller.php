@@ -109,7 +109,7 @@ class Controller
      *
      * @return Response
      */
-    public function render(string $template = '', $variables = []) :Response
+    public function render(string $template = '', array $variables = []) :Response
     {
         $this->addAssets();
 
@@ -126,7 +126,6 @@ class Controller
         } catch (FileNotFoundException $e) {
             $viewResult = $e->getMessage();
         } catch (ServiceNotFoundException $e) {
-            $response   = new Response();
             $viewResult = $e->getMessage();
         }
 
@@ -140,7 +139,7 @@ class Controller
      *
      * @return bool|null
      */
-    public function isPermitted($roles = [])
+    public function isPermitted(array $roles = [])
     {
         /** @var AuthenticatorService $authService */
         $authService = $this->getServiceLocator()->get(AuthenticatorService::class);
@@ -200,7 +199,7 @@ class Controller
      *
      * @return string
      */
-    public function route(string $name, array $parameters = [], $absolute = false)
+    public function route(string $name, array $parameters = [], bool $absolute = false)
     {
         return (new Route())($name, $parameters, $absolute);
     }

@@ -3,6 +3,7 @@
 namespace Faulancer\ORM;
 
 use Faulancer\Controller\Controller;
+use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\ServiceLocator\ServiceLocator;
 use ORM\EntityManager;
 use ORM\Exception\IncompletePrimaryKey;
@@ -57,6 +58,7 @@ abstract class Entity extends \ORM\Entity
      * @throws InvalidName
      * @throws NoEntityManager
      * @throws IncompletePrimaryKey
+     * @throws InvalidArgumentException
      */
     public function save(EntityManager $dbManager = null, $redirectOnDup = false)
     {

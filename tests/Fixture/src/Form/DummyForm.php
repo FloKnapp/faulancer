@@ -67,6 +67,14 @@ class DummyForm extends AbstractFormBuilder
         ]);
 
         $this->add([
+            'label' => 'FileType',
+            'attributes' => [
+                'name' => 'file',
+                'type' => 'file'
+            ]
+        ]);
+
+        $this->add([
             'label' => 'TextRadio',
             'attributes' => [
                 'name' => 'radio',
@@ -134,6 +142,14 @@ class DummyForm extends AbstractFormBuilder
             'attributes' => [
                 'name'  => 'submit',
                 'type'  => 'submit'
+            ]
+        ]);
+
+        $this->add([
+            'label' => 'TextArea',
+            'attributes' => [
+                'name'  => 'textarea',
+                'type'  => 'textarea'
             ]
         ]);
 

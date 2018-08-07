@@ -102,8 +102,6 @@ class ErrorController extends Controller
      * Render a 404 page
      *
      * @return Response
-     *
-     * @codeCoverageIgnore
      */
     private function _renderNotFoundPage()
     {

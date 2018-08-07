@@ -64,7 +64,6 @@ class Dispatcher
      * @return Response|JsonResponse|mixed
      * @throws MethodNotFoundException
      * @throws IncompatibleResponseException
-     * @throws ServiceNotFoundException
      */
     public function dispatch()
     {

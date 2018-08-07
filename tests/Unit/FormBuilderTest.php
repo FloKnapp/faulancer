@@ -37,16 +37,18 @@ class FormBuilderTest extends TestCase
     public function fieldDataProvider()
     {
         return [
-            ['<input name="firstname" type="text" />', 'firstname'],
-            ['<input name="lastname" type="text" />', 'lastname'],
-            ['<input name="email" type="email" />', 'email'],
-            ['<input name="date" type="date" />', 'date'],
-            ['<input name="hidden" type="hidden" value="hidden_val" />', 'hidden'],
-            ['<input name="tel" type="tel" />', 'tel'],
-            ['<input name="number" type="number" />', 'number'],
-            ['<input type="hidden" name="checkbox" value="yes"/><input name="checkbox" type="checkbox" value="no" checked="checked"/>', 'checkbox'],
+            ['<input name="firstname" value="test" type="text" />', 'firstname'],
+            ['<input name="lastname" value="test" type="text" />', 'lastname'],
+            ['<input name="email" value="test" type="email" />', 'email'],
+            ['<input name="date" type="date" value="test"/>', 'date'],
+            ['<input name="file" type="file" />', 'file'],
+            ['<input name="hidden" type="hidden" value="test"/>', 'hidden'],
+            ['<input name="tel" type="tel" value="test"/>', 'tel'],
+            ['<input name="number" type="number" value="test"/>', 'number'],
+            ['<input type="hidden" name="checkbox" value="yes"/><input name="checkbox" type="checkbox" value="no" />', 'checkbox'],
             ['<select name="gender"><option value="w">Frau</option><option value="m">Herr</option></select>', 'gender'],
-            ['<button name="submit" type="submit">TextSubmit</button>', 'submit']
+            ['<button name="submit" type="submit">TextSubmit</button>', 'submit'],
+            ['<textarea type="textarea" name="textarea">test</textarea>', 'textarea']
         ];
     }
 
@@ -75,7 +77,9 @@ class FormBuilderTest extends TestCase
     public function testStaticFormDefinitionText($expected, $fieldName)
     {
         ob_start();
-        echo $this->dummyForm->getField($fieldName);
+        $field = $this->dummyForm->getField($fieldName);
+        $field->setValue('test');
+        echo $field;
         $output = ob_get_contents();
         ob_end_clean();
 

@@ -37,4 +37,15 @@ class CsrfTokenTest extends TestCase
 
     }
 
+    /**
+     *
+     */
+    public function testTokenIsNotValid()
+    {
+        $token = Csrf::getToken() . 'test';
+        $_POST['csrf'] = $token;
+        $this->assertFalse(Csrf::isValid($token));
+
+    }
+
 }
