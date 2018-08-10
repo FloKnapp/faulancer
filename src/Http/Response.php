@@ -63,10 +63,12 @@ class Response extends AbstractHttp
     /**
      * Response constructor.
      * @param mixed $content
+     * @param int   $code
      */
-    public function __construct($content = null)
+    public function __construct($content = null, int $code = 200)
     {
         $this->setContent($content);
+        $this->setCode($code);
     }
 
     /**
