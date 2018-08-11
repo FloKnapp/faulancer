@@ -70,10 +70,10 @@ class ErrorController extends Controller
     private function _renderDebugPage()
     {
         $this->getView()->addStylesheet('/core/css/main.css');
-        $this->getView()->addStylesheet('/core/css/darkula.css');
+        $this->getView()->addStylesheet('/core/css/darcula.css');
         $this->getView()->addScript('/core/js/namespace.js');
         $this->getView()->addScript('/core/js/engine.js');
-        $this->getView()->addScript('/core/js/hightlight.pack.js');
+        $this->getView()->addScript('/core/js/highlight.pack.js');
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
         $raiser = [

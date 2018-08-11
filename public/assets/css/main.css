@@ -88,11 +88,18 @@ hr.low-margin {
 }
 
 .codeBlock {
-    padding: 0 10px 10px 10px;
     background: #151515;
     margin-top: 0;
-    line-height: 1.4em;
+    line-height: 0;
     border-radius: 0 0 5px 5px;
+}
+
+.codeBlock pre,
+.codeBlock code {
+    margin: 0;
+    padding: 0;
+    height: auto;
+    background: #151515;
 }
 
 .serverData {
@@ -115,32 +122,45 @@ hr.low-margin {
 
 code {
     font-family: "Courier New", sans-serif;
-    font-size: 1.1em;
+    font-size: 1em;
     white-space: pre-line;
     margin: 0;
     padding: 0;
-    color: #EEEEEE;
+    line-height: 12px;
 }
 
-code .line-nr {
+pre .line-nr {
     -moz-user-select: none;
     min-width: 40px;
     display: inline-block;
-    color: #505050;
+    color: #EEEEEE;
 }
 
 code .line {
-    padding: 3px 2px;
-    margin-left: 5px;
+    padding: 6px 0;
+    padding-left: 55px;
+    margin-left: 0;
     display: block;
+    position: relative;
 }
 
 code .line.highlight {
     background: #303030;
 }
 
+pre code .line .line-nr {
+    color: #EEEEEE;
+    background-color: #303030;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 6px 0;
+    text-align: center;
+}
+
 code .line.highlight .line-nr {
-    color: #AAAAAA;
+    display: inline-block;
+    background-color: #303030;
 }
 
 code .base_keys {
