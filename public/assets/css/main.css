@@ -119,6 +119,7 @@ code {
     white-space: pre-line;
     margin: 0;
     padding: 0;
+    color: #EEEEEE;
 }
 
 code .line-nr {

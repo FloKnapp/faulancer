@@ -5,7 +5,6 @@ namespace Faulancer\Controller;
 use Faulancer\Event\Observer;
 use Faulancer\Event\Type\OnDispatch;
 use Faulancer\Exception\IncompatibleResponseException;
-use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Http\Http;
 use Faulancer\Http\JsonResponse;
 use Faulancer\Http\Request;
@@ -273,7 +272,6 @@ class Dispatcher
      * @param array  $data
      *
      * @return array
-     * @throws MethodNotFoundException
      */
     private function _getVariableMatch($uri, array $data) :array
     {

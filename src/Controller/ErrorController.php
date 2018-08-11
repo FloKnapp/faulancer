@@ -54,6 +54,8 @@ class ErrorController extends Controller
             return $this->_renderDebugPage();
         }
 
+        echo "Hallo";
+
         return $this->_renderNotFoundPage();
 
     }
@@ -68,8 +70,10 @@ class ErrorController extends Controller
     private function _renderDebugPage()
     {
         $this->getView()->addStylesheet('/core/css/main.css');
+        $this->getView()->addStylesheet('/core/css/darkula.css');
         $this->getView()->addScript('/core/js/namespace.js');
         $this->getView()->addScript('/core/js/engine.js');
+        $this->getView()->addScript('/core/js/hightlight.pack.js');
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
         $raiser = [

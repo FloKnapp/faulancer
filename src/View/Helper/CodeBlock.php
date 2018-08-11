@@ -38,7 +38,7 @@ class CodeBlock extends AbstractViewHelper
                 $l = str_replace("\t", $tabChar, $line);
                 $l = str_replace(" ", $regularChar, $l);
 
-                $data = '<span>' . highlight_string($line, true) . '</span>';
+                $data = '<span>' . highlight_string($l, true) . '</span>';
 
                 if ($lineNr === $actualLine) {
                     $lines .= '<span class="line highlight"><span class="line-nr">' . $lineNr . '</span>' . $data . '</span>';
