@@ -11,6 +11,6 @@ namespace Faulancer\Exception;
  */
 class Exception extends \Exception {
 
-    protected $httpStatus = 200;
+    protected $httpStatus = 404;
 
 }

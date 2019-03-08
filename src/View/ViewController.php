@@ -5,8 +5,10 @@ namespace Faulancer\View;
 use Faulancer\Event\Observer;
 use Faulancer\Event\Type\OnPostRender;
 use Faulancer\Event\Type\OnRender;
+use Faulancer\Exception\Exception;
 use Faulancer\Exception\FileNotFoundException;
 use Faulancer\Exception\ServiceNotFoundException;
+use Faulancer\Exception\TemplateException;
 use Faulancer\Exception\ViewHelperException;
 use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
@@ -237,7 +239,7 @@ class ViewController
      */
     private function _cleanOutput($output) :string
     {
-        if (defined('APPLICATION_ENV') && APPLICATION_ENV === 'production') {
+        if (getenv('APPLICATION_ENV') === 'prod') {
             return preg_replace('/(\s{2,}|\t|\r|\n)/', ' ', trim($output));
         } else {
             return str_replace(["\t", "\r", "\n\n\n"], ' ', trim($output));
@@ -249,6 +251,8 @@ class ViewController
      *
      * @return string
      * @throws ServiceNotFoundException
+     * @throws Exception
+     * @throws TemplateException
      */
     public function render()
     {
@@ -256,13 +260,23 @@ class ViewController
 
         extract($this->variable);
 
-        ob_start();
+        try {
 
-        include $this->getTemplate();
+            ob_start();
 
-        $content = ob_get_contents();
+            include $this->getTemplate();
+            $content = ob_get_contents();
 
-        if (ob_get_length()) {
+        } catch (\Exception $e) {
+
+            while(ob_get_level() > 1) {
+                ob_end_clean();
+            }
+
+            throw new TemplateException($e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getPrevious());
+        }
+
+        if (ob_get_length() >= 0) {
             ob_end_clean();
         }
 

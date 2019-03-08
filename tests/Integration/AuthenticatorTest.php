@@ -107,7 +107,6 @@ class AuthenticatorServiceTest extends TestCase
      */
     public function testIsAuthenticatedNoUserObject()
     {
-
         $user = new \stdClass();
 
         /** @var AuthenticatorService|\PHPUnit_Framework_MockObject_MockObject $authMock */
@@ -116,7 +115,7 @@ class AuthenticatorServiceTest extends TestCase
 
         $result = $authMock->isPermitted(['author']);
 
-        $this->assertNull($result);
+        $this->assertFalse($result);
     }
 
 }
