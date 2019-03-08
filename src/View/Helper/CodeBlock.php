@@ -33,12 +33,13 @@ class CodeBlock extends AbstractViewHelper
 
             $lineNr++;
 
-            if ($lineNr >= $actualLine - 6 && $lineNr <= $actualLine + 3) {
+            if ($lineNr >= $actualLine - 8 && $lineNr <= $actualLine + 4) {
 
                 $l = str_replace("\t", $tabChar, $line);
                 $l = str_replace(" ", $regularChar, $l);
+                $l = str_replace(['<', '>'], ['&lsaquo;', '&rsaquo;'], $l);
 
-                $data = '<span>' . highlight_string($l, true) . '</span>';
+                $data = '<code>' . $l . '</code>';
 
                 if ($lineNr === $actualLine) {
                     $lines .= '<span class="line highlight"><span class="line-nr">' . $lineNr . '</span>' . $data . '</span>';
@@ -49,6 +50,8 @@ class CodeBlock extends AbstractViewHelper
             }
 
         }
+
+        fclose($file);
 
         return $lines;
 

@@ -21,6 +21,7 @@ class EndBlock extends AbstractViewHelper
     public function __invoke(string $name = '')
     {
         $content = ob_get_contents();
+
         $this->view->getParentTemplate()->setVariable($name, $content);
 
         unset($this->blockName);

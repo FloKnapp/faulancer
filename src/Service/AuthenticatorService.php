@@ -4,6 +4,7 @@ namespace Faulancer\Service;
 
 use Faulancer\Controller\Controller;
 use Faulancer\Exception\DbException;
+use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\ORM\User\Entity;
 use Faulancer\Security\Crypt;
 use Faulancer\ServiceLocator\ServiceInterface;
@@ -49,8 +50,6 @@ class AuthenticatorService implements ServiceInterface
      * @param string $redirectUrl
      *
      * @return bool
-     *
-     * @throws DbException
      */
     public function loginUser(Entity $user, $shouldBeActive = true, $redirectUrl = '')
     {
@@ -111,13 +110,13 @@ class AuthenticatorService implements ServiceInterface
      * @param array $roles
      * @return bool
      */
-    public function isPermitted(array $roles)
+    public function isPermitted(array $roles): bool
     {
         /** @var Entity $user */
         $user = $this->getUserFromSession();
 
         if (!$user instanceof Entity) {
-            return null;
+            return false;
         }
 
         foreach ($user->roles as $userRole) {
@@ -142,7 +141,7 @@ class AuthenticatorService implements ServiceInterface
 
     /**
      * @param string $entity
-     * @return Entity
+     * @return Entity     *
      * @codeCoverageIgnore
      */
     public function getUserFromSession(string $entity = '')

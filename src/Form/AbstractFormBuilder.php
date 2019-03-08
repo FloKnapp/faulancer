@@ -9,6 +9,7 @@ use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Type\AbstractType;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
+use Faulancer\Service\Config;
 use Faulancer\ServiceLocator\ServiceLocator;
 use Faulancer\Form\Validator\ValidatorChain;
 
@@ -74,7 +75,11 @@ abstract class AbstractFormBuilder
     public function getField(string $name)
     {
         if (empty($this->fields[$name])) {
-            throw new InvalidFormElementException('No field with name \'' . $name . '\' found');
+
+            $trace = \debug_backtrace();
+            $first = array_shift($trace);
+
+            throw new InvalidFormElementException('No field with name "' . $name . '" found', 0, $first['line'], $first['file']);
         }
 
         return $this->fields[$name];

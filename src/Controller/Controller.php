@@ -55,7 +55,7 @@ class Controller
      *
      * @return ServiceLocator
      */
-    public function getServiceLocator() :ServiceLocator
+    public function getServiceLocator(): ServiceLocator
     {
         return ServiceLocator::instance();
     }
@@ -65,7 +65,7 @@ class Controller
      *
      * @return SessionManager|ServiceInterface
      */
-    public function getSessionManager() :SessionManager
+    public function getSessionManager(): SessionManager
     {
         return $this->getServiceLocator()->get(SessionManager::class);
     }
@@ -75,7 +75,7 @@ class Controller
      *
      * @return ViewController
      */
-    public function getView() :ViewController
+    public function getView(): ViewController
     {
         $calledClass = get_called_class();
 
@@ -96,7 +96,7 @@ class Controller
      *
      * @return DbService|ServiceInterface
      */
-    public function getDb() :DbService
+    public function getDb(): DbService
     {
         return $this->getServiceLocator()->get(DbService::class);
     }
@@ -137,9 +137,9 @@ class Controller
      *
      * @param array $roles The corresponding user roles
      *
-     * @return bool|null
+     * @return bool
      */
-    public function isPermitted(array $roles = [])
+    public function isPermitted(array $roles = []): bool
     {
         /** @var AuthenticatorService $authService */
         $authService = $this->getServiceLocator()->get(AuthenticatorService::class);

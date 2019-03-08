@@ -50,11 +50,9 @@ class ErrorController extends Controller
     {
         ob_end_clean();
 
-        if (defined('APPLICATION_ENV') && APPLICATION_ENV !== 'production') {
+        if (getenv('APPLICATION_ENV') !== 'prod') {
             return $this->_renderDebugPage();
         }
-
-        echo "Hallo";
 
         return $this->_renderNotFoundPage();
 
@@ -70,10 +68,8 @@ class ErrorController extends Controller
     private function _renderDebugPage()
     {
         $this->getView()->addStylesheet('/core/css/main.css');
-        $this->getView()->addStylesheet('/core/css/darcula.css');
         $this->getView()->addScript('/core/js/namespace.js');
         $this->getView()->addScript('/core/js/engine.js');
-        $this->getView()->addScript('/core/js/highlight.pack.js');
         $this->getView()->setTemplatePath(__DIR__ . '/../../template');
 
         $raiser = [
@@ -112,9 +108,10 @@ class ErrorController extends Controller
         /** @var Config $config */
         $config = $errorController = $this->getServiceLocator()->get(Config::class);
 
+        /** @var ErrorControllerInterface $errorController */
         $errorController = $config->get('customErrorController');
 
-        if ($errorController) {
+        if (in_array(ErrorControllerInterface::class, class_implements($errorController) ?? [])) {
             return (new $errorController($this->request))->notFoundAction();
         }
 

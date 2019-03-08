@@ -73,7 +73,7 @@ class KernelTest extends TestCase
         $response = $kernel->run();
 
         $this->assertNotEmpty($response);
-        $this->assertSame('1', $response);
+        $this->assertSame(1, $response);
     }
 
 }

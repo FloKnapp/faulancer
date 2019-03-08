@@ -1,7 +1,4 @@
-@font-face {
-    font-family: "Inconsolata", monospace;
-    src: url("https://fonts.googleapis.com/css?family=Inconsolata");
-}
+@import url("https://fonts.googleapis.com/css?family=Inconsolata");
 
 html, body {
     width: 100%;
@@ -9,7 +6,7 @@ html, body {
     margin: 0;
     background: #202020;
     font-family: "Inconsolata", monospace;
-    font-size: 1em;
+    font-size: 16px;
     color: #808080;
 }
 
@@ -127,9 +124,10 @@ code {
     margin: 0;
     padding: 0;
     line-height: 12px;
+    background: #606060;
 }
 
-pre .line-nr {
+code .line-nr {
     -moz-user-select: none;
     min-width: 40px;
     display: inline-block;
@@ -142,25 +140,17 @@ code .line {
     margin-left: 0;
     display: block;
     position: relative;
+    white-space: pre-line;
 }
 
 code .line.highlight {
-    background: #303030;
+    background-color: #404040;
 }
 
-pre code .line .line-nr {
-    color: #EEEEEE;
-    background-color: #303030;
-    top: 0;
-    left: 0;
-    position: absolute;
-    padding: 6px 0;
-    text-align: center;
-}
-
-code .line.highlight .line-nr {
-    display: inline-block;
-    background-color: #303030;
+code .line.highlight code {
+    background-color: inherit;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    color: #EEE;
 }
 
 code .base_keys {

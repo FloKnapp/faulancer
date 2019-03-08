@@ -47,7 +47,6 @@ class Kernel
      * Initialize the application
      *
      * @return mixed
-     * @throws Exception
      * @codeCoverageIgnore
      */
     public function run()
@@ -59,12 +58,7 @@ class Kernel
         try {
 
             $this->registerErrorHandler();
-
-            ob_start();
-            echo $dispatcher->dispatch()->getContent();
-            $content = ob_get_contents();
-            ob_end_clean();
-            return $content;
+            return $dispatcher->dispatch()->getContent();
 
         } catch (Exception $e) {
             Observer::instance()->trigger(new OnKernelException($this));

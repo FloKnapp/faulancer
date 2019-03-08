@@ -358,14 +358,14 @@ class DispatcherTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $authenticatorMock->method('isPermitted')->willReturn(null);
+        $authenticatorMock->method('isPermitted')->willReturn(false);
 
         ServiceLocator::instance()->set(AuthenticatorService::class, $authenticatorMock);
 
         $dispatcher = new Dispatcher($request, $this->config);
         $response = $dispatcher->dispatch();
 
-        self::assertSame(true, $response);
+        self::assertSame(false, $response);
     }
 
     public function testAuthSuccess()
