@@ -7,6 +7,7 @@ use Faulancer\Exception\InvalidArgumentException;
 use Faulancer\Exception\InvalidFormElementException;
 use Faulancer\Exception\ServiceNotFoundException;
 use Faulancer\Form\Type\AbstractType;
+use Faulancer\Form\Validator\Base\Confirm;
 use Faulancer\Http\Request;
 use Faulancer\ORM\Entity;
 use Faulancer\Service\Config;
@@ -184,12 +185,16 @@ abstract class AbstractFormBuilder
                 continue;
             }
 
-            // Check stored confirm value (i.e. for password repeat requests) and ignore the second field
-            if ($field->getValue() === $this->confirmValue) {
-                continue;
-            }
+            if (in_array(Confirm::class, $field->getValidatorChain()->getValidators())) {
 
-            $this->confirmValue = $field->getValue();
+                // Check stored confirm value (i.e. for password repeat requests) and ignore the second field
+                if ($field->getValue() === $this->confirmValue) {
+                    continue;
+                }
+
+                $this->confirmValue = $field->getValue();
+
+            }
 
             $result[$key] = $field->getValue();
 

@@ -268,11 +268,7 @@ class ViewController
             $content = ob_get_contents();
 
         } catch (\Exception $e) {
-
-            while(ob_get_level() > 1) {
-                ob_end_clean();
-            }
-
+            ob_end_clean();
             throw new TemplateException($e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getPrevious());
         }
 

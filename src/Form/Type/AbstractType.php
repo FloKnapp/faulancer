@@ -102,6 +102,11 @@ abstract class AbstractType
         $this->validatorChain = $validatorChain;
     }
 
+    public function getValidatorChain():? ValidatorChain
+    {
+        return $this->validatorChain;
+    }
+
     /**
      * Validate field by validator chain or default validator
      *

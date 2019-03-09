@@ -48,14 +48,11 @@ class ErrorController extends Controller
      */
     public function displayError()
     {
-        ob_end_clean();
-
-        if (getenv('APPLICATION_ENV') !== 'prod') {
+        if (getenv('APPLICATION_ENV') === 'dev') {
             return $this->_renderDebugPage();
         }
 
         return $this->_renderNotFoundPage();
-
     }
 
     /**

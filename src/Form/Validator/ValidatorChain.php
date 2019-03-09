@@ -43,6 +43,15 @@ class ValidatorChain
     }
 
     /**
+     * @return AbstractValidator[]
+     * @codeCoverageIgnore
+     */
+    public function getValidators(): array
+    {
+        return $this->validators;
+    }
+
+    /**
      * @return boolean
      * @codeCoverageIgnore
      */
