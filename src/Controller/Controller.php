@@ -27,14 +27,14 @@ class Controller
 {
 
     /**
-     * Holds the views per controller request
+     * Contains the views per controller request
      *
      * @var array
      */
     private $_viewArray = [];
 
     /**
-     * Holds the request
+     * Contains the current request
      *
      * @var Request
      */
